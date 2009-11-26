@@ -6,6 +6,9 @@ set :deploy_to, "/var/www/domains/anage.beta.westarete.com"
 # the database migrations via "cap staging deploy:migrations".
 set :rails_env, "beta"
 
+# Non-standard ssh port.
+ssh_options[:port] = 22222
+
 # The hosts that we're deploying to.
 role :app, "beta.westarete.com"
 role :web, "beta.westarete.com"

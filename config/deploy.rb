@@ -1,24 +1,20 @@
-
-require 'capistrano/ext/multistage'    # Support for multiple deploy targets
-require 'capistrano-helpers/passenger' # Support for Apache passenger
-require 'capistrano-helpers/specs'     # Check specs before deploying
-require 'capistrano-helpers/features'  # Check cucumber features before deploying
-require 'capistrano-helpers/preflight' # Run preflight checklist before deploying
-require 'capistrano-helpers/privates'  # Symlink private files after deploying
-require 'capistrano-helpers/version'   # Record the version number after deploying
-require 'capistrano-helpers/campfire'  # Post deploy info to campfire
+require 'capistrano/ext/multistage'     # Support for multiple deploy targets
+require 'capistrano-helpers/passenger'  # Support for Apache passenger
+require 'capistrano-helpers/git'        # Efficient git setup
+require 'capistrano-helpers/branch'     # Ask what branch to deploy
+require 'capistrano-helpers/shared'     # Symlink shared files after deploying
+require 'capistrano-helpers/gems'       # Install all required rubygems
+require 'capistrano-helpers/migrations' # Run all migrations automatically
+require 'capistrano-helpers/campfire'   # Post deploy info to campfire
 
 # The name of the application.
-set :application, "anage"
-
-# The source code management software to use.
-set :scm, "git"
+set :application, "bus"
 
 # Location of the source code.
-set :repository,  "git@github.com:westarete/anage.git"
+set :repository,  "git@github.com:westarete/bus.git"
 
-# Non-standard ssh port.
-ssh_options[:port] = 22222
-
-# Set the files that should be replaced with their private counterparts.
-set :privates, %w{ config/database.yml config/session_secret.txt }
+# Set the files that should be symlinked to their shared counterparts.
+set :shared, %w{ 
+  config/database.yml 
+  config/initializers/session_store.rb
+}
