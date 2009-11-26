@@ -1,0 +1,69 @@
+= Version Plugin
+
+This is the plugin that we use at West Arete Computing to tag and push
+releases of our Rails applications. It does it in a consistent fashion, and
+ensures that all tests pass beforehand.
+
+== Naming Convention
+
+All releases have the format v1.2.3
+
+The first number is the "major" number, which is incremented at the conclusion
+of the entire project, or after a major architecture overhaul that changes the
+user's experience dramatically.
+
+The second number is the "minor" number. This is incremented whenever a
+release adds new features.
+
+The third number is the "patch" number. This is incremented for a release that
+is a pure refactoring or fixes problems or bugs, but does not add any new
+features.
+
+== Assumptions
+
+This plugin is fairly simple and makes some naïve assumptions:
+
+* the project uses git and should push and pull from origin master
+* you're using rspec
+* you're using cucumber
+ 
+== Usage
+
+The current version is stored in the VERSION file in the root of the rails
+project. This file gets checked into git and will be deployed with the app.
+It's fine to use it to display the version number on the site itself. 
+
+You should not edit the VERSION file directly except under exceptional
+circumstances. Instead, use the rake commands listed below.
+
+If no VERSION file is present, the current version is presumed to be v0.0.0
+
+To make a release that increments the patch revision, e.g. from v0.1.1 to
+v0.1.2, run:
+
+  rake version:bump:patch
+  
+To make a release that increments the minor revision, e.g. from v0.1.2 to
+v0.2.0, run:
+
+  rake version:bump:minor
+  
+To make a release that increments the major revision e.g. from v0.2.0 to 
+v1.0.0, run:
+
+  rake version:bump:major
+  
+Each of these tasks will do the following:
+
+* Run the app's specs and features to ensure that they all pass
+* Pull the latest changes from origin master
+* Write the new version to the VERSION file
+* Check the VERSION file into git
+* Create a new tag with the version number
+* Push to origin master, including tags
+
+== To Do
+
+* Figure out how to annotate tags with a message. Doesn't appear to be 
+  supported by the git gem.
+* Modify Rakfile to run specs.
