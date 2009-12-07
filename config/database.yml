@@ -1,0 +1,12 @@
+
+# PostgreSQL development database setup. This configuration presumes that you 
+# have a database user set up with the same name as your login, and it doesn't
+# require a password.
+
+development:
+  adapter: postgresql
+  database: anage_development
+
+test:
+  adapter: postgresql
+  database: anage_test
