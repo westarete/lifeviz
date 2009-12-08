@@ -9,6 +9,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 0) do
+ActiveRecord::Schema.define(:version => 20091207214412) do
+
+  create_table "taxa", :force => true do |t|
+    t.string  "name"
+    t.integer "parent_id"
+    t.integer "lft"
+    t.integer "rgt"
+    t.integer "rank"
+    t.string  "lineage_ids"
+  end
+
+  add_index "taxa", ["id"], :name => "index_taxa_on_id"
+  add_index "taxa", ["parent_id"], :name => "index_taxa_on_parent_id"
 
 end
