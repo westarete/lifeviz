@@ -12,5 +12,4 @@
 #
 
 class Taxon < ActiveRecord::Base
-  set_table_name "taxa"
 end

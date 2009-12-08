@@ -47,3 +47,9 @@ Rails::Initializer.run do |config|
   # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
   # config.i18n.default_locale = :de
 end
+
+
+ActiveSupport::Inflector.inflections do |inflect|
+  inflect.irregular 'taxon', 'taxa'
+  inflect.uncountable "species"
+end

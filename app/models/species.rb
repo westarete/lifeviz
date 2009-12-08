@@ -10,5 +10,5 @@
 #  updated_at :datetime
 #
 
-class Specie < ActiveRecord::Base
+class Species < ActiveRecord::Base
 end
