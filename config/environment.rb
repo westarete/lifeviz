@@ -13,6 +13,8 @@ Rails::Initializer.run do |config|
   config.gem 'webrat'
   config.gem 'cucumber'
   config.gem 'haml'
+  config.gem 'progressbar'
+  require 'progressbar'
   
   config.gem 'awesome_nested_set', :version => '1.4.3'
   # Settings in config/environments/* take precedence over those specified here.
