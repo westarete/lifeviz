@@ -15,3 +15,30 @@ config.action_controller.perform_caching             = false
 
 # Don't care if the mailer can't send
 config.action_mailer.raise_delivery_errors = false
+
+# Required gems for development
+
+# Analyze performance (visit http://localhost:3000/newrelic)
+config.gem 'newrelic_rpm', :version => '2.9.8'
+
+# Deployment recipes.
+config.gem 'capistrano-helpers', :lib => false, :version => '0.3.2'
+
+# Behavior-driven development.
+config.gem 'rspec',              :lib => false, :version => '1.2.9'
+config.gem 'rspec-rails',        :lib => false, :version => '1.2.9'
+
+# Generate fake data.
+config.gem 'faker', :version => '0.3.1'
+
+# Replacement for fixtures.
+config.gem 'machinist', :version => '1.0.5'
+
+# Provides ActiveRecord matchers that we can use with rspec.
+config.gem 'shoulda', :version => '2.10.2'
+
+# Mock browser testing.
+config.gem 'webrat', :version => '0.5.3'
+
+# Story driven development.
+config.gem 'cucumber', :version => '0.4.3'
