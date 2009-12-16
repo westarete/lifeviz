@@ -31,6 +31,9 @@ Rails::Initializer.run do |config|
   
   # Nested sets for storing hierarchies.
   config.gem 'awesome_nested_set', :version => '1.4.3'
+  
+  # Authentication
+  config.gem 'authlogic', :version => '2.1.3'
 
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named

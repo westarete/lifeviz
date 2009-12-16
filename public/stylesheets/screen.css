@@ -272,34 +272,37 @@ body {
     body #main {
       display: block; }
     /* line 11, ../../app/stylesheets/screen.sass */
-    body #main #login {
+    body #main #user_control {
       display: block;
       float: right;
       width: 300px; }
-    /* line 15, ../../app/stylesheets/screen.sass */
+      /* line 15, ../../app/stylesheets/screen.sass */
+      body #main #user_control #login, body #main #user_control #signup {
+        display: none; }
+    /* line 17, ../../app/stylesheets/screen.sass */
     body #main #header {
       margin-bottom: 1em; }
-    /* line 19, ../../app/stylesheets/screen.sass */
+    /* line 21, ../../app/stylesheets/screen.sass */
     body #main #content table {
       margin: 0;
       width: auto !important; }
-      /* line 22, ../../app/stylesheets/screen.sass */
+      /* line 24, ../../app/stylesheets/screen.sass */
       body #main #content table td.permalink {
         font-weight: 600;
         font-size: 1.5em; }
-    /* line 25, ../../app/stylesheets/screen.sass */
+    /* line 27, ../../app/stylesheets/screen.sass */
     body #main #footer {
       clear: both;
       margin-top: 1em; }
-      /* line 28, ../../app/stylesheets/screen.sass */
+      /* line 30, ../../app/stylesheets/screen.sass */
       body #main #footer a {
         vertical-align: middle; }
 
-/* line 31, ../../app/stylesheets/screen.sass */
+/* line 33, ../../app/stylesheets/screen.sass */
 h1, h2, h3, h4 {
   font-family: "Myriad Pro","Helvetica Neue",Helvetica,Arial,sans-serif !important; }
 
-/* line 34, ../../app/stylesheets/screen.sass */
+/* line 36, ../../app/stylesheets/screen.sass */
 .button_row {
   margin-top: 1em; }
 
