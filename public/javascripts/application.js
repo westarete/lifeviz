@@ -4,12 +4,11 @@
 $(function(){
    
    $('#login_button').click(function(){
-       
-       $('#login').show();
-       
+       $('#login').show("slow");
    });
-    
-    
-    
+   
+   $('#login_cancel_button').click(function(){
+       $('#login').hide("slow");
+   })
     
 });
