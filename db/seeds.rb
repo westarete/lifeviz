@@ -69,7 +69,7 @@ def create_species
       elsif family.length > 1 # 
         errors << "Too many matches: " + family.collect {|f| "#{f.name} "}.to_s
       else
-        genus = family[0].find(:first, :conditions => ["name = ?", (animal/'genus').inner_html])
+        genus = Taxon.find(:first, :conditions => ["name = ? AND parent_id = ?", (animal/'genus').inner_html, family.id])
         if genus
           Species.create( :name => (animal/'name_common').inner_html,
                           :synonyms => (animal/'synonyms').inner_html,
@@ -78,7 +78,7 @@ def create_species
         else
           errors << "Could not find genus that mached family: #{(animal/'family').inner_html} #{(animal/'genus').inner_html} #{(animal/'species').inner_html}"
         end
-      enda
+      end
       progress_bar.inc
     end
   end
