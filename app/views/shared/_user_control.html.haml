@@ -1,6 +1,7 @@
 #user_control
-  -if @current_user
-    %h4= "Logged in as #{@current_user} "
+  -if current_user
+    %h4= "Logged in as #{current_user.email} "
+    = link_to "Settings", edit_user_path(current_user)
     = link_to "Log out", user_session_path, :method => :delete
   - else
     = link_to "Log in", "#", :id => "login_button"
@@ -8,18 +9,18 @@
     #login
       %h4 Login
       - form_tag user_session_path, :method => :post do
-        = label_tag :email
+        = label_tag 'user[email]', :email
         %br
-        = text_field_tag :email
-        %br
-        %br
-        = label_tag :password
-        %br
-        = password_field_tag :password
+        = text_field_tag 'user[email]'
         %br
         %br
-        = check_box_tag :remember_me
-        = label_tag :remember_me
+        = label_tag 'user[password]', :password
+        %br
+        = password_field_tag 'user[password]'
+        %br
+        %br
+        = check_box_tag 'user[remember_me]'
+        = label_tag 'user[remember_me]', :remember_me
         %br
         %br
         = submit_tag "Login"
