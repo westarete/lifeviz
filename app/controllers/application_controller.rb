@@ -4,7 +4,11 @@
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
+  before_filter :load_taxonomy
 
   # Scrub sensitive parameters from your log
   # filter_parameter_logging :password
+  def load_taxonomy
+    @taxonomy = [["Animalia", "Animalia"]]
+  end
 end

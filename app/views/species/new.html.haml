@@ -1,3 +1,3 @@
 = render :partial => "/shared/header", :locals => { :title => "New Species", :subtitle => "", :flash => flash }
 
-= render :partial => "form"
+= render :partial => "form", :locals => { :species => @species }

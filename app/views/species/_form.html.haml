@@ -1,6 +1,10 @@
-= form_for @species do |f|
+- form_for :species do |f|
+  = render :partial => "shared/taxatoy"
+  %br
   = f.label :name
   = f.text_field :name
   %br
   = f.label :synonyms
   = f.text_field :synonyms
+  %br
+  %button{:type => "submit", :name => "commit", :value => "Create", :class => 'button positive'} Create Species

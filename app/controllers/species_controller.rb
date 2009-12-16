@@ -7,6 +7,7 @@ class SpeciesController < ApplicationController
   end
 
   def edit
+    @species = Species.find(params[:id])
   end
 
   def update
