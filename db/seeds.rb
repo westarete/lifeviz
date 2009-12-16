@@ -1,6 +1,6 @@
 require 'progressbar'
 require 'db/seed_methods'
-require 'xml'
+require 'hpricot'
 require 'pp'
 include SeedMethods
 UBIOTA = "db/data/ubiota_taxonomy.psv.bz2"
@@ -54,23 +54,31 @@ def create_species
   
   # Load species data from AnAge.
   print "Opening AnAge data..."
-  parser = XML::Parser.io(IO.popen("bunzip2 -c #{ANAGE}"))
-  doc = parser.parse
-  animals = doc.find('names[species]') # Grab all 'name' nodes with a 'species' node
-  num_lines = animals.count
+  doc = Hpricot::XML(IO.popen("bunzip2 -c #{ANAGE}"))
+  animals = (doc/'names') # Grab all 'name' nodes with a 'species' node
+  num_lines = animals.length
   puts " done."
   
   
   errors = []
   progress "Loading species...", num_lines do |progress_bar|
     animals.each do |animal|
-      debugger
-      family = Taxon.find(:all, :conditions => ["name = ? AND rank = 4", animal["family"]])
-      if family.empty?
-        errors << "Could not find family: #{animal['family']} #{animal['genus']} #{animal['species']}"
-      elsif family.length > 1
+      family = Taxon.find(:all, :conditions => ["name = ? AND rank = 4", (animal/'family').inner_html])
+      if family.empty? # If family could not be found, the taxonomy at the family level isn't matching up.
+        errors << "Could not find family: #{(animal/'family').inner_html} #{(animal/'genus').inner_html} #{(animal/'species').inner_html}"
+      elsif family.length > 1 # 
         errors << "Too many matches: " + family.collect {|f| "#{f.name} "}.to_s
-      end
+      else
+        genus = family[0].find(:first, :conditions => ["name = ?", (animal/'genus').inner_html])
+        if genus
+          Species.create( :name => (animal/'name_common').inner_html,
+                          :synonyms => (animal/'synonyms').inner_html,
+                          :taxon => genus
+                        )
+        else
+          errors << "Could not find genus that mached family: #{(animal/'family').inner_html} #{(animal/'genus').inner_html} #{(animal/'species').inner_html}"
+        end
+      enda
       progress_bar.inc
     end
   end
@@ -81,4 +89,3 @@ end
 
 # create_taxonomy
 create_species
-
