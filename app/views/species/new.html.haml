@@ -1,3 +1,3 @@
 = render :partial => "/shared/header", :locals => { :title => "New Species", :subtitle => "", :flash => flash }
-
-= render :partial => "form", :locals => { :species => @species }
+- form_for :species, :url => species_index_path do |f|
+  = render :partial => "form", :locals => { :species => @species, :f => f }
