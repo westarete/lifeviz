@@ -1,7 +1,8 @@
 #taxonomic_selector.clearfix
-  .rank
-    = label_tag "Kingdom"
-    = select "Kingdom", :id, @taxonomy
-  .rank
-    = label_tag "Phylum"
-    = select "Phylum", :id, @taxonomy
+  = select_tag('kingdom', options_from_collection_for_select(Taxon.kingdoms, 'id', 'name'))
+  = select_tag 'phylum'
+  = select_tag 'class'
+  = select_tag 'order'
+  = select_tag 'family'
+  = select_tag 'genus'
+  = select_tag 'species'
