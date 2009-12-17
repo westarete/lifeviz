@@ -1,15 +1,7 @@
-@import blueprint.sass
+// IE 6 Clearfix
+* html .clearfix
+  :zoom 1  
 
-+blueprint-ie 
-
-// Note :
-//
-// Compass will center text to fix IE6 container centering.
-// This means all your texts will be centered under all version of IE by default.
-// Please don't forget to restore the correct behavior to your main container (but not the body tag!)
-//
-// Example :
-//
-// .container, .footer
-//   :text-align left
-
+// IE 7 Clearfix
+*:first-child+html .clearfix
+  :zoom 1

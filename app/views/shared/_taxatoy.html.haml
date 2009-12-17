@@ -1,2 +1,7 @@
-= label_tag "Kingdom"
-= select "Kingdom", :id, @taxonomy
+#taxonomic_selector.clearfix
+  .rank
+    = label_tag "Kingdom"
+    = select "Kingdom", :id, @taxonomy
+  .rank
+    = label_tag "Phylum"
+    = select "Phylum", :id, @taxonomy

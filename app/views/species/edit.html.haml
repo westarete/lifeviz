@@ -1,3 +1,6 @@
 = render :partial => "/shared/header", :locals => { :title => "Edit Species", :subtitle => "", :flash => flash }
 
-= render :partial => "form", :locals => { :species => @species }
+- form_for @species do |f|
+  = render :partial => "form", :object => f
+  %button{:type => "submit", :name => "commit", :value => "Update", :class => 'button positive'} Update Species
+  = link_to "Cancel", species_path(@species), :class => "button"
