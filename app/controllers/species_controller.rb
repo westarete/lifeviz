@@ -1,6 +1,10 @@
 class SpeciesController < ApplicationController
   before_filter :load_taxonomy
   
+  def index
+    @species = Species.all
+  end
+
   def new
     @species = Species.new
   end
