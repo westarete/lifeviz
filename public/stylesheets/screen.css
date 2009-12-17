@@ -384,3 +384,12 @@ body {
 /* line 5, ../../app/stylesheets/partials/_typography.sass */
 h1, h2, h3, h4 {
   font-family: "Myriad Pro","Helvetica Neue",Helvetica,Arial,sans-serif !important; }
+
+/* line 10, ../../app/stylesheets/partials/_typography.sass */
+h2 {
+  margin-top: .25em; }
+
+/* line 13, ../../app/stylesheets/partials/_typography.sass */
+.detail {
+  font-size: .8em;
+  color: gray; }

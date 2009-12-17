@@ -28,6 +28,7 @@ class SpeciesController < ApplicationController
     @species = Species.find(params[:id])
     if @species.update_attributes(params[:species])
       flash[:success] = "Species updated."
+      redirect_to species_path(:id => @species.id)
     else
       flash[:failure] = "Species failed to update."
       render :update
