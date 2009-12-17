@@ -1,2 +1,12 @@
-= render :partial => "/shared/header", :locals => { :title => "Welcome to Anage", :subtitle => "Please browse the species below", :flash => flash }
+= render :partial => "/shared/header", :locals => { :title => "Welcome to Anage", :subtitle => "Please browse the species below.", :flash => flash }
 = render :partial => "/shared/taxatoy"
+
+%table
+  %tr
+    %th Common Name
+    %th Options
+  - @species.each do |species|
+    %tr
+      %td= link_to species.name, species
+      %td
+        = link_to "Edit", edit_species_path(:id => species.id)

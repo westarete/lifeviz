@@ -1,0 +1,40 @@
+body
+  #main
+    :padding-top 2em
+    +container
+    #user_control
+      :display block
+      :float right
+      :width 300px
+      #login, #signup
+        :display none
+    #header
+      :margin-bottom 1em
+    #flash
+    #content
+      table
+        :margin 0
+        :width auto !important
+        td.permalink
+          :font-weight 600
+          :font-size 1.5em
+    #footer
+      :clear both
+      :margin-top 1em
+      a
+        :vertical-align middle
+
+.button_row
+  :margin-top 1em
+    
+form
+  +blueprint-form
+
+/* new clearfix from perishablepress.com */
+.clearfix:after
+  :visibility hidden
+  :display block
+  :font-size 0
+  :content " "
+  :clear both
+  :height 0

@@ -91,7 +91,126 @@ img a {
   .success a {
     color: #264409; }
 
-/* line 5, ../../app/stylesheets/screen.sass */
+/* line 1, ../../app/stylesheets/partials/_taxonomy.sass */
+#taxonomic_selector {
+  margin: 0 0 1em 10px; }
+  /* line 3, ../../app/stylesheets/partials/_taxonomy.sass */
+  #taxonomic_selector .rank {
+    display: block;
+    margin-right: 10px;
+    float: left; }
+    /* line 7, ../../app/stylesheets/partials/_taxonomy.sass */
+    #taxonomic_selector .rank label {
+      margin-bottom: 10px;
+      display: block; }
+    /* line 10, ../../app/stylesheets/partials/_taxonomy.sass */
+    #taxonomic_selector .rank input {
+      display: block; }
+
+/* line 2, ../../app/stylesheets/partials/_structure.sass */
+body #main {
+  padding-top: 2em;
+  width: 950px;
+  margin: 0 auto;
+  overflow: hidden;
+  display: inline-block; }
+  /* line 5, ../../../../../../opt/local/lib/ruby/gems/1.8/gems/compass-0.8.17/frameworks/compass/stylesheets/compass/utilities/general/_hacks.sass */
+  body #main {
+    display: block; }
+  /* line 5, ../../app/stylesheets/partials/_structure.sass */
+  body #main #user_control {
+    display: block;
+    float: right;
+    width: 300px; }
+    /* line 9, ../../app/stylesheets/partials/_structure.sass */
+    body #main #user_control #login, body #main #user_control #signup {
+      display: none; }
+  /* line 11, ../../app/stylesheets/partials/_structure.sass */
+  body #main #header {
+    margin-bottom: 1em; }
+  /* line 15, ../../app/stylesheets/partials/_structure.sass */
+  body #main #content table {
+    margin: 0;
+    width: auto !important; }
+    /* line 18, ../../app/stylesheets/partials/_structure.sass */
+    body #main #content table td.permalink {
+      font-weight: 600;
+      font-size: 1.5em; }
+  /* line 21, ../../app/stylesheets/partials/_structure.sass */
+  body #main #footer {
+    clear: both;
+    margin-top: 1em; }
+    /* line 24, ../../app/stylesheets/partials/_structure.sass */
+    body #main #footer a {
+      vertical-align: middle; }
+
+/* line 27, ../../app/stylesheets/partials/_structure.sass */
+.button_row {
+  margin-top: 1em; }
+
+/* line 15, ../../../../../../opt/local/lib/ruby/gems/1.8/gems/compass-0.8.17/frameworks/blueprint/stylesheets/blueprint/modules/_form.sass */
+form label {
+  font-weight: bold; }
+/* line 17, ../../../../../../opt/local/lib/ruby/gems/1.8/gems/compass-0.8.17/frameworks/blueprint/stylesheets/blueprint/modules/_form.sass */
+form fieldset {
+  padding: 1.4em;
+  margin: 0 0 1.5em 0; }
+/* line 20, ../../../../../../opt/local/lib/ruby/gems/1.8/gems/compass-0.8.17/frameworks/blueprint/stylesheets/blueprint/modules/_form.sass */
+form legend {
+  font-weight: bold;
+  font-size: 1.2em; }
+/* line 24, ../../../../../../opt/local/lib/ruby/gems/1.8/gems/compass-0.8.17/frameworks/blueprint/stylesheets/blueprint/modules/_form.sass */
+form input.text, form input.title, form input[type=text] {
+  margin: 0.5em 0;
+  background-color: #fff;
+  padding: 5px; }
+/* line 28, ../../../../../../opt/local/lib/ruby/gems/1.8/gems/compass-0.8.17/frameworks/blueprint/stylesheets/blueprint/modules/_form.sass */
+form input.title {
+  font-size: 1.5em; }
+/* line 30, ../../../../../../opt/local/lib/ruby/gems/1.8/gems/compass-0.8.17/frameworks/blueprint/stylesheets/blueprint/modules/_form.sass */
+form input[type=checkbox], form input.checkbox,
+form input[type=radio], form input.radio {
+  position: relative;
+  top: 0.25em; }
+/* line 34, ../../../../../../opt/local/lib/ruby/gems/1.8/gems/compass-0.8.17/frameworks/blueprint/stylesheets/blueprint/modules/_form.sass */
+form textarea {
+  margin: 0.5em 0;
+  padding: 5px; }
+/* line 37, ../../../../../../opt/local/lib/ruby/gems/1.8/gems/compass-0.8.17/frameworks/blueprint/stylesheets/blueprint/modules/_form.sass */
+form select {
+  margin: 0.5em 0; }
+/* line 48, ../../../../../../opt/local/lib/ruby/gems/1.8/gems/compass-0.8.17/frameworks/blueprint/stylesheets/blueprint/modules/_form.sass */
+form fieldset {
+  border: 1px solid #cccccc; }
+/* line 50, ../../../../../../opt/local/lib/ruby/gems/1.8/gems/compass-0.8.17/frameworks/blueprint/stylesheets/blueprint/modules/_form.sass */
+form input.text, form input.title,
+form textarea,
+form select {
+  border: 1px solid #bbbbbb; }
+  /* line 54, ../../../../../../opt/local/lib/ruby/gems/1.8/gems/compass-0.8.17/frameworks/blueprint/stylesheets/blueprint/modules/_form.sass */
+  form input.text:focus, form input.title:focus,
+  form textarea:focus,
+  form select:focus {
+    border: 1px solid #666666; }
+/* line 41, ../../../../../../opt/local/lib/ruby/gems/1.8/gems/compass-0.8.17/frameworks/blueprint/stylesheets/blueprint/modules/_form.sass */
+form input.text, form input.title {
+  width: 300px; }
+/* line 43, ../../../../../../opt/local/lib/ruby/gems/1.8/gems/compass-0.8.17/frameworks/blueprint/stylesheets/blueprint/modules/_form.sass */
+form textarea {
+  width: 390px;
+  height: 250px; }
+
+/* new clearfix from perishablepress.com */
+/* line 34, ../../app/stylesheets/partials/_structure.sass */
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0; }
+
+/* line 1, ../../app/stylesheets/partials/_typography.sass */
 body {
   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif !important; }
   /* line 22, ../../../../../../opt/local/lib/ruby/gems/1.8/gems/compass-0.8.17/frameworks/blueprint/stylesheets/blueprint/modules/_typography.sass */
@@ -261,99 +380,7 @@ body {
   /* line 154, ../../../../../../opt/local/lib/ruby/gems/1.8/gems/compass-0.8.17/frameworks/blueprint/stylesheets/blueprint/modules/_typography.sass */
   body .loud {
     color: #111111; }
-  /* line 8, ../../app/stylesheets/screen.sass */
-  body #main {
-    padding-top: 2em;
-    width: 950px;
-    margin: 0 auto;
-    overflow: hidden;
-    display: inline-block; }
-    /* line 5, ../../../../../../opt/local/lib/ruby/gems/1.8/gems/compass-0.8.17/frameworks/compass/stylesheets/compass/utilities/general/_hacks.sass */
-    body #main {
-      display: block; }
-    /* line 11, ../../app/stylesheets/screen.sass */
-    body #main #user_control {
-      display: block;
-      float: right;
-      width: 300px; }
-      /* line 15, ../../app/stylesheets/screen.sass */
-      body #main #user_control #login, body #main #user_control #signup {
-        display: none; }
-    /* line 17, ../../app/stylesheets/screen.sass */
-    body #main #header {
-      margin-bottom: 1em; }
-    /* line 21, ../../app/stylesheets/screen.sass */
-    body #main #content table {
-      margin: 0;
-      width: auto !important; }
-      /* line 24, ../../app/stylesheets/screen.sass */
-      body #main #content table td.permalink {
-        font-weight: 600;
-        font-size: 1.5em; }
-    /* line 27, ../../app/stylesheets/screen.sass */
-    body #main #footer {
-      clear: both;
-      margin-top: 1em; }
-      /* line 30, ../../app/stylesheets/screen.sass */
-      body #main #footer a {
-        vertical-align: middle; }
 
-/* line 33, ../../app/stylesheets/screen.sass */
+/* line 5, ../../app/stylesheets/partials/_typography.sass */
 h1, h2, h3, h4 {
   font-family: "Myriad Pro","Helvetica Neue",Helvetica,Arial,sans-serif !important; }
-
-/* line 36, ../../app/stylesheets/screen.sass */
-.button_row {
-  margin-top: 1em; }
-
-/* line 15, ../../../../../../opt/local/lib/ruby/gems/1.8/gems/compass-0.8.17/frameworks/blueprint/stylesheets/blueprint/modules/_form.sass */
-form label {
-  font-weight: bold; }
-/* line 17, ../../../../../../opt/local/lib/ruby/gems/1.8/gems/compass-0.8.17/frameworks/blueprint/stylesheets/blueprint/modules/_form.sass */
-form fieldset {
-  padding: 1.4em;
-  margin: 0 0 1.5em 0; }
-/* line 20, ../../../../../../opt/local/lib/ruby/gems/1.8/gems/compass-0.8.17/frameworks/blueprint/stylesheets/blueprint/modules/_form.sass */
-form legend {
-  font-weight: bold;
-  font-size: 1.2em; }
-/* line 24, ../../../../../../opt/local/lib/ruby/gems/1.8/gems/compass-0.8.17/frameworks/blueprint/stylesheets/blueprint/modules/_form.sass */
-form input.text, form input.title, form input[type=text] {
-  margin: 0.5em 0;
-  background-color: #fff;
-  padding: 5px; }
-/* line 28, ../../../../../../opt/local/lib/ruby/gems/1.8/gems/compass-0.8.17/frameworks/blueprint/stylesheets/blueprint/modules/_form.sass */
-form input.title {
-  font-size: 1.5em; }
-/* line 30, ../../../../../../opt/local/lib/ruby/gems/1.8/gems/compass-0.8.17/frameworks/blueprint/stylesheets/blueprint/modules/_form.sass */
-form input[type=checkbox], form input.checkbox,
-form input[type=radio], form input.radio {
-  position: relative;
-  top: 0.25em; }
-/* line 34, ../../../../../../opt/local/lib/ruby/gems/1.8/gems/compass-0.8.17/frameworks/blueprint/stylesheets/blueprint/modules/_form.sass */
-form textarea {
-  margin: 0.5em 0;
-  padding: 5px; }
-/* line 37, ../../../../../../opt/local/lib/ruby/gems/1.8/gems/compass-0.8.17/frameworks/blueprint/stylesheets/blueprint/modules/_form.sass */
-form select {
-  margin: 0.5em 0; }
-/* line 48, ../../../../../../opt/local/lib/ruby/gems/1.8/gems/compass-0.8.17/frameworks/blueprint/stylesheets/blueprint/modules/_form.sass */
-form fieldset {
-  border: 1px solid #cccccc; }
-/* line 50, ../../../../../../opt/local/lib/ruby/gems/1.8/gems/compass-0.8.17/frameworks/blueprint/stylesheets/blueprint/modules/_form.sass */
-form input.text, form input.title,
-form textarea,
-form select {
-  border: 1px solid #bbbbbb; }
-  /* line 54, ../../../../../../opt/local/lib/ruby/gems/1.8/gems/compass-0.8.17/frameworks/blueprint/stylesheets/blueprint/modules/_form.sass */
-  form input.text:focus, form input.title:focus,
-  form textarea:focus,
-  form select:focus {
-    border: 1px solid #666666; }
-/* line 41, ../../../../../../opt/local/lib/ruby/gems/1.8/gems/compass-0.8.17/frameworks/blueprint/stylesheets/blueprint/modules/_form.sass */
-form input.text, form input.title {
-  width: 300px; }
-/* line 43, ../../../../../../opt/local/lib/ruby/gems/1.8/gems/compass-0.8.17/frameworks/blueprint/stylesheets/blueprint/modules/_form.sass */
-form textarea {
-  width: 390px;
-  height: 250px; }

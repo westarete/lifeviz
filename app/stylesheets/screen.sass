@@ -1,40 +1,7 @@
 @import compass/reset
 @import blueprint/screen
 @import partials/flash
+@import partials/taxonomy
 
-body
-  :font-family "Helvetica Neue",Helvetica,Arial,sans-serif !important
-  +blueprint-typography
-  #main
-    :padding-top 2em
-    +container
-    #user_control
-      :display block
-      :float right
-      :width 300px
-      #login, #signup
-        :display none
-    #header
-      :margin-bottom 1em
-    #flash
-    #content
-      table
-        :margin 0
-        :width auto !important
-        td.permalink
-          :font-weight 600
-          :font-size 1.5em
-    #footer
-      :clear both
-      :margin-top 1em
-      a
-        :vertical-align middle
-
-h1, h2, h3, h4
-  :font-family "Myriad Pro","Helvetica Neue",Helvetica,Arial,sans-serif !important
-
-.button_row
-  :margin-top 1em
-    
-form
-  +blueprint-form
+@import partials/structure
+@import partials/typography
