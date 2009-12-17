@@ -1,0 +1,2 @@
+module TaxonomyNavigationHelper
+end
