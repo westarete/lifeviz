@@ -50,7 +50,7 @@ end
 # Create species from anage/ubiota using hagrid_ubid as the bridge
 #   Collect species data from Anage
 #   Collect taxonomy species name and hierarchy from ubiota
-#   author: john marino
+#   Author: john marino
 def create_species
   new_species       = []
   orphaned_species  = []
@@ -58,24 +58,24 @@ def create_species
   # Entrance message
   puts "** Creating new species from anage/ubiota files using hagrid_ubid as the bridge..."
   
-  # open files
+  # Open files
   puts "** Opening data files..."
   anage         = IO.popen("bunzip2 -c #{ANAGE}")
   ubiota        = IO.popen("bunzip2 -c #{UBIOTA}")
   map           = IO.readlines(ANAGE_UBIOTA)
   anage && ubiota && map ? (puts "success") : (puts "*failed"; exit!)
   
-  # dump all species
+  # Dump all species
   puts "** Removing any existing species..." 
   Species.destroy_all ? (puts "success") : (puts "failed"; exit!)
   
-  # load taxon from anage, let's use hpricot
+  # Load taxon from anage, let's use hpricot
   puts "** Loading anage data, let's use hpricot..."
   doc           = Hpricot::XML(anage)
   anage_species = (doc/'names')
   puts  "success: #{anage_species.size} species loaded"
   
-  # create new species and load anage attributes we want
+  # Create new species and load anage attributes we want
   puts "** Loading species and storing anage data that we want..."
   anage_species.each do |s|
     x = {}
@@ -128,7 +128,7 @@ def create_species
    
   # Remove any species that has no genus in ubiota 
   count = new_species.size
-  puts "** Delete any species that have not been assigned a genus..."
+  puts "** Delete any species had no genus id or that are not species but rather taxon..."
   new_species.delete_if { |species| species[:taxon_id] == nil }
   puts "success: deleted #{count - new_species.size} species, #{new_species.size} remaining"
   
