@@ -1,7 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
   map.resource :user_session
   map.resources :users
-  map.resources :species
+  map.resources :species, :collection => { :data => :get }
   
   # AJAX Navigation
   map.taxonomy_dropdown '/taxonomy/dropdown/:rank', 

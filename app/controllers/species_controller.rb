@@ -4,6 +4,11 @@ class SpeciesController < ApplicationController
   def index
     @species = Species.all
   end
+  
+  def data
+    @species = Species.all
+    render :partial => "table"
+  end
 
   def new
     @species = Species.new

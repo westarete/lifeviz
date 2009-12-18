@@ -35,7 +35,7 @@ $(function(){
           data: { parent_id: $('#kingdom-dropdown').val() },
           success: function(response) {
               $('#phylum-dropdown').html(response);
-              $('#phylum-dropdown').parent().effect('highlight', {}, 3000);
+              $('#phylum-dropdown').parent().effect('highlight', {}, 500);
           }
       });
 
@@ -43,7 +43,15 @@ $(function(){
       $('#phylum-dropdown').removeAttr('disabled');
       
       // Update the main page content.
-       
+      $.ajax({
+          type: 'GET',
+          url: '/species/data', 
+          data: { 'kingdom': $('#kingdom-dropdown').val() },
+          success: function(response) {
+              $('#species').html(response);
+          }
+      });
+      
    });
     
 });
