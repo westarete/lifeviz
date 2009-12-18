@@ -1,8 +1,22 @@
 #taxonomic_selector.clearfix
-  = select_tag('kingdom', options_from_collection_for_select(Taxon.kingdoms, 'id', 'name'))
-  = select_tag 'phylum'
-  = select_tag 'class'
-  = select_tag 'order'
-  = select_tag 'family'
-  = select_tag 'genus'
-  = select_tag 'species'
+  .rank
+    = label_tag 'kingdom'
+    = select_tag('kingdom', dropdown_options(Taxon.kingdoms))
+  .rank
+    = label_tag 'phylum'
+    = select_tag 'phylum', dropdown_options, :disabled => true
+  .rank
+    = label_tag 'class'
+    = select_tag 'class', dropdown_options, :disabled => true
+  .rank
+    = label_tag 'order'
+    = select_tag 'order', dropdown_options, :disabled => true
+  .rank
+    = label_tag 'family'
+    = select_tag 'family', dropdown_options, :disabled => true
+  .rank
+    = label_tag 'genus'
+    = select_tag 'genus', dropdown_options, :disabled => true
+  .rank
+    = label_tag 'species'
+    = select_tag 'species', dropdown_options, :disabled => true
