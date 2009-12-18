@@ -5,6 +5,7 @@ require 'pp'
 include SeedMethods
 UBIOTA = "db/data/ubiota_taxonomy.psv.bz2"
 ANAGE = "db/data/anage.xml.bz2"
+ANAGE_UBIOTA = "db/data/hagrid_ubid.txt"
 
 # Count the number of rows in a file.
 def num_lines_bz2(filename)
@@ -13,7 +14,7 @@ def num_lines_bz2(filename)
   IO.popen("bunzip2 -c #{filename}").each do |line|
     id, term, rank, hierarchy, parent_id, num_children, hierarchy_ids = line.split("|")
     next if rank == "rank"
-    break if rank == "6"
+    #break if rank == "6"
     num_lines += 1
   end
   num_lines
@@ -45,6 +46,74 @@ def create_taxonomy
     end
   end
 end
+
+def create_species_revised
+  new_species   = []
+  
+  # open files
+  puts "Opening data files..."
+  anage         = IO.popen("bunzip2 -c #{ANAGE}")
+  ubiota        = IO.popen("bunzip2 -c #{UBIOTA}")
+  map           = IO.readlines(ANAGE_UBIOTA)
+  anage && map ? (puts "** success") : (puts "** failed")
+  
+  # dump all species
+  puts "Removing any existing species..." 
+  Species.destroy_all ? (puts "** success") : (puts "** failed")
+  
+  # load taxon from anage, let's use hpricot
+  puts "Loading anage data, let's use hpricot..."
+  doc           = Hpricot::XML(anage)
+  anage_species = (doc/'names')
+  puts  "** success: #{anage_species.size} species loaded"
+  
+  # create new species and load anage attributes we want
+  puts "Loading species and storing anage data that we want..."
+  anage_species.each do |s|
+    x = {}
+    x[:synonyms]  = (s/'name_common').inner_html
+    new_species << x
+  end
+  puts "** success: #{new_species.size} new species loaded in memory"
+  
+  # Load ubid into new species
+  puts "Loading ubid into new species..."
+  map.each_with_index do |line, index|
+    hagrid, ubid = line.split(/\s+/)
+    new_species[index][:ubid] = ubid.to_i
+  end
+  puts "** success"
+  
+  # Remove any species with no ubid
+  puts "Delete any species that do not have a ubid..."
+  new_species.delete_if { |species| species[:ubid] == nil }
+  puts "** success"
+  
+  # Sort species by ubid
+  puts "Sorting by ubid..."
+  new_species = new_species.sort_by { |each| each[:ubid] }
+  puts "** success"
+  
+  # Find ubiota genus for each species and store load it
+  puts "Looking up and loading each species' genus id in the ubiota data..."
+  x = 0    
+  ubiota.each do |line|
+    id, term, rank, hierarchy, parent_id, num_children, hierarchy_ids = line.split("|")
+    next if rank == "rank"
+    if new_species[x][:ubid] == id.to_i
+      new_species[x][:taxon_id] = parent_id.to_i
+      x += 1
+    end
+  end
+  puts "** success: traversed #{x} new species"
+
+  # TEST PRINT OUT
+  new_species.each do |x|
+    puts "ubid: " + x[:ubid].to_s + ", taxon_id: " + x[:taxon_id].to_s + ", " + x[:synonyms].to_s 
+  end
+  
+end
+
 
 def create_species
   # Remove any existing species
@@ -87,5 +156,14 @@ def create_species
   puts "Errors: #{errors.length}"
 end
 
-# create_taxonomy
-create_species
+#create_taxonomy
+create_species_revised
+
+
+
+
+
+
+
+
+
