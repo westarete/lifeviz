@@ -4,10 +4,10 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :species
   
   # AJAX Navigation
-  map.taxonomy_dropdown '/taxonomy/dropdowns/:rank', 
+  map.taxonomy_dropdown '/taxonomy/dropdown/:rank', 
     :controller => :taxonomy_navigation, 
     :action => :dropdown_options, 
-    :rank => /(kingdom|phylum|class|order|family|genus|species)/,
+    :rank => /(kingdoms|phylums|classes|orders|families|genuses|species)/,
     :conditions => {:method => :get}
   
   map.root :controller => :species

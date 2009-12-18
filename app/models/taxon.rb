@@ -15,13 +15,13 @@ class Taxon < ActiveRecord::Base
   acts_as_nested_set
   
   with_options :order => 'name' do |options|
-    options.named_scope :kingdoms, :conditions => 'rank = 0'
-    options.named_scope :phylums,  :conditions => 'rank = 1'
-    options.named_scope :classes,  :conditions => 'rank = 2'
-    options.named_scope :orders,   :conditions => 'rank = 3'
-    options.named_scope :families, :conditions => 'rank = 4'
-    options.named_scope :genuses,  :conditions => 'rank = 5'
-    options.named_scope :species,  :conditions => 'rank = 6'
+    options.named_scope :kingdoms, lambda { |conditions| conditions ||= {}; {:conditions => {:rank => 0}.merge(conditions)} }
+    options.named_scope :phylums,  lambda { |conditions| conditions ||= {}; {:conditions => {:rank => 1}.merge(conditions)} }
+    options.named_scope :classes,  lambda { |conditions| conditions ||= {}; {:conditions => {:rank => 2}.merge(conditions)} }
+    options.named_scope :orders,   lambda { |conditions| conditions ||= {}; {:conditions => {:rank => 3}.merge(conditions)} }
+    options.named_scope :families, lambda { |conditions| conditions ||= {}; {:conditions => {:rank => 4}.merge(conditions)} }
+    options.named_scope :genuses,  lambda { |conditions| conditions ||= {}; {:conditions => {:rank => 5}.merge(conditions)} }
+    options.named_scope :species,  lambda { |conditions| conditions ||= {}; {:conditions => {:rank => 6}.merge(conditions)} }
   end                                               
   
 end

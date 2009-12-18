@@ -10,5 +10,40 @@ $(function(){
    $('#login_cancel_button').click(function(){
        $('#login').hide("slow");
    })
+   
+   dropdown_urls = {
+     '#kingdom-dropdown': '/taxonomy/dropdown/kingdoms',
+     '#phylum-dropdown':  '/taxonomy/dropdown/phylums',
+     '#class-dropdown':   '/taxonomy/dropdown/classes',
+     '#order-dropdown':   '/taxonomy/dropdown/orders',
+     '#family-dropdown':  '/taxonomy/dropdown/families',
+     '#genus-dropdown':   '/taxonomy/dropdown/genuses',
+     '#species-dropdown': '/taxonomy/dropdown/species',       
+   };
+   
+   $('#kingdom-dropdown').change(function() {
+      // Disable all dropdowns to the right of phylum.
+      $('#class-dropdown').attr('disabled', 'disabled');
+      $('#order-dropdown').attr('disabled', 'disabled');
+      $('#family-dropdown').attr('disabled', 'disabled');
+      $('#genus-dropdown').attr('disabled', 'disabled');
+      $('#species-dropdown').attr('disabled', 'disabled');
+      // Populate the phylum dropdown.
+      $.ajax({
+          type: 'GET',
+          url: '/taxonomy/dropdown/phylums', 
+          data: { parent_id: $('#kingdom-dropdown').val() },
+          success: function(response) {
+              $('#phylum-dropdown').html(response);
+              $('#phylum-dropdown').parent().effect('highlight', {}, 3000);
+          }
+      });
+
+      // Enable the phylum dropdown.
+      $('#phylum-dropdown').removeAttr('disabled');
+      
+      // Update the main page content.
+       
+   });
     
 });
