@@ -47,6 +47,15 @@ def create_taxonomy
   end
 end
 
+def rebuild_lineages
+  progress "Rebuilding lineage for each taxon...", Taxon.count do |progress_bar|
+    Taxon.all.each do |taxon|
+      taxon.rebuild_lineage
+      progress_bar.inc
+    end
+  end
+end
+
 # Create species from anage/ubiota using hagrid_ubid as the bridge
 #   Collect species data from Anage
 #   Collect taxonomy species name and hierarchy from ubiota
@@ -154,7 +163,7 @@ def create_species
   puts "Species creation is completed"
 end
 
-#create_taxonomy
 
-# Execute species creation method
-create_species
+#create_taxonomy
+rebuild_lineages
+#create_species

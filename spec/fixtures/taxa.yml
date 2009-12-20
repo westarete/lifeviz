@@ -1,0 +1,41 @@
+ubt:
+  id: 1
+  name: UBT
+  rank: -1
+kingdom:
+  id: 2
+  name: Animalia
+  rank: 0
+  parent_id: 1
+phylum:
+  id: 3
+  name: Aniphylum
+  rank: 1
+  parent_id: 2
+class:
+  id: 4
+  name: Classamilia
+  rank: 2
+  parent_id: 3
+order:
+  id: 5
+  name: Aniorder
+  rank: 3
+  parent_id: 4
+family:
+  id: 6
+  name: Famimilia
+  rank: 4
+  parent_id: 5
+genus:
+  id: 7
+  name: Genimilia
+  rank: 5
+  parent_id: 6
+species:
+  id: 8
+  name: Specimilia
+  rank: 6
+  parent_id: 7
+  
+  

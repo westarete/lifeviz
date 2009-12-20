@@ -18,7 +18,6 @@ $(function(){
      '#order-dropdown':   '/taxonomy/dropdown/orders',
      '#family-dropdown':  '/taxonomy/dropdown/families',
      '#genus-dropdown':   '/taxonomy/dropdown/genuses',
-     '#species-dropdown': '/taxonomy/dropdown/species',       
    };
    
    $('#kingdom-dropdown').change(function() {
