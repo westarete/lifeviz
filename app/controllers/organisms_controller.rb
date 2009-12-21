@@ -1,4 +1,4 @@
-class OrganismController < ApplicationController
+class OrganismsController < ApplicationController
   before_filter :load_taxonomy
   
   def index
