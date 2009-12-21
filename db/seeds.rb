@@ -142,8 +142,10 @@ def create_species
       puts "fail: no taxon found with and id of #{s[:taxon_id]} for species with ubid of #{s[:ubid]}"
       fcount += 1
     else
-      species = Species.new(:name => s[:name], :taxon_id => taxon.id, :synonyms => s[:synonyms])
+      species = Orgnism.new(:name => s[:name], :taxon_id => taxon.id, :synonyms => s[:synonyms])
       species.send(:create_without_callbacks)
+      taxon   = Taxon.new(:name => s[:name], :parent_id => taxon.id, :rank => 6)
+      taxon.send(:create_without_callbacks)
     end
     count   = index
   end
