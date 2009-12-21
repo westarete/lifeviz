@@ -2,7 +2,7 @@
   .rank
     = label_tag 'kingdom'
     = select_tag('kingdom', options_for_taxonomy_select(Taxon.kingdoms), :id => 'kingdom-dropdown')
-  - %w( phylum class order family genus species ).each do |rank|
+  - %w( phylum class order family genus ).each do |rank|
     .rank
       = label_tag rank
       = select_tag rank, options_for_taxonomy_select, :disabled => true, :id => "#{rank}-dropdown"
