@@ -29,7 +29,14 @@ class Taxon < ActiveRecord::Base
   end
   
   def rebuild_lineage
-    update_attributes(:lineage_ids => ancestors.collect(&:id).inject(""){|string, ancestor_id| string += ancestor_id.to_s + (ancestors.last.id != ancestor_id ? "," : "" )})
+    ancestor_ids = ancestors.collect(&:id)
+    lineage_ids = ancestor_ids.inject("") do |string, ancestor_id|
+      # This line turns [1, 2, 3] into "1,2,3".
+      # That last conditional logic only adds the comma if we're not working
+      # on the last element. This is HORRIBLE, please refactor!
+      string += ancestor_id.to_s + (ancestors.last.id != ancestor_id ? "," : "" )
+    end
+    update_attributes(:lineage_ids => lineage_ids)
   end
   
   # Note: This method ONLY works if the database is 'clean', eg. all of the
