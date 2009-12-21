@@ -25,8 +25,10 @@ class Taxon < ActiveRecord::Base
   end                                               
   
   def species
+    debugger
     if rank < 5
-      leaves.collect{|genus| Species.find(:all, :conditions => ["taxon_id = ?", genus.id]) }.flatten
+      genus_ids = leaves.collect{|genus| genus.id }
+      Species.find(:all, :conditions => ["taxon_id IN (?)", genus_ids])
     else
       Species.find(:all, :conditions => ["taxon_id = ?", id])
     end

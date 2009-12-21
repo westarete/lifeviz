@@ -6,7 +6,8 @@ class SpeciesController < ApplicationController
   end
   
   def data
-    @species = Species.all
+    @taxon = Taxon.find(params[:taxon])
+    @species = @taxon.species
     render :partial => "table"
   end
 
