@@ -67,7 +67,7 @@ end
 #   Collect species data from Anage
 #   Collect taxonomy species name and hierarchy from ubiota
 #   Author: john marino
-def create_species
+def create_organisms
   new_species       = []
   orphaned_species  = []
   
@@ -83,7 +83,7 @@ def create_species
   
   # Dump all species
   puts "** Removing any existing species..." 
-  Species.destroy_all ? (puts "success") : (puts "failed"; exit!)
+  Organism.destroy_all ? (puts "success") : (puts "failed"; exit!)
   
   # Load taxon from anage, let's use hpricot
   puts "** Loading anage data, let's use hpricot..."
@@ -122,7 +122,7 @@ def create_species
   # Find and load ubiota genus ids and species name for each species
   #   Ensure no the rank is 6 (species level) and that we don't run past all the 
   #   Set taxon_id to nil if the species inside ubiota doesn't exist   
-  #   Species we have loaded, because we're incrementing through them
+  #   Organism we have loaded, because we're incrementing through them
   puts "** Looking up and loading each species' genus id from the ubiota data (few minutes)..."
   x = 0    
   ubiota.each do |line|
@@ -169,10 +169,10 @@ def create_species
   puts "failure: #{fcount} species didn't have taxons matching taxon_id in our database" if fcount != 0
   
   # Exit message
-  puts "Species creation is completed"
+  puts "Organism creation is completed"
 end
 
 # Execute taxonomy creation method
 #create_taxonomy
 # Execute species creation method
-create_species
+create_organisms

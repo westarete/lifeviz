@@ -24,13 +24,13 @@ class Taxon < ActiveRecord::Base
     options.named_scope :species,  lambda { |conditions| conditions ||= {}; {:conditions => {:rank => 6}.merge(conditions)} }
   end                                               
   
-  def species
+  def organisms
     debugger
     if rank < 5
       genus_ids = leaves.collect{|genus| genus.id }
-      Species.find(:all, :conditions => ["taxon_id IN (?)", genus_ids])
+      Organism.find(:all, :conditions => ["taxon_id IN (?)", genus_ids])
     else
-      Species.find(:all, :conditions => ["taxon_id = ?", id])
+      Organism.find(:all, :conditions => ["taxon_id = ?", id])
     end
   end
   

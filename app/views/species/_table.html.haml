@@ -2,8 +2,8 @@
   %tr
     %th Common Name
     %th Options
-  - @species.each do |species|
+  - @organisms.each do |organism|
     %tr
-      %td= link_to species.name, species
+      %td= link_to organism.name, organism
       %td
-        = link_to "Edit", edit_species_path(:id => species.id)
+        = link_to "Edit", edit_organism_path(:id => organism.id)

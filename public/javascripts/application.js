@@ -34,7 +34,7 @@ $(function(){
       // Update the main page content.
       $.ajax({
           type: 'GET',
-          url: '/species/data', 
+          url: '/organisms/data', 
           data: { 'taxon': $('#kingdom-dropdown').val() },
           success: function(response) {
               $('#species').html(response);
@@ -69,7 +69,7 @@ $(function(){
       // Update the main page content.
       $.ajax({
           type: 'GET',
-          url: '/species/data', 
+          url: '/organisms/data', 
           data: { 'taxon': $('#phylum-dropdown').val() },
           success: function(response) {
               $('#species').html(response);
@@ -103,7 +103,7 @@ $(function(){
       // Update the main page content.
       $.ajax({
           type: 'GET',
-          url: '/species/data', 
+          url: '/organisms/data', 
           data: { 'taxon': $('#class-dropdown').val() },
           success: function(response) {
               $('#species').html(response);
@@ -136,7 +136,7 @@ $(function(){
       // Update the main page content.
       $.ajax({
           type: 'GET',
-          url: '/species/data', 
+          url: '/organisms/data', 
           data: { 'taxon': $('#order-dropdown').val() },
           success: function(response) {
               $('#species').html(response);
@@ -154,7 +154,7 @@ $(function(){
       // Update the main page content.
       $.ajax({
           type: 'GET',
-          url: '/species/data', 
+          url: '/organisms/data', 
           data: { 'taxon': $('#genus-dropdown').val() },
           success: function(response) {
               $('#species').html(response);
