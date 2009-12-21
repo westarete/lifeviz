@@ -9,9 +9,9 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091216190913) do
+ActiveRecord::Schema.define(:version => 20091221212737) do
 
-  create_table "species", :force => true do |t|
+  create_table "organisms", :force => true do |t|
     t.integer  "taxon_id"
     t.string   "name"
     t.string   "synonyms"
@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(:version => 20091216190913) do
     t.datetime "updated_at"
   end
 
-  add_index "species", ["id"], :name => "index_species_on_id"
+  add_index "organisms", ["id"], :name => "index_species_on_id"
 
   create_table "taxa", :force => true do |t|
     t.string  "name"

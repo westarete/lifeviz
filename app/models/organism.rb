@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: species
+# Table name: organisms
 #
 #  id         :integer         not null, primary key
 #  taxon_id   :integer
@@ -10,7 +10,7 @@
 #  updated_at :datetime
 #
 
-class Species < ActiveRecord::Base
+class Organism < ActiveRecord::Base
   belongs_to :taxon
   
 end
