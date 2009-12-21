@@ -170,19 +170,6 @@ def create_species
   puts "Species creation is completed"
 end
 
-def add_lineages_to_species
-  species = Species.all
-  progress "Loading seed data...", Species.count do |progress_bar|
-    species.each do |specie|
-      taxon = Taxon.find(specie.taxon_id)
-      lineage_ids = taxon.lineage_ids + "," + taxon.id.to_s
-      specie.update_attribute(:lineage_ids, lineage_ids)
-      progress_bar.inc
-    end
-  end
-end
-
 # create_taxonomy
 # rebuild_lineages
 # create_species
-add_lineages_to_species
