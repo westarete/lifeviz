@@ -53,17 +53,10 @@ def rebuild_lineages
 	
 	  # Clear all lineage_ids
 	  puts "** Clearing existing lineage data..."
-	  sql.update "UPDATE taxa SET lineage_ids = NULL"
+	  sql.execute "UPDATE taxa SET lineage_ids = NULL;"
 	  puts "success"
 	  
-    progress "Rebuilding lineage for each taxon...", Taxon.count do |progress_bar|
-      Taxon.rebuild_lineages!
-      while
-        countdown = Taxon.count(:all, :conditions => "lineage_ids IS NULL")
-        progress_bar.set (countdown - Taxon.count)
-        break if countdown < 1
-      end
-    end
+    Taxon.rebuild_lineages!
     
 	  puts  "success: #{Taxon.count} taxa set"
 	sql.commit_db_transaction
