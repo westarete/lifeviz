@@ -48,12 +48,26 @@ def create_taxonomy
 end
 
 def rebuild_lineages
-  progress "Rebuilding lineage for each taxon...", Taxon.count do |progress_bar|
-    Taxon.all.each do |taxon|
-      taxon.rebuild_lineage
-      progress_bar.inc
+  sql = ActiveRecord::Base.connection();
+	sql.begin_db_transaction
+	
+	  # Clear all lineage_ids
+	  puts "** Clearing existing lineage data..."
+	  sql.update "UPDATE taxa SET lineage_ids = NULL"
+	  puts "success"
+	  
+    progress "Rebuilding lineage for each taxon...", Taxon.count do |progress_bar|
+      Taxon.rebuild_lineages!
+      while
+        countdown = Taxon.count(:all, :conditions => "lineage_ids IS NULL")
+        progress_bar.set (countdown - Taxon.count)
+        break if countdown < 1
+      end
     end
-  end
+    
+	  puts  "success: #{Taxon.count} taxa set"
+	sql.commit_db_transaction
+	
 end
 
 # Create species from anage/ubiota using hagrid_ubid as the bridge

@@ -5,16 +5,32 @@ describe Taxon do
   
   describe "#rebuild_lineage" do
     before(:each) do
+      # Set lft and rgt values for every taxon. Necessary!
       Taxon.rebuild!
       @family = Taxon.find(6)
       @taxon = Taxon.new(:name => "Genus 2", :rank => 5)
       @taxon.save!
       @taxon.move_to_child_of(@family)
-      # Set lft and rgt values for every taxon. Necessary!
+      @taxon.rebuild_lineage
     end
     it "should set lineage_ids to the correct values" do
-      @taxon.rebuild_lineage
       @taxon.lineage_ids.should == "1,2,3,4,5,6"
+    end
+  end
+  
+  describe ".rebuild_lineages!" do
+    before(:each) do
+      Taxon.rebuild!
+      Taxon.rebuild_lineages!
+    end
+    it "should build lineage_ids for every taxon in system" do
+      Taxon.find(2).lineage_ids.should == "1"
+      Taxon.find(3).lineage_ids.should == "1,2"
+      Taxon.find(4).lineage_ids.should == "1,2,3"
+      Taxon.find(5).lineage_ids.should == "1,2,3,4"
+      Taxon.find(6).lineage_ids.should == "1,2,3,4,5"
+      Taxon.find(7).lineage_ids.should == "1,2,3,4,5,6"
+      Taxon.find(8).lineage_ids.should == "1,2,3,4,5,6,7"
     end
   end
   
