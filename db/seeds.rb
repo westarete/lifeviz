@@ -45,6 +45,9 @@ def create_taxonomy
       progress_bar.inc
     end
   end
+  
+  lastval = ActiveRecord::Base.execute "SELECT MAX(ID) FROM taxa;"
+  ActiveRecord::Base.execute "select setval('taxa_id_seq', #{lastval + 1})"
 end
 
 def rebuild_lineages
@@ -158,10 +161,10 @@ def create_organisms
       puts "fail: no taxon found with and id of #{s[:taxon_id]} for species with ubid of #{s[:ubid]}"
       fcount += 1
     else
-      species = Orgnism.new(:name => s[:name], :taxon_id => taxon.id, :synonyms => s[:synonyms])
+      species = Organism.new(:name => s[:name], :taxon_id => taxon.id, :synonyms => s[:synonyms])
       species.send(:create_without_callbacks)
-      taxon   = Taxon.new(:name => s[:name], :parent_id => taxon.id, :rank => 6)
-      taxon.send(:create_without_callbacks)
+      species_taxon   = Taxon.new(:name => s[:name], :parent_id => taxon.id, :rank => 6)
+      species_taxon.send(:create_without_callbacks)
     end
     count   = index
   end
