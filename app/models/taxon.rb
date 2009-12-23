@@ -22,16 +22,10 @@ class Taxon < ActiveRecord::Base
     options.named_scope :families, lambda { |conditions| conditions ||= {}; {:conditions => {:rank => 4}.merge(conditions)} }
     options.named_scope :genuses,  lambda { |conditions| conditions ||= {}; {:conditions => {:rank => 5}.merge(conditions)} }
     options.named_scope :species,  lambda { |conditions| conditions ||= {}; {:conditions => {:rank => 6}.merge(conditions)} }
-  end                                               
+  end
   
-  def organisms
-    debugger
-    if rank < 5
-      genus_ids = leaves.collect{|genus| genus.id }
-      Organism.find(:all, :conditions => ["taxon_id IN (?)", genus_ids])
-    else
-      Organism.find(:all, :conditions => ["taxon_id = ?", id])
-    end
+  def organism
+    Organism.find(:first, :conditions => ["taxon_id = ?", id])
   end
   
   def parents

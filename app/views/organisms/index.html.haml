@@ -1,7 +1,7 @@
 = render :partial => "/shared/header", :locals => { :title => "Welcome to Anage", :subtitle => "Please browse the species below.", :flash => flash }
 = render :partial => "/taxonomy_navigation/dropdowns"
 
-#organism
+#species
   = render :partial => "table"
 
 = link_to "New Species", new_organism_path, :class => "button"

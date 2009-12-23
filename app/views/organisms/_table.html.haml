@@ -4,6 +4,6 @@
     %th Options
   - @species.each do |species|
     %tr
-      %td= link_to species.name, species
+      %td= link_to species.name, organism_path(:id => species.id)
       %td
-        = link_to "Edit", edit_organism_path(:id => species.organism.id)
+        = link_to "Edit", edit_organism_path(:id => species.id)

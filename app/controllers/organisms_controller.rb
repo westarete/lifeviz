@@ -2,12 +2,12 @@ class OrganismsController < ApplicationController
   before_filter :load_taxonomy
   
   def index
-    @species = Taxon.root.leaves
+    @species = Taxon.root.leaves.species
   end
   
   def data
     @taxon = Taxon.find(params[:taxon])
-    @species = @taxon.leaves
+    @species = @taxon.leaves.species
     render :partial => "table"
   end
 

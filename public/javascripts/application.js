@@ -17,6 +17,7 @@ $(function(){
       $('#order-dropdown').attr('disabled', 'disabled');
       $('#family-dropdown').attr('disabled', 'disabled');
       $('#genus-dropdown').attr('disabled', 'disabled');
+      $('#species').fadeOut();
       // Populate the phylum dropdown.
       $.ajax({
           type: 'GET',
@@ -38,6 +39,7 @@ $(function(){
           data: { 'taxon': $('#kingdom-dropdown').val() },
           success: function(response) {
               $('#species').html(response);
+              $('#species').fadeIn();
           }
       });
       
@@ -52,6 +54,7 @@ $(function(){
       $('#order-dropdown').attr('disabled', 'disabled');
       $('#family-dropdown').attr('disabled', 'disabled');
       $('#genus-dropdown').attr('disabled', 'disabled');
+      $('#species').fadeOut();
       // Populate the phylum dropdown.
       $.ajax({
           type: 'GET',
@@ -72,6 +75,7 @@ $(function(){
           url: '/organisms/data', 
           data: { 'taxon': $('#phylum-dropdown').val() },
           success: function(response) {
+              $('#species').fadeIn();
               $('#species').html(response);
           }
       });
