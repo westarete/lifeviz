@@ -1,6 +1,6 @@
 = render :partial => "/shared/header", :locals => { :title => "New Species", :subtitle => "", :flash => flash }
 
-- form_for :organism, :url => organism_index_path do |f|
+- form_for :species, :url => species_index_path do |f|
   = render :partial => "form", :object => f
   %button{:type => "submit", :name => "commit", :value => "Create", :class => 'button positive'} Create Species
-  = link_to "Cancel", organisms_path, :class => "button"
+  = link_to "Cancel", speciess_path, :class => "button"

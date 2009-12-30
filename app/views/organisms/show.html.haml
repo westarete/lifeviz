@@ -1,9 +1,0 @@
-= render :partial => "/shared/header", :locals => { :title => @organism.name, :subtitle => "", :flash => flash }
-
-.detail Common Name
-%h2= @organism.name
-
-.detail Synonyms
-%h3= @organism.synonyms
-
-= link_to "Edit this organism", edit_organism_path(@organism), :class => "button"
