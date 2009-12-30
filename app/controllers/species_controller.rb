@@ -8,7 +8,7 @@ class SpeciesController < ApplicationController
   def data
     @taxon = Taxon.find(params[:taxon])
     @species = @taxon.leaves.species
-    render :partial => "table"
+    render :partial => "table", :layout => false
   end
 
   def new
