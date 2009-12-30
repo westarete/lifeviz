@@ -2,12 +2,12 @@ class SpeciesController < ApplicationController
   before_filter :load_taxonomy
   
   def index
-    @species = Taxon.root.leaves.species
+    @species = Taxon.root.leaves.species.sort_by(&:name)
   end
   
   def data
     @taxon = Taxon.find(params[:taxon])
-    @species = @taxon.leaves.species
+    @species = @taxon.leaves.species.sort_by(&:name)
     render :partial => "table", :layout => false
   end
 
