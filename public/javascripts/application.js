@@ -55,7 +55,7 @@ $(function(){
       $('#family-dropdown').attr('disabled', 'disabled');
       $('#genus-dropdown').attr('disabled', 'disabled');
       $('#species').fadeOut();
-      // Populate the phylum dropdown.
+      // Populate the class dropdown.
       $.ajax({
           type: 'GET',
           url: '/taxonomy/dropdown/classes', 
@@ -66,7 +66,7 @@ $(function(){
           }
       });
 
-      // Enable the phylum dropdown.
+      // Enable the class dropdown.
       $('#class-dropdown').removeAttr('disabled');
       
       // Update the main page content.
@@ -90,7 +90,7 @@ $(function(){
       // Disable all dropdowns to the right of class.
       $('#family-dropdown').attr('disabled', 'disabled');
       $('#genus-dropdown').attr('disabled', 'disabled');
-      // Populate the phylum dropdown.
+      // Populate the order dropdown.
       $.ajax({
           type: 'GET',
           url: '/taxonomy/dropdown/orders', 
@@ -101,7 +101,7 @@ $(function(){
           }
       });
 
-      // Enable the phylum dropdown.
+      // Enable the order dropdown.
       $('#order-dropdown').removeAttr('disabled');
       
       // Update the main page content.
@@ -123,7 +123,7 @@ $(function(){
    $('#order-dropdown').change(function() {
       // Disable all dropdowns to the right of family.
       $('#genus-dropdown').attr('disabled', 'disabled');
-      // Populate the phylum dropdown.
+      // Populate the family dropdown.
       $.ajax({
           type: 'GET',
           url: '/taxonomy/dropdown/families', 
@@ -134,7 +134,7 @@ $(function(){
           }
       });
 
-      // Enable the phylum dropdown.
+      // Enable the family dropdown.
       $('#family-dropdown').removeAttr('disabled');
       
       // Update the main page content.
@@ -148,6 +148,40 @@ $(function(){
       });
       
    });
+   
+   
+   
+   
+   
+   
+   $('#family-dropdown').change(function() {
+      // Populate the genus dropdown.
+      $.ajax({
+          type: 'GET',
+          url: '/taxonomy/dropdown/genuses', 
+          data: { parent_id: $('#family-dropdown').val() },
+          success: function(response) {
+              $('#genus-dropdown').html(response);
+              $('#genus-dropdown').parent().effect('highlight', {}, 500);
+          }
+      });
+
+      // Enable the genus dropdown.
+      $('#genus-dropdown').removeAttr('disabled');
+      
+      // Update the main page content.
+      $.ajax({
+          type: 'GET',
+          url: '/species/data', 
+          data: { 'taxon': $('#family-dropdown').val() },
+          success: function(response) {
+              $('#species').html(response);
+          }
+      });
+      
+   });
+   
+   
    
    
    
