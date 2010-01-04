@@ -1,8 +1,11 @@
 #taxonomic_selector.clearfix
   .rank
-    = label_tag 'kingdom'
-    = select_tag('kingdom', options_for_taxonomy_select(Taxon.kingdoms), :id => 'kingdom-dropdown')
-  - %w( phylum class order family genus ).each do |rank|
+    = label_tag 'kingdom-dropdown', 'Kingdom'
+    = select_tag 'kingdom', options_for_taxonomy_select(Taxon.kingdoms, (@taxon.self_and_ancestors[1] ? @taxon.self_and_ancestors[1].id : nil)), :id => 'kingdom-dropdown'
+  - %w( phylum class order family genus ).each_with_index do |rank, i|
     .rank
-      = label_tag rank
-      = select_tag rank, options_for_taxonomy_select, :disabled => true, :id => "#{rank}-dropdown"
+      - selected = @taxon.self_and_ancestors[i + 2] ? @taxon.self_and_ancestors[i + 2].id : nil
+      - options = @taxon.self_and_ancestors[i + 1] ? @taxon.self_and_ancestors[i + 1].children : []
+      - disabled = @taxon.self_and_ancestors[i + 1] ? false : true
+      = label_tag "#{rank}-dropdown", rank.capitalize
+      = select_tag rank, options_for_taxonomy_select(options, selected), :id => "#{rank}-dropdown", :disabled => disabled

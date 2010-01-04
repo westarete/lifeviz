@@ -7,6 +7,7 @@ class SpeciesController < ApplicationController
     else
       @taxon = Taxon.root
     end
+    @rank = @taxon.rank
     @species = @taxon.leaves.species.sort_by(&:name)
   end
   
