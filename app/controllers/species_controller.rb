@@ -2,7 +2,12 @@ class SpeciesController < ApplicationController
   before_filter :load_taxonomy
   
   def index
-    @species = Taxon.root.leaves.species.sort_by(&:name)
+    if params[:taxon_id]
+      @taxon = Taxon.find(params[:taxon_id])
+    else
+      @taxon = Taxon.root
+    end
+    @species = @taxon.leaves.species.sort_by(&:name)
   end
   
   def data

@@ -2,6 +2,11 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :user_session
   map.resources :users
   map.resources :species, :collection => { :data => :get }
+  map.taxon '/:rank/:taxon_id',
+    :controller => :species,
+    :action => :index,
+    :rank => /(kingdom|phylum|class|order|family|genus)/,
+    :conditions => {:method => :get}
   
   # AJAX Navigation
   map.taxonomy_dropdown '/taxonomy/dropdown/:rank', 
