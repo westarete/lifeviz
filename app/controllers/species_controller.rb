@@ -23,12 +23,14 @@ class SpeciesController < ApplicationController
   end
 
   def create
+    @genus = Taxon.find(params[:genus])
     @species = Taxon.new(params[:species])
-    if @species.save
+    @species.rank = 6
+    if Taxon.transaction {@species.save; @species.move_to_child_of(@genus)}
       flash[:success] = "Species saved."
       redirect_to species_path(:id => @species.id)
     else
-      flash[:failure] = "Species failed to save."
+      flash.now[:failure] = "Species failed to save."
       render :new
     end
   end
@@ -47,7 +49,7 @@ class SpeciesController < ApplicationController
       flash[:success] = "Species updated."
       redirect_to species_path(:id => @species.id)
     else
-      flash[:failure] = "Species failed to update."
+      flash.now[:failure] = "Species failed to update."
       render :update
     end
   end
