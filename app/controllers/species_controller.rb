@@ -26,7 +26,7 @@ class SpeciesController < ApplicationController
     @genus = Taxon.find(params[:genus])
     @species = Taxon.new(params[:species])
     @species.rank = 6
-    if Taxon.transaction {@species.save; @species.move_to_child_of(@genus)}
+    if @species.save_under_parent(@genus)
       flash[:success] = "Species saved."
       redirect_to species_path(:id => @species.id)
     else
