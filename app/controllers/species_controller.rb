@@ -19,6 +19,7 @@ class SpeciesController < ApplicationController
 
   def new
     @species = Taxon.new
+    @taxon = Taxon.root
   end
 
   def create
