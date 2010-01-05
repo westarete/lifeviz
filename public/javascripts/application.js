@@ -36,7 +36,7 @@ $(function(){
       $.ajax({
           type: 'GET',
           url: '/species/data', 
-          data: { 'taxon': $('#kingdom-dropdown').val() },
+          data: { 'taxon_id': $('#kingdom-dropdown').val() },
           success: function(response) {
               $('#species').html(response);
               $('#species').fadeIn();
@@ -73,7 +73,7 @@ $(function(){
       $.ajax({
           type: 'GET',
           url: '/species/data', 
-          data: { 'taxon': $('#phylum-dropdown').val() },
+          data: { 'taxon_id': $('#phylum-dropdown').val() },
           success: function(response) {
               $('#species').fadeIn();
               $('#species').html(response);
@@ -108,7 +108,7 @@ $(function(){
       $.ajax({
           type: 'GET',
           url: '/species/data', 
-          data: { 'taxon': $('#class-dropdown').val() },
+          data: { 'taxon_id': $('#class-dropdown').val() },
           success: function(response) {
               $('#species').html(response);
           }
@@ -141,7 +141,7 @@ $(function(){
       $.ajax({
           type: 'GET',
           url: '/species/data', 
-          data: { 'taxon': $('#order-dropdown').val() },
+          data: { 'taxon_id': $('#order-dropdown').val() },
           success: function(response) {
               $('#species').html(response);
           }
@@ -173,7 +173,7 @@ $(function(){
       $.ajax({
           type: 'GET',
           url: '/species/data', 
-          data: { 'taxon': $('#family-dropdown').val() },
+          data: { 'taxon_id': $('#family-dropdown').val() },
           success: function(response) {
               $('#species').html(response);
           }
@@ -193,7 +193,7 @@ $(function(){
       $.ajax({
           type: 'GET',
           url: '/species/data', 
-          data: { 'taxon': $('#genus-dropdown').val() },
+          data: { 'taxon_id': $('#genus-dropdown').val() },
           success: function(response) {
               $('#species').html(response);
           }

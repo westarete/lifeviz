@@ -8,12 +8,12 @@ class SpeciesController < ApplicationController
       @taxon = Taxon.root
     end
     @rank = @taxon.rank
-    @species = @taxon.leaves.species.sort_by(&:name)
+    @species = @taxon.paginated_sorted_species(params[:page])
   end
   
   def data
-    @taxon = Taxon.find(params[:taxon])
-    @species = @taxon.leaves.species.sort_by(&:name)
+    @taxon = Taxon.find(params[:taxon_id])
+    @species = @taxon.paginated_sorted_species(params[:page])
     render :partial => "table", :layout => false
   end
 

@@ -107,7 +107,7 @@ img a {
     #taxonomic_selector .rank input {
       display: block; }
 
-/* line 2, ../../app/stylesheets/partials/_structure.sass */
+/* line 4, ../../app/stylesheets/partials/_structure.sass */
 body #main {
   padding-top: 2em;
   width: 950px;
@@ -117,34 +117,40 @@ body #main {
   /* line 5, ../../../../../../opt/local/lib/ruby/gems/1.8/gems/compass-0.8.17/frameworks/compass/stylesheets/compass/utilities/general/_hacks.sass */
   body #main {
     display: block; }
-  /* line 5, ../../app/stylesheets/partials/_structure.sass */
+  /* line 7, ../../app/stylesheets/partials/_structure.sass */
   body #main #user_control {
     display: block;
     float: right;
     width: 300px; }
-    /* line 9, ../../app/stylesheets/partials/_structure.sass */
+    /* line 11, ../../app/stylesheets/partials/_structure.sass */
     body #main #user_control #login, body #main #user_control #signup {
       display: none; }
-  /* line 11, ../../app/stylesheets/partials/_structure.sass */
+  /* line 13, ../../app/stylesheets/partials/_structure.sass */
   body #main #header {
     margin-bottom: 1em; }
-  /* line 15, ../../app/stylesheets/partials/_structure.sass */
+  /* line 17, ../../app/stylesheets/partials/_structure.sass */
   body #main #content table {
     margin: 0;
     width: auto !important; }
-    /* line 18, ../../app/stylesheets/partials/_structure.sass */
+    /* line 20, ../../app/stylesheets/partials/_structure.sass */
     body #main #content table td.permalink {
       font-weight: 600;
       font-size: 1.5em; }
-  /* line 21, ../../app/stylesheets/partials/_structure.sass */
+  /* line 23, ../../app/stylesheets/partials/_structure.sass */
   body #main #footer {
     clear: both;
     margin-top: 1em; }
-    /* line 24, ../../app/stylesheets/partials/_structure.sass */
+    /* line 26, ../../app/stylesheets/partials/_structure.sass */
     body #main #footer a {
       vertical-align: middle; }
 
-/* line 27, ../../app/stylesheets/partials/_structure.sass */
+/* line 31, ../../app/stylesheets/partials/_structure.sass */
+#login {
+  display: block;
+  background: gray;
+  color: white; }
+
+/* line 36, ../../app/stylesheets/partials/_structure.sass */
 .button_row {
   margin-top: 1em; }
 
@@ -201,7 +207,7 @@ form textarea {
   height: 250px; }
 
 /* new clearfix from perishablepress.com */
-/* line 34, ../../app/stylesheets/partials/_structure.sass */
+/* line 45, ../../app/stylesheets/partials/_structure.sass */
 .clearfix:after {
   visibility: hidden;
   display: block;
@@ -393,3 +399,7 @@ h2 {
 .detail {
   font-size: .8em;
   color: gray; }
+
+/* line 1, ../../app/stylesheets/partials/_species.sass */
+#species {
+  margin-bottom: 1em; }
