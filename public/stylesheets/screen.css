@@ -147,21 +147,30 @@ body #main {
 /* line 31, ../../app/stylesheets/partials/_structure.sass */
 #login {
   display: block;
-  padding: 5px;
+  padding: 15px;
+  border: 1px solid gray;
+  background-color: rgba(255,255,255,.8);
+  width: 235px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px; }
-  /* line 36, ../../app/stylesheets/partials/_structure.sass */
+  /* line 39, ../../app/stylesheets/partials/_structure.sass */
   #login .form-row {
     display: block; }
-    /* line 38, ../../app/stylesheets/partials/_structure.sass */
+    /* line 41, ../../app/stylesheets/partials/_structure.sass */
     #login .form-row .text {
       width: 100px; }
-    /* line 40, ../../app/stylesheets/partials/_structure.sass */
+    /* line 43, ../../app/stylesheets/partials/_structure.sass */
+    #login .form-row .remember-me {
+      font-size: 70%;
+      font-weight: 400; }
+    /* line 46, ../../app/stylesheets/partials/_structure.sass */
+    #login .form-row .email, #login .form-row .password, #login .form-row .remember-me {
+      padding-right: 5px; }
+    /* line 48, ../../app/stylesheets/partials/_structure.sass */
     #login .form-row .email, #login .form-row .password, #login .form-row .remember-me, #login .form-row .submit {
-      padding-right: 5px;
       float: left; }
 
-/* line 44, ../../app/stylesheets/partials/_structure.sass */
+/* line 51, ../../app/stylesheets/partials/_structure.sass */
 .button_row {
   margin-top: 1em; }
 
@@ -218,7 +227,7 @@ form textarea {
   height: 250px; }
 
 /* new clearfix from perishablepress.com */
-/* line 53, ../../app/stylesheets/partials/_structure.sass */
+/* line 60, ../../app/stylesheets/partials/_structure.sass */
 .clearfix:after {
   visibility: hidden;
   display: block;

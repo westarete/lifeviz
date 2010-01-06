@@ -30,15 +30,22 @@ body
 
 #login
   :display block
-  :padding 5px
+  :padding 15px
+  :border 1px solid gray
+  :background-color rgba(255,255,255,.8)
+  :width 235px
   -moz-border-radius: 5px
   -webkit-border-radius: 5px
   .form-row
     :display block
     .text
       :width 100px
-    .email, .password, .remember-me, .submit
+    .remember-me
+      :font-size 70%
+      :font-weight 400
+    .email, .password, .remember-me
       :padding-right 5px
+    .email, .password, .remember-me, .submit
       :float left
 
 .button_row
