@@ -147,10 +147,21 @@ body #main {
 /* line 31, ../../app/stylesheets/partials/_structure.sass */
 #login {
   display: block;
-  background: gray;
-  color: white; }
+  padding: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px; }
+  /* line 36, ../../app/stylesheets/partials/_structure.sass */
+  #login .form-row {
+    display: block; }
+    /* line 38, ../../app/stylesheets/partials/_structure.sass */
+    #login .form-row .text {
+      width: 100px; }
+    /* line 40, ../../app/stylesheets/partials/_structure.sass */
+    #login .form-row .email, #login .form-row .password, #login .form-row .remember-me, #login .form-row .submit {
+      padding-right: 5px;
+      float: left; }
 
-/* line 36, ../../app/stylesheets/partials/_structure.sass */
+/* line 44, ../../app/stylesheets/partials/_structure.sass */
 .button_row {
   margin-top: 1em; }
 
@@ -207,7 +218,7 @@ form textarea {
   height: 250px; }
 
 /* new clearfix from perishablepress.com */
-/* line 45, ../../app/stylesheets/partials/_structure.sass */
+/* line 53, ../../app/stylesheets/partials/_structure.sass */
 .clearfix:after {
   visibility: hidden;
   display: block;

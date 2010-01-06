@@ -1,27 +1,28 @@
 #user_control
   -if current_user
     %h4= "Logged in as #{current_user.email} "
-    = link_to "Settings", edit_user_path(current_user)
-    = link_to "Log out", user_session_path, :method => :delete
+    = link_to "Settings", edit_user_path(current_user), :class => "button"
+    = link_to "Log out", user_session_path, :method => :delete, :class => "button"
   - else
-    = link_to "Log in", "#", :id => "login_button"
-    = link_to "Sign up", new_user_path
+    #login-buttons
+      = link_to "Log in", "#", :id => "login_button", :class => "button"
+      = link_to "Sign up", new_user_path, :class => "button"
     #login
-      %h4 Login
       - form_tag user_session_path, :method => :post do
-        = label_tag 'user[email]', :email
-        %br
-        = text_field_tag 'user[email]'
-        %br
-        %br
-        = label_tag 'user[password]', :password
-        %br
-        = password_field_tag 'user[password]'
-        %br
-        %br
-        = check_box_tag 'user[remember_me]'
-        = label_tag 'user[remember_me]', :remember_me
-        %br
-        %br
-        = submit_tag "Login"
-        = link_to "Cancel", "#", :id => "login_cancel_button"
+        .form-row
+          .email
+            = label_tag 'user[email]', 'Email'
+            %br
+            = text_field_tag 'user[email]', '', :class => 'text'
+          .password
+            = label_tag 'user[password]', 'Password'
+            %br
+            = password_field_tag 'user[password]', '', :class => 'text'
+        .form-row
+          .remember-me
+            = check_box_tag 'user[remember_me]'
+            = label_tag 'user[remember_me]', 'Remember me'
+          .submit
+            = submit_tag "Login", :class => "button"
+            = link_to "Cancel", "#", :id => "login_cancel_button", :class => "button"
+          

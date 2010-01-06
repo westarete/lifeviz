@@ -4,11 +4,13 @@
 $(function(){
    
    $('#login_button').click(function(){
-       $('#login').show("slow");
+       $('#login-buttons').hide();
+       $('#login').show();
    });
    
    $('#login_cancel_button').click(function(){
-       $('#login').hide("slow");
+       $('#login').hide();
+       $('#login-buttons').show();
    })
    
    $('#kingdom-dropdown').change(function() {
