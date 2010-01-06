@@ -34,7 +34,18 @@ class Taxon < ActiveRecord::Base
     lineage_ids.split(/,/).collect { |ancestor_id| Taxon.find(ancestor_id) }
   end
   
-  def rebuild_lineage(parent_id, parent_lineage_ids="")
+  # Rebuild lineage_ids for this taxon.
+  def rebuild_lineage_ids
+    update_attributes(:lineage_ids => (parent.lineage_ids + "," + parent_id.to_s))
+  end
+  
+  # This method rebuilds lineage_ids for the entire taxonomy.
+  def self.rebuild_lineages!
+    Taxon.find(1).rebuild_lineage_branch(nil) # Run rebuild_lineage on root node.
+  end
+  
+  # This is a recursive method to rebuild a tree of lineage_ids.
+  def rebuild_lineage_branch(parent_id, parent_lineage_ids="")
     lineage_ids = if parent_id.nil?  # Root node
                     ""
                   elsif parent_lineage_ids == "" || parent_id == 1 # Child of root node
@@ -46,27 +57,8 @@ class Taxon < ActiveRecord::Base
     update_attributes(:lineage_ids => lineage_ids)
     
     unless leaf?
-      children.each {|child| child.rebuild_lineage(id, lineage_ids)}
+      children.each {|child| child.rebuild_lineage_branch(id, lineage_ids)}
     end
   end
-  
-  def self.rebuild_lineages!
-    Taxon.find(1).rebuild_lineage(nil) # Run rebuild_lineage on root node.
-  end
-  
-  # def rebuild_lineage
-  #   ancestor_ids = ancestors.collect(&:id)
-  #   lineage_ids = ancestor_ids.inject("") do |string, ancestor_id|
-  #     # This line turns [1, 2, 3] into "1,2,3".
-  #     # That last conditional logic only adds the comma if we're not working
-  #     # on the last element. This is HORRIBLE, please refactor!
-  #     string += ancestor_id.to_s + (ancestors.last.id != ancestor_id ? "," : "" )
-  #   end
-  #   update_attributes(:lineage_ids => lineage_ids)
-  # end
-  # 
-  # def self.rebuild_lineages!
-  #   Taxon.all.each(&:rebuild_lineage)
-  # end
   
 end
