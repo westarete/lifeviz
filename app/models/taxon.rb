@@ -14,6 +14,8 @@
 class Taxon < ActiveRecord::Base
   acts_as_nested_set
   
+  before_save :rebuild_lineage_ids
+  
   named_scope :kingdoms, lambda { |conditions| conditions ||= {}; {:conditions => {:rank => 0}.merge(conditions), :order => :name} }
   named_scope :phylums,  lambda { |conditions| conditions ||= {}; {:conditions => {:rank => 1}.merge(conditions), :order => :name} }
   named_scope :classes,  lambda { |conditions| conditions ||= {}; {:conditions => {:rank => 2}.merge(conditions), :order => :name} }
@@ -36,7 +38,9 @@ class Taxon < ActiveRecord::Base
   
   # Rebuild lineage_ids for this taxon.
   def rebuild_lineage_ids
-    update_attributes(:lineage_ids => (parent.lineage_ids + "," + parent_id.to_s))
+    unless parent_id.nil? || parent.lineage_ids.blank?
+      self.lineage_ids = (parent.lineage_ids + "," + parent_id.to_s)
+    end
   end
   
   # This method rebuilds lineage_ids for the entire taxonomy.

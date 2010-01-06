@@ -22,10 +22,8 @@ describe Taxon do
       Taxon.rebuild!
       Taxon.rebuild_lineages!
       @family = Taxon.find(6)
-      @taxon = Taxon.new(:name => "Genus 2", :rank => 5)
+      @taxon = Taxon.new(:name => "Genus 2", :rank => 5, :parent_id => @family.id)
       @taxon.save!
-      @taxon.move_to_child_of(@family)
-      @taxon.rebuild_lineage_ids
     end
     it "should set lineage_ids to the correct values" do
       @taxon.lineage_ids.should == "1,2,3,4,5,6"
