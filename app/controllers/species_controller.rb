@@ -18,26 +18,29 @@ class SpeciesController < ApplicationController
   end
 
   def new
-    @species = Taxon.new
+    @species = Species.new
+    @taxon = Taxon.root
   end
 
   def create
-    @species = Taxon.new(params[:species])
-    if @species.save
+    @genus = Taxon.find(params[:genus])
+    @species = Species.new(params[:species])
+    @species.rank = 6
+    if @species.save_under_parent(@genus)
       flash[:success] = "Species saved."
       redirect_to species_path(:id => @species.id)
     else
-      flash[:failure] = "Species failed to save."
+      flash.now[:failure] = "Species failed to save."
       render :new
     end
   end
 
   def show
-    @species = Taxon.find(params[:id])
+    @species = Species.find(params[:id])
   end
 
   def edit
-    @species = Taxon.find(params[:id])
+    @species = Species.find(params[:id])
   end
 
   def update
@@ -46,7 +49,7 @@ class SpeciesController < ApplicationController
       flash[:success] = "Species updated."
       redirect_to species_path(:id => @species.id)
     else
-      flash[:failure] = "Species failed to update."
+      flash.now[:failure] = "Species failed to update."
       render :update
     end
   end

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091221212737) do
+ActiveRecord::Schema.define(:version => 20100106160708) do
 
   create_table "organisms", :force => true do |t|
     t.integer  "taxon_id"
@@ -30,7 +30,10 @@ ActiveRecord::Schema.define(:version => 20091221212737) do
     t.string  "lineage_ids"
   end
 
+  add_index "taxa", ["lft"], :name => "index_taxa_on_lft"
   add_index "taxa", ["parent_id"], :name => "index_taxa_on_parent_id"
+  add_index "taxa", ["rank"], :name => "index_taxa_on_rank"
+  add_index "taxa", ["rgt"], :name => "index_taxa_on_rgt"
 
   create_table "users", :force => true do |t|
     t.string   "email",             :null => false
