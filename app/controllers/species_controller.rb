@@ -23,7 +23,12 @@ class SpeciesController < ApplicationController
   end
 
   def create
-    @genus = Taxon.find(params[:genus])
+    if params[:genus]
+      @genus = Taxon.find(params[:genus])
+    else
+      flash.now[:failure] = "You need to select a genus."
+      render :new
+    end
     @species = Species.new(params[:species])
     @species.rank = 6
     if @species.save_under_parent(@genus)
