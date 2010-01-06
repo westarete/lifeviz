@@ -24,6 +24,9 @@ class Taxon < ActiveRecord::Base
   named_scope :genuses,  lambda { |conditions| conditions ||= {}; {:conditions => {:rank => 5}.merge(conditions), :order => :name} }
   named_scope :species,  lambda { |conditions| conditions ||= {}; {:conditions => {:rank => 6}.merge(conditions), :order => :name} }
   
+  validates_presence_of :rank, :message => "must be set"
+  validates_presence_of :name, :message => "can't be blank"
+  
   def paginated_sorted_species(page)
     Taxon.paginate_by_sql("SELECT * FROM taxa WHERE lft >= #{self.lft} AND rgt <= #{self.rgt} AND rank = 6 ORDER BY name ASC", :page => page)
   end

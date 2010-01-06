@@ -16,11 +16,14 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe Taxon do
   fixtures :taxa
   
+  before(:each) do    
+    # Set lft and rgt values for every taxon. Necessary!
+    Taxon.rebuild!
+    Taxon.rebuild_lineages!
+  end
+  
   describe "#rebuild_lineage_ids" do
     before(:each) do
-      # Set lft and rgt values for every taxon. Necessary!
-      Taxon.rebuild!
-      Taxon.rebuild_lineages!
       @family = Taxon.find(6)
       @taxon = Taxon.new(:name => "Genus 2", :rank => 5, :parent_id => @family.id)
       @taxon.save!
@@ -31,10 +34,6 @@ describe Taxon do
   end
   
   describe ".rebuild_lineages!" do
-    before(:each) do
-      Taxon.rebuild!
-      Taxon.rebuild_lineages!
-    end
     it "should build lineage_ids for every taxon in system" do
       Taxon.find(2).lineage_ids.should == "1"
       Taxon.find(3).lineage_ids.should == "1,2"
