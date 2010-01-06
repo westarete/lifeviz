@@ -34,13 +34,6 @@ class Taxon < ActiveRecord::Base
     lineage_ids.split(/,/).collect { |ancestor_id| Taxon.find(ancestor_id) }
   end
   
-  def save_under_parent(parent)
-    Taxon.transaction do
-      save
-      move_to_child_of(parent)
-    end
-  end
-  
   def rebuild_lineage(parent_id, parent_lineage_ids="")
     lineage_ids = if parent_id.nil?  # Root node
                     ""

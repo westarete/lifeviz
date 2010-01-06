@@ -18,13 +18,13 @@ class SpeciesController < ApplicationController
   end
 
   def new
-    @species = Taxon.new
+    @species = Species.new
     @taxon = Taxon.root
   end
 
   def create
     @genus = Taxon.find(params[:genus])
-    @species = Taxon.new(params[:species])
+    @species = Species.new(params[:species])
     @species.rank = 6
     if @species.save_under_parent(@genus)
       flash[:success] = "Species saved."
@@ -36,11 +36,11 @@ class SpeciesController < ApplicationController
   end
 
   def show
-    @species = Taxon.find(params[:id])
+    @species = Species.find(params[:id])
   end
 
   def edit
-    @species = Taxon.find(params[:id])
+    @species = Species.find(params[:id])
   end
 
   def update
