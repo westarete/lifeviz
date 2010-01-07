@@ -3,4 +3,4 @@
 .detail Common Name
 %h2= @species.name
 
-= link_to "Edit this species", edit_species_path(@species), :class => "button"
+= (link_to "Edit this species", edit_species_path(@species), :class => "button") if current_user
