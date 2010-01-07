@@ -14,6 +14,8 @@
 #
 
 class Age < ActiveRecord::Base
-  belongs_to :taxon
+  belongs_to :species
+  validates_presence_of :taxon_id
+  validates_uniqueness_of :taxon_id
   
 end

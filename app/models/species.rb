@@ -14,6 +14,8 @@
 class Species < Taxon
   validates_presence_of :parent_id, :on => :create, :message => "can't be blank"
   
+  has_one :age, :dependant => :destroy
+  
   def validate
     @parent = Taxon.find(self.parent_id)
     if @parent.rank != 5
