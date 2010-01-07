@@ -171,12 +171,13 @@ body #main {
       float: left; }
     /* line 50, ../../app/stylesheets/partials/_structure.sass */
     #login .form-row .submit {
-      float: right; }
-      /* line 52, ../../app/stylesheets/partials/_structure.sass */
+      float: right;
+      padding-top: 8px; }
+      /* line 53, ../../app/stylesheets/partials/_structure.sass */
       #login .form-row .submit a {
         margin: 0 !important; }
 
-/* line 55, ../../app/stylesheets/partials/_structure.sass */
+/* line 56, ../../app/stylesheets/partials/_structure.sass */
 .button_row {
   margin-top: 1em; }
 
@@ -233,7 +234,7 @@ form textarea {
   height: 250px; }
 
 /* new clearfix from perishablepress.com */
-/* line 64, ../../app/stylesheets/partials/_structure.sass */
+/* line 65, ../../app/stylesheets/partials/_structure.sass */
 .clearfix:after {
   visibility: hidden;
   display: block;
