@@ -8,10 +8,10 @@ require 'capistrano-helpers/migrations' # Run all migrations automatically
 require 'capistrano-helpers/campfire'   # Post deploy info to campfire
 
 # The name of the application.
-set :application, "bus"
+set :application, "anage"
 
 # Location of the source code.
-set :repository,  "git@github.com:westarete/bus.git"
+set :repository,  "git@github.com:westarete/anage.git"
 
 # Set the files that should be symlinked to their shared counterparts.
 set :shared, %w{ 
