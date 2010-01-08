@@ -31,10 +31,6 @@ class Taxon < ActiveRecord::Base
     Taxon.paginate_by_sql("SELECT * FROM taxa WHERE lft >= #{self.lft} AND rgt <= #{self.rgt} AND rank = 6 ORDER BY name ASC", :page => page)
   end
   
-  def organism
-    Organism.find(:first, :conditions => ["taxon_id = ?", id])
-  end
-  
   def parents
     lineage_ids.split(/,/).collect { |ancestor_id| Taxon.find(ancestor_id) }
   end
