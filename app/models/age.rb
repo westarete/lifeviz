@@ -18,4 +18,8 @@ class Age < ActiveRecord::Base
   validates_presence_of :taxon_id
   validates_uniqueness_of :taxon_id
   
+  def self.find_or_create_by_taxon_id(taxon_id)
+    find_by_taxon_id(taxon_id) || 
+    create(:taxon_id => taxon_id)
+  end
 end

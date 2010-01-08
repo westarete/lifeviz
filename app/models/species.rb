@@ -14,12 +14,24 @@
 class Species < Taxon
   validates_presence_of :parent_id, :on => :create, :message => "can't be blank"
   
-  has_one :age, :dependant => :destroy
+  has_one :age, :dependent => :destroy, :foreign_key => :taxon_id
   
+  # Hack because Rails wants to create my associated models for me, and I
+  # don't want it to because it doesn't work!!
+  def age=(agehash)
+    nil
+  end
+  
+  before_save :create_associated_models
+
+  def create_associated_models
+    create_age unless age
+  end
+
   def validate
     @parent = Taxon.find(self.parent_id)
     if @parent.rank != 5
-      errors.add_to_base "Species need to belong to a genus"
+      errors.add_to_base "Species needs to belong to a genus"
     end
   end
   

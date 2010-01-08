@@ -12,7 +12,11 @@ class SpeciesController < ApplicationController
   end
   
   def data
-    @taxon = Taxon.find(params[:taxon_id])
+    if params[:taxon_id] && ! params[:taxon_id].blank?
+      @taxon = Taxon.find(params[:taxon_id])
+    else
+      @taxon = Taxon.root
+    end
     @species = @taxon.paginated_sorted_species(params[:page])
     render :partial => "table", :layout => false
   end
@@ -46,11 +50,16 @@ class SpeciesController < ApplicationController
 
   def edit
     @species = Species.find(params[:id])
+    @age = @species.age ? @species.age : @species.build.age
   end
 
   def update
-    @species = Taxon.find(params[:id])
-    if @species.update_attributes(params[:species])
+    @species = Species.find(params[:id])
+    @age = Age.find_or_create_by_taxon_id(params[:id])
+    if Species.transaction {
+        @species.update_attributes(params[:species])
+        @age.update_attributes(params[:species][:age])
+    } then
       flash[:success] = "Species updated."
       redirect_to species_path(:id => @species.id)
     else

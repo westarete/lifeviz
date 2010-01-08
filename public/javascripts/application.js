@@ -21,29 +21,47 @@ $(function(){
       $('#genus-dropdown').attr('disabled', 'disabled');
       $('#species').fadeOut();
       // Populate the phylum dropdown.
-      $.ajax({
-          type: 'GET',
-          url: '/taxonomy/dropdown/phylums', 
-          data: { parent_id: $('#kingdom-dropdown').val() },
-          success: function(response) {
-              $('#phylum-dropdown').html(response);
-              $('#phylum-dropdown').parent().effect('highlight', {}, 500);
-          }
-      });
+      if ($('#kingdom-dropdown').val() == '') {
+          
+          $('#phylum-dropdown').attr('disabled', 'disabled');
+          
+          // Update the main page content.
+          $.ajax({
+              type: 'GET',
+              url: '/species/data', 
+              success: function(response) {
+                  $('#species').html(response);
+                  $('#species').fadeIn();
+              }
+          });
+          
+      } else {
+          
+          $.ajax({
+              type: 'GET',
+              url: '/taxonomy/dropdown/phylums', 
+              data: { parent_id: $('#kingdom-dropdown').val() },
+              success: function(response) {
+                  $('#phylum-dropdown').html(response);
+                  $('#phylum-dropdown').parent().effect('highlight', {}, 500);
+              }
+          });
 
-      // Enable the phylum dropdown.
-      $('#phylum-dropdown').removeAttr('disabled');
+          // Enable the phylum dropdown.
+          $('#phylum-dropdown').removeAttr('disabled');
       
-      // Update the main page content.
-      $.ajax({
-          type: 'GET',
-          url: '/species/data', 
-          data: { 'taxon_id': $('#kingdom-dropdown').val() },
-          success: function(response) {
-              $('#species').html(response);
-              $('#species').fadeIn();
-          }
-      });
+          // Update the main page content.
+          $.ajax({
+              type: 'GET',
+              url: '/species/data', 
+              data: { 'taxon_id': $('#kingdom-dropdown').val() },
+              success: function(response) {
+                  $('#species').html(response);
+                  $('#species').fadeIn();
+              }
+          });
+      
+      }
       
    });
    

@@ -1,0 +1,21 @@
+.imr
+  = age.label :initial_mortality_rate, "IMR", :title => "Initial Mortality Rate"
+  %br
+  = age.text_field :initial_mortality_rate, :class => 'title', :title => "Initial Mortality Rate"
+  %br
+.mrdt
+  = age.label :mortality_rate_doubling_time, "MRDT", :title => "Mortality Rate Doubling Time"
+  %br
+  = age.text_field :mortality_rate_doubling_time, :class => 'title', :title => "Mortality Rate Doubling Time"
+  %br
+.longevity
+  = age.label :maximum_longevity, "Maximum Longevity"
+  %br
+  = age.text_field :maximum_longevity, :class => 'title'
+  %br
+.phenotype
+  = age.label :phenotype, "Phenotype", :title => "Observations"
+  %br
+  = age.text_area :phenotype, :class => 'textarea'
+  %br
+  

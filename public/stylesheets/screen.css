@@ -430,3 +430,20 @@ h2 {
 /* line 1, ../../app/stylesheets/partials/_species.sass */
 #species {
   margin-bottom: 1em; }
+
+/* line 7, ../../app/stylesheets/partials/_species.sass */
+.imr, .mrdt {
+  float: left; }
+
+/* line 9, ../../app/stylesheets/partials/_species.sass */
+.longevity {
+  clear: both; }
+
+/* line 12, ../../app/stylesheets/partials/_species.sass */
+#species_age_initial_mortality_rate {
+  width: 190px;
+  margin-right: 10px; }
+
+/* line 16, ../../app/stylesheets/partials/_species.sass */
+#species_age_mortality_rate_doubling_time {
+  width: 100px; }
