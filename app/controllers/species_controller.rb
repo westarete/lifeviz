@@ -15,7 +15,7 @@ class SpeciesController < ApplicationController
     if params[:taxon_id] && ! params[:taxon_id].blank?
       @taxon = Taxon.find(params[:taxon_id])
     else
-      @taxon = Taxon.root
+      @taxon = Taxon.find(1)
     end
     @species = @taxon.paginated_sorted_species(params[:page])
     render :partial => "table", :layout => false
