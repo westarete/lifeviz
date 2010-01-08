@@ -2,11 +2,9 @@
 
 - form_for @species, :url => {:action => :update}, :html => {:method => :put} do |f|
   = render :partial => "form", :object => f
-  
-  %fieldset
-    %legend Age
-    - f.fields_for :age, @age do |age_form|
-      = render :partial => "age", :object => age_form
+    
+  - f.fields_for :age, @age do |age_form|
+    = render :partial => "age", :object => age_form
   
   
   
