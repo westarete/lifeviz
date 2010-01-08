@@ -9,17 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100106160708) do
-
-  create_table "organisms", :force => true do |t|
-    t.integer  "taxon_id"
-    t.string   "name"
-    t.string   "synonyms"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "organisms", ["id"], :name => "index_species_on_id"
+ActiveRecord::Schema.define(:version => 20100108161309) do
 
   create_table "taxa", :force => true do |t|
     t.string  "name"
