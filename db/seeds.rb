@@ -25,6 +25,9 @@ def create_taxonomy
   # Remove any existing taxa
   puts "Removing any existing taxa..."
   Taxon.destroy_all
+  
+  puts "Setting taxon id sequence back to 1"
+  ActiveRecord::Base.connection.execute "SELECT setval('taxa_id_seq',1);"
 
   # # Load new taxonomy information from UBioTa.
   progress "Loading seed data...", num_lines_bz2(UBIOTA) do |progress_bar|
@@ -46,8 +49,9 @@ def create_taxonomy
     end
   end
   
-  lastval = ActiveRecord::Base.execute "SELECT MAX(ID) FROM taxa;"
-  ActiveRecord::Base.execute "select setval('taxa_id_seq', #{lastval + 1})"
+   lastval = ActiveRecord::Base.connection.execute "SELECT MAX(ID) FROM taxa;"
+   newval = lastval.max["max"].to_i + 1
+   ActiveRecord::Base.connection.execute "SELECT setval('taxa_id_seq', #{newval});"
 end
 
 def rebuild_lineages
@@ -85,8 +89,8 @@ def create_organisms
   anage && ubiota && map ? (puts "success") : (puts "*failed"; exit!)
   
   # Dump all species
-  puts "** Removing any existing species..." 
-  Organism.destroy_all ? (puts "success") : (puts "failed"; exit!)
+  #puts "** Removing any existing species..." 
+  #Organism.destroy_all ? (puts "success") : (puts "failed"; exit!)
   
   # Load taxon from anage, let's use hpricot
   puts "** Loading anage data, let's use hpricot..."
@@ -133,6 +137,7 @@ def create_organisms
     break if new_species[x] == nil
     next  if rank.to_i != 6               
     while id.to_i > new_species[x][:ubid]
+      #...
       new_species[x][:taxon_id] = nil
       orphaned_species << new_species[x]
       x += 1
@@ -161,12 +166,10 @@ def create_organisms
       puts "fail: no taxon found with and id of #{s[:taxon_id]} for species with ubid of #{s[:ubid]}"
       fcount += 1
     else
-      species = Organism.new(:name => s[:name], :taxon_id => taxon.id, :synonyms => s[:synonyms])
+      species = Taxon.new(:name => s[:name], :parent_id => taxon.id, :rank => 6)
       species.send(:create_without_callbacks)
-      species_taxon   = Taxon.new(:name => s[:name], :parent_id => taxon.id, :rank => 6)
-      species_taxon.send(:create_without_callbacks)
     end
-    count   = index
+    count = index
   end
   puts "success: Phew!... saved #{count - fcount} species"
   puts "failure: #{fcount} species didn't have taxons matching taxon_id in our database" if fcount != 0
@@ -176,6 +179,6 @@ def create_organisms
 end
 
 # Execute taxonomy creation method
-#create_taxonomy
+create_taxonomy
 # Execute species creation method
 create_organisms
