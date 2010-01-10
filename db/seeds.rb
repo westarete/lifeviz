@@ -20,11 +20,10 @@ def num_lines_bz2(filename)
   num_lines
 end
 
-
 def create_taxonomy
   # Remove any existing taxa
   puts "Removing any existing taxa..."
-  Taxon.destroy_all
+  Taxon.delete_all
   
   puts "Setting taxon id sequence back to 1"
   ActiveRecord::Base.connection.execute "SELECT setval('taxa_id_seq',1);"
@@ -58,15 +57,15 @@ def rebuild_lineages
   sql = ActiveRecord::Base.connection();
 	sql.begin_db_transaction
 	
-	  # Clear all lineage_ids
-	  puts "** Clearing existing lineage data..."
-	  sql.execute "UPDATE taxa SET lineage_ids = NULL;"
-	  puts "success"
-	  
-    Taxon.rebuild_lineages!
-    
-	  puts  "success: #{Taxon.count} taxa set"
-	sql.commit_db_transaction
+  # Clear all lineage_ids
+  puts "** Clearing existing lineage data..."
+  sql.execute "UPDATE taxa SET lineage_ids = NULL;"
+  puts "success"
+  
+  Taxon.rebuild_lineages!
+  
+  puts  "success: #{Taxon.count} taxa set"
+  sql.commit_db_transaction
 	
 end
 
@@ -79,7 +78,9 @@ def create_organisms
   orphaned_species  = []
   
   # Entrance message
-  puts "** Creating new species from anage/ubiota files using hagrid_ubid as the bridge..."
+  puts "** Creating new species from anage/ubiota files using hagrid_ubid as the bridge"
+  puts " NOTE: new species are species with data imported from anage, orphaned species are "
+  puts "       ubiota species with no associated anage data"
   
   # Open files
   puts "** Opening data files..."
@@ -88,18 +89,14 @@ def create_organisms
   map           = IO.readlines(ANAGE_UBIOTA)
   anage && ubiota && map ? (puts "success") : (puts "*failed"; exit!)
   
-  # Dump all species
-  #puts "** Removing any existing species..." 
-  #Organism.destroy_all ? (puts "success") : (puts "failed"; exit!)
-  
   # Load taxon from anage, let's use hpricot
   puts "** Loading anage data, let's use hpricot..."
   doc           = Hpricot::XML(anage)
   anage_species = (doc/'names')
   puts  "success: #{anage_species.size} species loaded"
   
-  # Create new species and load anage attributes we want
-  puts "** Loading species and storing anage data that we want..."
+  # Create new species array to load anage species and attributes we want
+  puts "** Loading new species and storing anage data from anage dump..."
   anage_species.each do |s|
     x = {}
     x[:synonyms]  = (s/'name_common').inner_html
@@ -107,59 +104,67 @@ def create_organisms
   end
   puts "success: #{new_species.size} new species loaded in memory"
   
-  # Load ubid into new species
-  puts "** Loading ubid into new species..."
+  # Load ubid ids into new species from mapping
+  puts "** Loading mapped ubiota ids into new species..."
   map.each_with_index do |line, index|
     hagrid, ubid = line.split(/\s+/)
     new_species[index][:ubid] = ubid.to_i
   end
   puts "success"
   
-  # Remove any species with no ubid
+  # Remove any new species that have no ubid from mapping
   count = new_species.size
-  puts "** Delete any species that do not have a ubid mapped..."
+  puts "** Delete any new species that do not have a ubiota id mapped..."
   new_species.delete_if { |species| species[:ubid] == nil }
   puts "success: deleted #{count - new_species.size} species, #{new_species.size} remaining"
   
   # Sort species by ubid
-  puts "** Sorting by ubid..."
+  puts "** Sorting new species by ubid..."
   new_species = new_species.sort_by { |each| each[:ubid] }
   puts "success"
   
   # Find and load ubiota genus ids and species name for each species
-  #   Ensure no the rank is 6 (species level) and that we don't run past all the 
+  #   Ensure the rank is 6 (species level)
   #   Set taxon_id to nil if the species inside ubiota doesn't exist   
-  #   Organism we have loaded, because we're incrementing through them
-  puts "** Looking up and loading each species' genus id from the ubiota data (few minutes)..."
+  puts "** Looking up and loading each new species' genus id from the ubiota data (few minutes)..."
   x = 0    
   ubiota.each do |line|
-  id, term, rank, hierarchy, parent_id, num_children, hierarchy_ids = line.split("|")
-    break if new_species[x] == nil
-    next  if rank.to_i != 6               
-    while id.to_i > new_species[x][:ubid]
-      #...
-      new_species[x][:taxon_id] = nil
-      orphaned_species << new_species[x]
-      x += 1
-    end       
-    if new_species[x][:ubid] == id.to_i
+    id, term, rank, hierarchy, parent_id, num_children, hierarchy_ids = line.split("|")
+    
+    # skip if we're not looking at a species level taxon
+    next  if rank.to_i != 6   
+    
+    if new_species[x].nil? || id.to_i != new_species[x][:ubid]
+      y = {:taxon_id => parent_id.to_i, :name => term.to_s}
+      orphaned_species << y
+      if !new_species[x].nil? then new_species[x][:taxon_id] = nil end
+      if !new_species[x].nil? && id.to_i > new_species[x][:ubid] then x += 1 end
+    else
       new_species[x][:taxon_id] = parent_id.to_i
       new_species[x][:name]     = term.to_s
       x += 1
     end
+
   end
-  puts "success: traversed #{x} new species"
+  puts "success: traversed #{x} new species and #{orphaned_species.size} orphaned species"
    
-  # Remove any species that has no genus in ubiota 
+  # Remove any new species that has no genus in ubiota 
   count = new_species.size
-  puts "** Delete any species had no genus id or that are not species but rather taxon..."
+  puts "** Delete any species that had no genus id... (NOTE THIS)"
   new_species.delete_if { |species| species[:taxon_id] == nil }
   puts "success: deleted #{count - new_species.size} species, #{new_species.size} remaining"
   
-  # Create species with all the species stored in memory
+  # Remove any orphaned species that has no genus in ubiota 
+  count = orphaned_species.size
+  puts "** Delete any orphaned species that had no genus id... (NOTE THIS)"
+  orphaned_species.delete_if { |species| species[:taxon_id] == 0 }
+  puts "success: deleted #{count - orphaned_species.size} species, #{orphaned_species.size} remaining"
+
+  # Create species with all the new species stored in memory
   count   = 0
   fcount  = 0
-  puts "** Saving all the species..."
+  puts "** Saving all the new species..."
+  start_time = Time.now
   new_species.each_with_index do |s, index|
     taxon   = Taxon.find_by_id(s[:taxon_id])
     if taxon == nil
@@ -171,11 +176,29 @@ def create_organisms
     end
     count = index
   end
-  puts "success: Phew!... saved #{count - fcount} species"
+  puts "success: Phew!... saved #{count - fcount} species in #{Time.now - start_time}"
   puts "failure: #{fcount} species didn't have taxons matching taxon_id in our database" if fcount != 0
-  
+
+  # Create orphaned species with all the species stored in memory
+  count   = 0
+  fcount  = 0
+  puts "** Saving all the orphaned species..."
+  orphaned_species.each_with_index do |s, index|
+   taxon   = Taxon.find_by_id(s[:taxon_id])
+   if taxon == nil
+     puts "fail: no taxon found with and id of #{s[:taxon_id].to_s} for species with ubid of #{s[:ubid].to_s}"
+     fcount += 1
+   else
+     species = Taxon.new(:name => s[:name], :parent_id => taxon.id, :rank => 6)
+     species.send(:create_without_callbacks)
+   end
+   count = index
+  end
+  puts "success: Phew!... saved #{count - fcount} species"  
+  puts "failure: #{fcount} species didn't have taxons matching taxon_id in our database" if fcount != 0
+
   # Exit message
-  puts "Organism creation is completed"
+  puts "Species creation is completed"
 end
 
 # Execute taxonomy creation method
