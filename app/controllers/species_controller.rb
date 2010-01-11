@@ -27,19 +27,21 @@ class SpeciesController < ApplicationController
   end
 
   def create
+    @taxon = Taxon.root
     if params[:genus]
       @genus = Taxon.find(params[:genus])
+      @species = Species.new(params[:species])
+      @species.rank = 6
+      @species.parent_id = @genus.id
+      if @species.save
+        flash[:success] = "Species saved."
+        redirect_to species_path(:id => @species.id)
+      else
+        flash.now[:failure] = "Species failed to save."
+        render :new
+      end
     else
       flash.now[:failure] = "You need to select a genus."
-      render :new
-    end
-    @species = Species.new(params[:species])
-    @species.rank = 6
-    if @species.save_under_parent(@genus)
-      flash[:success] = "Species saved."
-      redirect_to species_path(:id => @species.id)
-    else
-      flash.now[:failure] = "Species failed to save."
       render :new
     end
   end
