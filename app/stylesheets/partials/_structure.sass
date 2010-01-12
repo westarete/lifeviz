@@ -69,3 +69,29 @@ form
   :content " "
   :clear both
   :height 0
+  
+// Grayable background for pop-ups
+#backgroundGray
+  :display none
+  :position fixed
+  // hack for internet explorer 6  
+  _position: absolute 
+  :height 100%
+  :width 100%
+  :top 0
+  :left 0
+  :background black
+  :border 1px solid #cecece
+  :z-index 1
+  :opacity 0.8
+  
+#popup
+  :display none
+  :position fixed
+  // hack for internet explorer 6  
+  _position: absolute
+  :height 200px
+  :width 700px
+  :z-index 2
+  h2, h3, h4
+    :color white !important

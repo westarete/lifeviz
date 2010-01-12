@@ -1,7 +1,19 @@
 // Place your application-specific JavaScript functions and classes here
 // This file is automatically included by javascript_include_tag :defaults
-
 $(function(){
+    
+    $.fn.centerScreen = function(loaded) {
+        var obj = this;
+        if(!loaded) {
+            obj.css('top', $(window).height()/2-this.height()/2);
+            obj.css('left', $(window).width()/2-this.width()/2);
+            $(window).resize(function() { obj.centerScreen(!loaded); });
+        } else {
+            obj.stop();
+            obj.animate({ top: $(window).height()/2-this.height()/2, left: $
+            (window).width()/2-this.width()/2}, 200, 'linear');
+        }
+    } 
    
    $('#login_button').click(function(){
        $('#login-buttons').hide();
@@ -333,6 +345,12 @@ $(function(){
       
       }
       
-   });
-   
+    });
+    
+    $('#create-species').click(function() {
+       $("#backgroundGray").fadeIn(3000);
+       $('#popup').centerScreen();
+       $("#popup").fadeIn(5000);
+    });
+    
 });

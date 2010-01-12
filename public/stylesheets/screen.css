@@ -243,6 +243,32 @@ form textarea {
   clear: both;
   height: 0; }
 
+/* line 74, ../../app/stylesheets/partials/_structure.sass */
+#backgroundGray {
+  display: none;
+  position: fixed;
+  _position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background: black;
+  border: 1px solid #cecece;
+  z-index: 1;
+  opacity: 0.8; }
+
+/* line 88, ../../app/stylesheets/partials/_structure.sass */
+#popup {
+  display: none;
+  position: fixed;
+  _position: absolute;
+  height: 200px;
+  width: 700px;
+  z-index: 2; }
+  /* line 96, ../../app/stylesheets/partials/_structure.sass */
+  #popup h2, #popup h3, #popup h4 {
+    color: white !important; }
+
 /* line 1, ../../app/stylesheets/partials/_typography.sass */
 body {
   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif !important; }
