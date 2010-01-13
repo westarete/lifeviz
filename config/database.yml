@@ -7,6 +7,9 @@ development:
   adapter: postgresql
   database: anage_development
 
-test:
+test: &TEST
   adapter: postgresql
   database: anage_test
+
+cucumber:
+  <<: *TEST

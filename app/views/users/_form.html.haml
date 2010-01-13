@@ -1,14 +1,14 @@
 = form.label :email
 %br
-= form.text_field :email
+= form.text_field :email, :class => 'title'
 %br
 %br
 = form.label :password, form.object.new_record? ? nil : "Change password"
 %br
-= form.password_field :password
+= form.password_field :password, :class => 'title'
 %br
 %br
 = form.label :password_confirmation
 %br
-= form.password_field :password_confirmation
+= form.password_field :password_confirmation, :class => 'title'
 %br

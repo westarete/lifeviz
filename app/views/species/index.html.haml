@@ -4,4 +4,4 @@
 #species
   = render :partial => "table"
 
-= link_to "New Species", new_species_path, :class => "button"
+= (link_to "New Species", new_species_path, :class => "button") if current_user

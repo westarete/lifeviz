@@ -1,6 +1,9 @@
 = render :partial => "/shared/header", :locals => { :title => @species.name, :subtitle => "", :flash => flash }
 
-.detail Common Name
+.detail Latin Name
 %h2= @species.name
 
-= link_to "Edit this species", edit_species_path(@species), :class => "button"
+.detail Common Name
+%h2= @species.age.synonyms
+
+= (link_to "Edit this species", edit_species_path(@species), :class => "button") if current_user

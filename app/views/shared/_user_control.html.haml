@@ -7,9 +7,9 @@
     #login-buttons
       = link_to "Log in", "#", :id => "login_button", :class => "button"
       = link_to "Sign up", new_user_path, :class => "button"
-    #login
+    #login.clearfix
       - form_tag user_session_path, :method => :post do
-        .form-row
+        .form-row.clearfix
           .email
             = label_tag 'user[email]', 'Email'
             %br
@@ -18,11 +18,12 @@
             = label_tag 'user[password]', 'Password'
             %br
             = password_field_tag 'user[password]', '', :class => 'text'
-        .form-row
+        .form-row.clearfix
           .remember-me
             = check_box_tag 'user[remember_me]'
+            %br
             = label_tag 'user[remember_me]', 'Remember me'
           .submit
-            = submit_tag "Login", :class => "button"
+            %button{:type => "submit", :name => "commit", :value => "Login", :class => 'button positive'} Login
             = link_to "Cancel", "#", :id => "login_cancel_button", :class => "button"
           

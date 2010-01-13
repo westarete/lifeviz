@@ -1,0 +1,64 @@
+--- !ruby/object:Gem::Specification 
+name: progressbar
+version: !ruby/object:Gem::Version 
+  version: 0.9.0
+platform: ruby
+authors: 
+- Satoru Takabayashi
+- Jose Peleteiro
+autorequire: 
+bindir: bin
+cert_chain: []
+
+date: 2009-11-23 00:00:00 -05:00
+default_executable: 
+dependencies: []
+
+description: Ruby/ProgressBar is a text progress bar library for Ruby. It can indicate progress with percentage, a progress bar, and estimated remaining time.
+email: satoru@0xcc.net
+executables: []
+
+extensions: []
+
+extra_rdoc_files: 
+- ChangeLog
+- LICENSE
+- README.en.rd
+- README.ja.rd
+files: 
+- lib/progressbar.rb
+- ChangeLog
+- LICENSE
+- README.en.rd
+- README.ja.rd
+- test/test.rb
+has_rdoc: true
+homepage: http://github.com/peleteiro/progressbar
+licenses: []
+
+post_install_message: 
+rdoc_options: 
+- --charset=UTF-8
+require_paths: 
+- lib
+required_ruby_version: !ruby/object:Gem::Requirement 
+  requirements: 
+  - - ">="
+    - !ruby/object:Gem::Version 
+      version: "0"
+  version: 
+required_rubygems_version: !ruby/object:Gem::Requirement 
+  requirements: 
+  - - ">="
+    - !ruby/object:Gem::Version 
+      version: "0"
+  version: 
+requirements: []
+
+rubyforge_project: 
+rubygems_version: 1.3.5
+signing_key: 
+specification_version: 3
+summary: Ruby/ProgressBar is a text progress bar library for Ruby.
+test_files: 
+- test/test.rb

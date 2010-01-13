@@ -12,7 +12,11 @@ class SpeciesController < ApplicationController
   end
   
   def data
-    @taxon = Taxon.find(params[:taxon_id])
+    if params[:taxon_id] && ! params[:taxon_id].blank?
+      @taxon = Taxon.find(params[:taxon_id])
+    else
+      @taxon = Taxon.find(1)
+    end
     @species = @taxon.paginated_sorted_species(params[:page])
     render :partial => "table", :layout => false
   end
@@ -23,14 +27,21 @@ class SpeciesController < ApplicationController
   end
 
   def create
-    @genus = Taxon.find(params[:genus])
-    @species = Species.new(params[:species])
-    @species.rank = 6
-    if @species.save_under_parent(@genus)
-      flash[:success] = "Species saved."
-      redirect_to species_path(:id => @species.id)
+    @taxon = Taxon.root
+    if params[:genus]
+      @genus = Taxon.find(params[:genus])
+      @species = Species.new(params[:species])
+      @species.rank = 6
+      @species.parent_id = @genus.id
+      if @species.save
+        flash[:success] = "Species saved."
+        redirect_to species_path(:id => @species.id)
+      else
+        flash.now[:failure] = "Species failed to save."
+        render :new
+      end
     else
-      flash.now[:failure] = "Species failed to save."
+      flash.now[:failure] = "You need to select a genus."
       render :new
     end
   end
@@ -41,11 +52,16 @@ class SpeciesController < ApplicationController
 
   def edit
     @species = Species.find(params[:id])
+    @age = @species.age ? @species.age : @species.build.age
   end
 
   def update
-    @species = Taxon.find(params[:id])
-    if @species.update_attributes(params[:species])
+    @species = Species.find(params[:id])
+    @age = Age.find_or_create_by_taxon_id(params[:id])
+    if Species.transaction {
+        @species.update_attributes(params[:species])
+        @age.update_attributes(params[:species][:age])
+    } then
       flash[:success] = "Species updated."
       redirect_to species_path(:id => @species.id)
     else

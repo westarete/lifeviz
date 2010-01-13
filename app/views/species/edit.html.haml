@@ -1,6 +1,14 @@
 = render :partial => "/shared/header", :locals => { :title => "Edit Species", :subtitle => "", :flash => flash }
 
-- form_for :species, :url => {:action => :update}, :html => {:method => :put} do |f|
+- form_for @species, :url => {:action => :update}, :html => {:method => :put} do |f|
   = render :partial => "form", :object => f
+    
+  - f.fields_for :age, @age do |age_form|
+    = render :partial => "age", :object => age_form
+  
+  
+  
+  
+  
   %button{:type => "submit", :name => "commit", :value => "Update", :class => 'button positive'} Update Species
   = link_to "Cancel", species_path(@species.id), :class => "button"

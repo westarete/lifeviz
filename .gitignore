@@ -3,3 +3,4 @@ tmp/*
 nbproject
 *.tmp
 */*.tmp
+config/campfire.yml

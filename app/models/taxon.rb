@@ -42,6 +42,11 @@ class Taxon < ActiveRecord::Base
     end
   end
   
+  # Redefining our own 'root' method, which should run much faster...
+  def self.root
+    find(1)
+  end
+  
   # This method rebuilds lineage_ids for the entire taxonomy.
   def self.rebuild_lineages!
     Taxon.find(1).rebuild_lineage_branch(nil) # Run rebuild_lineage on root node.

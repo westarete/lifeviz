@@ -3,6 +3,10 @@
 - form_for :species, :url => {:action => :create}, :html => {:method => :post} do |f|
   = render :partial => "/taxonomy_navigation/dropdowns"
   = render :partial => "form", :object => f
-  %button{:type => "submit", :name => "commit", :value => "Create", :class => 'button positive'} Create Species
+  %h4 WARNING! Creating a species can take several minutes, as it reorganizes the taxonomy.
+  %button{:type => "submit", :name => "commit", :value => "Create", :class => 'button positive', :id => "create-species"} Create Species
   = link_to "Cancel", species_index_path, :class => "button"
   
+  #popup
+    %h2 Species will take a few minutes to create...
+    %h3 Please be patient!

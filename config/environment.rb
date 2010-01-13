@@ -24,7 +24,7 @@ Rails::Initializer.run do |config|
   config.gem 'compass', :version => '0.8.17'
   
   # Alternate template and stylesheet engine.
-  config.gem 'haml', :version => '2.2.16'
+  config.gem 'haml', :version => '2.2.15'
 
   # Show text-based progress bar for long-running console tasks.
   config.gem 'progressbar', :version => '0.9.0'  
@@ -37,6 +37,9 @@ Rails::Initializer.run do |config|
   
   # Pagination
   config.gem 'will_paginate', :version => '2.3.11'
+  
+  # Null object pattern.
+  config.gem 'activerecord_null_object'
 
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
