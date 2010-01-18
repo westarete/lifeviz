@@ -127,24 +127,34 @@ def create_organisms
   #   Ensure the rank is 6 (species level)
   #   Set taxon_id to nil if the species inside ubiota doesn't exist   
   puts "** Looking up and loading each new species' genus id from the ubiota data (few minutes)..."
-  x = 0    
+  x = 0
+  a_couple = 0
   ubiota.each do |line|
     id, term, rank, hierarchy, parent_id, num_children, hierarchy_ids = line.split("|")
-    
+  
     # skip if we're not looking at a species level taxon
-    next  if rank.to_i != 6   
-    
+    if rank.to_i != 6   
+      next
+    end
+  
     if new_species[x].nil? || id.to_i != new_species[x][:ubid]
       y = {:taxon_id => parent_id.to_i, :name => term.to_s}
       orphaned_species << y
       if !new_species[x].nil? then new_species[x][:taxon_id] = nil end
       if !new_species[x].nil? && id.to_i > new_species[x][:ubid] then x += 1 end
+    
+      if y[:taxon_id] == 0
+        puts "id: #{id} term: #{term} rank: #{rank} parentid: #{parent_id}"; a_couple += 1
+        puts line
+        puts"\n"
+      end
+      if a_couple == 20 then raise "investigate" end
     else
       new_species[x][:taxon_id] = parent_id.to_i
       new_species[x][:name]     = term.to_s
       x += 1
     end
-
+    
   end
   puts "success: traversed #{x} new species and #{orphaned_species.size} orphaned species"
    
@@ -160,48 +170,48 @@ def create_organisms
   orphaned_species.delete_if { |species| species[:taxon_id] == 0 }
   puts "success: deleted #{count - orphaned_species.size} species, #{orphaned_species.size} remaining"
 
-  # Create species with all the new species stored in memory
-  count   = 0
-  fcount  = 0
-  puts "** Saving all the new species..."
-  start_time = Time.now
-  new_species.each_with_index do |s, index|
-    taxon   = Taxon.find_by_id(s[:taxon_id])
-    if taxon == nil
-      puts "fail: no taxon found with and id of #{s[:taxon_id]} for species with ubid of #{s[:ubid]}"
-      fcount += 1
-    else
-      species = Taxon.new(:name => s[:name], :parent_id => taxon.id, :rank => 6)
-      species.send(:create_without_callbacks)
-    end
-    count = index
-  end
-  puts "success: Phew!... saved #{count - fcount} species in #{Time.now - start_time}"
-  puts "failure: #{fcount} species didn't have taxons matching taxon_id in our database" if fcount != 0
-
-  # Create orphaned species with all the species stored in memory
-  count   = 0
-  fcount  = 0
-  puts "** Saving all the orphaned species..."
-  orphaned_species.each_with_index do |s, index|
-   taxon   = Taxon.find_by_id(s[:taxon_id])
-   if taxon == nil
-     puts "fail: no taxon found with and id of #{s[:taxon_id].to_s} for species with ubid of #{s[:ubid].to_s}"
-     fcount += 1
-   else
-     species = Taxon.new(:name => s[:name], :parent_id => taxon.id, :rank => 6)
-     species.send(:create_without_callbacks)
-   end
-   count = index
-  end
-  puts "success: Phew!... saved #{count - fcount} species"  
-  puts "failure: #{fcount} species didn't have taxons matching taxon_id in our database" if fcount != 0
+  # # Create species with all the new species stored in memory
+  # count   = 0
+  # fcount  = 0
+  # puts "** Saving all the new species..."
+  # start_time = Time.now
+  # new_species.each_with_index do |s, index|
+  #   taxon   = Taxon.find_by_id(s[:taxon_id])
+  #   if taxon == nil
+  #     puts "fail: no taxon found with and id of #{s[:taxon_id]} for species with ubid of #{s[:ubid]}"
+  #     fcount += 1
+  #   else
+  #     species = Taxon.new(:name => s[:name], :parent_id => taxon.id, :rank => 6)
+  #     species.send(:create_without_callbacks)
+  #   end
+  #   count = index
+  # end
+  # puts "success: Phew!... saved #{count - fcount} species in #{Time.now - start_time}"
+  # puts "failure: #{fcount} species didn't have taxons matching taxon_id in our database" if fcount != 0
+  # 
+  # # Create orphaned species with all the species stored in memory
+  # count   = 0
+  # fcount  = 0
+  # puts "** Saving all the orphaned species..."
+  # orphaned_species.each_with_index do |s, index|
+  #  taxon   = Taxon.find_by_id(s[:taxon_id])
+  #  if taxon == nil
+  #    puts "fail: no taxon found with and id of #{s[:taxon_id].to_s} for species with ubid of #{s[:ubid].to_s}"
+  #    fcount += 1
+  #  else
+  #    species = Taxon.new(:name => s[:name], :parent_id => taxon.id, :rank => 6)
+  #    species.send(:create_without_callbacks)
+  #  end
+  #  count = index
+  # end
+  # puts "success: Phew!... saved #{count - fcount} species"  
+  # puts "failure: #{fcount} species didn't have taxons matching taxon_id in our database" if fcount != 0
 
   # Exit message
   puts "Species creation is completed"
 end
 
 # Execute taxonomy creation method
-create_taxonomy
+# create_taxonomy
 # Execute species creation method
 create_organisms
