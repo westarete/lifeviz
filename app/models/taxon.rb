@@ -28,7 +28,11 @@ class Taxon < ActiveRecord::Base
   validates_presence_of :name, :message => "can't be blank"
   
   def paginated_sorted_species(page)
-    Taxon.paginate_by_sql("SELECT * FROM taxa WHERE lft >= #{self.lft} AND rgt <= #{self.rgt} AND rank = 6 ORDER BY name ASC", :page => page)
+    begin
+      Taxon.paginate_by_sql("SELECT * FROM taxa WHERE lft >= #{self.lft} AND rgt <= #{self.rgt} AND rank = 6 ORDER BY name ASC", :page => page)
+    rescue
+      raise "Left and Right attributes were nil!"
+    end
   end
   
   def parents
