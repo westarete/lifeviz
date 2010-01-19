@@ -9,15 +9,12 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100107172610) do
+ActiveRecord::Schema.define(:version => 20100119194718) do
 
   create_table "ages", :force => true do |t|
-    t.integer  "taxon_id"
-    t.string   "synonyms"
+    t.integer  "species_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.float    "initial_mortality_rate"
-    t.float    "mortality_rate_doubling_time"
     t.float    "maximum_longevity"
     t.string   "phenotype"
   end

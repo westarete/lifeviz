@@ -14,7 +14,7 @@
 class Species < Taxon
   validates_presence_of :parent_id, :on => :create, :message => "can't be blank"
   
-  has_one :age, :dependent => :destroy, :foreign_key => :taxon_id, :null_object => true
+  has_many :ages, :dependent => :destroy, :foreign_key => :species_id
   
   # Hack because Rails wants to create my associated models for me, and I
   # don't want it to because it doesn't work!!
