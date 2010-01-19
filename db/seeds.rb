@@ -7,14 +7,24 @@ UBIOTA        = "db/data/ubiota_taxonomy.psv.bz2"
 ANAGE         = "db/data/anage.xml.bz2"
 ANAGE_UBIOTA  = "db/data/hagrid_ubid.txt"
 
-# Count the number of rows in a file.
-def num_lines_bz2(filename)
+# Count the number of taxa in a file.
+def num_taxa_lines_bz2(filename)
   num_lines = 0
   puts "Calculating total size of job"
   IO.popen("bunzip2 -c #{filename}").each do |line|
     id, term, rank, hierarchy, parent_id, num_children, hierarchy_ids = line.split("|")
     next if rank == "rank"
     break if rank == "6"
+    num_lines += 1
+  end
+  num_lines
+end
+
+# Count the number of rows in a file.
+def num_lines_bz2(filename)
+  num_lines = 0
+  puts "Calculating total size of job"
+  IO.popen("bunzip2 -c #{filename}").each do |line|
     num_lines += 1
   end
   num_lines
@@ -29,7 +39,7 @@ def create_taxonomy
   ActiveRecord::Base.connection.execute "SELECT setval('taxa_id_seq',1);"
 
   # # Load new taxonomy information from UBioTa.
-  progress "Loading seed data...", num_lines_bz2(UBIOTA) do |progress_bar|
+  progress "Loading seed data...", num_taxa_lines_bz2(UBIOTA) do |progress_bar|
     IO.popen("bunzip2 -c #{UBIOTA}").each do |line|
       id, term, rank, hierarchy, parent_id, num_children, hierarchy_ids = line.split("|")
       next if rank == "rank"
@@ -48,9 +58,9 @@ def create_taxonomy
     end
   end
   
-   lastval = ActiveRecord::Base.connection.execute "SELECT MAX(ID) FROM taxa;"
-   newval = lastval.max["max"].to_i + 1
-   ActiveRecord::Base.connection.execute "SELECT setval('taxa_id_seq', #{newval});"
+  lastval = ActiveRecord::Base.connection.execute "SELECT MAX(ID) FROM taxa;"
+  newval = lastval.max["max"].to_i + 1
+  ActiveRecord::Base.connection.execute "SELECT setval('taxa_id_seq', #{newval});"
 end
 
 def rebuild_lineages
@@ -66,14 +76,13 @@ def rebuild_lineages
   
   puts  "success: #{Taxon.count} taxa set"
   sql.commit_db_transaction
-	
 end
 
 # Create species from anage/ubiota using hagrid_ubid as the bridge
 #   Collect species data from Anage
 #   Collect taxonomy species name and hierarchy from ubiota
 #   Author: john marino
-def create_organisms
+def create_species_and_data
   new_species       = []
   orphaned_species  = []
   
@@ -88,6 +97,10 @@ def create_organisms
   ubiota        = IO.popen("bunzip2 -c #{UBIOTA}")
   map           = IO.readlines(ANAGE_UBIOTA)
   anage && ubiota && map ? (puts "success") : (puts "*failed"; exit!)
+
+  # Dump all related data
+  puts "** Removing any existing age data..." 
+  Age.destroy_all ? (puts "success") : (puts "failed"; exit!)
   
   # Load taxon from anage, let's use hpricot
   puts "** Loading anage data, let's use hpricot..."
@@ -97,10 +110,13 @@ def create_organisms
   
   # Create new species array to load anage species and attributes we want
   puts "** Loading new species and storing anage data from anage dump..."
-  anage_species.each do |s|
-    x = {}
-    x[:synonyms]  = (s/'name_common').inner_html
-    new_species << x
+  progress "Storing data", anage_species.length do |progress_bar|
+    anage_species.each do |s|
+      x = {}
+      x[:synonyms]  = (s/'name_common').inner_html
+      new_species << x
+      progress_bar.inc
+    end
   end
   puts "success: #{new_species.size} new species loaded in memory"
   
@@ -125,15 +141,17 @@ def create_organisms
   
   # Find and load ubiota genus ids and species name for each species
   #   Ensure the rank is 6 (species level)
-  #   Set taxon_id to nil if the species inside ubiota doesn't exist   
+  #   Set taxon_id to nil if the species inside ubiota doesn't exist
   puts "** Looking up and loading each new species' genus id from the ubiota data (few minutes)..."
   x = 0
   a_couple = 0
+  progress "Loading seed data...", num_lines_bz2(UBIOTA) do |progress_bar|
   ubiota.each do |line|
     id, term, rank, hierarchy, parent_id, num_children, hierarchy_ids = line.split("|")
   
     # skip if we're not looking at a species level taxon
     if rank.to_i != 6   
+      progress_bar.inc
       next
     end
   
@@ -148,13 +166,14 @@ def create_organisms
         puts line
         puts"\n"
       end
+      # DEBUGGER
       if a_couple == 20 then raise "investigate" end
     else
       new_species[x][:taxon_id] = parent_id.to_i
       new_species[x][:name]     = term.to_s
       x += 1
     end
-    
+    progress_bar.inc
   end
   puts "success: traversed #{x} new species and #{orphaned_species.size} orphaned species"
    
@@ -170,25 +189,28 @@ def create_organisms
   orphaned_species.delete_if { |species| species[:taxon_id] == 0 }
   puts "success: deleted #{count - orphaned_species.size} species, #{orphaned_species.size} remaining"
 
-  # # Create species with all the new species stored in memory
-  # count   = 0
-  # fcount  = 0
-  # puts "** Saving all the new species..."
-  # start_time = Time.now
-  # new_species.each_with_index do |s, index|
-  #   taxon   = Taxon.find_by_id(s[:taxon_id])
-  #   if taxon == nil
-  #     puts "fail: no taxon found with and id of #{s[:taxon_id]} for species with ubid of #{s[:ubid]}"
-  #     fcount += 1
-  #   else
-  #     species = Taxon.new(:name => s[:name], :parent_id => taxon.id, :rank => 6)
-  #     species.send(:create_without_callbacks)
-  #   end
-  #   count = index
-  # end
-  # puts "success: Phew!... saved #{count - fcount} species in #{Time.now - start_time}"
-  # puts "failure: #{fcount} species didn't have taxons matching taxon_id in our database" if fcount != 0
-  # 
+  # Create species with all the new species stored in memory
+  count   = 0
+  fcount  = 0
+  puts "** Saving all the new species..."
+  start_time = Time.now
+  progress "Saving species", new_species.length do |progress_bar|
+    new_species.each_with_index do |s, index|
+      taxon   = Taxon.find_by_id(s[:taxon_id])
+      if taxon == nil
+        puts "fail: no taxon found with and id of #{s[:taxon_id]} for species with ubid of #{s[:ubid]}"
+        fcount += 1
+      else
+        species = Taxon.new(:name => s[:name], :parent_id => taxon.id, :rank => 6)
+        species.send(:create_without_callbacks)
+      end
+      count = index
+      progress_bar.inc
+    end
+  end
+  puts "success: Phew!... saved #{count - fcount} species in #{Time.now - start_time}"
+  puts "failure: #{fcount} species didn't have taxons matching taxon_id in our database" if fcount != 0
+  
   # # Create orphaned species with all the species stored in memory
   # count   = 0
   # fcount  = 0
@@ -212,6 +234,6 @@ def create_organisms
 end
 
 # Execute taxonomy creation method
-# create_taxonomy
+create_taxonomy
 # Execute species creation method
-create_organisms
+create_species_and_data
