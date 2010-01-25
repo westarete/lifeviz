@@ -1,0 +1,11 @@
+%h2 Adding Longevity to Homo Sapiens
+
+- form_for @age do |f|
+  = f.label :longevity
+  = f.text_field :longevity
+  = f.select :units
+  
+  [Citation Form]
+  
+  = f.submit 'Save'
+  = link_to 'cancel'
