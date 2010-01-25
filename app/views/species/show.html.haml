@@ -1,9 +1,33 @@
 = render :partial => "/shared/header", :locals => { :title => @species.name, :subtitle => "", :flash => flash }
 
-.detail Latin Name
-%h2= @species.name
+#latin_name
+  %p Latin Name
+  %h2= @species.name
 
-.detail Common Name
-%h2= @species.age.synonyms
+%table#longevity
+  %thead
+    %tr
+      %th Longevity
+      %th Citation
+      %th Actions
+  %tbody
+    %tr
+      %td.longevity 67 years
+      %td.citation  [citation]
+      %td.actions   
+        = link_to 'edit'
+        = link_to 'delete'
+    %tr
+      %td.longevity 74 years
+      %td.citation  [citation]
+      %td.actions   
+        = link_to 'edit'
+        = link_to 'delete'
+    %tr
+      %td.longevity 73 years
+      %td.citation  [citation]
+      %td.actions   
+        = link_to 'edit'
+        = link_to 'delete'
 
-= (link_to "Edit this species", edit_species_path(@species), :class => "button") if current_user
+= link_to 'add new longevity'
