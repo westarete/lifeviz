@@ -107,6 +107,10 @@ img a {
     #taxonomic_selector .rank input {
       display: block; }
 
+/* line 3, ../../app/stylesheets/partials/_color.sass */
+table#longevity thead th {
+  background-color: #ffffff; }
+
 /* line 4, ../../app/stylesheets/partials/_structure.sass */
 body #main {
   padding-top: 2em;
@@ -268,6 +272,10 @@ form textarea {
   /* line 96, ../../app/stylesheets/partials/_structure.sass */
   #popup h2, #popup h3, #popup h4 {
     color: white !important; }
+
+/* line 99, ../../app/stylesheets/partials/_structure.sass */
+table#longevity {
+  width: auto; }
 
 /* line 1, ../../app/stylesheets/partials/_typography.sass */
 body {
