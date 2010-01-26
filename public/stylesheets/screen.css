@@ -237,8 +237,12 @@ form textarea {
   width: 390px;
   height: 250px; }
 
+/* line 62, ../../app/stylesheets/partials/_structure.sass */
+.form_input {
+  margin-bottom: 1em; }
+
 /* new clearfix from perishablepress.com */
-/* line 65, ../../app/stylesheets/partials/_structure.sass */
+/* line 68, ../../app/stylesheets/partials/_structure.sass */
 .clearfix:after {
   visibility: hidden;
   display: block;
@@ -247,7 +251,7 @@ form textarea {
   clear: both;
   height: 0; }
 
-/* line 74, ../../app/stylesheets/partials/_structure.sass */
+/* line 77, ../../app/stylesheets/partials/_structure.sass */
 #backgroundGray {
   display: none;
   position: fixed;
@@ -261,7 +265,7 @@ form textarea {
   z-index: 1;
   opacity: 0.8; }
 
-/* line 88, ../../app/stylesheets/partials/_structure.sass */
+/* line 91, ../../app/stylesheets/partials/_structure.sass */
 #popup {
   display: none;
   position: fixed;
@@ -269,11 +273,11 @@ form textarea {
   height: 200px;
   width: 700px;
   z-index: 2; }
-  /* line 96, ../../app/stylesheets/partials/_structure.sass */
+  /* line 99, ../../app/stylesheets/partials/_structure.sass */
   #popup h2, #popup h3, #popup h4 {
     color: white !important; }
 
-/* line 99, ../../app/stylesheets/partials/_structure.sass */
+/* line 102, ../../app/stylesheets/partials/_structure.sass */
 table#longevity {
   width: auto; }
 

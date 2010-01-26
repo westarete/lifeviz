@@ -1,6 +1,6 @@
 = render :partial => "/shared/header", :locals => { :title => @species.name, :subtitle => "", :flash => flash }
 
-%h2 Adding Lifespan
+%h2 Editing Lifespan
 
 - form_for :age, :url => { :action => :create } do |f|
   .form_input
@@ -13,5 +13,5 @@
     [Citation Form]
   
   .form_input
-    %button{:type => "submit", :name => "commit", :value => "Create", :class => 'button positive', :id => "create-annotation"} Add Lifespan
+    %button{:type => "submit", :name => "commit", :value => "Create", :class => 'button positive', :id => "create-annotation"} Submit Change
     = link_to "Cancel", @species, :class => "button"

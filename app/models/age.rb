@@ -3,6 +3,8 @@ class Age < ActiveRecord::Base
   validates_presence_of :species_id
   validates_uniqueness_of :species_id
   
+  attr_accessor :units
+  
   def self.find_or_create_by_species_id(species_id)
     find_by_species_id(species_id) || 
     create(:species_id => species_id)
