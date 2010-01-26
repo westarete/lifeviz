@@ -1,4 +1,4 @@
-class Age < ActiveRecord::Base
+class Lifespan < ActiveRecord::Base
   belongs_to :species
   validates_presence_of :species_id
   validates_uniqueness_of :species_id
@@ -9,17 +9,22 @@ class Age < ActiveRecord::Base
     find_by_species_id(species_id) || 
     create(:species_id => species_id)
   end
+  
+  def to_s
+    value.to_s
+  end
+  
 end
+
 
 # == Schema Information
 #
-# Table name: ages
+# Table name: lifespans
 #
-#  id                :integer         not null, primary key
-#  species_id        :integer
-#  created_at        :datetime
-#  updated_at        :datetime
-#  maximum_longevity :float
-#  phenotype         :string(255)
+#  id         :integer         not null, primary key
+#  species_id :integer
+#  created_at :datetime
+#  updated_at :datetime
+#  value      :float
 #
 
