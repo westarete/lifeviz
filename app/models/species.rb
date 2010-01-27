@@ -14,20 +14,15 @@
 class Species < Taxon
   validates_presence_of :parent_id, :on => :create, :message => "can't be blank"
   
-  has_many :ages, :dependent => :destroy, :foreign_key => :species_id
+  has_many :lifespans, :dependent => :destroy, :foreign_key => :species_id
   
   # Hack because Rails wants to create my associated models for me, and I
   # don't want it to because it doesn't work!!
-  def age=(agehash)
+  def lifespan=(lifespanhash)
     nil
   end
   
-  before_save :create_associated_models
   after_save :move_to_genus
-
-  def create_associated_models
-    create_age unless age
-  end
 
   def validate
     
