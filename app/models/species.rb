@@ -25,7 +25,6 @@ class Species < Taxon
   after_save :move_to_genus
 
   def validate
-    
     unless self.parent_id && Taxon.find(self.parent_id) && Taxon.find(self.parent_id).rank == 5
       errors.add_to_base "Species needs to belong to a genus"
     end
