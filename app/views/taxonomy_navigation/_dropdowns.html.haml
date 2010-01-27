@@ -8,4 +8,4 @@
       - options = @taxon.self_and_ancestors[i + 1] ? @taxon.self_and_ancestors[i + 1].children : []
       - disabled = @taxon.self_and_ancestors[i + 1] ? false : true
       = label_tag "#{rank}-dropdown", rank.capitalize
-      = select_tag rank, options_for_taxonomy_select(options, selected), :id => "#{rank}-dropdown", :disabled => disabled
+      = select_tag rank, options_for_taxonomy_select(options, selected), :id => "#{rank}-dropdown", :disabled => true

@@ -2,8 +2,11 @@ class SpeciesController < ApplicationController
   before_filter :load_taxonomy
   
   def index
-    if params[:taxon_id]
-      @taxon = Taxon.find(params[:taxon_id])
+    if params[:taxon]
+      unless @taxon = Taxon.find_by_name(params[:taxon].capitalize)
+        @taxon = Taxon.root
+        flash.now[:notice] = "#{params[:rank].capitalize} #{params[:taxon].capitalize} could not be found."
+      end
     else
       @taxon = Taxon.root
     end

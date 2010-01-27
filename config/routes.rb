@@ -10,17 +10,18 @@ ActionController::Routing::Routes.draw do |map|
     a.connect '/species/:species_id/ages/:id', :action => :update, :conditions => {:method => :put}
   end
   
-  map.taxon '/:rank/:taxon_id',
-    :controller => :species,
-    :action => :index,
-    :rank => /(kingdom|phylum|class|order|family|genus)/,
-    :conditions => {:method => :get}
   
   # AJAX Navigation
   map.taxonomy_dropdown '/taxonomy/dropdown/:rank', 
     :controller => :taxonomy_navigation, 
     :action => :dropdown_options, 
     :rank => /(kingdoms|phylums|classes|orders|families|genuses|species)/,
+    :conditions => {:method => :get}
+  
+  map.taxon '/:rank/:taxon',
+    :controller => :species,
+    :action => :index,
+    :rank => /(kingdom|phylum|class|order|family|genus)/,
     :conditions => {:method => :get}
   
   map.root :controller => :species
