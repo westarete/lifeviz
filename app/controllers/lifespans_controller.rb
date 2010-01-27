@@ -6,11 +6,13 @@ class LifespansController < ApplicationController
   end
   
   def create
-    @lifespan = @species.lifespans.new(params[:lifespan])
+    @lifespan = Lifespan.new(params[:lifespan])
+    @lifespan.species = @species
     if @lifespan.save
+      flash[:success] = "Lifespan annotation created."
       redirect_to @species
     else
-      flash.now[:failure] = "Lifespan annotation update failed."
+      flash.now[:failure] = "Lifespan annotation create failed."
       render :new
     end
   end
@@ -22,6 +24,7 @@ class LifespansController < ApplicationController
   def update
     @lifespan = Lifespan.find(params[:id])
     if @lifespan.update_attributes(params[:lifespan])
+      flash[:success] = "Lifespan annotation updated."
       redirect_to @species
     else
       flash.now[:failure] = "Lifespan annotation update failed."

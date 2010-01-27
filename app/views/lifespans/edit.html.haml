@@ -2,11 +2,11 @@
 
 %h2 Editing Lifespan
 
-- form_for :age, :url => { :action => :create } do |f|
+- form_for :lifespan, :url => { :action => :update }, :html => {:method => :put} do |f|
   .form_input
-    = f.label :maximum_longevity, "Lifespan"
+    = f.label :value, "Lifespan"
     %br
-    = f.text_field :maximum_longevity, :class => "text", :style => "width: 50px"
+    = f.text_field :value, :class => "text", :style => "width: 50px"
     = f.select :units, ["Years", "Months", "Days", "Hours", "Minutes"]
   
   .form_input

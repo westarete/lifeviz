@@ -1,7 +1,7 @@
 class Lifespan < ActiveRecord::Base
   belongs_to :species
   validates_presence_of :species_id
-  validates_uniqueness_of :species_id
+  validates_numericality_of :value
   
   attr_accessor :units
   
@@ -27,4 +27,3 @@ end
 #  updated_at :datetime
 #  value      :float
 #
-

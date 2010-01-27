@@ -11,23 +11,12 @@
       %th Citation
       %th Actions
   %tbody
-    %tr
-      %td.longevity 67 years
-      %td.citation  [citation]
-      %td.actions   
-        = link_to 'edit'
-        = link_to 'delete'
-    %tr
-      %td.longevity 74 years
-      %td.citation  [citation]
-      %td.actions   
-        = link_to 'edit'
-        = link_to 'delete'
-    %tr
-      %td.longevity 73 years
-      %td.citation  [citation]
-      %td.actions   
-        = link_to 'edit'
-        = link_to 'delete'
+    - @species.lifespans.each do |lifespan|
+      %tr
+        %td.lifespan= lifespan
+        %td.citation  [citation]
+        %td.actions   
+          = link_to 'edit', edit_lifespan_path(@species, lifespan)
+          =# link_to 'delete'
 
-= link_to 'Add Lifespan Annotation', nil,  :class => "button"
+= link_to 'Add Lifespan Annotation', new_lifespan_path(@species),  :class => "button"
