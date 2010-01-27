@@ -157,27 +157,36 @@ body #main {
   #login .form-row {
     display: block; }
     /* line 41, ../../app/stylesheets/partials/_structure.sass */
-    #login .form-row .text {
+    #login .form-row #user_email, #login .form-row #user_password {
       width: 100px; }
     /* line 43, ../../app/stylesheets/partials/_structure.sass */
+    #login .form-row #user_openid_identifier {
+      width: 200px; }
+    /* line 45, ../../app/stylesheets/partials/_structure.sass */
     #login .form-row .remember-me {
       font-size: 70%;
       font-weight: 400; }
-    /* line 46, ../../app/stylesheets/partials/_structure.sass */
-    #login .form-row .email, #login .form-row .password, #login .form-row .remember-me {
-      padding-right: 5px; }
     /* line 48, ../../app/stylesheets/partials/_structure.sass */
     #login .form-row .email, #login .form-row .password, #login .form-row .remember-me {
-      float: left; }
+      padding-right: 5px; }
     /* line 50, ../../app/stylesheets/partials/_structure.sass */
+    #login .form-row .email, #login .form-row .password, #login .form-row .remember-me {
+      float: left; }
+    /* line 52, ../../app/stylesheets/partials/_structure.sass */
     #login .form-row .submit {
       float: right;
       padding-top: 8px; }
-      /* line 53, ../../app/stylesheets/partials/_structure.sass */
+      /* line 55, ../../app/stylesheets/partials/_structure.sass */
       #login .form-row .submit a {
         margin: 0 !important; }
+    /* line 57, ../../app/stylesheets/partials/_structure.sass */
+    #login .form-row .regular_button {
+      display: none; }
+    /* line 59, ../../app/stylesheets/partials/_structure.sass */
+    #login .form-row .openid {
+      display: none; }
 
-/* line 56, ../../app/stylesheets/partials/_structure.sass */
+/* line 62, ../../app/stylesheets/partials/_structure.sass */
 .button_row {
   margin-top: 1em; }
 
@@ -234,7 +243,7 @@ form textarea {
   height: 250px; }
 
 /* new clearfix from perishablepress.com */
-/* line 65, ../../app/stylesheets/partials/_structure.sass */
+/* line 71, ../../app/stylesheets/partials/_structure.sass */
 .clearfix:after {
   visibility: hidden;
   display: block;
@@ -243,7 +252,7 @@ form textarea {
   clear: both;
   height: 0; }
 
-/* line 74, ../../app/stylesheets/partials/_structure.sass */
+/* line 80, ../../app/stylesheets/partials/_structure.sass */
 #backgroundGray {
   display: none;
   position: fixed;
@@ -257,7 +266,7 @@ form textarea {
   z-index: 1;
   opacity: 0.8; }
 
-/* line 88, ../../app/stylesheets/partials/_structure.sass */
+/* line 94, ../../app/stylesheets/partials/_structure.sass */
 #popup {
   display: none;
   position: fixed;
@@ -265,7 +274,7 @@ form textarea {
   height: 200px;
   width: 700px;
   z-index: 2; }
-  /* line 96, ../../app/stylesheets/partials/_structure.sass */
+  /* line 102, ../../app/stylesheets/partials/_structure.sass */
   #popup h2, #popup h3, #popup h4 {
     color: white !important; }
 

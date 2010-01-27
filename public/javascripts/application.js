@@ -23,7 +23,23 @@ $(function(){
    $('#login_cancel_button').click(function(){
        $('#login').hide();
        $('#login-buttons').show();
-   })
+   });
+   
+   $('.regular_button').click(function(){
+      $(this).hide();
+      $('.openid').hide();
+      $('.openid_button').show();
+      $('.email').show();
+      $('.password').show();
+   });
+   
+   $('.openid_button').click(function(){
+      $(this).hide();
+      $('.email').hide();
+      $('.password').hide();
+      $('.regular_button').show();
+      $('.openid').show();
+   });
    
    $('#kingdom-dropdown').change(function() {
       // Disable all dropdowns to the right of phylum.

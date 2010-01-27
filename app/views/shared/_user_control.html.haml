@@ -18,12 +18,19 @@
             = label_tag 'user[password]', 'Password'
             %br
             = password_field_tag 'user[password]', '', :class => 'text'
+          .openid
+            = label_tag 'user[openid_identifier]', 'OpenID'
+            %br
+            = text_field_tag 'user[openid_identifier]', '', :class => 'text'
         .form-row.clearfix
           .remember-me
             = check_box_tag 'user[remember_me]'
             %br
             = label_tag 'user[remember_me]', 'Remember me'
           .submit
+            .openid_button= link_to "OpenID", "#", :class => "button"
+            .regular_button= link_to "Standard Login", "#", :class => "button"
+            
             %button{:type => "submit", :name => "commit", :value => "Login", :class => 'button positive'} Login
             = link_to "Cancel", "#", :id => "login_cancel_button", :class => "button"
           
