@@ -3,12 +3,16 @@ class SpeciesController < ApplicationController
   
   def index
     if params[:taxon]
-      unless @taxon = Taxon.find_by_name(params[:taxon].capitalize)
+      if ! @taxon = Taxon.find_by_name(params[:taxon].capitalize)
         @taxon = Taxon.root
+        @disable_remaining_dropdowns = "disabled"
         flash.now[:notice] = "#{params[:rank].capitalize} #{params[:taxon].capitalize} could not be found."
+      else
+        @disable_remaining_dropdowns = false
       end
     else
       @taxon = Taxon.root
+      @disable_remaining_dropdowns = "disabled"
     end
     @rank = @taxon.rank
     @species = @taxon.paginated_sorted_species(params[:page])

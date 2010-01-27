@@ -3,9 +3,11 @@
     = label_tag 'kingdom-dropdown', 'Kingdom'
     = select_tag 'kingdom', options_for_taxonomy_select(Taxon.kingdoms, (@taxon.self_and_ancestors[1] ? @taxon.self_and_ancestors[1].id : nil)), :id => 'kingdom-dropdown'
   - %w( phylum class order family genus ).each_with_index do |rank, i|
+    - if i > @rank
+      - @disable_remaining_dropdowns = "disabled"
     .rank
       - selected = @taxon.self_and_ancestors[i + 2] ? @taxon.self_and_ancestors[i + 2].id : nil
       - options = @taxon.self_and_ancestors[i + 1] ? @taxon.self_and_ancestors[i + 1].children : []
       - disabled = @taxon.self_and_ancestors[i + 1] ? false : true
       = label_tag "#{rank}-dropdown", rank.capitalize
-      = select_tag rank, options_for_taxonomy_select(options, selected), :id => "#{rank}-dropdown", :disabled => true
+      = select_tag rank, options_for_taxonomy_select(options, selected), :id => "#{rank}-dropdown", :disabled => @disable_remaining_dropdowns
