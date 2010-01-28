@@ -9,17 +9,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100119194718) do
+ActiveRecord::Schema.define(:version => 20100128165555) do
 
-  create_table "ages", :force => true do |t|
+  create_table "lifespans", :force => true do |t|
     t.integer  "species_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.float    "maximum_longevity"
-    t.string   "phenotype"
+    t.float    "value"
   end
 
-  add_index "ages", ["id"], :name => "index_species_on_id"
+  add_index "lifespans", ["id"], :name => "index_species_on_id"
 
   create_table "taxa", :force => true do |t|
     t.string  "name"
@@ -36,12 +35,15 @@ ActiveRecord::Schema.define(:version => 20100119194718) do
   add_index "taxa", ["rgt"], :name => "index_taxa_on_rgt"
 
   create_table "users", :force => true do |t|
-    t.string   "email",             :null => false
-    t.string   "crypted_password",  :null => false
-    t.string   "password_salt",     :null => false
+    t.string   "email"
+    t.string   "crypted_password"
+    t.string   "password_salt"
     t.string   "persistence_token", :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "openid_identifier"
   end
+
+  add_index "users", ["openid_identifier"], :name => "index_users_on_openid_identifier"
 
 end
