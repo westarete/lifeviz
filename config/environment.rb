@@ -34,6 +34,7 @@ Rails::Initializer.run do |config|
   
   # Authentication
   config.gem 'authlogic', :version => '2.1.3'
+  config.gem "authlogic-oid", :lib => "authlogic_openid", :version => "1.0.4"
   
   # Pagination
   config.gem 'will_paginate', :version => '2.3.11'

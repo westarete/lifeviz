@@ -4,18 +4,20 @@ class UserSessionsController < ApplicationController
   
   def create
     @user_session = UserSession.new(params[:user])
-     if @user_session.save
-      flash[:success] = "Login successful!" 
+    if @user_session.save
+      flash[:success] = "Login successful!"
+      redirect_to root_url
     else
-      flash[:failure] = "Use a valid Email and Password"
+      if !performed?
+        redirect_to root_url
+      end
+      flash[:failure] = "Login failed. Were your credentials correct?"
     end
-    redirect_back_or_default root_url
-    
   end
   
   def destroy
     current_user_session.destroy
     flash[:success] = "Logout successful!"
-    redirect_back_or_default root_url
+    redirect_to root_url
   end
-end
+en
