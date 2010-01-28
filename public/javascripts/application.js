@@ -15,6 +15,7 @@ $(function(){
         }
     } 
    
+   // Login interface
    $('#login_button').click(function(){
        $('#login-buttons').hide();
        $('#login').show();
@@ -26,21 +27,26 @@ $(function(){
    });
    
    $('.regular_button').click(function(){
-      $(this).hide();
-      $('.openid').hide();
-      $('.openid_button').show();
-      $('.email').show();
-      $('.password').show();
+      $('#openid').hide();
+      $('#standard').show();
    });
    
    $('.openid_button').click(function(){
-      $(this).hide();
-      $('.email').hide();
-      $('.password').hide();
-      $('.regular_button').show();
-      $('.openid').show();
+      $('#standard').hide();
+      $('#openid').show();
    });
    
+  $('#user_openid_identifier').coolinput({
+    blurClass: 'blur',
+    iconClass: 'openid_icon'
+  });
+  
+  $('#user_email, #user_password').coolinput({
+    blurClass: 'blur'
+  });
+
+   
+   // Taxatoy-like navigation
    $('#kingdom-dropdown').change(function() {
       // Disable all dropdowns to the right of phylum.
       $('#class-dropdown').attr('disabled', 'disabled');

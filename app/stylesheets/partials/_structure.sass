@@ -7,7 +7,7 @@ body
     #user_control
       :display block
       :float right
-      :width 300px
+      :width 310px
       #login, #signup
         :display none
     #header
@@ -27,21 +27,25 @@ body
         :vertical-align middle
 
 // Component Styles
-
+#login-buttons
+  :float right
+  
 #login
   :display block
   :padding 15px
   :border 1px solid gray
   :background-color rgba(255,255,255,.8)
-  :width 235px
+  :width 275px
   -moz-border-radius: 5px
   -webkit-border-radius: 5px
   .form-row
     :display block
+    .alt
+      :float right
     #user_email, #user_password
-      :width 100px
+      :width 120px
     #user_openid_identifier
-      :width 200px
+      :width 237px
     .remember-me
       :font-size 70%
       :font-weight 400
@@ -54,10 +58,10 @@ body
       :padding-top 8px
       a
         :margin 0 !important
-    .regular_button
-      :display none
-    .openid
-      :display none
+    .regular_button, .openid_button
+      :float right
+  #openid
+    :display none
 
 .button_row
   :margin-top 1em
