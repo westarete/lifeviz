@@ -26,13 +26,13 @@ class Lifespan < ActiveRecord::Base
   end
   
   def value=(v)
-    v = v.to_i
+    v = v.to_f
     self.value_in_days = case units
-      when 'Years'  then v * 365.0
-      when 'Months' then v * 30.0
+      when 'Years'  then v * 365
+      when 'Months' then v * 30
       when 'Days'   then v
     end
-
+    self.value_in_days
   end
   
 end
