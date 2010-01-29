@@ -1,9 +1,9 @@
 class Lifespan < ActiveRecord::Base
   belongs_to :species
   validates_presence_of :species_id
-  validates_numericality_of :value
+  # validates_numericality_of :value
   
-  attr_accessor :units
+  attr_accessor :value
   
   def self.find_or_create_by_species_id(species_id)
     find_by_species_id(species_id) || 
@@ -14,6 +14,25 @@ class Lifespan < ActiveRecord::Base
     value.to_s
   end
   
+  def value    
+    return 0 if value_in_days == 0
+    case units
+      when 'Years'  then value_in_days / 365
+      when 'Months' then value_in_days / 30
+      when 'Days'   then value_in_days
+    end
+  end
+  
+  def value=(v)
+    v = v.to_i
+    self.value_in_days = case units
+      when 'Years'  then v * 365.0
+      when 'Months' then v * 30.0
+      when 'Days'   then v
+    end
+
+  end
+  
 end
 
 
@@ -21,9 +40,10 @@ end
 #
 # Table name: lifespans
 #
-#  id         :integer         not null, primary key
-#  species_id :integer
-#  created_at :datetime
-#  updated_at :datetime
-#  value      :float
+#  id                 :integer         not null, primary key
+#  species_id         :integer
+#  created_at         :datetime
+#  updated_at         :datetime
+#  value_in_days      :float
+#  units              :string
 #
