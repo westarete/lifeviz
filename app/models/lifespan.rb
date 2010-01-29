@@ -1,7 +1,9 @@
 class Lifespan < ActiveRecord::Base
   belongs_to :species
-  validates_presence_of :species_id
-  # validates_numericality_of :value
+  validates_presence_of   :species_id
+  validates_presence_of   :units
+  validates_inclusion_of  :units, :in => %w( Days Months Years )
+  validates_presence_of   :value
   
   attr_accessor :value
   
@@ -14,7 +16,7 @@ class Lifespan < ActiveRecord::Base
     value.to_s
   end
   
-  def value    
+  def value
     return 0 if value_in_days == 0
     case units
       when 'Years'  then value_in_days / 365
