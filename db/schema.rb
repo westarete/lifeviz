@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(:version => 20100129180101) do
     t.string  "lineage_ids"
   end
 
+  add_index "taxa", ["id"], :name => "index_taxa_on_id"
   add_index "taxa", ["lft"], :name => "index_taxa_on_lft"
   add_index "taxa", ["parent_id"], :name => "index_taxa_on_parent_id"
   add_index "taxa", ["rank"], :name => "index_taxa_on_rank"
