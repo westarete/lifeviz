@@ -100,26 +100,29 @@ def create_species_and_data
 
   # Dump all related data
   puts "** Removing any existing age data..." 
-  Age.destroy_all ? (puts "success") : (puts "failed"; exit!)
+  # Age.destroy_all ? (puts "success") : (puts "failed"; exit!)
   
   # Load taxon from anage, let's use hpricot
   puts "** Loading anage data, let's use hpricot..."
   doc           = Hpricot::XML(anage)
   anage_species = (doc/'names')
-  puts  "success: #{anage_species.size} species loaded"
+  anage_ages    = (doc/'age')
+  
+  puts  "success: #{anage_species.size} species loaded with #{anage_ages.size} ages"
   
   # Create new species array to load anage species and attributes we want
   puts "** Loading new species and storing anage data from anage dump..."
   progress "Storing data", anage_species.length do |progress_bar|
-    anage_species.each do |s|
+    anage_species.each_with_index do |s, index|
       x = {}
       x[:synonyms]  = (s/'name_common').inner_html
+      x[:age]       = (anage_ages[index]/'tmax').inner_html
       new_species << x
       progress_bar.inc
     end
   end
   puts "success: #{new_species.size} new species loaded in memory"
-  
+    
   # Load ubid ids into new species from mapping
   puts "** Loading mapped ubiota ids into new species..."
   map.each_with_index do |line, index|
@@ -193,6 +196,7 @@ def create_species_and_data
   # Create species with all the new species stored in memory
   count   = 0
   fcount  = 0
+  age_nil = 0
   puts "** Saving all the new species..."
   start_time = Time.now
   progress "Species", new_species.length do |progress_bar|
@@ -204,12 +208,21 @@ def create_species_and_data
       else
         species = Taxon.new(:name => s[:name], :parent_id => taxon.id, :rank => 6)
         species.send(:create_without_callbacks)
+        age     = Lifespan.new(:value_in_days => (s[:age].to_f * 365), :units => "Years", :species_id => species.id)
+        
+        if age.value_in_days == 0
+          age_nil += 1
+        else
+          age.send(:create_without_callbacks)
+        end
       end
       count = index
       progress_bar.inc
     end
   end
   puts "success: Phew!... saved #{count - fcount} species in #{Time.now - start_time}"
+  puts "success: Phew!... saved #{count - age_nil} ages"
+  
   puts "failure: #{fcount} species didn't have taxons matching taxon_id in our database" if fcount != 0
   
   # # Create orphaned species with all the species stored in memory
@@ -235,9 +248,12 @@ def create_species_and_data
 
   # Exit message
   puts "Species creation is completed"
+  
+  puts "NOTE: don't forget to run Taxon.rebuild! ... it will take a while"
 end
 
 # Execute taxonomy creation method
-# create_taxonomy
+create_taxonomy
 # Execute species creation method
 create_species_and_data
+# rebuild_lineages
