@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 describe Karma::Proxy do
   before(:each) do
     @buckets = { :comments => 1, :edits => 2 }
-    @proxy = Karma::Proxy.new(@buckets)
+    @proxy = Karma::Proxy.new(User.make)
   end
   it "should be a Fixnum" do
     @proxy.kind_of?(Fixnum).should be_true
