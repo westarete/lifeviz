@@ -1,0 +1,218 @@
+a
+  :color blue
+  :outline none
+
+  &:hover
+    :cursor pointer
+    :color green
+
+
+img, a img
+  :border none
+  :-ms-interpolation-mode bicubic
+
+
+* html #bottom
+  :_behavior url(/images/iepngfix.htc)
+
+
+.icon
+  :width 16px
+  :height 16px
+
+
+a.button, button.button
+  :font-family "Lucida Grande",Tahoma,Arial,sans-serif
+  :float left
+  :margin 0 .7em 0 0
+  :text-decoration none
+  :background #EAEAEA url(/images/white-grad.png) repeat-x left top
+  :border 1px solid #dedede
+  :border-right 1px solid #bbb
+  :border-bottom 1px solid #bfbfbf
+  :padding 5px 10px 6px 10px
+  :display block
+  :cursor pointer
+  :font-size 100%
+  :line-height 130%
+  :color #464646
+  :-webkit-box-shadow rgba(0,0,0,.15) 0px 1px 3px
+  :-moz-box-shadow rgba(0,0,0,.15) 0px 1px 3px
+  :-webkit-border-radius 11px
+  :-moz-border-radius 11px
+
+
+a.button
+  :float none
+  :display inline
+  :display inline-block
+
+
+button
+  :width auto !important
+  :overflow visible !important
+
+  &.button
+    :float none
+    :display inline
+    :display inline-block
+    :padding 4px 10px 3px 7px
+
+    &[type]
+      :width auto
+      :padding 5px 10px 5px 7px
+      :line-height 17px
+
+
+*+html button.button[type]
+  :padding 4px 10px 3px 7px
+  :margin-bottom 1px
+
+
+* html button.button
+  :margin-bottom 1px
+
+
+a.button img, button.button img
+  :margin 0 3px -3px 0 !important
+
+
+a.button:hover
+  :border 1px solid #999
+  :color #000
+
+
+button
+  &.button:hover
+    :border 1px solid #999
+    :color #000
+
+  &.active
+    :border-color #ccc
+    :background #FFF url(/images/white-grad-active.png) repeat-x left top
+    :-webkit-box-shadow none
+    :-moz-box-shadow none
+
+
+a.button:active
+  :border-color #ccc
+  :background #FFF url(/images/white-grad-active.png) repeat-x left top
+  :-webkit-box-shadow none
+  :-moz-box-shadow none
+
+
+button.positive
+  :color #63A142
+  :font-weight bold
+
+
+a.positive
+  :color #63A142
+  :font-weight bold
+
+  &:hover
+    :border 1px solid #7CB043
+    :color #63A142
+
+
+button.positive:hover
+  :border 1px solid #7CB043
+  :color #63A142
+
+
+a
+  &.positive:active
+    :background #94B717
+    :border 1px solid #94B717
+    :text-shadow #607710 1px 1px 1px
+    :color #fff
+
+  &.negative
+    :color #d12f19
+
+
+button.negative
+  :color #d12f19
+
+
+a.negative:hover, button.negative:hover
+  :border 1px solid #E86B6D
+  :color #d12f19
+
+
+a.negative:active
+  :background #d12f19
+  :border 1px solid #d12f19
+  :text-shadow #A93816 1px 1px 1px
+  :color #fff
+
+
+.buttons
+  a em, button em
+    :font-weight normal
+    :font-style normal
+
+
+a
+  &.button em
+    :font-weight normal
+    :font-style normal
+
+  &.dark
+    :text-decoration none
+    :color #eee
+    :background #444
+    :border 1px solid #444
+    :padding 5px 10px
+    :-webkit-border-radius 11px
+    :-moz-border-radius 11px
+    :display inline-block
+
+    img
+      :margin 0 3px -3px 0 !important
+
+  &.darkPos, &.darkNeg
+    :text-decoration none
+    :color #eee
+    :background #444
+    :border 1px solid #444
+    :padding 5px 10px
+    :-webkit-border-radius 11px
+    :-moz-border-radius 11px
+    :display inline-block
+
+  &.dark:hover
+    :color #fff
+    :background #555
+    :border 1px solid #fff !important
+
+  &.darkPos
+    :border 1px solid #4c8614
+    :background #4c8614
+
+    &:hover
+      :color #fff
+      :background #5ca417
+      :border 1px solid #fff
+
+  &.darkNeg
+    :border 1px solid #d12f19
+    :background #d12f19
+
+    &:hover
+      :background #f13118
+      :border 1px solid #fff !important
+
+  &.dark:active, &.darkPos:active, &.darkNeg:active
+    :background-color #FAE158 !important
+    :color #222 !important
+    :border-color #DFC94F !important
+
+
+.info .buttons
+  :float right
+  :margin 6px 0 0 0
+  :padding 0
+
+  a, button
+    :margin 0 0 0 .7em

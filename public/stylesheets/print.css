@@ -1,3 +1,12 @@
+/* line 3, ../../vendor/gems/compass-0.8.17/frameworks/blueprint/stylesheets/blueprint/modules/_form.sass */
+.blur {
+  color: #666; }
+
+/* line 6, ../../vendor/gems/compass-0.8.17/frameworks/blueprint/stylesheets/blueprint/modules/_form.sass */
+.openid_icon {
+  background: url(/images/openid.png) center left no-repeat;
+  padding-left: 25px !important; }
+
 /* line 17, ../../vendor/gems/compass-0.8.17/frameworks/blueprint/stylesheets/blueprint/_print.sass */
 body {
   line-height: 1.5;

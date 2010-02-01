@@ -2,14 +2,13 @@
 %html
   %head
 
-    = stylesheet_link_tag "button.css", :media => 'screen, projection'
     = stylesheet_link_tag 'screen.css', :media => 'screen, projection'
     = stylesheet_link_tag 'print.css', :media => 'print'
     /[if lt IE 8]
       = stylesheet_link_tag 'ie.css', :media => 'screen, projection'
     = javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"
     = javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"
-    = javascript_include_tag 'application'
+    = javascript_include_tag 'application', 'jquery.coolinput'
   %body
     #main
       = render :partial => "/shared/user_control"
