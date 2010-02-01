@@ -32,7 +32,8 @@ module UserKarma
     results = ActiveSupport::JSON.decode(json)
     @karma = results['total']
   rescue RestClient::Exception
-    nil
+    # TODO: What is the appropriate behavior when the karma server is unreachable?
+    nil 
   end
   
   # Returns true if the user has attained a "bronze" karma level.
