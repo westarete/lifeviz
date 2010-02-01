@@ -5,8 +5,6 @@ class Lifespan < ActiveRecord::Base
   validates_inclusion_of  :units, :in => %w( Days Months Years )
   validates_presence_of   :value
   
-  attr_accessor :value
-  
   def self.find_or_create_by_species_id(species_id)
     find_by_species_id(species_id) || 
     create(:species_id => species_id)
