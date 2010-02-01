@@ -135,3 +135,16 @@ describe Lifespan do
   end
   
 end
+
+# == Schema Information
+#
+# Table name: lifespans
+#
+#  id            :integer         not null, primary key
+#  species_id    :integer
+#  created_at    :datetime
+#  updated_at    :datetime
+#  value_in_days :decimal(, )
+#  units         :string(255)
+#
+

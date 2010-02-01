@@ -44,6 +44,11 @@ $(function(){
   $('#user_email, #user_password').coolinput({
     blurClass: 'blur'
   });
+  
+  // KARMA!
+  $('#karma-tabs').tabs({
+      collapsible: true
+  });
 
    
    // Taxatoy-like navigation

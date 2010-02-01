@@ -1,7 +1,7 @@
 = render :partial => "/shared/header", :locals => { :title => @species.name, :subtitle => "", :flash => flash }
 
-#latin_name
-  %p Latin Name
+#scientific_name
+  %span.detail Scientific Name
   %h2= @species.name
 
 %table#longevity
