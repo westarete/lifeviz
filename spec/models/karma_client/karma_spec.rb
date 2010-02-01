@@ -16,6 +16,11 @@ describe KarmaClient::Karma do
      it "should return a levels object" do
        @karma.levels.kind_of?(KarmaClient::Levels).should be_true
      end
+     it "should be initialized with the proper total" do
+       @karma.levels.bronze?.should be_true
+       @karma.levels.silver?.should be_true
+       @karma.levels.gold?.should be_false       
+     end
    end
   
 end
