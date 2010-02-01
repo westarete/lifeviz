@@ -11,5 +11,11 @@ describe KarmaClient::Karma do
        @karma.total.should == 7
      end
    end
+   
+   describe "#levels" do
+     it "should return a levels object" do
+       @karma.levels.kind_of?(KarmaClient::Levels).should be_true
+     end
+   end
   
 end

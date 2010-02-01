@@ -14,6 +14,11 @@ module KarmaClient
       @total
     end
     
+    # Return the levels object for this user.
+    def levels
+      Levels.new(@total)
+    end
+    
     private
     
     # Retrieve all of the karma information for this user from the server.
