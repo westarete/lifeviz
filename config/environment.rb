@@ -40,6 +40,9 @@ Rails::Initializer.run do |config|
   
   # Null object pattern.
   config.gem 'activerecord_null_object'
+  
+  # Talk to karma server.
+  config.gem 'rest-client', :lib => 'restclient', :version => '1.3.0'
 
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
