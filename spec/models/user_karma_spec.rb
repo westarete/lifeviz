@@ -52,4 +52,38 @@ describe UserKarma do
       @user.karma.should == -1
     end
   end
+  
+  describe "#bronze?" do
+    it "should return false if the user has karma of 4 or less" do
+      @user.stub!(:karma).and_return(4)
+      @user.bronze?.should be_false
+    end
+    it "should return true if the user has karma of 5 or more" do
+      @user.stub!(:karma).and_return(5)
+      @user.bronze?.should be_true
+    end
+  end
+
+  describe "#silver?" do
+    it "should return false if the user has karma of 9 or less" do
+      @user.stub!(:karma).and_return(9)
+      @user.silver?.should be_false
+    end
+    it "should return true if the user has karma of 10 or more" do
+      @user.stub!(:karma).and_return(10)
+      @user.silver?.should be_true
+    end
+  end
+
+  describe "#gold?" do
+    it "should return false if the user has karma of 19 or less" do
+      @user.stub!(:karma).and_return(19)
+      @user.gold?.should be_false
+    end
+    it "should return true if the user has karma of 20 or more" do
+      @user.stub!(:karma).and_return(20)
+      @user.gold?.should be_true
+    end
+  end
+  
 end

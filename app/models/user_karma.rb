@@ -35,4 +35,19 @@ module UserKarma
     nil
   end
   
+  # Returns true if the user has attained a "bronze" karma level.
+  def bronze?
+    karma >= 5
+  end
+  
+  # Returns true if the user has attained a "silver" karma level.
+  def silver?
+    karma >= 10
+  end
+  
+  # Returns true if the user has attained a "gold" karma level.
+  def gold?
+    karma >= 20
+  end
+  
 end
