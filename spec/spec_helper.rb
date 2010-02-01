@@ -63,3 +63,33 @@ require 'shoulda'
 require 'authlogic/test_case'
 include Authlogic::TestCase
 activate_authlogic
+
+# Stub out the actual karma server so it's talking to our fake data instead.
+def stub_karma_server(json=nil)
+  # A sample json response from the karma server.
+  json ||= %{
+    {
+      "total":7,
+      "user_path":"/users/bobexamplecom.json",
+      "user":"bobexamplecom",
+      "buckets": {
+        "animals": {
+          "total":4,
+          "adjustments_path":"/users/bobexamplecom/buckets/animals/adjustments.json",
+          "bucket_path":"/buckets/animals.json"
+         },
+         "plants": {
+           "total":3,
+           "adjustments_path":"/users/bobexamplecom/buckets/plants/adjustments.json",
+           "bucket_path":"/buckets/plants.json"
+         }
+       }
+     }
+  }
+  # A RestClient Resource that returns json in response to a get request.
+  resource = stub('resource', :get => json)
+  # Stub the RestClient Resource to use our objects instead of querying the server.
+  RestClient::Resource.stub!(:new => resource)
+end
+
+

@@ -1,9 +1,9 @@
-module Karma
+module KarmaClient
   module User
   
     # Provide access to the user's karma.
     def karma
-      Proxy.new(self)
+      Karma.new(self)
     end
 
   end  
