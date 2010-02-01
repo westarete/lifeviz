@@ -2,6 +2,7 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe KarmaClient::User do
   before(:each) do
+    stub_karma_server
     @user = User.make
   end
   
