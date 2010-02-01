@@ -11,26 +11,37 @@ class Lifespan < ActiveRecord::Base
   end
   
   def to_s
-    value.to_s
+    if units
+      "#{value} #{units}".downcase
+    else
+      ""
+    end
   end
   
   def value
-    return 0 if value_in_days == 0
-    case units
-      when 'Years'  then value_in_days / 365
-      when 'Months' then value_in_days / 30
-      when 'Days'   then value_in_days
+    if value_in_days && units
+      in_units(units)
+    else
+      @value
     end
   end
   
   def value=(v)
+    @value = v
     v = v.to_f
     self.value_in_days = case units
       when 'Years'  then v * 365
       when 'Months' then v * 30
       when 'Days'   then v
     end
-    self.value_in_days
+  end
+  
+  def in_units(unit)
+    case unit
+      when 'Years'  then value_in_days.to_i / 365
+      when 'Months' then value_in_days.to_i / 30
+      when 'Days'   then value_in_days
+    end
   end
   
 end
