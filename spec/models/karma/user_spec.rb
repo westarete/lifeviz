@@ -1,6 +1,6 @@
-require File.dirname(__FILE__) + '/../spec_helper'
+require File.dirname(__FILE__) + '/../../spec_helper'
 
-describe UserKarma do
+describe Karma::User do
   before(:each) do
     @user = User.make
   end
