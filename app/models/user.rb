@@ -13,5 +13,5 @@
 
 class User < ActiveRecord::Base
   acts_as_authentic
-  include Karma::User
+  include KarmaClient::User
 end
