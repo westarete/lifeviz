@@ -12,13 +12,6 @@ describe KarmaClient::Karma do
      end
    end
    
-   describe "#total=" do
-     it "should update the total" do
-       @karma.total = 12
-       @karma.total.should == 12
-     end
-   end
-   
    describe "#levels" do
      it "should return a levels object" do
        @karma.levels.kind_of?(KarmaClient::Levels).should be_true

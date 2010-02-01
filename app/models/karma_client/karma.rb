@@ -13,14 +13,6 @@ module KarmaClient
     def total
       @total
     end
-
-    # Update the total karma for this user. This is just here so that the 
-    # buckets model can update the total when a bucket is changed. It should
-    # not be called externally, since it only affects cached data and has
-    # no effect on the values on the server.
-    def total=(new_total) #:nodoc:
-      @total = new_total
-    end
     
     # Return the levels object for this user.
     def levels
