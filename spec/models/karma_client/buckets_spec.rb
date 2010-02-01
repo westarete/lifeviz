@@ -16,4 +16,11 @@ describe KarmaClient::Buckets do
     end
   end
   
+  describe "setter methods" do
+    it "should set the value of that bucket" do
+      @buckets.plants += 2
+      @buckets.plants.should == 5
+    end
+  end
+  
 end
