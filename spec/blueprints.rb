@@ -1,3 +1,5 @@
+require 'machinist'
+require "machinist/active_record"
 require 'machinist/active_record'
 require 'sham'
 

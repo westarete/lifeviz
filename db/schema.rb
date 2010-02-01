@@ -21,6 +21,21 @@ ActiveRecord::Schema.define(:version => 20100129180101) do
 
   add_index "lifespans", ["id"], :name => "index_species_on_id"
 
+  create_table "open_id_authentication_associations", :force => true do |t|
+    t.integer "issued"
+    t.integer "lifetime"
+    t.string  "handle"
+    t.string  "assoc_type"
+    t.binary  "server_url"
+    t.binary  "secret"
+  end
+
+  create_table "open_id_authentication_nonces", :force => true do |t|
+    t.integer "timestamp",  :null => false
+    t.string  "server_url"
+    t.string  "salt",       :null => false
+  end
+
   create_table "taxa", :force => true do |t|
     t.string  "name"
     t.integer "parent_id"
@@ -37,12 +52,15 @@ ActiveRecord::Schema.define(:version => 20100129180101) do
   add_index "taxa", ["rgt"], :name => "index_taxa_on_rgt"
 
   create_table "users", :force => true do |t|
-    t.string   "email",             :null => false
-    t.string   "crypted_password",  :null => false
-    t.string   "password_salt",     :null => false
+    t.string   "email"
+    t.string   "crypted_password"
+    t.string   "password_salt"
     t.string   "persistence_token", :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "openid_identifier"
   end
+
+  add_index "users", ["openid_identifier"], :name => "index_users_on_openid_identifier"
 
 end

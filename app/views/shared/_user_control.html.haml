@@ -10,20 +10,25 @@
     #login.clearfix
       - form_tag user_session_path, :method => :post do
         .form-row.clearfix
-          .email
-            = label_tag 'user[email]', 'Email'
-            %br
-            = text_field_tag 'user[email]', '', :class => 'text'
-          .password
-            = label_tag 'user[password]', 'Password'
-            %br
-            = password_field_tag 'user[password]', '', :class => 'text'
+          #standard
+            .title
+              %strong Login with Email
+              = link_to "Use OpenID", "#", :class => "openid_button"
+            .email
+              = text_field_tag 'user[email]', '', :class => 'text', :title => "Email"
+            .password
+              = password_field_tag 'user[password]', '', :class => 'text', :title => "Password"
+          #openid
+            .title
+              %strong Login with OpenID
+              = link_to "Use Standard", "#", :class => "regular_button"
+            .openid
+              = text_field_tag 'user[openid_identifier]', '', :class => 'text', :title => "OpenID"
         .form-row.clearfix
           .remember-me
             = check_box_tag 'user[remember_me]'
-            %br
             = label_tag 'user[remember_me]', 'Remember me'
-          .submit
+          .submit.buttons
             %button{:type => "submit", :name => "commit", :value => "Login", :class => 'button positive'} Login
             = link_to "Cancel", "#", :id => "login_cancel_button", :class => "button"
           

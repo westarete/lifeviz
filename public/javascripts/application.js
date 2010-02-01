@@ -15,6 +15,7 @@ $(function(){
         }
     } 
    
+   // Login interface
    $('#login_button').click(function(){
        $('#login-buttons').hide();
        $('#login').show();
@@ -23,8 +24,29 @@ $(function(){
    $('#login_cancel_button').click(function(){
        $('#login').hide();
        $('#login-buttons').show();
-   })
+   });
    
+   $('.regular_button').click(function(){
+      $('#openid').hide();
+      $('#standard').show();
+   });
+   
+   $('.openid_button').click(function(){
+      $('#standard').hide();
+      $('#openid').show();
+   });
+   
+  $('#user_openid_identifier').coolinput({
+    blurClass: 'blur',
+    iconClass: 'openid_icon'
+  });
+  
+  $('#user_email, #user_password').coolinput({
+    blurClass: 'blur'
+  });
+
+   
+   // Taxatoy-like navigation
    $('#kingdom-dropdown').change(function() {
       // Disable all dropdowns to the right of phylum.
       $('#class-dropdown').attr('disabled', 'disabled');

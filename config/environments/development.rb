@@ -25,8 +25,8 @@ config.gem 'newrelic_rpm', :version => '2.9.8'
 config.gem 'capistrano-helpers', :lib => false, :version => '0.3.2'
 
 # Behavior-driven development.
-config.gem 'rspec',              :lib => false, :version => '1.2.9'
-config.gem 'rspec-rails',        :lib => false, :version => '1.2.9'
+config.gem 'rspec',              :lib => false, :version => '1.3.0'
+config.gem 'rspec-rails',        :lib => false, :version => '1.3.2'
 
 # Generate fake data.
 config.gem 'faker', :version => '0.3.1'
@@ -38,7 +38,7 @@ config.gem 'machinist', :version => '1.0.5'
 config.gem 'shoulda', :version => '2.10.2'
 
 # Mock browser testing.
-config.gem 'webrat', :version => '0.5.3'
+config.gem 'webrat', :version => '0.7.0'
 
 # Story driven development.
-config.gem 'cucumber', :version => '0.4.3'
+config.gem 'cucumber', :version => '0.6.2'
