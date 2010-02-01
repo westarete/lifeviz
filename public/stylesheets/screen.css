@@ -340,6 +340,10 @@ table#longevity thead th {
 .bronze {
   color: #8C7853; }
 
+/* line 12, ../../app/stylesheets/partials/_color.sass */
+.karma-purple {
+  color: #A0A; }
+
 /* line 4, ../../app/stylesheets/partials/_structure.sass */
 body #main {
   padding-top: 2em;
