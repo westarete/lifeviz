@@ -1,6 +1,6 @@
 %table
   %tr
-    %th Common Name
+    %th Scientific Name
   - @species.each do |species|
     %tr
       %td= link_to species.name, species_path(species.id)
