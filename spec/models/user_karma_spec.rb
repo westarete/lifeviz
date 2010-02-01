@@ -38,4 +38,18 @@ describe UserKarma do
       @user.karma_url.should =~ /\/karma.json$/
     end
   end
+  
+  describe "#karma" do
+    before(:each) do
+      # A sample json response from the karma server.
+      json = '{"buckets":{"animals":{"total":-4,"adjustments_path":"/users/ieva/buckets/animals/adjustments.json","bucket_path":"/buckets/animals.json"},"plants":{"total":3,"adjustments_path":"/users/ieva/buckets/plants/adjustments.json","bucket_path":"/buckets/plants.json"}},"total":-1,"user_path":"/users/ieva.json","user":"ieva"}'
+      # A RestClient Resource that returns json in response to a get request.
+      resource = stub('resource', :get => json)
+      # Stub the RestClient Resource to use our objects instead of querying the server.
+      RestClient::Resource.stub!(:new => resource)
+    end
+    it "should fetch and parse the results from the karma server" do
+      @user.karma.should == -1
+    end
+  end
 end
