@@ -10,7 +10,7 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
     if @user.save
       flash[:success] = "Account registered!"
-      redirect_back_or_default root_url
+      redirect_to root_url
     else
       render :action => :new
     end
