@@ -26,9 +26,18 @@ describe KarmaClient::Buckets do
   end
   
   describe "setter methods" do
+    before(:each) do
+      stub_karma_server
+    end
     it "should set the value of that bucket" do
       @buckets.plants += 2
       @buckets.plants.should == 5
+    end
+    it "should send the changes back to the karma server" do
+      resource = mock('resource')
+      resource.should_receive(:post).with('adjustment[value]=3')
+      RestClient::Resource.should_receive(:new).with("http://#{KARMA_SERVER_HOSTNAME}/users/bobexamplecom/buckets/plants/adjustments.json").and_return(resource)
+      @buckets.plants += 3
     end
   end
   

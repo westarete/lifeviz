@@ -31,10 +31,29 @@ module KarmaClient
         next if respond_to? :"#{bucket_name}="
         class_eval %{
           def #{bucket_name}=(new_value)
-            @buckets[:#{bucket_name}] = new_value
+            update_bucket_value('#{bucket_name}', new_value)
           end
         }        
       end
+    end
+    
+    # Update the given bucket name with the new value, and notify the karma
+    # server.
+    def update_bucket_value(bucket_name, new_value)
+      adjustment_value = new_value - @buckets[bucket_name]['total']
+      send_adjustment_to_karma_server(bucket_name, adjustment_value)
+      @buckets[bucket_name]['total'] = new_value
+    end
+        
+    # Send an update to the karma server that adjusts the given bucket by
+    # the given amount.
+    def send_adjustment_to_karma_server(bucket_name, adjustment_value)
+      resource = RestClient::Resource.new("http://#{KARMA_SERVER_HOSTNAME}#{@buckets[bucket_name]['adjustments_path']}")
+      resource.post("adjustment[value]=#{adjustment_value}")
+    rescue RestClient::Exception => e
+      # TODO: What is the appropriate behavior when the karma server is unreachable?
+      p e.response
+      raise
     end
     
   end
