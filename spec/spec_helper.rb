@@ -88,7 +88,7 @@ def stub_karma_server(json=nil)
   }
   # A RestClient Resource that returns json in response to a get request, and
   # accepts a post request.
-  resource = stub('resource', :get => json, :post => nil)
+  resource = stub('resource', :get => json, :post => nil, :put => nil)
   # Stub the RestClient Resource to use our objects instead of querying the server.
   RestClient::Resource.stub!(:new => resource)
 end

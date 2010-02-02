@@ -26,18 +26,26 @@ module KarmaClient
         
     private
     
+    # Register our user on the karma server.
+    def create_user_on_karma_server
+      resource = RestClient::Resource.new("http://#{KARMA_SERVER_HOSTNAME}/users/#{@user.karma_permalink}.json")
+      resource.put('')
+    rescue RestClient::Exception => e
+      # TODO: What is the appropriate behavior when this request fails?
+      p e.response
+      raise
+    end
+    
     # Retrieve all of the karma information for this user from the server.
     def fetch_karma
-      # resource = RestClient::Resource.new(karma_url, :user => '', :password => KARMA_API_KEY)   # with authentication
       resource = RestClient::Resource.new("http://#{KARMA_SERVER_HOSTNAME}/users/#{@user.karma_permalink}/karma.json")
       json = resource.get
       results = ActiveSupport::JSON.decode(json)
-
-      # Store the user's karma for each bucket.
       @buckets = results['buckets']
-
-      # TODO: What is the appropriate behavior when the karma server is unreachable?
-      # rescue RestClient::Exception
+    rescue RestClient::ResourceNotFound
+      # If the user is not defined yet, create it and try again.
+      create_user_on_karma_server
+      retry
     end
     
   end
