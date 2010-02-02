@@ -61,7 +61,7 @@ module KarmaClient
       resource = RestClient::Resource.new("http://#{KARMA_SERVER_HOSTNAME}#{@buckets[bucket_name]['adjustments_path']}")
       resource.post("adjustment[value]=#{adjustment_value}")
     rescue RestClient::Exception => e
-      # TODO: What is the appropriate behavior when the karma server is unreachable?
+      # TODO: What is the appropriate behavior when this request fails?
       p e.response
       raise
     end
