@@ -11,6 +11,16 @@ module KarmaClient
       define_bucket_setter_methods
     end
     
+    # Return the sum of all bucket totals. Most people shouldn't use this
+    # directly. Use @user.karma.total instead.
+    def _total  # :nodoc:
+      total = 0
+      @buckets.each do |name, hash|
+        total += hash['total']
+      end
+      total
+    end
+    
     private
     
     # Define the getter accessor methods for the buckets.

@@ -11,11 +11,7 @@ module KarmaClient
     # Return the total karma for this user. This is the sum of all the 
     # buckets' karma.
     def total
-      total = 0
-      @buckets.each do |name, hash|
-        total += hash['total']
-      end
-      total
+      self.buckets._total
     end
     
     # Return the levels object for this user.

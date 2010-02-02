@@ -19,6 +19,12 @@ describe KarmaClient::Buckets do
     @buckets.should respond_to(:animals)
   end
   
+  describe "#_total" do
+    it "should return the total of all buckets" do
+      @buckets._total.should == 5
+    end
+  end
+  
   describe "getter methods" do
     it "should return the value of that bucket" do
       @buckets.plants.should == 3
