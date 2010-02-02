@@ -225,26 +225,26 @@ def create_species_and_data
   
   puts "failure: #{fcount} species didn't have taxons matching taxon_id in our database" if fcount != 0
   
-  # # Create orphaned species with all the species stored in memory
-  # count   = 0
-  # fcount  = 0
-  # puts "** Saving all the orphaned species..."
-  # progress "Orphans", orphaned_species.length do |progress_bar|
-  #   orphaned_species.each_with_index do |s, index|
-  #     taxon   = Taxon.find_by_id(s[:taxon_id])
-  #     if taxon == nil
-  #      puts "fail: no taxon found with and id of #{s[:taxon_id].to_s} for species with ubid of #{s[:ubid].to_s}"
-  #      fcount += 1
-  #     else
-  #      species = Taxon.new(:name => s[:name], :parent_id => taxon.id, :rank => 6)
-  #      species.send(:create_without_callbacks)
-  #     end
-  #     count = index
-  #     progress_bar.inc
-  #   end
-  # end
-  # puts "success: Phew!... saved #{count - fcount} species"  
-  # puts "failure: #{fcount} species didn't have taxons matching taxon_id in our database" if fcount != 0
+  # Create orphaned species with all the species stored in memory
+  count   = 0
+  fcount  = 0
+  puts "** Saving all the orphaned species..."
+  progress "Orphans", orphaned_species.length do |progress_bar|
+    orphaned_species.each_with_index do |s, index|
+      taxon   = Taxon.find_by_id(s[:taxon_id])
+      if taxon == nil
+       puts "fail: no taxon found with and id of #{s[:taxon_id].to_s} for species with ubid of #{s[:ubid].to_s}"
+       fcount += 1
+      else
+       species = Taxon.new(:name => s[:name], :parent_id => taxon.id, :rank => 6)
+       species.send(:create_without_callbacks)
+      end
+      count = index
+      progress_bar.inc
+    end
+  end
+  puts "success: Phew!... saved #{count - fcount} species"  
+  puts "failure: #{fcount} species didn't have taxons matching taxon_id in our database" if fcount != 0
 
   # Exit message
   puts "Species creation is completed"
