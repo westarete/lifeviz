@@ -23,6 +23,10 @@ class ApplicationController < ActionController::Base
       @current_user = current_user_session && current_user_session.record
     end
     
+    def karma
+      current_user.karma
+    end
+    
     def require_user
       unless current_user
         store_location

@@ -1,0 +1,28 @@
+#karma-widget
+  - if current_user
+    / #karma-tabs
+    /   %ul
+    /     %li
+    /       %a{:href => "#karma"}Karma
+    /     %li
+    /       %a{:href => "#achievements"}Achievements
+
+    #karma
+      Karma:
+      = current_user.karma.total
+    
+    #achievements
+      Level:
+      - if current_user.karma.levels.gold?
+        %span.gold Gold!
+      - elsif current_user.karma.levels.silver?
+        %span.silver Silver!
+      - elsif current_user.karma.levels.bronze?
+        %span.bronze Bronze!
+      - else
+        %span.detail *dust*
+        
+  - else
+    %h5
+      Powered by
+      %span.karma-purple Karma!

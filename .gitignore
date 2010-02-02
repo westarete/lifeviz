@@ -4,3 +4,4 @@ nbproject
 *.tmp
 */*.tmp
 config/campfire.yml
+rerun.txt
