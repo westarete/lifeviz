@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100129180101) do
+ActiveRecord::Schema.define(:version => 20100202144252) do
 
   create_table "lifespans", :force => true do |t|
     t.integer  "species_id"
@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(:version => 20100129180101) do
 
   add_index "taxa", ["id"], :name => "index_taxa_on_id"
   add_index "taxa", ["lft"], :name => "index_taxa_on_lft"
+  add_index "taxa", ["name"], :name => "index_taxa_on_name"
   add_index "taxa", ["parent_id"], :name => "index_taxa_on_parent_id"
   add_index "taxa", ["rank"], :name => "index_taxa_on_rank"
   add_index "taxa", ["rgt"], :name => "index_taxa_on_rgt"
