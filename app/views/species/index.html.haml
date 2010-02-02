@@ -1,6 +1,8 @@
 = render :partial => "/shared/header", :locals => { :title => "LifeViz", :subtitle => "Please browse the species below.", :flash => flash }
 = render :partial => "/taxonomy_navigation/dropdowns"
 
+#spinner= image_tag 'loader.gif'
+
 #species
   = render :partial => "table"
 

@@ -65,6 +65,8 @@ $(function(){
           
           $('#phylum-dropdown').attr('disabled', 'disabled');
           
+          $('#spinner').fadeIn();
+          
           // Update the main page content.
           $.ajax({
               type: 'GET',
@@ -72,10 +74,13 @@ $(function(){
               success: function(response) {
                   $('#species').html(response);
                   $('#species').fadeIn();
+                  $('#spinner').fadeOut();
               }
           });
           
       } else {
+          
+          $('#spinner').fadeIn();
           
           // Populate the phylum dropdown.
           $.ajax({
@@ -84,7 +89,6 @@ $(function(){
               data: { parent_id: $('#kingdom-dropdown').val() },
               success: function(response) {
                   $('#phylum-dropdown').html(response);
-                  $('#phylum-dropdown').parent().effect('highlight', {}, 500);
               }
           });
 
@@ -99,6 +103,8 @@ $(function(){
               success: function(response) {
                   $('#species').html(response);
                   $('#species').fadeIn();
+                  $('#phylum-dropdown').parent().effect('highlight', {}, 500);
+                  $('#spinner').fadeOut();
               }
           });
       
@@ -121,6 +127,7 @@ $(function(){
       if ($('#phylum-dropdown').val() == '') {
           
           $('#class-dropdown').attr('disabled', 'disabled');
+          $('#spinner').fadeIn();
           
           // Update the main page content.
           $.ajax({
@@ -130,10 +137,12 @@ $(function(){
               success: function(response) {
                   $('#species').html(response);
                   $('#species').fadeIn();
+                  $('#spinner').fadeOut();
               }
           });
           
       } else {
+          $('#spinner').fadeIn();
       
           // Populate the class dropdown.
           $.ajax({
@@ -142,7 +151,6 @@ $(function(){
               data: { parent_id: $('#phylum-dropdown').val() },
               success: function(response) {
                   $('#class-dropdown').html(response);
-                  $('#class-dropdown').parent().effect('highlight', {}, 500);
               }
           });
 
@@ -157,6 +165,8 @@ $(function(){
               success: function(response) {
                   $('#species').html(response);
                   $('#species').fadeIn();
+                  $('#class-dropdown').parent().effect('highlight', {}, 500);
+                  $('#spinner').fadeOut();
               }
           });
       
@@ -178,6 +188,7 @@ $(function(){
       if ($('#class-dropdown').val() == '') {
           
           $('#order-dropdown').attr('disabled', 'disabled');
+          $('#spinner').fadeIn();
           
           // Update the main page content.
           $.ajax({
@@ -187,10 +198,12 @@ $(function(){
               success: function(response) {
                   $('#species').html(response);
                   $('#species').fadeIn();
+                  $('#spinner').fadeOut();
               }
           });
           
       } else {
+          $('#spinner').fadeIn();
       
           // Populate the order dropdown.
           $.ajax({
@@ -199,7 +212,6 @@ $(function(){
               data: { parent_id: $('#class-dropdown').val() },
               success: function(response) {
                   $('#order-dropdown').html(response);
-                  $('#order-dropdown').parent().effect('highlight', {}, 500);
               }
           });
 
@@ -214,6 +226,8 @@ $(function(){
               success: function(response) {
                   $('#species').html(response);
                   $('#species').fadeIn();
+                  $('#order-dropdown').parent().effect('highlight', {}, 500);
+                  $('#spinner').fadeOut();
               }
           });
       
@@ -234,6 +248,7 @@ $(function(){
       if ($('#order-dropdown').val() == '') {
           
           $('#family-dropdown').attr('disabled', 'disabled');
+          $('#spinner').fadeIn();
           
           // Update the main page content.
           $.ajax({
@@ -243,10 +258,12 @@ $(function(){
               success: function(response) {
                   $('#species').html(response);
                   $('#species').fadeIn();
+                  $('#spinner').fadeOut();
               }
           });
           
       } else {
+          $('#spinner').fadeIn();
       
           // Populate the family dropdown.
           $.ajax({
@@ -255,7 +272,6 @@ $(function(){
               data: { parent_id: $('#order-dropdown').val() },
               success: function(response) {
                   $('#family-dropdown').html(response);
-                  $('#family-dropdown').parent().effect('highlight', {}, 500);
               }
           });
 
@@ -270,6 +286,8 @@ $(function(){
               success: function(response) {
                   $('#species').html(response);
                   $('#species').fadeIn();
+                  $('#family-dropdown').parent().effect('highlight', {}, 500);
+                  $('#spinner').fadeOut();
               }
           });
       
@@ -290,6 +308,7 @@ $(function(){
       if ($('#family-dropdown').val() == '') {
           
           $('#genus-dropdown').attr('disabled', 'disabled');
+          $('#spinner').fadeIn();
           
           // Update the main page content.
           $.ajax({
@@ -299,10 +318,12 @@ $(function(){
               success: function(response) {
                   $('#species').html(response);
                   $('#species').fadeIn();
+                  $('#spinner').fadeOut();
               }
           });
           
       } else {
+          $('#spinner').fadeIn();
        
           // Populate the genus dropdown.
           $.ajax({
@@ -311,7 +332,6 @@ $(function(){
               data: { parent_id: $('#family-dropdown').val() },
               success: function(response) {
                   $('#genus-dropdown').html(response);
-                  $('#genus-dropdown').parent().effect('highlight', {}, 500);
               }
           });
 
@@ -326,6 +346,8 @@ $(function(){
               success: function(response) {
                   $('#species').html(response);
                   $('#species').fadeIn();
+                  $('#genus-dropdown').parent().effect('highlight', {}, 500);
+                  $('#spinner').fadeOut();
               }
           });
       
@@ -345,6 +367,7 @@ $(function(){
        
        // If someone selects 'any'
       if ($('#genus-dropdown').val() == '') {
+          $('#spinner').fadeIn();
           
           // Update the main page content.
           $.ajax({
@@ -354,10 +377,12 @@ $(function(){
               success: function(response) {
                   $('#species').html(response);
                   $('#species').fadeIn();
+                  $('#spinner').fadeOut();
               }
           });
           
       } else {
+          $('#spinner').fadeIn();
       
           // Update the main page content.
           $.ajax({
@@ -367,6 +392,7 @@ $(function(){
               success: function(response) {
                   $('#species').html(response);
                   $('#species').fadeIn();
+                  $('#spinner').fadeOut();
               }
           });
       

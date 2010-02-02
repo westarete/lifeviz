@@ -409,10 +409,14 @@ body #presence {
       font-weight: 600; }
 
 /* line 55, ../../app/stylesheets/partials/_structure.sass */
+#spinner {
+  display: none; }
+
+/* line 58, ../../app/stylesheets/partials/_structure.sass */
 #login-buttons {
   float: right; }
 
-/* line 58, ../../app/stylesheets/partials/_structure.sass */
+/* line 61, ../../app/stylesheets/partials/_structure.sass */
 #login {
   display: block;
   padding: 15px;
@@ -421,43 +425,43 @@ body #presence {
   width: 275px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px; }
-  /* line 66, ../../app/stylesheets/partials/_structure.sass */
+  /* line 69, ../../app/stylesheets/partials/_structure.sass */
   #login .form-row {
     display: block; }
-    /* line 68, ../../app/stylesheets/partials/_structure.sass */
+    /* line 71, ../../app/stylesheets/partials/_structure.sass */
     #login .form-row .alt {
       float: right; }
-    /* line 70, ../../app/stylesheets/partials/_structure.sass */
+    /* line 73, ../../app/stylesheets/partials/_structure.sass */
     #login .form-row #user_email, #login .form-row #user_password {
       width: 120px; }
-    /* line 72, ../../app/stylesheets/partials/_structure.sass */
+    /* line 75, ../../app/stylesheets/partials/_structure.sass */
     #login .form-row #user_openid_identifier {
       width: 237px; }
-    /* line 74, ../../app/stylesheets/partials/_structure.sass */
+    /* line 77, ../../app/stylesheets/partials/_structure.sass */
     #login .form-row .remember-me {
       font-size: 70%;
       font-weight: 400; }
-    /* line 77, ../../app/stylesheets/partials/_structure.sass */
+    /* line 80, ../../app/stylesheets/partials/_structure.sass */
     #login .form-row .email, #login .form-row .password, #login .form-row .remember-me {
       padding-right: 5px; }
-    /* line 79, ../../app/stylesheets/partials/_structure.sass */
+    /* line 82, ../../app/stylesheets/partials/_structure.sass */
     #login .form-row .email, #login .form-row .password, #login .form-row .remember-me {
       float: left; }
-    /* line 81, ../../app/stylesheets/partials/_structure.sass */
+    /* line 84, ../../app/stylesheets/partials/_structure.sass */
     #login .form-row .submit {
       float: right;
       padding-top: 8px; }
-      /* line 84, ../../app/stylesheets/partials/_structure.sass */
+      /* line 87, ../../app/stylesheets/partials/_structure.sass */
       #login .form-row .submit a {
         margin: 0 !important; }
-    /* line 86, ../../app/stylesheets/partials/_structure.sass */
+    /* line 89, ../../app/stylesheets/partials/_structure.sass */
     #login .form-row .regular_button, #login .form-row .openid_button {
       float: right; }
-  /* line 88, ../../app/stylesheets/partials/_structure.sass */
+  /* line 91, ../../app/stylesheets/partials/_structure.sass */
   #login #openid {
     display: none; }
 
-/* line 91, ../../app/stylesheets/partials/_structure.sass */
+/* line 94, ../../app/stylesheets/partials/_structure.sass */
 .button_row {
   margin-top: 1em; }
 
@@ -513,12 +517,12 @@ form textarea {
   width: 390px;
   height: 250px; }
 
-/* line 97, ../../app/stylesheets/partials/_structure.sass */
+/* line 100, ../../app/stylesheets/partials/_structure.sass */
 .form_input {
   margin-bottom: 1em; }
 
 /* new clearfix from perishablepress.com */
-/* line 103, ../../app/stylesheets/partials/_structure.sass */
+/* line 106, ../../app/stylesheets/partials/_structure.sass */
 .clearfix:after {
   visibility: hidden;
   display: block;
@@ -527,7 +531,7 @@ form textarea {
   clear: both;
   height: 0; }
 
-/* line 112, ../../app/stylesheets/partials/_structure.sass */
+/* line 115, ../../app/stylesheets/partials/_structure.sass */
 #backgroundGray {
   display: none;
   position: fixed;
@@ -541,7 +545,7 @@ form textarea {
   z-index: 1;
   opacity: 0.8; }
 
-/* line 126, ../../app/stylesheets/partials/_structure.sass */
+/* line 129, ../../app/stylesheets/partials/_structure.sass */
 #popup {
   display: none;
   position: fixed;
@@ -549,11 +553,11 @@ form textarea {
   height: 200px;
   width: 700px;
   z-index: 2; }
-  /* line 134, ../../app/stylesheets/partials/_structure.sass */
+  /* line 137, ../../app/stylesheets/partials/_structure.sass */
   #popup h2, #popup h3, #popup h4 {
     color: white !important; }
 
-/* line 137, ../../app/stylesheets/partials/_structure.sass */
+/* line 140, ../../app/stylesheets/partials/_structure.sass */
 table#longevity {
   width: auto; }
 
