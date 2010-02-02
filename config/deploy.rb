@@ -6,6 +6,7 @@ require 'capistrano-helpers/shared'     # Symlink shared files after deploying
 require 'capistrano-helpers/gems'       # Install all required rubygems
 require 'capistrano-helpers/migrations' # Run all migrations automatically
 require 'capistrano-helpers/campfire'   # Post deploy info to campfire
+require 'hoptoad_notifier/capistrano'   # Hoptoad notification
 
 # The name of the application.
 set :application, "anage"
