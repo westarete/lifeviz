@@ -22,5 +22,18 @@ describe KarmaClient::Karma do
        @karma.levels.gold?.should be_false       
      end
    end
+   
+   describe "#buckets" do
+     it "should return a buckets object" do
+       @karma.buckets.kind_of?(KarmaClient::Buckets).should be_true
+     end
+     describe "setters" do
+       it "should update the total" do
+         @karma.total.should == 7
+         @karma.buckets.plants += 2
+         @karma.total.should == 9
+       end
+     end
+   end
   
 end

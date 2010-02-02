@@ -23,6 +23,11 @@ module KarmaClient
       Levels.new(self.total)
     end
     
+    # Return the buckets object for this user.
+    def buckets
+      Buckets.new(@buckets)
+    end
+        
     private
     
     # Retrieve all of the karma information for this user from the server.
