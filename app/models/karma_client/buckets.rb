@@ -19,7 +19,7 @@ module KarmaClient
         next if respond_to? bucket_name
         class_eval %{
           def #{bucket_name}
-            @buckets[:#{bucket_name}]
+            @buckets['#{bucket_name}']['total']
           end
         }        
       end

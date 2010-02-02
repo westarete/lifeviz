@@ -2,7 +2,16 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe KarmaClient::Buckets do
   before(:each) do
-    @buckets = KarmaClient::Buckets.new(:plants => 3, :animals => 2)
+    @buckets = KarmaClient::Buckets.new({
+      'plants' => {
+        'total' => 3,
+        'adjustments_path' => '/users/bobexamplecom/buckets/plants/adjustments.json',
+      },
+      'animals' => {
+        'total' => 2,
+        'adjustments_path' => '/users/bobexamplecom/buckets/animals/adjustments.json',
+      },
+    })
   end
 
   it "should define an accessor method for each bucket name" do
