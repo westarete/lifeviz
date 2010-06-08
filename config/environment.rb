@@ -44,6 +44,9 @@ Rails::Initializer.run do |config|
   
   # Talk to karma server.
   config.gem 'rest-client', :lib => 'restclient', :version => '1.3.0'
+  
+  # Hoptoad notifier
+  config.gem 'hoptoad_notifier', :version => '2.1.3'
 
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named

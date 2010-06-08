@@ -1,5 +1,5 @@
 #karma-widget
-  - if current_user
+  - if logged_in?
     / #karma-tabs
     /   %ul
     /     %li
@@ -14,11 +14,11 @@
     #achievements
       Level:
       - if current_user.karma.levels.gold?
-        %span.gold Gold!
+        %span.gold Gold
       - elsif current_user.karma.levels.silver?
-        %span.silver Silver!
+        %span.silver Silver
       - elsif current_user.karma.levels.bronze?
-        %span.bronze Bronze!
+        %span.bronze Bronze
       - else
         %span.detail *dust*
         
@@ -26,3 +26,10 @@
     %h5
       Powered by
       %span.karma-purple Karma!
+  
+  - if flash[:karma_updated]
+    :javascript
+      $(function(){
+        $('#karma-widget').effect("highlight");
+      });
+    
