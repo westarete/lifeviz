@@ -8,10 +8,25 @@ module KarmaClient
       fetch_karma
     end
     
+    def connected?
+      begin
+        resource = RestClient::Resource.new("http://#{KARMA_SERVER_HOSTNAME}/users/#{@user.karma_permalink}/karma.json")
+        json = resource.get
+      rescue
+        false
+      else
+        true
+      end
+    end
+    
     # Return the total karma for this user. This is the sum of all the 
     # buckets' karma.
     def total
-      self.buckets._total
+      if connected?
+        self.buckets._total
+      else
+        0
+      end
     end
     
     # Return the levels object for this user.
@@ -46,6 +61,8 @@ module KarmaClient
       # If the user is not defined yet, create it and try again.
       create_user_on_karma_server
       retry
+    rescue
+      Rails.logger.warn "Karma Broken!"
     end
     
   end
