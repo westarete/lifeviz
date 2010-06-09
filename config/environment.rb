@@ -20,11 +20,11 @@ Rails::Initializer.run do |config|
   # config.gem "sqlite3-ruby", :lib => "sqlite3"
   # config.gem "aws-s3", :lib => "aws/s3"
   
-  # Stylesheet library.
-  config.gem 'compass', :version => '0.8.17'
-  
   # Alternate template and stylesheet engine.
-  config.gem 'haml', :version => '2.2.15'
+  config.gem 'haml', :version => '3.0.5'
+  
+  # Stylesheet library.
+  config.gem 'compass', :version => '0.10.1'
 
   # Show text-based progress bar for long-running console tasks.
   config.gem 'progressbar', :version => '0.9.0'  

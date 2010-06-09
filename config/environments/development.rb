@@ -22,7 +22,7 @@ config.action_mailer.raise_delivery_errors = false
 config.gem 'newrelic_rpm', :version => '2.9.8'
 
 # Deployment recipes.
-config.gem 'capistrano-helpers', :lib => false, :version => '0.3.2'
+config.gem 'capistrano-helpers', :lib => false, :version => '>= 0.4.3'
 
 # Behavior-driven development.
 config.gem 'rspec',              :lib => false, :version => '1.3.0'
