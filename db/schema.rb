@@ -9,7 +9,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100202144252) do
+ActiveRecord::Schema.define(:version => 20100610181137) do
+
+  create_table "birth_weights", :force => true do |t|
+    t.integer  "species_id"
+    t.decimal  "value_in_grams"
+    t.string   "units"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "birth_weights", ["species_id"], :name => "index_birth_weights_on_species_id"
 
   create_table "lifespans", :force => true do |t|
     t.integer  "species_id"
