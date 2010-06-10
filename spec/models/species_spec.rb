@@ -14,6 +14,8 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Species do
+   it { should have_many :birth_weights }
+  
   fixtures :taxa
   
   before(:each) do    
