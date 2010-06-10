@@ -10,6 +10,8 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js" type="text/javascript"></script> 
     <script src="/javascripts/application.js?1276007042" type="text/javascript"></script> 
     <script src="/javascripts/jquery.coolinput.js?1265035769" type="text/javascript"></script> 
+    <script src="/javascripts/protovis-r3.2.js" type="text/javascript"></script>
+    <script src="/wireframes/species_data.js" type="text/javascript"></script> 
   </head> 
   <body> 
     <div id='main'> 
@@ -61,7 +63,162 @@
           <label for="genus-dropdown">Genus</label> 
           <select disabled="disabled" id="genus-dropdown" name="genus"><option value="">Any</option></select> 
         </div> 
-      </div> 
+      </div>
+      
+      
+      
+      
+      
+      
+<div id="center"><div id="fig"> 
+    <script type="text/javascript+protovis"> 
+ 
+// The units and dimensions to visualize, in order.
+var units = {
+  dsp: {name: "Lifespan", unit: " years"},
+  lbs: {name: "Birth Weight", unit: " lbs"},
+  hp: {name: "Adult Weight", unit: " lbs"},
+  acc: {name: "Litter Size", unit: ""}
+}
+ 
+var dims = pv.keys(units);
+ 
+/* Sizing and scales. */
+var w = 890,
+    h = 420,
+    fudge = 0.5,
+    x = pv.Scale.ordinal(dims).splitFlush(0, w),
+    y = pv.dict(dims, function(t) pv.Scale.linear(
+        species_data.filter(function(d) !isNaN(d[t])),
+        function(d) Math.floor(d[t])-fudge,
+        function(d) Math.ceil(d[t]) +fudge
+        ).range(0, h)),
+    c = pv.dict(dims, function(t) pv.Scale.linear(
+        species_data.filter(function(d) !isNaN(d[t])),
+        function(d) Math.floor(d[t])-fudge,
+        function(d) Math.ceil(d[t]) +fudge
+        ).range("steelblue", "brown"));
+ 
+/* Interaction state. */
+var filter = pv.dict(dims, function(t) {
+    return {min: y[t].domain()[0], max: y[t].domain()[1]};
+  }), active = "dsp";
+ 
+/* The root panel. */
+var vis = new pv.Panel()
+    .width(w)
+    .height(h)
+    .left(30)
+    .right(30)
+    .top(30)
+    .bottom(20);
+ 
+// The parallel coordinates display.
+vis.add(pv.Panel)
+    .data(species_data)
+    .visible(function(d) dims.every(function(t)
+        (d[t] >= filter[t].min) && (d[t] <= filter[t].max)))
+  .add(pv.Line)
+    .data(dims)
+    .left(function(t, d) x(t))
+    .bottom(function(t, d) y[t](d[t]))
+    .strokeStyle("#ddd")
+    .lineWidth(1)
+    .antialias(false);
+ 
+// Rule per dimension.
+rule = vis.add(pv.Rule)
+    .data(dims)
+    .left(x);
+ 
+// Dimension label
+rule.anchor("top").add(pv.Label)
+    .top(-12)
+    .font("bold 10px sans-serif")
+    .text(function(d) units[d].name);
+ 
+// The parallel coordinates display.
+var change = vis.add(pv.Panel);
+ 
+var line = change.add(pv.Panel)
+    .data(species_data)
+    .visible(function(d) dims.every(function(t)
+        (d[t] >= filter[t].min) && (d[t] <= filter[t].max)))
+  .add(pv.Line)
+    .data(dims)
+    .left(function(t, d) x(t))
+    .bottom(function(t, d) y[t](d[t]))
+    .strokeStyle(function(t, d) c[active](d[active]))
+    .lineWidth(1);
+ 
+// Updater for slider and resizer.
+function update(d) {
+  var t = d.dim;
+  filter[t].min = Math.max(y[t].domain()[0], y[t].invert(h - d.y - d.dy));
+  filter[t].max = Math.min(y[t].domain()[1], y[t].invert(h - d.y));
+  active = t;
+  change.render();
+  return false;
+}
+ 
+// Updater for slider and resizer.
+function selectAll(d) {
+  if (d.dy < 3) {
+    var t = d.dim;
+    filter[t].min = Math.max(y[t].domain()[0], y[t].invert(0));
+    filter[t].max = Math.min(y[t].domain()[1], y[t].invert(h));
+    d.y = 0; d.dy = h;
+    active = t;
+    change.render();
+  }
+  return false;
+}
+ 
+/* Handle select and drag */
+var handle = change.add(pv.Panel)
+    .data(dims.map(function(dim) { return {y:0, dy:h, dim:dim}; }))
+    .left(function(t) x(t.dim) - 30)
+    .width(60)
+    .fillStyle("rgba(0,0,0,.001)")
+    .cursor("crosshair")
+    .event("mousedown", pv.Behavior.select())
+    .event("select", update)
+    .event("selectend", selectAll)
+  .add(pv.Bar)
+    .left(25)
+    .top(function(d) d.y)
+    .width(10)
+    .height(function(d) d.dy)
+    .fillStyle(function(t) t.dim == active
+        ? c[t.dim]((filter[t.dim].max + filter[t.dim].min) / 2)
+        : "hsla(0,0,50%,.5)")
+    .strokeStyle("white")
+    .cursor("move")
+    .event("mousedown", pv.Behavior.drag())
+    .event("dragstart", update)
+    .event("drag", update);
+ 
+handle.anchor("bottom").add(pv.Label)
+    .textBaseline("top")
+    .text(function(d) filter[d.dim].min.toFixed(0) + units[d.dim].unit);
+ 
+handle.anchor("top").add(pv.Label)
+    .textBaseline("bottom")
+    .text(function(d) filter[d.dim].max.toFixed(0) + units[d.dim].unit);
+ 
+vis.render();
+ 
+    </script> 
+  </div></div>
+      
+      
+      
+      
+      
+      
+      
+      
+      
       <div id='spinner'><img alt="Loader" src="/images/loader.gif?1265035769" /></div> 
       <div id='species'> 
         <table> 
@@ -73,90 +230,6 @@
           </tr> 
           <tr> 
             <td><a href="/species/1326637">Aa argyrolepis</a></td> 
-          </tr> 
-          <tr> 
-            <td><a href="/species/1242183">Aa brevis</a></td> 
-          </tr> 
-          <tr> 
-            <td><a href="/species/272835">Aa calceata</a></td> 
-          </tr> 
-          <tr> 
-            <td><a href="/species/1195667">Aa chiogena</a></td> 
-          </tr> 
-          <tr> 
-            <td><a href="/species/1005155">Aa colombiana</a></td> 
-          </tr> 
-          <tr> 
-            <td><a href="/species/1312679">Aa denticulata</a></td> 
-          </tr> 
-          <tr> 
-            <td><a href="/species/1457287">Aa erosa</a></td> 
-          </tr> 
-          <tr> 
-            <td><a href="/species/1365178">Aa fiebrigii</a></td> 
-          </tr> 
-          <tr> 
-            <td><a href="/species/334444">Aa filamentosa</a></td> 
-          </tr> 
-          <tr> 
-            <td><a href="/species/347090">Aa gymnandra</a></td> 
-          </tr> 
-          <tr> 
-            <td><a href="/species/514970">Aa hartwegii</a></td> 
-          </tr> 
-          <tr> 
-            <td><a href="/species/177309">Aa hieronymi</a></td> 
-          </tr> 
-          <tr> 
-            <td><a href="/species/950502">Aa inaequalis</a></td> 
-          </tr> 
-          <tr> 
-            <td><a href="/species/273274">Aa lechleri</a></td> 
-          </tr> 
-          <tr> 
-            <td><a href="/species/1201758">Aa leucantha</a></td> 
-          </tr> 
-          <tr> 
-            <td><a href="/species/704651">Aa lorentzii</a></td> 
-          </tr> 
-          <tr> 
-            <td><a href="/species/785930">Aa macra</a></td> 
-          </tr> 
-          <tr> 
-            <td><a href="/species/1070024">Aa maderoi</a></td> 
-          </tr> 
-          <tr> 
-            <td><a href="/species/463970">Aa mandonii</a></td> 
-          </tr> 
-          <tr> 
-            <td><a href="/species/1051925">Aa matthewsii</a></td> 
-          </tr> 
-          <tr> 
-            <td><a href="/species/490664">Aa microtidis</a></td> 
-          </tr> 
-          <tr> 
-            <td><a href="/species/1314881">Aa nervosa</a></td> 
-          </tr> 
-          <tr> 
-            <td><a href="/species/1562345">Aa nigrescens</a></td> 
-          </tr> 
-          <tr> 
-            <td><a href="/species/1018584">Aa nubigena</a></td> 
-          </tr> 
-          <tr> 
-            <td><a href="/species/1307724">Aa paleacea</a></td> 
-          </tr> 
-          <tr> 
-            <td><a href="/species/1018574">Aa paludosa</a></td> 
-          </tr> 
-          <tr> 
-            <td><a href="/species/1044077">Aa pumilio</a></td> 
-          </tr> 
-          <tr> 
-            <td><a href="/species/1044081">Aa rhynchocarpa</a></td> 
-          </tr> 
-          <tr> 
-            <td><a href="/species/1480108">Aa riobambae</a></td> 
           </tr> 
         </table> 
         <div class="pagination"><span class="disabled prev_page">&laquo; Previous</span> <span class="current">1</span> <a href="/species?page=2" rel="next">2</a> <a href="/species?page=3">3</a> <a href="/species?page=4">4</a> <a href="/species?page=5">5</a> <a href="/species?page=6">6</a> <a href="/species?page=7">7</a> <a href="/species?page=8">8</a> <a href="/species?page=9">9</a> <span class="gap">&hellip;</span> <a href="/species?page=51517">51517</a> <a href="/species?page=51518">51518</a> <a href="/species?page=2" class="next_page" rel="next">Next &raquo;</a></div> 
