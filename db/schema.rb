@@ -9,7 +9,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100202144252) do
+ActiveRecord::Schema.define(:version => 20100611214102) do
+
+  create_table "adult_weights", :force => true do |t|
+    t.integer  "species_id", :null => false
+    t.float    "measure",    :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "lifespans", :force => true do |t|
     t.integer  "species_id"

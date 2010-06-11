@@ -7,3 +7,18 @@ User.blueprint do
   password { 'secret' }
   password_confirmation { 'secret' }
 end
+
+Taxon.blueprint do
+  name { Faker::Name.first_name }
+  rank { (0..5).to_a.rand }
+  lineage_ids ""
+end
+
+Species.blueprint do
+  name { Faker::Name.first_name }
+  rank 6
+end
+
+AdultWeight.blueprint do
+  measure { (0..500).to_a.rand }
+end
