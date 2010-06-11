@@ -29,7 +29,7 @@ class Taxon < ActiveRecord::Base
   
   def paginated_sorted_species(page)
     begin
-      Taxon.paginate_by_sql("SELECT * FROM taxa WHERE lft >= #{self.lft} AND rgt <= #{self.rgt} AND rank = 6 ORDER BY name ASC", :page => page)
+      Species.paginate_by_sql("SELECT * FROM taxa WHERE lft >= #{self.lft} AND rgt <= #{self.rgt} AND rank = 6 ORDER BY name ASC", :page => page)
     rescue
       raise "Left and Right attributes were nil!"
     end
@@ -41,7 +41,7 @@ class Taxon < ActiveRecord::Base
   
   # Rebuild lineage_ids for this taxon.
   def rebuild_lineage_ids
-    unless parent_id.nil? || parent.lineage_ids.blank?
+    unless Taxon.first.blank? || parent_id.nil? || parent.lineage_ids.blank?
       self.lineage_ids = (parent.lineage_ids + "," + parent_id.to_s)
     end
   end
