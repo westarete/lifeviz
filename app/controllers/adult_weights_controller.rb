@@ -17,6 +17,21 @@ class AdultWeightsController < ApplicationController
     end
   end
   
+  def edit
+    @adult_weight = AdultWeight.find(params[:id])
+  end
+  
+  def update
+    @adult_weight = AdultWeight.find(params[:id])
+    if @adult_weight.update_attributes(params[:adult_weight])
+      flash[:success] = "Adult weight updated."
+      redirect_to @species
+    else
+      flash.now[:failure] = "Adult weight update failed."
+      render :edit
+    end
+  end
+  
 private
   
   def find_species

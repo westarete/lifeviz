@@ -11,8 +11,10 @@ ActionController::Routing::Routes.draw do |map|
   end
   
   map.with_options :controller => :adult_weights do |i|
-    i.new_adult_weight  '/species/:species_id/adult_weights/new'  ,:action => :new     ,:conditions => {:method => :get }
-    i.connect           '/species/:species_id/adult_weights'      ,:action => :create  ,:conditions => {:method => :post}
+    i.new_adult_weight  '/species/:species_id/adult_weights/new'      ,:action => :new    ,:conditions => {:method => :get  }
+    i.edit_adult_weight '/species/:species_id/adult_weights/:id/edit' ,:action => :edit   ,:conditions => {:method => :get  }
+    i.connect           '/species/:species_id/adult_weights'          ,:action => :create ,:conditions => {:method => :post }
+    i.connect           '/species/:species_id/adult_weights/:id'      ,:action => :update ,:conditions => {:method => :put  }
   end
   
   # AJAX Navigation
