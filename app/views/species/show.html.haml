@@ -16,19 +16,21 @@
       %tr
         %td.lifespan= lifespan
         %td.citation  [citation]
-        - if logged_in? && current_user.karma.levels.bronze?
-          %td.actions   
-            = link_to 'edit', edit_lifespan_path(@species, lifespan)
-            =# link_to 'delete'
+        %td.actions   
+          = link_to 'edit', edit_lifespan_path(@species, lifespan)
+          =# link_to 'delete'
 
 %table#adult_weights
   %thead
     %tr
       %th Adult Weight
+      %th Action
   %tbody
     - @species.adult_weights.each do |adult_weight|
       %tr
         %td.adult_weight= adult_weight.measure
+        %td.actions   
+          = link_to 'edit', edit_adult_weight_path(@species, adult_weight), :id => "edit_adult_weight_#{adult_weight.id}"
 
 = link_to 'Add an Adult Weight', new_adult_weight_path(@species),  :class => "button"
 = link_to 'Add Lifespan Annotation', new_lifespan_path(@species),  :class => "button"
