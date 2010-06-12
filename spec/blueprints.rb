@@ -24,6 +24,12 @@ AdultWeight.blueprint do
   measure { rand }
 end
 
+BirthWeight.blueprint do
+  species
+  value_in_grams { rand }
+  units   { %w(Grams Kilograms).rand }
+end
+
 LitterSize.blueprint do
   species
   measure { (0..12).to_a.rand }
