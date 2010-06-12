@@ -6,9 +6,11 @@ make_biological_classification(5)
 context "User viewing the species detail page" do
   
   let(:species) { Species.make(:parent_id => Taxon.find_by_rank(5).id ) }
+  let(:bad_litter_size)  { LitterSize.make(:species => species, :measure => 0) }
   
   before do
     species
+    bad_litter_size
     3.times { species.litter_sizes.make  }
     visit species_path(species)
   end
@@ -46,6 +48,26 @@ context "User viewing the species detail page" do
     
     it 'sees a success message' do
       page.should have_xpath("//*[@class='success']", :text => '5', :text => "Litter size created.")
+    end
+  end
+  
+  context "when editing a litter size" do
+    before do
+      click "edit_litter_size_#{bad_litter_size.id}"
+      fill_in 'litter_size_measure', :with => '14'
+      click_button 'Submit Change'
+    end
+    
+    it 'sees the species scientific name as a title' do
+      page.should have_xpath("//h1", :text => species.name)
+    end
+    
+    it 'sees the new litter size' do
+      page.should have_xpath("//*[@class='litter_size']", :text => '14')
+    end
+  
+    it 'sees success message' do
+      page.should have_xpath("//*[@class='success']", :text => 'Litter size updated.')
     end
   end
   
