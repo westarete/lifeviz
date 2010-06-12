@@ -22,6 +22,7 @@ class BirthWeight < ActiveRecord::Base
   end
   
   def value=(v)
+    return if v.blank? || v.nil?
     @value = v
     v = v.to_f
     self.value_in_grams = case units
