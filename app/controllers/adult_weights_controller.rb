@@ -32,6 +32,13 @@ class AdultWeightsController < ApplicationController
     end
   end
   
+  def destroy
+    @adult_weight = AdultWeight.find(params[:id])
+    @adult_weight.destroy
+    flash[:success] = "Adult weight deleted."
+    redirect_to @species
+  end
+  
 private
   
   def find_species
