@@ -20,5 +20,6 @@ Species.blueprint do
 end
 
 AdultWeight.blueprint do
-  measure { (0..500).to_a.rand }
+  species
+  measure { rand }
 end
