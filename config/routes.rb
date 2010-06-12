@@ -18,6 +18,11 @@ ActionController::Routing::Routes.draw do |map|
     i.connect '/species/:species_id/adult_weights/:id'      ,:action => :update ,:conditions => {:method => :put    }
   end
   
+  map.with_options :controller => :birth_weights do |i|
+    i.new_birth_weight '/species/:species_id/birth_weights/new', :action => :new, :conditions => {:method => :get}
+    i.connect '/species/:species_id/birth_weights', :action => :create, :conditions => {:method => :post}
+  end
+  
   map.with_options :controller => :litter_sizes do |i|
     i.new_litter_size     '/species/:species_id/litter_sizes/new'     ,:action => :new    ,:conditions => {:method => :get }
     i.edit_litter_size    '/species/:species_id/litter_sizes/:id/edit',:action => :edit   ,:conditions => {:method => :get }
