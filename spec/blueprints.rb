@@ -21,7 +21,8 @@ end
 
 AdultWeight.blueprint do
   species
-  measure { rand }
+  value_in_grams { rand }
+  units   { %w(Grams Kilograms).rand }
 end
 
 BirthWeight.blueprint do

@@ -26,7 +26,7 @@ context "User viewing the species detail page" do
     
     it "has birth_weights" do
       species.birth_weights.each do |bw|
-        page.should have_xpath("//*[@class='birth_weight']", :text => "#{bw.value} #{bw.units.downcase}")
+        page.should have_xpath("//*[@class='birth_weight']", :text => "#{bw.value.to_s} #{bw.units.downcase}")
       end
     end
   end
