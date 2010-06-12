@@ -1,5 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resource :user_session
+  map.resource  :user_session
   map.resources :users
   
   map.resources :species, :collection => { :data => :get }
@@ -10,6 +10,10 @@ ActionController::Routing::Routes.draw do |map|
     a.connect '/species/:species_id/lifespans/:id', :action => :update, :conditions => {:method => :put}
   end
   
+  map.with_options :controller => :adult_weights do |i|
+    i.new_adult_weight  '/species/:species_id/adult_weights/new'  ,:action => :new     ,:conditions => {:method => :get }
+    i.connect           '/species/:species_id/adult_weights'      ,:action => :create  ,:conditions => {:method => :post}
+  end
   
   # AJAX Navigation
   map.taxonomy_dropdown '/taxonomy/dropdown/:rank', 
