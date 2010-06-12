@@ -10,8 +10,5 @@
     = f.select :units, ["Years", "Months", "Days"]
   
   .form_input
-    [Citation Form]
-  
-  .form_input
     %button{:type => "submit", :name => "commit", :value => "Create", :class => 'button positive', :id => "create-annotation"} Add Lifespan
     = link_to "Cancel", @species, :class => "button"
