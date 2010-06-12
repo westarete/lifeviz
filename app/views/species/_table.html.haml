@@ -2,11 +2,15 @@
   %tr
     %th Scientific Name
     %th Adult Weights
+    %th Litter Sizes
   - @species.each do |species|
     %tr
       %td.name= link_to species.name, species_path(species.id)
       %td.adult_weights     
         - species.adult_weights.each do |aw|
           %span.adult_weight= aw.measure
+      %td.litter_sizes
+        - species.litter_sizes.each do |l|
+          %span.litter_size= l.measure
 
 = will_paginate @species, :params => {:controller => :species, :action => :index}

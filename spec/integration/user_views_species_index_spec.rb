@@ -11,6 +11,7 @@ context "User viewing the species index page" do
   before do
     species
     3.times { species.adult_weights.make }
+    3.times { species.litter_sizes.make  }
     other_species    
     visit species_index_path
   end
@@ -33,10 +34,24 @@ context "User viewing the species index page" do
       end
     end
     
-    it "has an adult weights" do
+    it "has adult weights" do
       Species.all.each do |s|
         s.adult_weights.each do |aw|
           page.should have_xpath("//*[@class='adult_weight']", :text => aw.measure.to_s)
+        end
+      end
+    end
+    
+    it "has a litter size list" do
+      Species.all.each do |s|
+        page.should have_xpath("//*[@class='litter_sizes']")
+      end
+    end
+    
+    it "has litter sizes" do
+      Species.all.each do |s|
+        s.litter_sizes.each do |l|
+          page.should have_xpath("//*[@class='litter_size']", :text => l.measure.to_s)
         end
       end
     end
