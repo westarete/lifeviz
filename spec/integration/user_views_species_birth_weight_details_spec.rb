@@ -71,4 +71,23 @@ context "User viewing the species detail page" do
     end
   end
   
+  context 'when deleting an birth weight' do  
+    before do
+      # NOTE: link_to 'delete', :method => delete is no good... use button_to instead -jm
+      click "delete_birth_weight_#{bad_birth_weight.id}"
+    end
+    
+    it "sees the species' page" do
+      page.should have_xpath("//h1", :text => species.name)
+    end
+    
+    it 'sees success message' do
+      page.should have_xpath("//*[@class='success']", :text => 'Birth weight deleted.')
+    end
+    
+    it "doesn't see the bad birth weight" do
+      page.should have_no_xpath("//*[@class='birth_weights']", :text => '999.9')
+    end
+  end
+  
 end
