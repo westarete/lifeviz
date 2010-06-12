@@ -37,10 +37,13 @@
   %thead
     %tr
       %th Litter Size
+      %th Action
   %tbody
     - @species.litter_sizes.each do |litter_size|
       %tr
         %td.litter_size= litter_size.measure
+        %td.actions   
+          = link_to 'edit', edit_litter_size_path(@species, litter_size), :id => "edit_litter_size_#{litter_size.id}"
 
 = link_to 'Add an Adult Weight'     ,new_adult_weight_path(@species) ,:class => "button"
 = link_to 'Add Lifespan Annotation' ,new_lifespan_path(@species)     ,:class => "button"
