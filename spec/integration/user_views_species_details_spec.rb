@@ -20,7 +20,6 @@ context "User viewing the species detail page" do
   context "can see the species' litter size list" do
    
     it "has a litter size list" do
-      save_and_open_page
       page.should have_xpath("//*[@id='litter_sizes']")
     end
     
