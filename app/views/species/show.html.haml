@@ -35,16 +35,14 @@
   %thead
     %tr
       %th Birth Weight
-      - if logged_in? && current_user.karma.levels.bronze?
-        %th Actions
+      %th Actions
   %tbody
     - @species.birth_weights.each do |birth_weight|
       %tr
         %td.birth_weight= birth_weight
-        - if logged_in? && current_user.karma.levels.bronze?
-          %td.actions   
-            =# link_to 'edit', edit_birth_weight_path(@species, birth_weight)
-            =# link_to 'delete'
+        %td.actions   
+          = link_to   'edit'   ,edit_birth_weight_path(@species, birth_weight)     ,:id => "edit_birth_weight_#{birth_weight.id}"
+          =# link_to 'delete'
 
 %table#litter_sizes
   %thead
