@@ -35,7 +35,7 @@ context "User deletes an adult weight for a species" do
     end
     
     it "doesn't see the bad adult weight" do
-      page.should_not have_xpath("//*[@class='adult_weight']", :text => '55.5')
+      page.should have_no_xpath("//*[@class='adult_weights']", :text => '55.5')
     end
     
   end
