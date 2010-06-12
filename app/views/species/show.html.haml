@@ -42,7 +42,7 @@
         %td.birth_weight= birth_weight
         %td.actions   
           = link_to   'edit'   ,edit_birth_weight_path(@species, birth_weight)     ,:id => "edit_birth_weight_#{birth_weight.id}"
-          =# link_to 'delete'
+          = button_to 'delete' ,destroy_birth_weight_path(@species, birth_weight)  ,:id => "delete_birth_weight_#{birth_weight.id}",  :method => :delete
 
 %table#litter_sizes
   %thead
