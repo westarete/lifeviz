@@ -30,4 +30,25 @@ context "User viewing the species detail page" do
     end
   end
   
+  context "when creating creating a new birth weight" do
+    before do
+      click 'Add Birth Weight'
+      fill_in 'birth_weight_value', :with => '5.5'
+      click_button 'Add Birth Weight'
+    end
+    
+    it "sees the species scientific name as title" do
+      page.should have_xpath("//h1", :text => species.name)
+    end
+    
+    it 'sees the new birth weight' do
+      save_and_open_page
+      page.should have_xpath("//*[@class='birth_weight']", :text => '5.5')
+    end
+    
+    it 'sees a success message' do
+      page.should have_xpath("//*[@class='success']", :text => '5.5', :text => "Birth weight created.")
+    end
+  end
+  
 end
