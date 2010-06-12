@@ -33,7 +33,7 @@
           = link_to   'edit'   ,edit_adult_weight_path(@species, adult_weight)     ,:id => "edit_adult_weight_#{adult_weight.id}"
           = button_to 'delete' ,destroy_adult_weight_path(@species, adult_weight)  ,:id => "delete_adult_weight_#{adult_weight.id}",  :method => :delete
 
-%table#birth-weight
+%table#birth_weights
   %thead
     %tr
       %th Birth Weight
