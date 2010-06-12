@@ -31,6 +31,13 @@ class BirthWeightsController < ApplicationController
       render :edit
     end
   end
+  
+  def destroy
+    @birth_weight = BirthWeight.find(params[:id])
+    @birth_weight.destroy
+    flash[:success] = "Birth weight deleted."
+    redirect_to @species
+  end
     
 private
   

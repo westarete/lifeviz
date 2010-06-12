@@ -19,8 +19,9 @@ ActionController::Routing::Routes.draw do |map|
   end
   
   map.with_options :controller => :birth_weights do |i|
-    i.new_birth_weight  '/species/:species_id/birth_weights/new'      ,:action => :new  ,:conditions => {:method => :get }
-    i.edit_birth_weight '/species/:species_id/birth_weights/:id/edit' ,:action => :edit ,:conditions => {:method => :get }
+    i.new_birth_weight    '/species/:species_id/birth_weights/new'      ,:action => :new    ,:conditions => {:method => :get }
+    i.edit_birth_weight   '/species/:species_id/birth_weights/:id/edit' ,:action => :edit   ,:conditions => {:method => :get }
+    i.destroy_birth_weight'/species/:species_id/birth_weights/:id'      ,:action => :destroy,:conditions => {:method => :delete}
     i.connect '/species/:species_id/birth_weights'      ,:action => :create ,:conditions => {:method => :post }
     i.connect '/species/:species_id/birth_weights/:id'  ,:action => :update ,:conditions => {:method => :put  }
   end
