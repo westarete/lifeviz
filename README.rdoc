@@ -1,11 +1,15 @@
 
 == Anage
 
-Customer: 
-
-Basecamp: 
-
-Highrise: 
-
-Describe the project here.
-
+June 11th 2010
+  Clean Install 
+    1. clone
+    2. create new databases
+    3. rake db:schema:load
+    4. import data only (long time... like 30m-1hr)
+       $gunzip -c db/data-only.sql.gz | psql anage_development
+    5. get into psql
+       $psql anage_development
+    6. run vacuum (5mins)
+       #vacuum analyze
+    7. script/server

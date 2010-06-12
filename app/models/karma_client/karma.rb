@@ -10,7 +10,7 @@ module KarmaClient
     
     def connected?
       begin
-        resource = RestClient::Resource.new("http://#{KARMA_SERVER_HOSTNAME}/users/#{@user.karma_permalink}/karma.json")
+        resource = RestClient::Resource.new("http://#{KARMA_SERVER_HOSTNAME}/users/#{@user.karma_permalink}/karma.json", "", KARMA_API_KEY)
         json = resource.get
       rescue
         false
@@ -19,11 +19,10 @@ module KarmaClient
       end
     end
     
-    # Return the total karma for this user. This is the sum of all the 
-    # buckets' karma.
+    # Return the total karma for this user. This is the sum of all the tags' karma.
     def total
       if connected?
-        self.buckets._total
+        self.tags._total
       else
         0
       end
@@ -34,16 +33,16 @@ module KarmaClient
       Levels.new(self.total)
     end
     
-    # Return the buckets object for this user.
-    def buckets
-      Buckets.new(@buckets)
+    # Return the tags object for this user.
+    def tags
+      Tags.new(@tags)
     end
         
     private
     
     # Register our user on the karma server.
     def create_user_on_karma_server
-      resource = RestClient::Resource.new("http://#{KARMA_SERVER_HOSTNAME}/users/#{@user.karma_permalink}.json")
+      resource = RestClient::Resource.new("http://#{KARMA_SERVER_HOSTNAME}/users/#{@user.karma_permalink}.json", "", KARMA_API_KEY)
       resource.put('')
     rescue RestClient::Exception => e
       # TODO: What is the appropriate behavior when this request fails?
@@ -53,10 +52,10 @@ module KarmaClient
     
     # Retrieve all of the karma information for this user from the server.
     def fetch_karma
-      resource = RestClient::Resource.new("http://#{KARMA_SERVER_HOSTNAME}/users/#{@user.karma_permalink}/karma.json")
+      resource = RestClient::Resource.new("http://#{KARMA_SERVER_HOSTNAME}/users/#{@user.karma_permalink}/karma.json", "", KARMA_API_KEY)
       json = resource.get
       results = ActiveSupport::JSON.decode(json)
-      @buckets = results['buckets']
+      @tags = results['tags']
     rescue RestClient::ResourceNotFound
       # If the user is not defined yet, create it and try again.
       create_user_on_karma_server

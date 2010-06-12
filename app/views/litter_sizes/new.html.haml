@@ -1,0 +1,13 @@
+= render :partial => "/shared/header", :locals => { :title => @species.name, :subtitle => "", :flash => flash }
+
+%h2 Adding Litter Size
+
+- form_for :litter_size, :url => { :action => :create } do |f|
+  .form_input
+    = f.label :value, "Litter size"
+    %br
+    = f.text_field :measure, :class => "text", :style => "width: 50px"
+  
+  .form_input
+    %button{:type => "submit", :name => "commit", :value => "Create", :class => 'button positive', :id => "create-litter-size"} Add Litter Size
+    = link_to "Cancel", @species, :class => "button"

@@ -16,10 +16,22 @@
       %tr
         %td.lifespan= lifespan
         %td.citation  [citation]
-        - if logged_in? && current_user.karma.levels.bronze?
-          %td.actions   
-            = link_to 'edit', edit_lifespan_path(@species, lifespan)
-            =# link_to 'delete'
+        %td.actions   
+          = link_to 'edit', edit_lifespan_path(@species, lifespan)
+          =# link_to 'delete'
+
+%table#adult_weights
+  %thead
+    %tr
+      %th Adult Weight
+      %th Action
+  %tbody
+    - @species.adult_weights.each do |adult_weight|
+      %tr
+        %td.adult_weight= adult_weight.measure
+        %td.actions   
+          = link_to   'edit'   ,edit_adult_weight_path(@species, adult_weight)     ,:id => "edit_adult_weight_#{adult_weight.id}"
+          = button_to 'delete' ,destroy_adult_weight_path(@species, adult_weight)  ,:id => "delete_adult_weight_#{adult_weight.id}",  :method => :delete
 
 %table#birth-weight
   %thead
@@ -38,4 +50,19 @@
             =# link_to 'edit', edit_birthweight_path(@species, birthweight)
             =# link_to 'delete'
 
-= link_to 'Add Lifespan Annotation', new_lifespan_path(@species),  :class => "button"
+%table#litter_sizes
+  %thead
+    %tr
+      %th Litter Size
+      %th Action
+  %tbody
+    - @species.litter_sizes.each do |litter_size|
+      %tr
+        %td.litter_size= litter_size.measure
+        %td.actions   
+          = link_to   'edit'  ,edit_litter_size_path(@species, litter_size)    ,:id => "edit_litter_size_#{litter_size.id}"
+          = button_to 'delete',destroy_litter_size_path(@species, litter_size) ,:id => "delete_litter_size_#{litter_size.id}",  :method => :delete
+
+= link_to 'Add an Adult Weight'     ,new_adult_weight_path(@species) ,:class => "button"
+= link_to 'Add Lifespan Annotation' ,new_lifespan_path(@species)     ,:class => "button"
+= link_to 'Add Litter Size'         ,new_litter_size_path(@species)  ,:class => "button"

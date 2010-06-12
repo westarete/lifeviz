@@ -651,11 +651,6 @@ form textarea {
   color: white !important;
 }
 
-/* line 140, ../../app/stylesheets/partials/_structure.sass */
-table#longevity {
-  width: auto;
-}
-
 /* line 1, ../../app/stylesheets/partials/_typography.sass */
 body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
