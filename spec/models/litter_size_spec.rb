@@ -13,8 +13,9 @@ describe LitterSize do
     weight
   end
 
-  it { should belong_to(:species)             }
-  it { should validate_presence_of(:measure)  }
+  it { should belong_to(:species)               }
+  it { should validate_presence_of(:species_id) }
+  it { should validate_presence_of(:measure)    }
   
 end
 # == Schema Information
