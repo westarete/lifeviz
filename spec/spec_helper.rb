@@ -64,5 +64,5 @@ end
 
 def make_biological_classification(rank = 5)
   return false if rank < -1 || 5 < rank
-  Taxon.find_by_rank(rank) ? make_biological_classification(rank - 1) : Taxon.create(:rank => rank, :parent_id => make_biological_classification(rank - 1), :name => Faker::Name.first_name).id
+  Taxon.find_by_rank(rank) ? make_biological_classification(rank - 1) : Taxon.create(:rank => rank.to_i, :parent_id => make_biological_classification(rank - 1), :name => Faker::Name.first_name).id
 end
