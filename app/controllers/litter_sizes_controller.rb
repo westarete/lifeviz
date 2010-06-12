@@ -32,6 +32,13 @@ class LitterSizesController < ApplicationController
     end
   end
   
+  def destroy
+    @litter_size = LitterSize.find(params[:id])
+    @litter_size.destroy
+    flash[:success] = "Litter size deleted."
+    redirect_to @species
+  end
+  
 private
   
   def find_species
