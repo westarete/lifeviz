@@ -16,6 +16,7 @@ class Species < Taxon
   
   has_many :lifespans     , :dependent => :destroy, :foreign_key => :species_id
   has_many :adult_weights , :dependent => :destroy, :foreign_key => :species_id
+  has_many :litter_sizes  , :dependent => :destroy, :foreign_key => :species_id
   
   # Hack because Rails wants to create my associated models for me, and I
   # don't want it to because it doesn't work!!

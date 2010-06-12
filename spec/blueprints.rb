@@ -23,3 +23,8 @@ AdultWeight.blueprint do
   species
   measure { rand }
 end
+
+LitterSize.blueprint do
+  species
+  measure { (0..12).to_a.rand }
+end

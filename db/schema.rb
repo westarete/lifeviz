@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100611214102) do
+ActiveRecord::Schema.define(:version => 20100612051827) do
 
   create_table "adult_weights", :force => true do |t|
     t.integer  "species_id", :null => false
@@ -27,6 +27,13 @@ ActiveRecord::Schema.define(:version => 20100611214102) do
   end
 
   add_index "lifespans", ["id"], :name => "index_species_on_id"
+
+  create_table "litter_sizes", :force => true do |t|
+    t.integer  "species_id", :null => false
+    t.integer  "measure",    :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "open_id_authentication_associations", :force => true do |t|
     t.integer "issued"
