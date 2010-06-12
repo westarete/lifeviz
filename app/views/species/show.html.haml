@@ -30,7 +30,8 @@
       %tr
         %td.adult_weight= adult_weight.measure
         %td.actions   
-          = link_to 'edit', edit_adult_weight_path(@species, adult_weight), :id => "edit_adult_weight_#{adult_weight.id}"
+          = link_to   'edit'   ,edit_adult_weight_path(@species, adult_weight)     ,:id => "edit_adult_weight_#{adult_weight.id}"
+          = button_to 'delete' ,destroy_adult_weight_path(@species, adult_weight)  ,:id => "delete_adult_weight_#{adult_weight.id}",  :method => :delete
 
 = link_to 'Add an Adult Weight', new_adult_weight_path(@species),  :class => "button"
 = link_to 'Add Lifespan Annotation', new_lifespan_path(@species),  :class => "button"
