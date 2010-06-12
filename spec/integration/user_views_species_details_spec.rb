@@ -71,4 +71,23 @@ context "User viewing the species detail page" do
     end
   end
   
+  context 'when deleting an litter size' do
+    before do
+      # NOTE: link_to 'delete', :method => delete is no good... use button_to instead -jm
+      click "delete_litter_size_#{bad_litter_size.id}"
+    end
+    
+    it "sees the species' page" do
+      page.should have_xpath("//h1", :text => species.name)
+    end
+    
+    it 'sees success message' do
+      page.should have_xpath("//*[@class='success']", :text => 'Litter size deleted.')
+    end
+    
+    it "doesn't see the bad litter size" do
+      page.should have_no_xpath("//*[@class='litter_sizes']", :text => '0')
+    end
+  end
+  
 end
