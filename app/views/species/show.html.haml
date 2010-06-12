@@ -42,5 +42,7 @@
       %tr
         %td.litter_size= litter_size.measure
 
-= link_to 'Add an Adult Weight', new_adult_weight_path(@species),  :class => "button"
-= link_to 'Add Lifespan Annotation', new_lifespan_path(@species),  :class => "button"
+= link_to 'Add an Adult Weight'     ,new_adult_weight_path(@species) ,:class => "button"
+= link_to 'Add Lifespan Annotation' ,new_lifespan_path(@species)     ,:class => "button"
+= link_to 'Add Litter Size'         ,new_litter_size_path(@species)  ,:class => "button"
+
