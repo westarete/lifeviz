@@ -18,7 +18,6 @@ context "User viewing the species detail page" do
   end
   
   context "can see the species' litter size list" do
-   
     it "has a litter size list" do
       page.should have_xpath("//*[@id='litter_sizes']")
     end
@@ -28,7 +27,26 @@ context "User viewing the species detail page" do
         page.should have_xpath("//*[@class='litter_size']", :text => l.measure.to_s)
       end
     end
+  end
+  
+  context "when creating creating a new litter size" do
+    before do
+      click 'Add Litter Size'
+      fill_in 'litter_size_measure', :with => '5'
+      click_button 'Add Litter Size'
+    end
     
+    it "sees the species scientific name as title" do
+      page.should have_xpath("//h1", :text => species.name)
+    end
+    
+    it 'sees the new litter size' do
+      page.should have_xpath("//*[@class='litter_size']", :text => '5')
+    end
+    
+    it 'sees a success message' do
+      page.should have_xpath("//*[@class='success']", :text => '5', :text => "Litter size created.")
+    end
   end
   
 end
