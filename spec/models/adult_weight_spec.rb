@@ -13,7 +13,19 @@ describe AdultWeight do
     weight
   end
 
-  it { should belong_to(:species)             }
-  it { should validate_presence_of(:measure)  }
+  it { should belong_to(:species)                   }
+  it { should validate_presence_of(:value_in_grams) }
   
 end
+# == Schema Information
+#
+# Table name: adult_weights
+#
+#  id             :integer         not null, primary key
+#  species_id     :integer         not null
+#  value_in_grams :decimal(, )     not null
+#  created_at     :datetime
+#  updated_at     :datetime
+#  units          :string(255)
+#
+
