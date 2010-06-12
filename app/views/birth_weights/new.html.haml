@@ -1,0 +1,14 @@
+= render :partial => "/shared/header", :locals => { :title => @species.name, :subtitle => "", :flash => flash }
+
+%h2 Adding Birth Weight
+
+- form_for :birth_weight, :url => { :action => :create } do |f|
+  .form_input
+    = f.label :value, "Birth weight"
+    %br
+    = f.text_field :value, :class => "text", :style => "width: 50px"
+    = select_tag "birth_weight[units]", "<option>Grams</option><option>Kilograms</option>"
+  
+  .form_input
+    %button{:type => "submit", :name => "commit", :value => "Create", :class => 'button positive', :id => "create-birth-weight"} Add Birth Weight
+    = link_to "Cancel", @species, :class => "button"
