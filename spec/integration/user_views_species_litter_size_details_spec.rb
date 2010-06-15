@@ -31,7 +31,7 @@ context "User viewing the species detail page" do
     end
   end
   
-  context "when creating creating a new litter size" do
+  context "when creating a new litter size" do
     before do
       click 'Add Litter Size'
       fill_in 'litter_size_measure', :with => '5'

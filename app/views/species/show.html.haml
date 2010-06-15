@@ -15,8 +15,8 @@
       %tr
         %td.lifespan= lifespan
         %td.actions   
-          = link_to 'edit', edit_lifespan_path(@species, lifespan)
-          =# link_to 'delete'
+          = link_to image_tag('edit.png'), edit_lifespan_path(@species, lifespan)
+          = link_to image_tag('delete.png'), destroy_lifespan_path(@species, lifespan), :id => "delete_lifespan_#{lifespan.id}", :method => :delete
 
 %table#adult_weights
   %thead
@@ -28,8 +28,8 @@
       %tr
         %td.adult_weight= adult_weight
         %td.actions   
-          = link_to   'edit'   ,edit_adult_weight_path(@species, adult_weight)     ,:id => "edit_adult_weight_#{adult_weight.id}"
-          = button_to 'delete' ,destroy_adult_weight_path(@species, adult_weight)  ,:id => "delete_adult_weight_#{adult_weight.id}",  :method => :delete
+          = link_to image_tag('edit.png'), edit_adult_weight_path(@species, adult_weight), :id => "edit_adult_weight_#{adult_weight.id}", :alt => "Edit adult weight"
+          = link_to image_tag('delete.png'), destroy_adult_weight_path(@species, adult_weight), :id => "delete_adult_weight_#{adult_weight.id}", :method => :delete
 
 %table#birth_weights
   %thead
@@ -41,8 +41,8 @@
       %tr
         %td.birth_weight= birth_weight
         %td.actions   
-          = link_to   'edit'   ,edit_birth_weight_path(@species, birth_weight)     ,:id => "edit_birth_weight_#{birth_weight.id}"
-          = button_to 'delete' ,destroy_birth_weight_path(@species, birth_weight)  ,:id => "delete_birth_weight_#{birth_weight.id}",  :method => :delete
+          = link_to image_tag('edit.png'), edit_birth_weight_path(@species, birth_weight), :id => "edit_birth_weight_#{birth_weight.id}"
+          = link_to image_tag('delete.png'), destroy_birth_weight_path(@species, birth_weight), :id => "delete_birth_weight_#{birth_weight.id}", :method => :delete
 
 %table#litter_sizes
   %thead
@@ -54,10 +54,10 @@
       %tr
         %td.litter_size= litter_size.measure
         %td.actions   
-          = link_to   'edit'  ,edit_litter_size_path(@species, litter_size)    ,:id => "edit_litter_size_#{litter_size.id}"
-          = button_to 'delete',destroy_litter_size_path(@species, litter_size) ,:id => "delete_litter_size_#{litter_size.id}",  :method => :delete
+          = link_to image_tag('edit.png'), edit_litter_size_path(@species, litter_size), :id => "edit_litter_size_#{litter_size.id}"
+          = link_to image_tag('delete.png'), destroy_litter_size_path(@species, litter_size), :id => "delete_litter_size_#{litter_size.id}", :method => :delete
 
-= link_to 'Add Adult Weight' ,new_adult_weight_path(@species) ,:class => "button"
-= link_to 'Add Birth Weight' ,new_birth_weight_path(@species) ,:class => "button"
-= link_to 'Add Lifespan Annotation' ,new_lifespan_path(@species)     ,:class => "button"
-= link_to 'Add Litter Size'         ,new_litter_size_path(@species)  ,:class => "button"
+= link_to 'Add Adult Weight', new_adult_weight_path(@species), :class => "button"
+= link_to 'Add Birth Weight', new_birth_weight_path(@species), :class => "button"
+= link_to 'Add Lifespan Annotation', new_lifespan_path(@species), :class => "button"
+= link_to 'Add Litter Size', new_litter_size_path(@species), :class => "button"
