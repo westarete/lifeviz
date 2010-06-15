@@ -31,4 +31,12 @@ class Species < Taxon
     move_to_child_of(parent)
   end
   
+  def lifespan
+    if lifespans.any?
+      "#{lifespans.collect(&:value_in_days).sum / lifespans.length.to_f} Days"
+    else
+      "N/A"
+    end
+  end
+  
 end

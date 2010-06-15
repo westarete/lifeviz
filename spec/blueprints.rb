@@ -15,6 +15,7 @@ Taxon.blueprint do
 end
 
 Species.blueprint do
+  parent_id { Taxon.make(:rank => 5).id }
   name { Faker::Name.first_name }
   rank 6
 end
