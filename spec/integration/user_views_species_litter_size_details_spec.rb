@@ -73,7 +73,6 @@ context "User viewing the species detail page" do
   
   context 'when deleting an litter size' do
     before do
-      # NOTE: link_to 'delete', :method => delete is no good... use button_to instead -jm
       click "delete_litter_size_#{bad_litter_size.id}"
     end
     

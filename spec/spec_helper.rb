@@ -8,8 +8,8 @@ require 'spec/rails'
 require 'capybara/rails'
 require 'capybara/dsl'
 
-# Uncomment the next line to use webrat's matchers
-#require 'webrat/integrations/rspec-rails'
+# Change api key for karma, so we can expect it.
+KARMA_API_KEY = 'karmatestapikey'
 
 # Requires supporting files with custom matchers and macros, etc,
 # in ./support/ and its subdirectories.
@@ -41,16 +41,16 @@ def stub_karma_server(json=nil)
       "total":7,
       "user_path":"/users/bobexamplecom.json",
       "user":"bobexamplecom",
-      "buckets": {
+      "tags": {
         "animals": {
           "total":4,
-          "adjustments_path":"/users/bobexamplecom/buckets/animals/adjustments.json",
-          "bucket_path":"/buckets/animals.json"
+          "adjustments_path":"/users/bobexamplecom/tags/animals/adjustments.json",
+          "tag_path":"/tags/animals.json"
          },
          "plants": {
            "total":3,
-           "adjustments_path":"/users/bobexamplecom/buckets/plants/adjustments.json",
-           "bucket_path":"/buckets/plants.json"
+           "adjustments_path":"/users/bobexamplecom/tags/plants/adjustments.json",
+           "tag_path":"/tags/plants.json"
          }
        }
      }

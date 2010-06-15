@@ -22,6 +22,7 @@ module KarmaClient
     # Return the total karma for this user. This is the sum of all the tags' karma.
     def total
       if connected?
+        fetch_karma
         self.tags._total
       else
         0
