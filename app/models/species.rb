@@ -33,7 +33,14 @@ class Species < Taxon
   
   def lifespan
     if lifespans.any?
-      "#{lifespans.collect(&:value_in_days).sum / lifespans.length.to_f} Days"
+      case lifespans.group_by(&:units).values.max_by(&:size).first.units
+      when "Days"
+        (lifespans.collect(&:value_in_days).sum / lifespans.length.to_f).to_s + " Days"
+      when "Months"
+        ((lifespans.collect(&:value_in_days).sum / lifespans.length.to_f) / 30.0).to_s + " Months"
+      when "Years"
+        ((lifespans.collect(&:value_in_days).sum / lifespans.length.to_f) / 365.0).to_s + " Years"
+      end
     else
       "N/A"
     end

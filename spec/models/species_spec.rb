@@ -39,13 +39,21 @@ describe Species do
   
   describe "#lifespan" do
     subject { species.lifespan }
-    context "when there are a few lifespans" do
+    context "when there are a few lifespans and the units are the same" do
       before do
         species.lifespans.build(:value => 1, :units => "Days")
         species.lifespans.build(:value => 2, :units => "Days")
         species.lifespans.build(:value => 3, :units => "Days")
       end
       it { should == "2.0 Days" }
+    end
+    context "when there are a few lifespans with different units" do
+      before do
+        species.lifespans.build(:value => 1,   :units => "Months")
+        species.lifespans.build(:value => 1.5, :units => "Months")
+        species.lifespans.build(:value => 2,   :units => "Months")
+      end
+      it { should == "1.5 Months" }
     end
     context "when there are no lifespans" do
       it { should == "N/A" }
