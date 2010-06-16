@@ -39,7 +39,7 @@ describe Species do
   
   describe "#lifespan_in_days" do
     subject { species.lifespan_in_days }
-    context "when there are a few lifespans and the units are the same" do
+    context "when there are a few lifespans" do
       before do
         species.lifespans.build(:value => 20, :units => "Days")
         species.lifespans.build(:value => 40, :units => "Days")
@@ -51,4 +51,20 @@ describe Species do
       it { should be_close(0.0, 0.01) }
     end
   end
+  
+  describe "#birth_weight_in_grams" do
+    subject { species.birth_weight_in_grams }
+    context "when there are a few birth weights" do
+      before do
+        species.birth_weights.build(:value => 500, :units => "Grams")
+        species.birth_weights.build(:value => 1000, :units => "Grams")
+        species.birth_weights.build(:value => 1.5,  :units => "Kilograms")
+      end
+      it { should be_close(1000.00, 0.01) }
+    end
+    context "when there are no birth_weights" do
+      it { should be_close(0.0, 0.01) }
+    end
+  end
+  
 end

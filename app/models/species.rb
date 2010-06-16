@@ -40,4 +40,13 @@ class Species < Taxon
     end
   end
   
+  # Return the average birthweight in grams.
+  def birth_weight_in_grams
+    if birth_weights.any?
+      birth_weights.collect(&:value_in_grams).sum / birth_weights.length.to_f
+    else
+      0.0
+    end
+  end
+  
 end
