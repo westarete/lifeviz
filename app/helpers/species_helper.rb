@@ -30,4 +30,18 @@ module SpeciesHelper
     end
   end
   
+  # Get the mode of the adult_weights' units, and the average of the adult_weight values, and return it in a string
+  def adult_weight_with_units(species)
+    if species.adult_weights.any?
+      case species.adult_weights.group_by(&:units).values.max_by(&:size).first.units
+      when "Grams"
+        "%.2f Grams" % species.adult_weight_in_grams
+      when "Kilograms"
+        "%.2f Kilograms" % (species.adult_weight_in_grams / 1000.0)
+      end
+    else
+      "N/A"
+    end
+  end
+  
 end

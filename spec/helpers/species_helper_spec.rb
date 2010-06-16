@@ -69,4 +69,31 @@ describe SpeciesHelper do
     end
   end
   
+  describe "#adult_weight_with_units" do
+    subject { adult_weight_with_units(species) }
+    context "when there are a few adult_weights and the units are the same" do
+      before do
+        species.adult_weights.build(:value => 1, :units => "Grams")
+        species.adult_weights.build(:value => 2, :units => "Grams")
+        species.adult_weights.build(:value => 3, :units => "Grams")
+      end
+      it "should use the same unit" do
+        subject.should == "2.00 Grams"
+      end
+    end
+    context "when there are a few adult_weights with different units" do
+      before do
+        species.adult_weights.build(:value => 500, :units => "Grams")
+        species.adult_weights.build(:value => 1,   :units => "Kilograms")
+        species.adult_weights.build(:value => 1.5, :units => "Kilograms")
+      end
+      it "should pick the most common unit" do
+        subject.should == "1.00 Kilograms"
+      end
+    end
+    context "when there are no adult_weights" do
+      it { should == "N/A" }
+    end
+  end
+  
 end
