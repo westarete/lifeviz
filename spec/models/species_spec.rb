@@ -67,4 +67,19 @@ describe Species do
     end
   end
   
+  describe "#adult_weight_in_grams" do
+    subject { species.adult_weight_in_grams }
+    context "when there are a few adult weights" do
+      before do
+        species.adult_weights.build(:value => 500, :units => "Grams")
+        species.adult_weights.build(:value => 1000, :units => "Grams")
+        species.adult_weights.build(:value => 1.5,  :units => "Kilograms")
+      end
+      it { should be_close(1000.00, 0.01) }
+    end
+    context "when there are no adult_weights" do
+      it { should be_close(0.0, 0.01) }
+    end
+  end
+  
 end

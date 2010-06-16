@@ -49,4 +49,13 @@ class Species < Taxon
     end
   end
   
+  # Return the average adultweight in grams.
+  def adult_weight_in_grams
+    if adult_weights.any?
+      adult_weights.collect(&:value_in_grams).sum / adult_weights.length.to_f
+    else
+      0.0
+    end
+  end
+  
 end
