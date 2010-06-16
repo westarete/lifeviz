@@ -15,4 +15,19 @@ module SpeciesHelper
       "N/A"
     end
   end
+  
+  # Get the mode of the birth_weights' units, and the average of the birth_weight values, and return it in a string
+  def birth_weight_with_units(species)
+    if species.birth_weights.any?
+      case species.birth_weights.group_by(&:units).values.max_by(&:size).first.units
+      when "Grams"
+        "%.2f Grams" % species.birth_weight_in_grams
+      when "Kilograms"
+        "%.2f Kilograms" % (species.birth_weight_in_grams / 1000.0)
+      end
+    else
+      "N/A"
+    end
+  end
+  
 end
