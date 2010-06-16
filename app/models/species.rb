@@ -31,22 +31,6 @@ class Species < Taxon
     move_to_child_of(parent)
   end
   
-  # Get the mode of the lifespans' units, and the average of the lifespan values, and return it in a string
-  def lifespan_with_units
-    if lifespans.any?
-      case lifespans.group_by(&:units).values.max_by(&:size).first.units
-      when "Days"
-        "%.2f Days" % lifespan_in_days
-      when "Months"
-        "%.2f Months" % (lifespan_in_days / 30.0)
-      when "Years"
-        "%.2f Years" % (lifespan_in_days / 365.0)
-      end
-    else
-      "N/A"
-    end
-  end
-  
   # Return the average lifespan in days.
   def lifespan_in_days
     if lifespans.any?
