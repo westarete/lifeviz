@@ -66,7 +66,7 @@ describe Species do
         subject.should be_close(1000.00, 0.01)
       end
     end
-    context "when there are no birth_weights" do
+    context "when there are no birth weights" do
       it { should be_close(0.0, 0.01) }
     end
   end
@@ -83,8 +83,25 @@ describe Species do
         subject.should be_close(1000.00, 0.01)
       end
     end
-    context "when there are no adult_weights" do
+    context "when there are no adult weights" do
       it { should be_close(0.0, 0.01) }
+    end
+  end
+  
+  describe "#litter_size" do
+    subject { species.litter_size }
+    context "when there are a few litter sizes" do
+      before do
+        species.litter_sizes.build(:measure => 1)
+        species.litter_sizes.build(:measure => 3)
+        species.litter_sizes.build(:measure => 5)
+      end
+      it "should average the litter sizes" do
+        subject.should be_close(3.0, 0.1)
+      end
+    end
+    context "when there are no litter sizes" do
+      it { should be_close(0.0, 0.1) }
     end
   end
   

@@ -40,7 +40,7 @@ class Species < Taxon
     end
   end
   
-  # Return the average birthweight in grams.
+  # Return the average birth weight in grams.
   def birth_weight_in_grams
     if birth_weights.any?
       birth_weights.collect(&:value_in_grams).sum / birth_weights.length.to_f
@@ -49,10 +49,19 @@ class Species < Taxon
     end
   end
   
-  # Return the average adultweight in grams.
+  # Return the average adult weight in grams.
   def adult_weight_in_grams
     if adult_weights.any?
       adult_weights.collect(&:value_in_grams).sum / adult_weights.length.to_f
+    else
+      0.0
+    end
+  end
+  
+  # Return the average litter size.
+  def litter_size
+    if litter_sizes.any?
+      litter_sizes.collect(&:measure).sum / litter_sizes.length.to_f
     else
       0.0
     end
