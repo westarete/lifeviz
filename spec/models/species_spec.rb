@@ -45,7 +45,9 @@ describe Species do
         species.lifespans.build(:value => 40, :units => "Days")
         species.lifespans.build(:value => 1,  :units => "Months")
       end
-      it { should be_close(30.0, 0.01) }
+      it "should average the lifespans in days" do
+        subject.should be_close(30.0, 0.01)
+      end
     end
     context "when there are no lifespans" do
       it { should be_close(0.0, 0.01) }
@@ -60,7 +62,9 @@ describe Species do
         species.birth_weights.build(:value => 1000, :units => "Grams")
         species.birth_weights.build(:value => 1.5,  :units => "Kilograms")
       end
-      it { should be_close(1000.00, 0.01) }
+      it "should average the birth weights" do
+        subject.should be_close(1000.00, 0.01)
+      end
     end
     context "when there are no birth_weights" do
       it { should be_close(0.0, 0.01) }
@@ -75,7 +79,9 @@ describe Species do
         species.adult_weights.build(:value => 1000, :units => "Grams")
         species.adult_weights.build(:value => 1.5,  :units => "Kilograms")
       end
-      it { should be_close(1000.00, 0.01) }
+      it "should average the adult weights" do
+        subject.should be_close(1000.00, 0.01)
+      end
     end
     context "when there are no adult_weights" do
       it { should be_close(0.0, 0.01) }
