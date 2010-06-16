@@ -1,8 +1,10 @@
 %table
   %tr
     %th Scientific Name
+    %th Lifespan
   - @species.each do |species|
     %tr
       %td.name= link_to species.name, species_path(species.id)
+      %td= lifespan_with_units(species)
 
 = will_paginate @species, :params => {:controller => :species, :action => :index}
