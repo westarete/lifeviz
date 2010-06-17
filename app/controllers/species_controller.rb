@@ -24,8 +24,23 @@ class SpeciesController < ApplicationController
     else
       @taxon = Taxon.find(1)
     end
-    @species = @taxon.paginated_sorted_species(params[:page])
-    render :partial => "table", :layout => false
+    respond_to do |format|
+      format.html do
+        @species = @taxon.paginated_sorted_species(params[:page])
+        render :partial => "table", :layout => false
+      end
+      format.json do
+        render :json => @taxon.complete_species.to_json(
+          :only => :name,
+          :methods => [
+            :lifespan_in_days,
+            :birth_weight_in_grams,
+            :adult_weight_in_grams,
+            :litter_size
+          ]
+        )
+      end
+    end
   end
 
   def new

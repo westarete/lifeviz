@@ -12,6 +12,7 @@
 #
 
 class Species < Taxon
+  ActiveRecord::Base.include_root_in_json = false
   validates_presence_of :parent_id, :on => :create, :message => "can't be blank"
 
   has_many :birth_weights , :dependent => :destroy, :foreign_key => :species_id

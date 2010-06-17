@@ -20,6 +20,12 @@ Species.blueprint do
   rank 6
 end
 
+Lifespan.blueprint do
+  species
+  value_in_days { rand }
+  units   { %w(Days Months Years).rand }
+end
+
 AdultWeight.blueprint do
   species
   value_in_grams { rand }
