@@ -36,7 +36,7 @@ class Species < Taxon
     if lifespans.any?
       lifespans.collect(&:value_in_days).sum / lifespans.length.to_f
     else
-      0.0
+      nil
     end
   end
   
@@ -45,7 +45,7 @@ class Species < Taxon
     if birth_weights.any?
       birth_weights.collect(&:value_in_grams).sum / birth_weights.length.to_f
     else
-      0.0
+      nil
     end
   end
   
@@ -54,7 +54,7 @@ class Species < Taxon
     if adult_weights.any?
       adult_weights.collect(&:value_in_grams).sum / adult_weights.length.to_f
     else
-      0.0
+      nil
     end
   end
   
@@ -63,8 +63,15 @@ class Species < Taxon
     if litter_sizes.any?
       litter_sizes.collect(&:measure).sum / litter_sizes.length.to_f
     else
-      0.0
+      nil
     end
+  end
+  
+  def all_data_available?
+    lifespan_in_days &&
+    birth_weight_in_grams &&
+    adult_weight_in_grams &&
+    litter_size
   end
   
 end

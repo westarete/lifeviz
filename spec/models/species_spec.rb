@@ -50,7 +50,7 @@ describe Species do
       end
     end
     context "when there are no lifespans" do
-      it { should be_close(0.0, 0.01) }
+      it { should be_nil }
     end
   end
   
@@ -67,7 +67,7 @@ describe Species do
       end
     end
     context "when there are no birth weights" do
-      it { should be_close(0.0, 0.01) }
+      it { should be_nil }
     end
   end
   
@@ -84,7 +84,7 @@ describe Species do
       end
     end
     context "when there are no adult weights" do
-      it { should be_close(0.0, 0.01) }
+      it { should be_nil }
     end
   end
   
@@ -101,8 +101,23 @@ describe Species do
       end
     end
     context "when there are no litter sizes" do
-      it { should be_close(0.0, 0.1) }
+      it { should be_nil }
     end
   end
   
+  describe "#all_data_available?" do
+    subject { species.all_data_available? }
+    context "when there's not data available" do
+      it { should be_false }
+    end
+    context "when there is data available" do
+      before do 
+        species.litter_sizes.build(:measure => 1)
+        species.birth_weights.build(:value => 500, :units => "Grams")
+        species.lifespans.build(:value => 20, :units => "Days")
+        species.adult_weights.build(:value => 500, :units => "Grams")
+      end
+      it { should be_true}
+    end
+  end
 end
