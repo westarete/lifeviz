@@ -1,7 +1,9 @@
 /* line 2, ../../app/stylesheets/ie.sass */
 * html .clearfix {
-  zoom: 1; }
+  zoom: 1;
+}
 
 /* line 6, ../../app/stylesheets/ie.sass */
-*:first-child+html .clearfix {
-  zoom: 1; }
+*:first-child + html .clearfix {
+  zoom: 1;
+}
