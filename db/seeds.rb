@@ -79,9 +79,8 @@ def rebuild_lineages
 end
 
 # Create species from anage/ubiota using hagrid_ubid as the bridge
-#   Collect species data from Anage
-#   Collect taxonomy species name and hierarchy from ubiota
-#   Author: john marino
+# Collect species data from Anage
+# Collect taxonomy species name and hierarchy from ubiota
 def create_species_and_data
   new_species       = []
   orphaned_species  = []

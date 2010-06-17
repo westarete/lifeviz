@@ -7,3 +7,4 @@ config/campfire.yml
 rerun.txt
 .DS_Store
 */**/.DS_Store
+capybara*

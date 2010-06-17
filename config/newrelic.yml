@@ -31,7 +31,7 @@ common: &default_settings
   # "All UI" then specify a semicolon separated list of up to three
   # distinct names.  This setting does not prevent you from manually
   # defining applications.
-  app_name: AnAge
+  app_name: LifeViz
 
   # When 'enabled' is turned on, the agent collects performance data
   # by inserting lightweight tracers on key methods inside the rails
@@ -184,7 +184,7 @@ cucumber:
 staging:
   <<: *default_settings
   enabled: true
-  app_name: AnAge (Staging)
+  app_name: LifeViz (Staging)
 
 # many applications have a beta environment which behaves
 # identically to production.  Support for that environment is provided
@@ -192,7 +192,7 @@ staging:
 beta:
   <<: *default_settings
   enabled: true
-  app_name: AnAge (Beta)
+  app_name: LifeViz (Beta)
 
 # Turn on the agent in production for 24x7 monitoring.  NewRelic
 # testing shows an average performance impact of < 5 ms per

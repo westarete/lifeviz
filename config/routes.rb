@@ -6,6 +6,7 @@ ActionController::Routing::Routes.draw do |map|
   map.with_options :controller => :lifespans do |a|
     a.new_lifespan '/species/:species_id/lifespans/new', :action => :new, :conditions => {:method => :get}
     a.edit_lifespan '/species/:species_id/lifespans/:id/edit', :action => :edit, :conditions => {:method => :get}
+    a.destroy_lifespan '/species/:species_id/lifespans/:id'      ,:action => :destroy,:conditions => {:method => :delete}
     a.connect '/species/:species_id/lifespans', :action => :create, :conditions => {:method => :post}
     a.connect '/species/:species_id/lifespans/:id', :action => :update, :conditions => {:method => :put}
   end

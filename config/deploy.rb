@@ -9,7 +9,7 @@ require 'capistrano-helpers/campfire'   # Post deploy info to campfire
 require 'hoptoad_notifier/capistrano'   # Hoptoad notification
 
 # The name of the application.
-set :application, "anage"
+set :application, "lifeviz"
 
 # Location of the source code.
 set :repository,  "git@github.com:westarete/anage.git"

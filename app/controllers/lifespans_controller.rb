@@ -34,6 +34,13 @@ class LifespansController < ApplicationController
     end
   end
   
+  def destroy
+    @lifespan = Lifespan.find(params[:id])
+    @lifespan.destroy
+    flash[:success] = "Lifespan deleted."
+    redirect_to @species
+  end
+  
   private
   
   def find_species
@@ -41,7 +48,7 @@ class LifespansController < ApplicationController
   end
   
   def add_annotation_point(value)
-    current_user.karma.buckets.lifevis_annotations += 1
+    current_user.karma.tags.lifevis_annotations += 1
     flash[:karma_updated] = true
   end
   
