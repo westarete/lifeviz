@@ -96,4 +96,21 @@ describe SpeciesHelper do
     end
   end
   
+  describe "#litter_size" do
+    subject { litter_size(species) }
+    context "when there are a few litter sizes" do
+      before do
+        species.litter_sizes.build(:measure => 1)
+        species.litter_sizes.build(:measure => 2)
+        species.litter_sizes.build(:measure => 3)
+      end
+      it "should return the average litter size formatted properly" do
+        subject.should == "2.0"
+      end
+    end
+    context "when there are no litter sizes" do
+      it { should == "N/A" }
+    end
+  end
+  
 end

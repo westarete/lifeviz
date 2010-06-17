@@ -44,4 +44,13 @@ module SpeciesHelper
     end
   end
   
+  # Get the average lifespan, else display N/A
+  def litter_size(species)
+    if species.litter_sizes.any?
+      "%.1f" % species.litter_size
+    else
+      "N/A"
+    end
+  end
+  
 end
