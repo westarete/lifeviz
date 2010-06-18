@@ -15,8 +15,15 @@ Taxon.blueprint do
 end
 
 Species.blueprint do
+  parent_id { Taxon.make(:rank => 5).id }
   name { Faker::Name.first_name }
   rank 6
+end
+
+Lifespan.blueprint do
+  species
+  value_in_days { rand }
+  units   { %w(Days Months Years).rand }
 end
 
 AdultWeight.blueprint do

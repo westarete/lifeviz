@@ -11,19 +11,19 @@ namespace :version do
   namespace :bump do
 
     desc 'Increase the version by a major version number and release to origin'
-    task :major => ['version:read', 'spec', 'cucumber'] do
+    task :major => ['version:read', 'spec'] do
       @version.bump_major
       puts "Version is now #{@version}"
     end
 
     desc 'Increase the version by a minor version number and release to origin'
-    task :minor => ['version:read', 'spec', 'cucumber'] do
+    task :minor => ['version:read', 'spec'] do
       @version.bump_minor
       puts "Version is now #{@version}"
     end
 
     desc 'Increase the version by a patch version number and release to origin'
-    task :patch => ['version:read', 'spec', 'cucumber'] do
+    task :patch => ['version:read', 'spec'] do
       @version.bump_patch
       puts "Version is now #{@version}"
     end

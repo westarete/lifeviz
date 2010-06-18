@@ -4,8 +4,8 @@ describe TaxonomyNavigationHelper do
   include TaxonomyNavigationHelper
 
   describe "#options_for_taxonomy_select" do
-    describe "when given some taxons" do      
-      before(:each) do
+    context "when given some taxons" do      
+      before do
         @bob = Taxon.create!(:name => 'bob', :rank => 6)
         @alice = Taxon.create!(:name => 'alice', :rank => 6)
       end
@@ -16,7 +16,7 @@ describe TaxonomyNavigationHelper do
           "<option value=\"#{@alice.id}\">alice</option>"
       end
     end
-    describe "when given no arguments" do
+    context "when given no arguments" do
       it "should return a single html option for \"Any\"" do
         options_for_taxonomy_select.should == "<option value=\"\">Any</option>"
       end

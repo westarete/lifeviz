@@ -35,6 +35,18 @@ class Taxon < ActiveRecord::Base
     end
   end
   
+  def species
+    begin
+      @species = Species.find_by_sql("SELECT * FROM taxa WHERE lft >= #{self.lft} AND rgt <= #{self.rgt} AND rank = 6 ORDER BY name ASC")
+    rescue
+      raise "Left and Right attributes were nil!"
+    end
+  end
+  
+  def complete_species
+    species.find_all {|s| s.all_data_available? }
+  end
+  
   def parents
     lineage_ids.split(/,/).collect { |ancestor_id| Taxon.find(ancestor_id) }
   end
