@@ -39,7 +39,7 @@ def create_taxonomy
   puts "Setting taxon id sequence back to 1"
   ActiveRecord::Base.connection.execute "SELECT setval('taxa_id_seq',1);"
 
-  # # Load new taxonomy information from UBioTa.
+  # Load new taxonomy information from UBioTa.
   progress "Loading seed data...", num_taxa_lines_bz2(UBIOTA) do |progress_bar|
     IO.popen("bunzip2 -c #{UBIOTA}").each do |line|
       id, term, rank, hierarchy, parent_id, num_children, hierarchy_ids = line.split("|")
@@ -99,8 +99,8 @@ def create_species_and_data
   anage && ubiota && map ? (puts "success") : (puts "*failed"; exit!)
 
   # Dump all related data
-  puts "** Removing any existing age data..." 
-  # Age.destroy_all ? (puts "success") : (puts "failed"; exit!)
+  puts "** Removing any existing age, litter sizes, adult weights,birth weights data..." 
+  Age.destroy_all && LitterSize.destroy_all && AdultWeight.destroy_all && BirthWeight.destroy_all ? (puts "success") : (puts "failed"; exit!)
   
   # Load taxon from anage, let's use hpricot
   puts "** Loading anage data, let's use hpricot..."
@@ -108,37 +108,31 @@ def create_species_and_data
   anage_species     = (doc/'names')
   anage_ages        = (doc/'age')
   anage_development = (doc/'development')
-  
   puts  "success: #{anage_species.size} species loaded with #{anage_ages.size} ages}"
   
   puts "anage species: #{anage_species.size}, anage ages: #{anage_ages.size}, anage devs: #{anage_development.size}"
-  
-        development_index = 0
-  
+    
   # Create new species array to load anage species and attributes we want
   puts "** Loading new species and storing anage data from anage dump..."
+  development_index = 0
   progress "Storing data", anage_species.length do |progress_bar|
     anage_species.each_with_index do |s, index|
-      
-      hagrid            = (s/'id_hagr').inner_html
+      hagrid        = (s/'id_hagr').inner_html
       x = {}
-      x[:synonyms]      = (s/'name_common').inner_html
-      x[:age]           = (anage_ages[index]/'tmax').inner_html
-      
+      x[:synonyms]  = (s/'name_common').inner_html
+      x[:age]       = (anage_ages[index]/'tmax').inner_html
+      x[:hagrid]    = hagrid
+
       while anage_development[development_index] && (anage_development[development_index]/'hagrid').inner_html.to_i < hagrid.to_i
         puts "#{(anage_development[development_index]/'hagrid').inner_html} is less than #{hagrid}"
         development_index += 1
       end
       
+      # development attributes matches the current species id
       if anage_development[development_index] && (anage_development[development_index]/'hagrid').inner_html.to_i == hagrid.to_i
-        
-        # puts "#{(anage_development[development_index]/'hagrid').inner_html} MATCHES #{hagrid}"
-      
         development = anage_development[development_index]
-      
         if development && (development/'hagrid').inner_html == hagrid
           x[:adult_weight]  = (development/'adult_weight').inner_html.to_f
-          # puts "float: #{x[:adult_weight].to_f}, int: #{x[:adult_weight].to_i}" if x[:adult_weight].to_i != 0
           x[:birth_weight]  = (development/'birth_weight').inner_html.to_f
           x[:litter_size]   = (development/'litter_size').inner_html.to_f
         else
@@ -147,11 +141,7 @@ def create_species_and_data
           x[:litter_size]   = ""
         end
         development_index += 1
-
-      # elsif anage_development[development_index]
-        # puts "#{(anage_development[development_index]/'hagrid').inner_html} doesn't match #{hagrid} so increment species"
       end
-
 
       new_species << x
       progress_bar.inc
@@ -162,9 +152,13 @@ def create_species_and_data
     
   # Load ubid ids into new species from mapping
   puts "** Loading mapped ubiota ids into new species..."
-  map.each_with_index do |line, index|
+  new_species_pointer = 0
+  map.each do |line|
     hagrid, ubid = line.split(/\s+/)
-    new_species[index][:ubid] = ubid.to_i
+    while hagrid != new_species[new_species_pointer][:hagrid]
+      new_species_pointer += 1
+    end
+    new_species[new_species_pointer][:ubid] = ubid.to_i
   end
   puts "success"
   
@@ -200,14 +194,6 @@ def create_species_and_data
         orphaned_species << y
         if !new_species[x].nil? then new_species[x][:taxon_id] = nil end
         if !new_species[x].nil? && id.to_i > new_species[x][:ubid] then x += 1 end
-    
-        # if y[:taxon_id] == 0
-        #   puts "id: #{id} term: #{term} rank: #{rank} parentid: #{parent_id}"; a_couple += 1
-        #   puts line
-        #   puts"\n"
-        # end
-        # # DEBUGGER
-        # if a_couple == 20 then raise "investigate" end
       else
         new_species[x][:taxon_id] = parent_id.to_i
         new_species[x][:name]     = term.to_s
@@ -233,7 +219,7 @@ def create_species_and_data
   # Create species with all the new species stored in memory
   count   = 0
   fcount  = 0
-  # age_nil = 0
+  age_nil = 0
   birth_weight_nil = 0
   adult_weight_nil = 0
   litter_size_nil  = 0
@@ -246,14 +232,16 @@ def create_species_and_data
         fcount += 1
       else
         species = Taxon.find_by_name(s[:name])
-        # species.send(:create_without_callbacks)
+        if species.nil?
+          species.send(:create_without_callbacks)
+        end
         
-        # age          = Lifespan.new(:value_in_days => (s[:age].to_f * 365), :units => "Years", :species_id => species.id)
+        age          = Lifespan.new(:value_in_days => (s[:age].to_f * 365), :units => "Years", :species_id => species.id)   if ! s[:age].blank?
         birth_weight = BirthWeight.new(:value_in_grams => (s[:birth_weight]), :units => "Grams", :species_id => species.id) if ! s[:birth_weight].blank?
         adult_weight = AdultWeight.new(:value_in_grams => (s[:adult_weight]), :units => "Grams", :species_id => species.id) if ! s[:adult_weight].blank?
         litter_size  = LitterSize.new(:measure => (s[:litter_size]), :species_id => species.id) if ! s[:litter_size].blank?
         
-        # age.value_in_days == 0 ? (age_nil += 1) : age.send(:create_without_callbacks)
+        age.nil?          ? (age_nil += 1) : age.send(:create_without_callbacks)
         adult_weight.nil? ? (adult_weight_nil += 1) : adult_weight.send(:create_without_callbacks)
         birth_weight.nil? ? (birth_weight_nil += 1) : birth_weight.send(:create_without_callbacks)
         litter_size.nil?  ? (litter_size_nil += 1)  : litter_size.send(:create_without_callbacks)
@@ -263,11 +251,11 @@ def create_species_and_data
       progress_bar.inc
     end
   end
-  puts "success: Phew!... saved #{count - fcount} species in #{Time.now - start_time}"
-  # puts "success: Phew!... saved #{count - age_nil} ages"
-  puts "success: Phew!... saved #{count - adult_weight_nil} adult weights"
-  puts "success: Phew!... saved #{count - birth_weight_nil} birth weights"
-  puts "success: Phew!... saved #{count - litter_size_nil} litter sizes"
+  puts "success: saved #{count - fcount} species in #{Time.now - start_time}"
+  puts "success: saved #{count - age_nil} ages"
+  puts "success: saved #{count - adult_weight_nil} adult weights"
+  puts "success: saved #{count - birth_weight_nil} birth weights"
+  puts "success: saved #{count - litter_size_nil} litter sizes"
   
   puts "failure: #{fcount} species didn't have taxons matching taxon_id in our database" if fcount != 0
   
@@ -283,7 +271,7 @@ def create_species_and_data
        fcount += 1
       else
        species = Taxon.new(:name => s[:name], :parent_id => taxon.id, :rank => 6)
-       species.send(:create_without_callbacks)
+       # species.send(:create_without_callbacks)
       end
       count = index
       progress_bar.inc
@@ -294,12 +282,11 @@ def create_species_and_data
   
   # Exit message
   puts "Species creation is completed"
-  
-  puts "NOTE: don't forget to run Taxon.rebuild! ... it will take a while"
+  puts "NOTE: don't forget to run Taxon.rebuild! ... it will take a while & vacuum analyze"
 end
 
 # Execute taxonomy creation method
 create_taxonomy
 # Execute species creation method
 create_species_and_data
-# rebuild_lineages
+rebuild_lineages
