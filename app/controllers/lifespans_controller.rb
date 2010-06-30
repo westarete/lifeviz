@@ -47,9 +47,4 @@ class LifespansController < ApplicationController
     @species = Species.find(params[:species_id])
   end
   
-  def add_annotation_point(value)
-    current_user.karma.tags.lifevis_annotations += 1
-    flash[:karma_updated] = true
-  end
-  
 end

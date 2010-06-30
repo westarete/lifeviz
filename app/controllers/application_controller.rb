@@ -9,6 +9,11 @@ class ApplicationController < ActionController::Base
   
   private
   
+    def add_annotation_point(value)
+      current_user.karma.tags.lifevis_annotations += 1
+      flash[:karma_updated] = true
+    end
+  
     def load_taxonomy
       @taxonomy = [["Animalia", "Animalia"]]
     end

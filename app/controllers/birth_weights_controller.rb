@@ -10,6 +10,7 @@ class BirthWeightsController < ApplicationController
     @birth_weight.species = @species
     if @birth_weight.save
       flash[:success] = "Birth weight created."
+      add_annotation_point(1)
       redirect_to @species
     else
       flash.now[:failure] = "Birth weight creation failed."

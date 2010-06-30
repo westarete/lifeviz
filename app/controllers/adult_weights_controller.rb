@@ -10,6 +10,7 @@ class AdultWeightsController < ApplicationController
     @adult_weight.species = @species
     if @adult_weight.save
       flash[:success] = "Adult weight created."
+      add_annotation_point(1)
       redirect_to @species
     else
       flash.now[:failure] = "Adult weight creation failed."
