@@ -12,7 +12,7 @@ class LitterSizesController < ApplicationController
       flash[:success] = "Litter size created."
       redirect_to @species
     else
-      flash.now[:failure] = "Litter size creation failed."
+      flash.now[:failure] = "Litter size annotation failed becase ", @litter_size.errors.full_messages.to_sentence.downcase, "."
       render :new
     end
   end

@@ -5,6 +5,20 @@ class Lifespan < ActiveRecord::Base
   validates_inclusion_of  :units, :in => %w( Days Months Years )
   validates_presence_of   :value
   
+  def validate
+    should_be_greater_than_zero
+  end
+  
+  def should_be_greater_than_zero
+    unless value_in_days.nil?
+      if value_in_days == 0
+        errors.add(:lifespan, "needs to be greater than zero")
+      elsif !(value_in_days > 0)
+        errors.add(:lifespan, "should be a positive number")
+      end
+    end
+  end
+  
   def to_s
     if units
       "#{value} #{units}".downcase

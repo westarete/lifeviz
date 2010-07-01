@@ -12,7 +12,7 @@ class BirthWeightsController < ApplicationController
       flash[:success] = "Birth weight created."
       redirect_to @species
     else
-      flash.now[:failure] = "Birth weight creation failed."
+      flash.now[:failure] = "Birth weight annotation failed becase ", @birth_weight.errors.full_messages.to_sentence.downcase, "."
       render :new
     end
   end

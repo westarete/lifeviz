@@ -13,7 +13,7 @@ class LifespansController < ApplicationController
       add_annotation_point(1)
       redirect_to @species
     else
-      flash.now[:failure] = "Lifespan annotation create failed."
+      flash.now[:failure] = "Lifespan annotation failed becase ", @lifespan.errors.full_messages.to_sentence.downcase, "."
       render :new
     end
   end

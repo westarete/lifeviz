@@ -12,7 +12,7 @@ class AdultWeightsController < ApplicationController
       flash[:success] = "Adult weight created."
       redirect_to @species
     else
-      flash.now[:failure] = "Adult weight creation failed."
+      flash.now[:failure] = "Adult weight annotation failed becase ", @adult_weight.errors.full_messages.to_sentence.downcase, "."
       render :new
     end
   end

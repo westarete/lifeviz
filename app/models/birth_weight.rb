@@ -5,6 +5,20 @@ class BirthWeight < ActiveRecord::Base
   validates_inclusion_of  :units, :in => %w( Grams Kilograms )
   validates_presence_of   :value_in_grams
 
+  def validate
+    should_be_greater_than_zero
+  end
+  
+  def should_be_greater_than_zero
+    unless value_in_grams.nil?
+      if value_in_grams == 0
+        errors.add(:birth_weight, "needs to be greater than zero")
+      elsif !(value_in_grams > 0)
+        errors.add(:birth_weight, "should be a positive number")
+      end
+    end
+  end
+
   def to_s
     if units
       "#{value} #{units}".downcase
