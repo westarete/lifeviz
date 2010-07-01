@@ -11,9 +11,9 @@ class LitterSize < ActiveRecord::Base
   def should_be_greater_than_zero
     unless measure.nil?
       if measure == 0
-        errors.add(:litter_size, "needs to be greater than zero")
+        errors.add(:measure, "needs to be greater than zero")
       elsif !(measure > 0)
-        errors.add(:litter_size, "should be a positive number")
+        errors.add(:measure, "should be a positive number")
       end
     end
   end

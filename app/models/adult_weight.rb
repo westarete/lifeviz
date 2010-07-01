@@ -13,9 +13,9 @@ class AdultWeight < ActiveRecord::Base
   def should_be_greater_than_zero
     unless value_in_grams.nil?
       if value_in_grams == 0
-        errors.add(:adult_weight, "needs to be greater than zero")
+        errors.add(:value, "needs to be greater than zero")
       elsif !(value_in_grams > 0)
-        errors.add(:adult_weight, "should be a positive number")
+        errors.add(:value, "should be a positive number")
       end
     end
   end
