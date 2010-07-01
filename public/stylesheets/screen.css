@@ -180,44 +180,44 @@ body #main #footer { clear: both; margin-top: 1em; }
 /* line 27, ../../app/stylesheets/partials/_structure.sass */
 body #main #footer a { vertical-align: middle; }
 /* line 29, ../../app/stylesheets/partials/_structure.sass */
-body #presence { bottom: 0; right: 0; height: 55px; padding: 0; position: fixed; width: 100%; z-index: 99; }
-/* line 37, ../../app/stylesheets/partials/_structure.sass */
+body #presence { bottom: 0; right: 0; height: 55px; padding: 0; position: fixed; z-index: 99; }
+/* line 36, ../../app/stylesheets/partials/_structure.sass */
 body #presence #karma-widget { margin-right: 30px; height: 100%; width: 110px; float: right; background: url(/images/karma_tiny.gif) no-repeat -5px -5px; -moz-border-radius-topleft: 10px; -webkit-border-top-left-radius: 10px; -moz-border-radius-topright: 10px; -webkit-border-top-right-radius: 10px; border: 1px solid gray; background-color: rgba(255, 255, 255, 0.8); padding: 15px 15px 15px 75px; }
-/* line 50, ../../app/stylesheets/partials/_structure.sass */
+/* line 49, ../../app/stylesheets/partials/_structure.sass */
 body #presence #karma-widget #karma, body #presence #karma-widget #achievements { font-weight: 600; }
 
-/* line 55, ../../app/stylesheets/partials/_structure.sass */
+/* line 54, ../../app/stylesheets/partials/_structure.sass */
 #spinner { display: none; }
 
-/* line 58, ../../app/stylesheets/partials/_structure.sass */
+/* line 57, ../../app/stylesheets/partials/_structure.sass */
 #login-buttons { float: right; }
 
-/* line 61, ../../app/stylesheets/partials/_structure.sass */
+/* line 60, ../../app/stylesheets/partials/_structure.sass */
 #login { display: block; padding: 15px; border: 1px solid gray; background-color: rgba(255, 255, 255, 0.8); width: 275px; -moz-border-radius: 5px; -webkit-border-radius: 5px; }
-/* line 69, ../../app/stylesheets/partials/_structure.sass */
+/* line 68, ../../app/stylesheets/partials/_structure.sass */
 #login .form-row { display: block; }
-/* line 71, ../../app/stylesheets/partials/_structure.sass */
+/* line 70, ../../app/stylesheets/partials/_structure.sass */
 #login .form-row .alt { float: right; }
-/* line 73, ../../app/stylesheets/partials/_structure.sass */
+/* line 72, ../../app/stylesheets/partials/_structure.sass */
 #login .form-row #user_email, #login .form-row #user_password { width: 120px; }
-/* line 75, ../../app/stylesheets/partials/_structure.sass */
+/* line 74, ../../app/stylesheets/partials/_structure.sass */
 #login .form-row #user_openid_identifier { width: 237px; }
-/* line 77, ../../app/stylesheets/partials/_structure.sass */
+/* line 76, ../../app/stylesheets/partials/_structure.sass */
 #login .form-row .remember-me { font-size: 70%; font-weight: 400; }
-/* line 80, ../../app/stylesheets/partials/_structure.sass */
+/* line 79, ../../app/stylesheets/partials/_structure.sass */
 #login .form-row .email, #login .form-row .password, #login .form-row .remember-me { padding-right: 5px; }
-/* line 82, ../../app/stylesheets/partials/_structure.sass */
+/* line 81, ../../app/stylesheets/partials/_structure.sass */
 #login .form-row .email, #login .form-row .password, #login .form-row .remember-me { float: left; }
-/* line 84, ../../app/stylesheets/partials/_structure.sass */
+/* line 83, ../../app/stylesheets/partials/_structure.sass */
 #login .form-row .submit { float: right; padding-top: 8px; }
-/* line 87, ../../app/stylesheets/partials/_structure.sass */
+/* line 86, ../../app/stylesheets/partials/_structure.sass */
 #login .form-row .submit a { margin: 0 !important; }
-/* line 89, ../../app/stylesheets/partials/_structure.sass */
+/* line 88, ../../app/stylesheets/partials/_structure.sass */
 #login .form-row .regular_button, #login .form-row .openid_button { float: right; }
-/* line 91, ../../app/stylesheets/partials/_structure.sass */
+/* line 90, ../../app/stylesheets/partials/_structure.sass */
 #login #openid { display: none; }
 
-/* line 94, ../../app/stylesheets/partials/_structure.sass */
+/* line 93, ../../app/stylesheets/partials/_structure.sass */
 .button_row { margin-top: 1em; }
 
 /* line 18, ../../../../../../opt/local/lib/ruby/gems/1.8/gems/compass-0.10.1/frameworks/blueprint/stylesheets/blueprint/_form.scss */
@@ -246,24 +246,24 @@ form input.text:focus, form input.title:focus, form input[type=text]:focus, form
 form input.text, form input.title, form input[type=text], form input[type=password] { width: 300px; }
 /* line 48, ../../../../../../opt/local/lib/ruby/gems/1.8/gems/compass-0.10.1/frameworks/blueprint/stylesheets/blueprint/_form.scss */
 form textarea { width: 390px; height: 250px; }
-/* line 99, ../../app/stylesheets/partials/_structure.sass */
+/* line 98, ../../app/stylesheets/partials/_structure.sass */
 form .fieldWithErrors { display: inline; }
-/* line 101, ../../app/stylesheets/partials/_structure.sass */
+/* line 100, ../../app/stylesheets/partials/_structure.sass */
 form .fieldWithErrors input { border: 1px solid red; }
 
-/* line 104, ../../app/stylesheets/partials/_structure.sass */
+/* line 103, ../../app/stylesheets/partials/_structure.sass */
 .form_input { margin-bottom: 1em; }
 
 /* new clearfix from perishablepress.com */
-/* line 110, ../../app/stylesheets/partials/_structure.sass */
+/* line 109, ../../app/stylesheets/partials/_structure.sass */
 .clearfix:after { visibility: hidden; display: block; font-size: 0; content: " "; clear: both; height: 0; }
 
-/* line 119, ../../app/stylesheets/partials/_structure.sass */
+/* line 118, ../../app/stylesheets/partials/_structure.sass */
 #backgroundGray { display: none; position: fixed; _position: absolute; height: 100%; width: 100%; top: 0; left: 0; background: black; border: 1px solid #cecece; z-index: 1; opacity: 0.8; }
 
-/* line 133, ../../app/stylesheets/partials/_structure.sass */
+/* line 132, ../../app/stylesheets/partials/_structure.sass */
 #popup { display: none; position: fixed; _position: absolute; height: 200px; width: 700px; z-index: 2; }
-/* line 141, ../../app/stylesheets/partials/_structure.sass */
+/* line 140, ../../app/stylesheets/partials/_structure.sass */
 #popup h2, #popup h3, #popup h4 { color: white !important; }
 
 /* line 1, ../../app/stylesheets/partials/_typography.sass */
