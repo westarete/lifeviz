@@ -1,5 +1,5 @@
 class LitterSizesController < ApplicationController
-  before_filter :find_species
+  before_filter :find_species, :require_user
   
   def new
     @litter_size = @species.litter_sizes.new

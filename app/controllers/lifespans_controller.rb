@@ -1,5 +1,5 @@
 class LifespansController < ApplicationController
-  before_filter :find_species
+  before_filter :find_species, :require_user
   
   def new
     @lifespan = @species.lifespans.new

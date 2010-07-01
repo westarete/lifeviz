@@ -1,5 +1,5 @@
 class AdultWeightsController < ApplicationController
-  before_filter :find_species
+  before_filter :find_species, :require_user
   
   def new
     @adult_weight = @species.adult_weights.new

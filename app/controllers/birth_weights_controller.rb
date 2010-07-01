@@ -1,5 +1,5 @@
 class BirthWeightsController < ApplicationController
-  before_filter :find_species
+  before_filter :find_species, :require_user
   
   def new
     @birth_weight = @species.birth_weights.new
