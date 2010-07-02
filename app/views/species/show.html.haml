@@ -31,8 +31,8 @@
         %td.adult_weight= adult_weight
         - if current_user
           %td.actions   
-            = link_to image_tag('edit.png'), edit_adult_weight_path(@species, adult_weight), :id => "edit_adult_weight_#{adult_weight.id}", :alt => "Edit adult weight"
-            = button_to "Delete", destroy_adult_weight_path(@species, adult_weight), :id => "delete_adult_weight_#{adult_weight.id}", :method => :delete, :alt => "Delete adult weight"
+            = link_to "", edit_adult_weight_path(@species, adult_weight), :id => "edit_adult_weight_#{adult_weight.id}", :alt => "Edit adult weight", :class => 'edit_button'
+            = button_to "", destroy_adult_weight_path(@species, adult_weight), :id => "delete_adult_weight_#{adult_weight.id}", :method => :delete, :alt => "Delete adult weight", :class => 'delete_button'
 
 %table#birth_weights
   %thead

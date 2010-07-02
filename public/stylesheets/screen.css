@@ -50,91 +50,100 @@ img, a img { border: none; -ms-interpolation-mode: bicubic; }
 /* line 19, ../../app/stylesheets/partials/_button.sass */
 .icon { width: 16px; height: 16px; }
 
-/* line 24, ../../app/stylesheets/partials/_button.sass */
+/* line 23, ../../app/stylesheets/partials/_button.sass */
+.delete_button, .edit_button { width: 16px; height: 16px; border: none; background-color: white; cursor: pointer; float: left; text-decoration: none; }
+
+/* line 32, ../../app/stylesheets/partials/_button.sass */
+.delete_button { background-image: url(/images/delete.png); }
+
+/* line 35, ../../app/stylesheets/partials/_button.sass */
+.edit_button { background-image: url(/images/edit.png); }
+
+/* line 38, ../../app/stylesheets/partials/_button.sass */
 a.button, button.button { font-family: "Lucida Grande", Tahoma, Arial, sans-serif; float: left; margin: 0 0.7em 0 0; text-decoration: none; background: #eaeaea url(/images/white-grad.png) repeat-x left top; border: 1px solid #dedede; border-right: 1px solid #bbbbbb; border-bottom: 1px solid #bfbfbf; padding: 5px 10px 6px 10px; display: block; cursor: pointer; font-size: 100%; line-height: 130%; color: #464646; -webkit-box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 3px; -moz-box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 3px; -webkit-border-radius: 11px; -moz-border-radius: 11px; }
 
-/* line 45, ../../app/stylesheets/partials/_button.sass */
+/* line 59, ../../app/stylesheets/partials/_button.sass */
 a.button { float: none; display: inline; display: inline-block; }
 
-/* line 51, ../../app/stylesheets/partials/_button.sass */
+/* line 65, ../../app/stylesheets/partials/_button.sass */
 button { width: auto !important; overflow: visible !important; }
-/* line 55, ../../app/stylesheets/partials/_button.sass */
+/* line 69, ../../app/stylesheets/partials/_button.sass */
 button.button { float: none; display: inline; display: inline-block; padding: 4px 10px 3px 7px; }
-/* line 61, ../../app/stylesheets/partials/_button.sass */
+/* line 75, ../../app/stylesheets/partials/_button.sass */
 button.button[type] { width: auto; padding: 5px 10px 5px 7px; line-height: 17px; }
 
-/* line 67, ../../app/stylesheets/partials/_button.sass */
+/* line 81, ../../app/stylesheets/partials/_button.sass */
 * + html button.button[type] { padding: 4px 10px 3px 7px; margin-bottom: 1px; }
 
-/* line 72, ../../app/stylesheets/partials/_button.sass */
+/* line 86, ../../app/stylesheets/partials/_button.sass */
 * html button.button { margin-bottom: 1px; }
 
-/* line 76, ../../app/stylesheets/partials/_button.sass */
+/* line 90, ../../app/stylesheets/partials/_button.sass */
 a.button img, button.button img { margin: 0 3px -3px 0 !important; }
 
-/* line 80, ../../app/stylesheets/partials/_button.sass */
+/* line 94, ../../app/stylesheets/partials/_button.sass */
 a.button:hover { border: 1px solid #999999; color: black; }
 
-/* line 86, ../../app/stylesheets/partials/_button.sass */
+/* line 100, ../../app/stylesheets/partials/_button.sass */
 button.button:hover { border: 1px solid #999999; color: black; }
-/* line 90, ../../app/stylesheets/partials/_button.sass */
+/* line 104, ../../app/stylesheets/partials/_button.sass */
 button.active { border-color: #cccccc; background: white url(/images/white-grad-active.png) repeat-x left top; -webkit-box-shadow: none; -moz-box-shadow: none; }
 
-/* line 97, ../../app/stylesheets/partials/_button.sass */
+/* line 111, ../../app/stylesheets/partials/_button.sass */
 a.button:active { border-color: #cccccc; background: white url(/images/white-grad-active.png) repeat-x left top; -webkit-box-shadow: none; -moz-box-shadow: none; }
 
-/* line 104, ../../app/stylesheets/partials/_button.sass */
+/* line 118, ../../app/stylesheets/partials/_button.sass */
 button.positive { color: #63a142; font-weight: bold; }
 
-/* line 109, ../../app/stylesheets/partials/_button.sass */
+/* line 123, ../../app/stylesheets/partials/_button.sass */
 a.positive { color: #63a142; font-weight: bold; }
-/* line 113, ../../app/stylesheets/partials/_button.sass */
+/* line 127, ../../app/stylesheets/partials/_button.sass */
 a.positive:hover { border: 1px solid #7cb043; color: #63a142; }
 
-/* line 118, ../../app/stylesheets/partials/_button.sass */
+/* line 132, ../../app/stylesheets/partials/_button.sass */
 button.positive:hover { border: 1px solid #7cb043; color: #63a142; }
 
-/* line 124, ../../app/stylesheets/partials/_button.sass */
+/* line 138, ../../app/stylesheets/partials/_button.sass */
 a.positive:active { background: #94b717; border: 1px solid #94b717; text-shadow: #607710 1px 1px 1px; color: white; }
-/* line 130, ../../app/stylesheets/partials/_button.sass */
+/* line 144, ../../app/stylesheets/partials/_button.sass */
 a.negative { color: #d12f19; }
 
-/* line 134, ../../app/stylesheets/partials/_button.sass */
+/* line 148, ../../app/stylesheets/partials/_button.sass */
 button.negative { color: #d12f19; }
 
-/* line 138, ../../app/stylesheets/partials/_button.sass */
+/* line 152, ../../app/stylesheets/partials/_button.sass */
 a.negative:hover, button.negative:hover { border: 1px solid #e86b6d; color: #d12f19; }
 
-/* line 143, ../../app/stylesheets/partials/_button.sass */
+/* line 157, ../../app/stylesheets/partials/_button.sass */
 a.negative:active { background: #d12f19; border: 1px solid #d12f19; text-shadow: #a93816 1px 1px 1px; color: white; }
 
-/* line 151, ../../app/stylesheets/partials/_button.sass */
+/* line 165, ../../app/stylesheets/partials/_button.sass */
 .buttons a em, .buttons button em { font-weight: normal; font-style: normal; }
 
-/* line 157, ../../app/stylesheets/partials/_button.sass */
-a.button em { font-weight: normal; font-style: normal; }
-/* line 161, ../../app/stylesheets/partials/_button.sass */
-a.dark { text-decoration: none; color: #eeeeee; background: #444444; border: 1px solid #444444; padding: 5px 10px; -webkit-border-radius: 11px; -moz-border-radius: 11px; display: inline-block; }
 /* line 171, ../../app/stylesheets/partials/_button.sass */
+a.button em { font-weight: normal; font-style: normal; }
+/* line 175, ../../app/stylesheets/partials/_button.sass */
+a.dark { text-decoration: none; color: #eeeeee; background: #444444; border: 1px solid #444444; padding: 5px 10px; -webkit-border-radius: 11px; -moz-border-radius: 11px; display: inline-block; }
+/* line 185, ../../app/stylesheets/partials/_button.sass */
 a.dark img { margin: 0 3px -3px 0 !important; }
-/* line 174, ../../app/stylesheets/partials/_button.sass */
+/* line 188, ../../app/stylesheets/partials/_button.sass */
 a.darkPos, a.darkNeg { text-decoration: none; color: #eeeeee; background: #444444; border: 1px solid #444444; padding: 5px 10px; -webkit-border-radius: 11px; -moz-border-radius: 11px; display: inline-block; }
-/* line 184, ../../app/stylesheets/partials/_button.sass */
-a.dark:hover { color: white; background: #555555; border: 1px solid white !important; }
-/* line 189, ../../app/stylesheets/partials/_button.sass */
-a.darkPos { border: 1px solid #4c8614; background: #4c8614; }
-/* line 193, ../../app/stylesheets/partials/_button.sass */
-a.darkPos:hover { color: white; background: #5ca417; border: 1px solid white; }
 /* line 198, ../../app/stylesheets/partials/_button.sass */
+a.dark:hover { color: white; background: #555555; border: 1px solid white !important; }
+/* line 203, ../../app/stylesheets/partials/_button.sass */
+a.darkPos { border: 1px solid #4c8614; background: #4c8614; }
+/* line 207, ../../app/stylesheets/partials/_button.sass */
+a.darkPos:hover { color: white; background: #5ca417; border: 1px solid white; }
+/* line 212, ../../app/stylesheets/partials/_button.sass */
 a.darkNeg { border: 1px solid #d12f19; background: #d12f19; }
-/* line 202, ../../app/stylesheets/partials/_button.sass */
+/* line 216, ../../app/stylesheets/partials/_button.sass */
 a.darkNeg:hover { background: #f13118; border: 1px solid white !important; }
-/* line 206, ../../app/stylesheets/partials/_button.sass */
+/* line 220, ../../app/stylesheets/partials/_button.sass */
 a.dark:active, a.darkPos:active, a.darkNeg:active { background-color: #fae158 !important; color: #222222 !important; border-color: #dfc94f !important; }
 
-/* line 212, ../../app/stylesheets/partials/_button.sass */
+/* line 226, ../../app/stylesheets/partials/_button.sass */
 .info .buttons { float: right; margin: 6px 0 0 0; padding: 0; }
-/* line 217, ../../app/stylesheets/partials/_button.sass */
+/* line 231, ../../app/stylesheets/partials/_button.sass */
 .info .buttons a, .info .buttons button { margin: 0 0 0 0.7em; }
 
 /* line 1, ../../app/stylesheets/partials/_taxonomy.sass */
