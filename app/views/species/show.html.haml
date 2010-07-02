@@ -16,8 +16,8 @@
         %td.lifespan= lifespan
         - if current_user
           %td.actions   
-            = link_to image_tag('edit.png'), edit_lifespan_path(@species, lifespan), :id => "edit_lifespan_#{lifespan.id}", :alt => "Edit lifespan"
-            = button_to "Delete", destroy_lifespan_path(@species, lifespan), :id => "delete_lifespan_#{lifespan.id}", :method => :delete, :alt => "Delete lifespan"
+            = link_to "", edit_lifespan_path(@species, lifespan), :id => "edit_lifespan_#{lifespan.id}", :alt => "Edit lifespan", :class => 'edit_button'
+            = button_to "", destroy_lifespan_path(@species, lifespan), :id => "delete_lifespan_#{lifespan.id}", :method => :delete, :alt => "Delete lifespan", :class => 'delete_button'
 
 %table#adult_weights
   %thead
@@ -46,8 +46,8 @@
         %td.birth_weight= birth_weight
         - if current_user
           %td.actions
-            = link_to image_tag('edit.png'), edit_birth_weight_path(@species, birth_weight), :id => "edit_birth_weight_#{birth_weight.id}", :alt => "Edit birth weight"
-            = button_to "Delete", destroy_birth_weight_path(@species, birth_weight), :id => "delete_birth_weight_#{birth_weight.id}", :method => :delete, :alt => "Delete birth weight"
+            = link_to "", edit_birth_weight_path(@species, birth_weight), :id => "edit_birth_weight_#{birth_weight.id}", :alt => "Edit birth weight", :class => 'edit_button'
+            = button_to "", destroy_birth_weight_path(@species, birth_weight), :id => "delete_birth_weight_#{birth_weight.id}", :method => :delete, :alt => "Delete birth weight", :class => 'delete_button'
 
 %table#litter_sizes
   %thead
@@ -61,8 +61,8 @@
         %td.litter_size= litter_size.measure
         - if current_user
           %td.actions   
-            = link_to image_tag('edit.png'), edit_litter_size_path(@species, litter_size), :id => "edit_litter_size_#{litter_size.id}", :alt => "Edit litter size"
-            = button_to "Delete", destroy_litter_size_path(@species, litter_size), :id => "delete_litter_size_#{litter_size.id}", :method => :delete, :alt => "Delete litter size"
+            = link_to "", edit_litter_size_path(@species, litter_size), :id => "edit_litter_size_#{litter_size.id}", :alt => "Edit litter size", :class => 'edit_button'
+            = button_to "", destroy_litter_size_path(@species, litter_size), :id => "delete_litter_size_#{litter_size.id}", :method => :delete, :alt => "Delete litter size", :class => 'delete_button'
 
 - if current_user
   = link_to 'Add Adult Weight', new_adult_weight_path(@species), :class => "button"
