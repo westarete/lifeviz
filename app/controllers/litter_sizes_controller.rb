@@ -10,6 +10,7 @@ class LitterSizesController < ApplicationController
     @litter_size.species = @species
     if @litter_size.save
       flash[:success] = "Litter size created."
+      add_annotation_point(1)
       redirect_to @species
     else
       flash.now[:failure] = "Litter size annotation failed becase ", @litter_size.errors.full_messages.to_sentence.downcase, "."
