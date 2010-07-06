@@ -5,9 +5,8 @@ June 11th 2010
   Clean Install w/ dump
     1. clone
     2. create new databases
-    3. rake db:schema:load
-    4. import data only (long time... like 30m-1hr)
-       $gunzip -c db/data-only.sql.gz | psql anage_development
+    3. import dump (long time... like 30m-1hr) or slim_dump of choice
+       $gunzip -c db/dump.sql.gz | psql anage_development
     5. get into psql
        $psql anage_development
     6. run vacuum (5mins)
@@ -18,13 +17,14 @@ June 17th 2010
   Clean Install from scratch
     1. make sure you have anage.xml, hagrid_ubid.txt, and ubiota_taxonomy.psv in db/data folder
     2. create new database
-    3. run db:seed (~4hrs)
+    3. rake db:schema:load
+    4. run db:seed (~4hrs)
         - create_taxonomy
         - create_species_and_data
-    4. enter console and Taxon.rebuild! (~4hrs)
-    5. get into psql
+    5. enter console and Taxon.rebuild! (~4hrs)
+    6. get into psql
        $psql anage_development
-    6. run vacuum (5mins)
-    7. #vacuum analyze;
-    8. at this point you may want to run Taxon.rebuild_lineages! from console since we performed a vacuum analyze and things are faster
-    8. script/server
+    7. run vacuum (5mins)
+    8. #vacuum analyze;
+    9. at this point you may want to run Taxon.rebuild_lineages! from console since we performed a vacuum analyze and things are faster
+    10. script/server

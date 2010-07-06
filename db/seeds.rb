@@ -100,7 +100,7 @@ def create_species_and_data
 
   # Dump all related data
   puts "** Removing any existing age, litter sizes, adult weights,birth weights data..." 
-  Age.destroy_all && LitterSize.destroy_all && AdultWeight.destroy_all && BirthWeight.destroy_all ? (puts "success") : (puts "failed"; exit!)
+  Lifespan.destroy_all && LitterSize.destroy_all && AdultWeight.destroy_all && BirthWeight.destroy_all ? (puts "success") : (puts "failed"; exit!)
   
   # Load taxon from anage, let's use hpricot
   puts "** Loading anage data, let's use hpricot..."
@@ -233,6 +233,7 @@ def create_species_and_data
       else
         species = Taxon.find_by_name(s[:name])
         if species.nil?
+          species = Taxon.new(:name => s[:name], :parent_id => taxon.id, :rank => 6)
           species.send(:create_without_callbacks)
         end
         
