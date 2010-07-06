@@ -13,6 +13,7 @@ context "User viewing the species detail page" do
     species
     bad_birth_weight
     3.times { species.birth_weights.make }
+    log_in
     visit species_path(species)
   end
   

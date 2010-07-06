@@ -7,11 +7,13 @@ context "User viewing the species detail page" do
   
   let(:species) { Species.make(:parent_id => Taxon.find_by_rank(5).id ) }
   let(:bad_litter_size)  { LitterSize.make(:species => species, :measure => 0) }
+  let(:user) { User.make }
   
   before do
     species
     bad_litter_size
     3.times { species.litter_sizes.make  }
+    log_in
     visit species_path(species)
   end
   
