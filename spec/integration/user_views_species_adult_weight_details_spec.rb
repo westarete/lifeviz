@@ -10,6 +10,7 @@ context "User viewing the species detail page" do
   let(:user) { User.make }
   
   before do
+    stub_karma_server
     species
     bad_adult_weight
     3.times { species.adult_weights.make  }
