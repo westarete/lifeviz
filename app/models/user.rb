@@ -2,6 +2,8 @@ class User < ActiveRecord::Base
   acts_as_authentic
   include KarmaClient::User
   
+  cattr_accessor :current_user
+  
   # The permalink to use to refer to this user in the karma server. Must be
   # implemented for the karma client to work.
   def karma_permalink

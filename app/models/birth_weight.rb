@@ -1,10 +1,13 @@
 class BirthWeight < ActiveRecord::Base
   belongs_to :species
+  
+  after_create :add_annotation_point
+  
   validates_presence_of   :species_id
   validates_presence_of   :units
   validates_inclusion_of  :units, :in => %w( Grams Kilograms )
   validates_presence_of   :value_in_grams
-
+  
   def validate
     should_be_greater_than_zero
   end
@@ -16,6 +19,12 @@ class BirthWeight < ActiveRecord::Base
       elsif !(value_in_grams > 0)
         errors.add(:value, "should be a positive number")
       end
+    end
+  end
+  
+  def add_annotation_point
+    if user = User.current_user
+      user.karma.tags.animals += 1
     end
   end
 

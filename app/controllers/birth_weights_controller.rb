@@ -10,7 +10,7 @@ class BirthWeightsController < ApplicationController
     @birth_weight.species = @species
     if @birth_weight.save
       flash[:success] = "Birth weight created."
-      add_annotation_point(1)
+      flash[:karma_updated] = true
       redirect_to @species
     else
       flash.now[:failure] = "Birth weight annotation failed becase ", @birth_weight.errors.full_messages.to_sentence.downcase, "."
@@ -40,7 +40,7 @@ class BirthWeightsController < ApplicationController
     redirect_to @species
   end
     
-private
+  private
   
   def find_species
     @species = Species.find(params[:species_id])

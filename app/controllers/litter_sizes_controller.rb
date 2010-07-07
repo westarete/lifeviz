@@ -10,7 +10,7 @@ class LitterSizesController < ApplicationController
     @litter_size.species = @species
     if @litter_size.save
       flash[:success] = "Litter size created."
-      add_annotation_point(1)
+      flash[:karma_updated] = true
       redirect_to @species
     else
       flash.now[:failure] = "Litter size annotation failed becase ", @litter_size.errors.full_messages.to_sentence.downcase, "."
@@ -40,7 +40,7 @@ class LitterSizesController < ApplicationController
     redirect_to @species
   end
   
-private
+  private
   
   def find_species
     @species = Species.find(params[:species_id])

@@ -9,11 +9,6 @@ class ApplicationController < ActionController::Base
   
   private
   
-    def add_annotation_point(value)
-      current_user.karma.tags.lifevis_annotations += 1
-      flash[:karma_updated] = true
-    end
-  
     def load_taxonomy
       @taxonomy = [["Animalia", "Animalia"]]
     end
@@ -25,7 +20,7 @@ class ApplicationController < ActionController::Base
     
     def current_user
       return @current_user if defined?(@current_user)
-      @current_user = current_user_session && current_user_session.record
+      User.current_user = @current_user = current_user_session && current_user_session.record
     end
     
     def logged_in?
