@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
     result.gsub!(/[ \-]+/i, '-') # No more than one of the separator in a row.
     result.gsub!(/^\-|\-$/i, '') # Remove leading/trailing separator.
     result.downcase!
-    result    
+    result
   end
   
 end

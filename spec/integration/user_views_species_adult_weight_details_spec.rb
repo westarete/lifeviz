@@ -7,11 +7,14 @@ context "User viewing the species detail page" do
   
   let(:species) { Species.make(:parent_id => Taxon.find_by_rank(5).id ) }
   let(:bad_adult_weight)  { AdultWeight.make(:species => species, :value => 999.9, :units => "Grams") }
+  let(:user) { User.make }
   
   before do
+    stub_karma_server
     species
     bad_adult_weight
     3.times { species.adult_weights.make  }
+    log_in
     visit species_path(species)
   end
   

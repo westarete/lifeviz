@@ -40,5 +40,5 @@ end
 
 LitterSize.blueprint do
   species
-  measure { (0..12).to_a.rand }
+  measure { rand(12) + 1 }
 end

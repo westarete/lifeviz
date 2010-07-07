@@ -61,8 +61,6 @@ module KarmaClient
       # If the user is not defined yet, create it and try again.
       create_user_on_karma_server
       retry
-    rescue
-      Rails.logger.warn "Karma Broken!"
     end
     
   end
