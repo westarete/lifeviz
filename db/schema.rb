@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100701174324) do
+ActiveRecord::Schema.define(:version => 20100708135945) do
 
   create_table "adult_weights", :force => true do |t|
     t.integer  "species_id",      :null => false
@@ -101,6 +101,7 @@ ActiveRecord::Schema.define(:version => 20100701174324) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "openid_identifier"
+    t.string   "name"
   end
 
   add_index "users", ["openid_identifier"], :name => "index_users_on_openid_identifier"
