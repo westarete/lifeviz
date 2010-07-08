@@ -111,6 +111,7 @@ describe BirthWeight do
 end
 
 
+
 # == Schema Information
 #
 # Table name: birth_weights
@@ -123,7 +124,5 @@ end
 #  updated_at      :datetime
 #  created_by      :integer
 #  created_by_name :string(255)
-#  updated_by      :integer
-#  updated_by_name :string(255)
 #
 

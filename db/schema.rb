@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100708135945) do
+ActiveRecord::Schema.define(:version => 20100708184107) do
 
   create_table "adult_weights", :force => true do |t|
     t.integer  "species_id",      :null => false
@@ -19,8 +19,6 @@ ActiveRecord::Schema.define(:version => 20100708135945) do
     t.string   "units"
     t.integer  "created_by"
     t.string   "created_by_name"
-    t.integer  "updated_by"
-    t.string   "updated_by_name"
   end
 
   create_table "birth_weights", :force => true do |t|
@@ -31,8 +29,6 @@ ActiveRecord::Schema.define(:version => 20100708135945) do
     t.datetime "updated_at"
     t.integer  "created_by"
     t.string   "created_by_name"
-    t.integer  "updated_by"
-    t.string   "updated_by_name"
   end
 
   add_index "birth_weights", ["species_id"], :name => "index_birth_weights_on_species_id"
@@ -45,8 +41,6 @@ ActiveRecord::Schema.define(:version => 20100708135945) do
     t.string   "units"
     t.integer  "created_by"
     t.string   "created_by_name"
-    t.integer  "updated_by"
-    t.string   "updated_by_name"
   end
 
   add_index "lifespans", ["id"], :name => "index_species_on_id"
@@ -58,8 +52,6 @@ ActiveRecord::Schema.define(:version => 20100708135945) do
     t.datetime "updated_at"
     t.integer  "created_by"
     t.string   "created_by_name"
-    t.integer  "updated_by"
-    t.string   "updated_by_name"
   end
 
   create_table "open_id_authentication_associations", :force => true do |t|
