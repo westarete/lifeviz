@@ -1,9 +1,10 @@
 class LitterSize < ActiveRecord::Base
   include Annotation
   
-  belongs_to :species
-  
+  before_create :set_created_by
   after_create :add_annotation_point
+  
+  belongs_to :species
   
   validates_presence_of :species_id
   validates_presence_of :measure

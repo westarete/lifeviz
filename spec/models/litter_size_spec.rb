@@ -6,7 +6,7 @@ make_biological_classification(5)
 describe LitterSize do
   
   let(:species) { Species.make(:parent_id => Taxon.find_by_rank(5).id ) }
-  let(:litter_size)  { LitterSize.make( :species_id => species ) }
+  let(:litter_size)  { species.litter_sizes.new }
   
   before do
     species

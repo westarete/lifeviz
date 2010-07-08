@@ -8,12 +8,14 @@
   %thead
     %tr
       %th Lifespan
+      %th Contributor
       - if current_user
         %th Actions
   %tbody
     - @species.lifespans.each do |lifespan|
       %tr
         %td.lifespan= lifespan
+        %td.contributor= lifespan.created_by
         - if current_user
           %td.actions   
             = link_to "", edit_lifespan_path(@species, lifespan), :id => "edit_lifespan_#{lifespan.id}", :alt => "Edit lifespan", :class => 'edit_button'
@@ -23,12 +25,14 @@
   %thead
     %tr
       %th Adult Weight
+      %th Contributor
       - if current_user
         %th Actions
   %tbody
     - @species.adult_weights.each do |adult_weight|
       %tr
         %td.adult_weight= adult_weight
+        %td.contributor= adult_weight.created_by
         - if current_user
           %td.actions   
             = link_to "", edit_adult_weight_path(@species, adult_weight), :id => "edit_adult_weight_#{adult_weight.id}", :alt => "Edit adult weight", :class => 'edit_button'
@@ -38,12 +42,14 @@
   %thead
     %tr
       %th Birth Weight
+      %th Contributor
       - if current_user
         %th Actions
   %tbody
     - @species.birth_weights.each do |birth_weight|
       %tr
         %td.birth_weight= birth_weight
+        %td.contributor= birth_weight.created_by
         - if current_user
           %td.actions
             = link_to "", edit_birth_weight_path(@species, birth_weight), :id => "edit_birth_weight_#{birth_weight.id}", :alt => "Edit birth weight", :class => 'edit_button'
@@ -53,19 +59,21 @@
   %thead
     %tr
       %th Litter Size
+      %th Contributor
       - if current_user
         %th Actions
   %tbody
     - @species.litter_sizes.each do |litter_size|
       %tr
         %td.litter_size= litter_size.measure
+        %td.contributor= litter_size.created_by
         - if current_user
           %td.actions   
             = link_to "", edit_litter_size_path(@species, litter_size), :id => "edit_litter_size_#{litter_size.id}", :alt => "Edit litter size", :class => 'edit_button'
             = button_to "", destroy_litter_size_path(@species, litter_size), :id => "delete_litter_size_#{litter_size.id}", :method => :delete, :alt => "Delete litter size", :class => 'delete_button'
 
 - if current_user
+  = link_to 'Add Lifespan', new_lifespan_path(@species), :class => "button"
   = link_to 'Add Adult Weight', new_adult_weight_path(@species), :class => "button"
   = link_to 'Add Birth Weight', new_birth_weight_path(@species), :class => "button"
-  = link_to 'Add Lifespan Annotation', new_lifespan_path(@species), :class => "button"
   = link_to 'Add Litter Size', new_litter_size_path(@species), :class => "button"
