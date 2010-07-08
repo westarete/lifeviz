@@ -10,13 +10,14 @@
     = javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"
     = javascript_include_tag 'application', 'jquery.coolinput', 'protovis-r3.2', 'graph'
   %body
-    #main
+    #top_presence
       = render :partial => "/shared/user_control"
+    #main
       = yield
       = render :partial => "/shared/footer"
     
     #backgroundGray
     
-    #presence
-      =render :partial => "shared/karma"
+    #bottom_presence
+      = render :partial => "shared/karma"
     

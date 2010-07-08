@@ -1,19 +1,26 @@
-= form.label :email
-%br
-= form.text_field :email, :class => 'title'
-%br
-%br
-= form.label :password, form.object.new_record? ? nil : "Change password"
-%br
-= form.password_field :password, :class => 'title'
-%br
-%br
-= form.label :password_confirmation, "Confirm password"
-%br
-= form.password_field :password_confirmation, :class => 'title'
-%br
-%br
-= form.label :openid_identifier, "OpenID"
-%br
-= form.text_field :openid_identifier, :class => 'title'
-%br
+%fieldset
+  %legend Personal Information
+  = form.label :name, "Full Name"
+  %br
+  = form.text_field :name, :class => 'title'
+  %br
+  = form.label :email
+  %br
+  = form.text_field :email, :class => 'title'
+
+%fieldset
+  %legend Password
+  = form.label :password, form.object.new_record? ? nil : "Change password"
+  %br
+  = form.password_field :password, :class => 'title', :value => ""
+  %br
+  %br
+  = form.label :password_confirmation, "Confirm password"
+  %br
+  = form.password_field :password_confirmation, :class => 'title'
+
+%fieldset
+  %legend OpenID
+  = form.label :openid_identifier, "OpenID"
+  %br
+  = form.text_field :openid_identifier, :class => 'title'
