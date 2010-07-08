@@ -19,6 +19,7 @@ describe User do
   end
     
 end
+
 # == Schema Information
 #
 # Table name: users
@@ -31,5 +32,6 @@ end
 #  created_at        :datetime
 #  updated_at        :datetime
 #  openid_identifier :string(255)
+#  name              :string(255)
 #
 

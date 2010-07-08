@@ -1,4 +1,6 @@
 class AdultWeight < ActiveRecord::Base
+  include Annotation
+  
   belongs_to :species
   
   after_create :add_annotation_point
@@ -22,12 +24,6 @@ class AdultWeight < ActiveRecord::Base
     end
   end
   
-  def add_annotation_point
-    if user = User.current_user
-      user.karma.tags.animals += 1
-    end
-  end
-
   def to_s
     if units
       "#{value} #{units}".downcase
@@ -35,7 +31,7 @@ class AdultWeight < ActiveRecord::Base
       ""
     end
   end
-
+  
   def value
     if value_in_grams && units
       in_units(units)
@@ -53,7 +49,6 @@ class AdultWeight < ActiveRecord::Base
       when 'Kilograms' then v * 1000
     end
   end
-  
   
   def in_units(units)
     case units

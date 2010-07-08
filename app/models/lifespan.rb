@@ -1,4 +1,6 @@
 class Lifespan < ActiveRecord::Base
+  include Annotation
+  
   belongs_to :species
   
   after_create :add_annotation_point
@@ -19,12 +21,6 @@ class Lifespan < ActiveRecord::Base
       elsif !(value_in_days > 0)
         errors.add(:value, "should be a positive number")
       end
-    end
-  end
-  
-  def add_annotation_point
-    if user = User.current_user
-      user.karma.tags.animals += 1
     end
   end
   

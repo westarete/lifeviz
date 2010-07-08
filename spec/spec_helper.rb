@@ -42,15 +42,15 @@ def stub_karma_server(json=nil)
       "user_path":"/users/bobexamplecom.json",
       "user":"bobexamplecom",
       "tags": {
-        "animals": {
+        "add_annotation": {
           "total":4,
-          "adjustments_path":"/users/bobexamplecom/tags/animals/adjustments.json",
-          "tag_path":"/tags/animals.json"
+          "adjustments_path":"/users/bobexamplecom/tags/add_annotation/adjustments.json",
+          "tag_path":"/tags/add_annotation.json"
          },
-         "plants": {
+         "add_comment": {
            "total":3,
-           "adjustments_path":"/users/bobexamplecom/tags/plants/adjustments.json",
-           "tag_path":"/tags/plants.json"
+           "adjustments_path":"/users/bobexamplecom/tags/add_comment/adjustments.json",
+           "tag_path":"/tags/add_comment.json"
          }
        }
      }
