@@ -20,16 +20,19 @@ describe LitterSize do
 end
 
 
+
 # == Schema Information
 #
 # Table name: litter_sizes
 #
-#  id              :integer         not null, primary key
-#  species_id      :integer         not null
-#  measure         :integer         not null
-#  created_at      :datetime
-#  updated_at      :datetime
-#  created_by      :integer
-#  created_by_name :string(255)
+#  id               :integer         not null, primary key
+#  species_id       :integer         not null
+#  measure          :integer         not null
+#  created_at       :datetime
+#  updated_at       :datetime
+#  created_by       :integer
+#  created_by_name  :string(255)
+#  citation         :string(255)
+#  citation_context :text
 #
 

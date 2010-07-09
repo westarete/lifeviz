@@ -9,16 +9,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100708184107) do
+ActiveRecord::Schema.define(:version => 20100709203032) do
 
   create_table "adult_weights", :force => true do |t|
-    t.integer  "species_id",      :null => false
-    t.decimal  "value_in_grams",  :null => false
+    t.integer  "species_id",       :null => false
+    t.decimal  "value_in_grams",   :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "units"
     t.integer  "created_by"
     t.string   "created_by_name"
+    t.string   "citation"
+    t.text     "citation_context"
   end
 
   create_table "birth_weights", :force => true do |t|
@@ -29,6 +31,8 @@ ActiveRecord::Schema.define(:version => 20100708184107) do
     t.datetime "updated_at"
     t.integer  "created_by"
     t.string   "created_by_name"
+    t.string   "citation"
+    t.text     "citation_context"
   end
 
   add_index "birth_weights", ["species_id"], :name => "index_birth_weights_on_species_id"
@@ -41,17 +45,21 @@ ActiveRecord::Schema.define(:version => 20100708184107) do
     t.string   "units"
     t.integer  "created_by"
     t.string   "created_by_name"
+    t.string   "citation"
+    t.text     "citation_context"
   end
 
   add_index "lifespans", ["id"], :name => "index_species_on_id"
 
   create_table "litter_sizes", :force => true do |t|
-    t.integer  "species_id",      :null => false
-    t.integer  "measure",         :null => false
+    t.integer  "species_id",       :null => false
+    t.integer  "measure",          :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "created_by"
     t.string   "created_by_name"
+    t.string   "citation"
+    t.text     "citation_context"
   end
 
   create_table "open_id_authentication_associations", :force => true do |t|
