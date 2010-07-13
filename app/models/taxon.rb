@@ -52,8 +52,12 @@ class Taxon < ActiveRecord::Base
   end
   
   # this method needs to be smarter... what if we want 2 ranks down?
-  def complete_species
-    self.children.find_all {|s| s.all_data_available? }
+  def children_of_rank(rank)
+    if rank && self.rank < rank && rank < 7
+      Species.find_by_sql("SELECT * FROM taxa WHERE lft >= #{self.lft} AND rgt <= #{self.rgt} AND rank = #{rank} ORDER BY name ASC")
+    else
+      raise 'rank not set properly'
+    end
   end
   
   # returns an array of arrays. 
