@@ -25,38 +25,26 @@ class Species < Taxon
 
   # Return the average adult weight in grams.
   def adult_weight_in_grams
-    if adult_weights.any?
-      adult_weights.collect(&:value_in_grams).sum / adult_weights.length.to_f
-    else
-      nil
-    end
+    weights = adult_weights.collect(&:value_in_grams).delete_if{|x| x.nil? || x <= 0 } if adult_weights.any?
+    weights && weights.any? ? ( weights.sum / weights.size.to_f ) : nil
   end
 
   # Return the average birth weight in grams.
   def birth_weight_in_grams
-    if birth_weights.any?
-      birth_weights.collect(&:value_in_grams).sum / birth_weights.length.to_f
-    else
-      nil
-    end
+    weights = birth_weights.collect(&:value_in_grams).delete_if{|x| x.nil? || x <= 0 } if birth_weights.any?
+    weights && weights.any? ? ( weights.sum / weights.size.to_f ) : nil
   end
 
   # Return the average lifespan in days.
   def lifespan_in_days
-    if lifespans.any?
-      lifespans.collect(&:value_in_days).sum / lifespans.length.to_f
-    else
-      nil
-    end
+    lspans = lifespans.collect(&:value_in_days).delete_if{|x| x.nil? || x <= 0 } if lifespans.any?
+    lspans && lspans.any? ? ( lspans.sum / lspans.size.to_f ) : nil
   end
 
   # Return the average litter size.
   def litter_size
-    if litter_sizes.any?
-      litter_sizes.collect(&:measure).sum / litter_sizes.length.to_f
-    else
-      nil
-    end
+    lsizes = litter_sizes.collect(&:measure).delete_if{|x| x.nil? || x <= 0 } if litter_sizes.any?
+    lsizes && lsizes.any? ? ( lsizes.sum / lsizes.size.to_f ) : nil
   end
 
   def move_to_genus
