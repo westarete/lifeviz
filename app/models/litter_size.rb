@@ -1,6 +1,11 @@
 class LitterSize < ActiveRecord::Base
-
+  include Annotation
+  
+  before_create :set_created_by
+  after_create :add_annotation_point
+  
   belongs_to :species
+  
   validates_presence_of :species_id
   validates_presence_of :measure
 
@@ -19,14 +24,18 @@ class LitterSize < ActiveRecord::Base
   end
 
 end
+
+
 # == Schema Information
 #
 # Table name: litter_sizes
 #
-#  id         :integer         not null, primary key
-#  species_id :integer         not null
-#  measure    :integer         not null
-#  created_at :datetime
-#  updated_at :datetime
+#  id              :integer         not null, primary key
+#  species_id      :integer         not null
+#  measure         :integer         not null
+#  created_at      :datetime
+#  updated_at      :datetime
+#  created_by      :integer
+#  created_by_name :string(255)
 #
 

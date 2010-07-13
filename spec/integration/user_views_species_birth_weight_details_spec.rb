@@ -7,11 +7,14 @@ context "User viewing the species detail page" do
   
   let(:species) { Species.make(:parent_id => Taxon.find_by_rank(5).id ) }
   let(:bad_birth_weight)  { BirthWeight.make(:species => species, :value => 999.9, :units => "Grams") }
-  
+  let(:user) { User.make }
+
   before do
+    stub_karma_server
     species
     bad_birth_weight
-    3.times { species.birth_weights.make  }
+    3.times { species.birth_weights.make }
+    log_in
     visit species_path(species)
   end
   
@@ -31,7 +34,7 @@ context "User viewing the species detail page" do
     end
   end
   
-  context "when creating creating a new birth weight" do
+  context "when creating a new birth weight" do
     before do
       click 'Add Birth Weight'
       fill_in 'birth_weight_value', :with => '5.5'

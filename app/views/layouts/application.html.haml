@@ -13,12 +13,13 @@
       = yield :javascript
 
   %body
-    #main
+    #top_presence
       = render :partial => "/shared/user_control"
+    #main
       = yield
       = render :partial => "/shared/footer"
     
     #backgroundGray
     
-    #presence
-      =render :partial => "shared/karma"
+    #bottom_presence
+      = render :partial => "shared/karma"

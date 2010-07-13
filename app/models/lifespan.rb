@@ -1,5 +1,11 @@
 class Lifespan < ActiveRecord::Base
+  include Annotation
+  
+  before_create :set_created_by
+  after_create :add_annotation_point
+  
   belongs_to :species
+  
   validates_presence_of   :species_id
   validates_presence_of   :units
   validates_inclusion_of  :units, :in => %w( Days Months Years )
@@ -58,15 +64,19 @@ end
 
 
 
+
+
 # == Schema Information
 #
 # Table name: lifespans
 #
-#  id            :integer         not null, primary key
-#  species_id    :integer
-#  created_at    :datetime
-#  updated_at    :datetime
-#  value_in_days :decimal(, )
-#  units         :string(255)
+#  id              :integer         not null, primary key
+#  species_id      :integer
+#  created_at      :datetime
+#  updated_at      :datetime
+#  value_in_days   :decimal(, )
+#  units           :string(255)
+#  created_by      :integer
+#  created_by_name :string(255)
 #
 

@@ -1,11 +1,11 @@
 #user_control
-  -if current_user
+  - if current_user
     #loggedin-buttons
-      %h4= "Logged in as #{current_user.email}"
+      #logged_in_as= "Logged in as #{current_user}."
       = link_to "Settings", edit_user_path(current_user), :class => "button"
       = link_to "Log out", user_session_path, :method => :delete, :class => "button"
   - else
-    #login-buttons
+    #login-buttons.clearfix
       = link_to "Log in", "#", :id => "login_button", :class => "button"
       = link_to "Sign up", new_user_path, :class => "button"
     #login.clearfix

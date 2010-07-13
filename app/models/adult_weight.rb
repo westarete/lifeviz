@@ -1,6 +1,11 @@
 class AdultWeight < ActiveRecord::Base
+  include Annotation
+  
+  before_create :set_created_by
+  after_create :add_annotation_point
   
   belongs_to :species
+  
   validates_presence_of   :species_id
   validates_presence_of   :units
   validates_inclusion_of  :units, :in => %w( Grams Kilograms )
@@ -19,7 +24,7 @@ class AdultWeight < ActiveRecord::Base
       end
     end
   end
-
+  
   def to_s
     if units
       "#{value} #{units}".downcase
@@ -27,7 +32,7 @@ class AdultWeight < ActiveRecord::Base
       ""
     end
   end
-
+  
   def value
     if value_in_grams && units
       in_units(units)
@@ -46,24 +51,26 @@ class AdultWeight < ActiveRecord::Base
     end
   end
   
-  
   def in_units(units)
     case units
       when 'Grams'  then value_in_grams
       when 'Kilograms' then value_in_grams.to_i / 1000
     end
   end
-
 end
+
+
 # == Schema Information
 #
 # Table name: adult_weights
 #
-#  id             :integer         not null, primary key
-#  species_id     :integer         not null
-#  value_in_grams :decimal(, )     not null
-#  created_at     :datetime
-#  updated_at     :datetime
-#  units          :string(255)
+#  id              :integer         not null, primary key
+#  species_id      :integer         not null
+#  value_in_grams  :decimal(, )     not null
+#  created_at      :datetime
+#  updated_at      :datetime
+#  units           :string(255)
+#  created_by      :integer
+#  created_by_name :string(255)
 #
 

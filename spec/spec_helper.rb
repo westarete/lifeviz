@@ -42,15 +42,15 @@ def stub_karma_server(json=nil)
       "user_path":"/users/bobexamplecom.json",
       "user":"bobexamplecom",
       "tags": {
-        "animals": {
+        "add_annotation": {
           "total":4,
-          "adjustments_path":"/users/bobexamplecom/tags/animals/adjustments.json",
-          "tag_path":"/tags/animals.json"
+          "adjustments_path":"/users/bobexamplecom/tags/add_annotation/adjustments.json",
+          "tag_path":"/tags/add_annotation.json"
          },
-         "plants": {
+         "add_comment": {
            "total":3,
-           "adjustments_path":"/users/bobexamplecom/tags/plants/adjustments.json",
-           "tag_path":"/tags/plants.json"
+           "adjustments_path":"/users/bobexamplecom/tags/add_comment/adjustments.json",
+           "tag_path":"/tags/add_comment.json"
          }
        }
      }
@@ -60,6 +60,13 @@ def stub_karma_server(json=nil)
   resource = stub('resource', :get => json, :post => nil, :put => nil)
   # Stub the RestClient Resource to use our objects instead of querying the server.
   RestClient::Resource.stub!(:new => resource)
+end
+
+def log_in
+  visit root_path
+  fill_in 'user_email', :with => user.email
+  fill_in 'user_password', :with => "secret"
+  click 'Login'
 end
 
 def make_biological_classification(rank = 5)

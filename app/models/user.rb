@@ -2,6 +2,12 @@ class User < ActiveRecord::Base
   acts_as_authentic
   include KarmaClient::User
   
+  cattr_accessor :current_user
+  
+  def to_s
+    name || email
+  end
+  
   # The permalink to use to refer to this user in the karma server. Must be
   # implemented for the karma client to work.
   def karma_permalink
@@ -12,10 +18,11 @@ class User < ActiveRecord::Base
     result.gsub!(/[ \-]+/i, '-') # No more than one of the separator in a row.
     result.gsub!(/^\-|\-$/i, '') # Remove leading/trailing separator.
     result.downcase!
-    result    
+    result
   end
   
 end
+
 # == Schema Information
 #
 # Table name: users
@@ -28,5 +35,6 @@ end
 #  created_at        :datetime
 #  updated_at        :datetime
 #  openid_identifier :string(255)
+#  name              :string(255)
 #
 

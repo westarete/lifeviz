@@ -39,10 +39,6 @@ $(function(){
     iconClass: 'openid_icon'
   });
   
-  $('#user_email, #user_password').coolinput({
-    blurClass: 'blur'
-  });
-  
   // KARMA!
   $('#karma-tabs').tabs({
       collapsible: true

@@ -1,10 +1,16 @@
 class BirthWeight < ActiveRecord::Base
+  include Annotation
+  
+  before_create :set_created_by
+  after_create :add_annotation_point
+  
   belongs_to :species
+  
   validates_presence_of   :species_id
   validates_presence_of   :units
   validates_inclusion_of  :units, :in => %w( Grams Kilograms )
   validates_presence_of   :value_in_grams
-
+  
   def validate
     should_be_greater_than_zero
   end
@@ -45,7 +51,6 @@ class BirthWeight < ActiveRecord::Base
     end
   end
   
-  
   def in_units(units)
     case units
       when 'Grams'  then value_in_grams
@@ -54,15 +59,19 @@ class BirthWeight < ActiveRecord::Base
   end
 end
 
+
+
 # == Schema Information
 #
 # Table name: birth_weights
 #
-#  id             :integer         not null, primary key
-#  species_id     :integer
-#  value_in_grams :decimal(, )
-#  units          :string(255)
-#  created_at     :datetime
-#  updated_at     :datetime
+#  id              :integer         not null, primary key
+#  species_id      :integer
+#  value_in_grams  :decimal(, )
+#  units           :string(255)
+#  created_at      :datetime
+#  updated_at      :datetime
+#  created_by      :integer
+#  created_by_name :string(255)
 #
 
