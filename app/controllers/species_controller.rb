@@ -47,7 +47,7 @@ class SpeciesController < ApplicationController
       end
 
       format.json do
-        render :json =>  @taxon.complete_species.to_json(
+        render :json =>  @taxon.children_of_rank(@taxon.rank + 1).to_json(
                  :only => :name,
                  :methods => [
                    :avg_lifespan,
