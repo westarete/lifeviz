@@ -41,7 +41,6 @@ class Species < Taxon
     end
   end
 
-
   # Return the average lifespan in days.
   def lifespan_in_days
     if lifespans.any?
@@ -50,7 +49,6 @@ class Species < Taxon
       nil
     end
   end
-
 
   # Return the average litter size.
   def litter_size
@@ -61,11 +59,9 @@ class Species < Taxon
     end
   end
 
-
   def move_to_genus
     move_to_child_of(parent)
   end
-
 
   def precalculate_stats
     self.avg_lifespan      = self.lifespan_in_days
