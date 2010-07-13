@@ -2,7 +2,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resource  :user_session
   map.resources :users
   
-  map.resources :species, :collection => { :data => :get }
+  map.resources :species, :collection => { :data => :get }, :member => {:children => :get}
+
   map.with_options :controller => :lifespans do |a|
     a.new_lifespan '/species/:species_id/lifespans/new', :action => :new, :conditions => {:method => :get}
     a.edit_lifespan '/species/:species_id/lifespans/:id/edit', :action => :edit, :conditions => {:method => :get}

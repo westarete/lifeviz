@@ -147,16 +147,16 @@ a.dark:active, a.darkPos:active, a.darkNeg:active { background-color: #fae158 !i
 .info .buttons a, .info .buttons button { margin: 0 0 0 0.7em; }
 
 /* line 1, ../../app/stylesheets/partials/_taxonomy.sass */
-#taxonomic_selector { margin: 0 0 1em 10px; min-height: 2em; }
-/* line 4, ../../app/stylesheets/partials/_taxonomy.sass */
-#taxonomic_selector .rank { display: block; margin-right: 10px; float: left; }
-/* line 8, ../../app/stylesheets/partials/_taxonomy.sass */
-#taxonomic_selector .rank label { margin-bottom: 10px; display: block; }
+#taxonomic_selector { margin: 0 0 1em 10px; min-height: 2em; list-style: none; }
+/* line 5, ../../app/stylesheets/partials/_taxonomy.sass */
+#taxonomic_selector li { display: block; margin-right: 10px; float: left; }
+/* line 9, ../../app/stylesheets/partials/_taxonomy.sass */
+#taxonomic_selector li label { display: block; }
 /* line 11, ../../app/stylesheets/partials/_taxonomy.sass */
-#taxonomic_selector .rank input { display: block; }
+#taxonomic_selector li input { display: block; }
 
 /* line 14, ../../app/stylesheets/partials/_taxonomy.sass */
-#fig { width: 900px; margin: 30px auto; text-align: center; }
+#graph { display: none; width: 900px; margin: 30px auto; text-align: center; }
 
 /* line 1, ../../app/stylesheets/partials/_color.sass */
 .gold { color: #cd7f32; }
@@ -196,7 +196,7 @@ body #presence #karma-widget { margin-right: 30px; height: 100%; width: 110px; f
 body #presence #karma-widget #karma, body #presence #karma-widget #achievements { font-weight: 600; }
 
 /* line 54, ../../app/stylesheets/partials/_structure.sass */
-#spinner { display: none; }
+.spinner { display: none; }
 
 /* line 57, ../../app/stylesheets/partials/_structure.sass */
 #login-buttons { float: right; }
