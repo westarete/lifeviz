@@ -1,17 +1,20 @@
 
 == Anage
 
-June 11th 2010
+July 13 2010
   Clean Install w/ dump
-    1. clone
-    2. create new databases
-    3. import dump (long time... like 30m-1hr) or slim_dump of choice
+    1. clone/update server repository
+    2. create new database
+    3. import dump (long time... like 30m-1hr) or slim_dump (10 seconds)
        $gunzip -c db/dump.sql.gz | psql anage_development
+    4. rake db:migrate (optional: if you want newest changes to the db)
     5. get into psql
        $psql anage_development
     6. run vacuum (5mins)
        #vacuum analyze;
-    7. script/server
+    7. run Species.rebuild_stats (NOT NEEDED FOR SLIM)
+    8. run Taxon.rebuild_stats (NOT NEEDED FOR SLIM)
+    9. script/server
     
 June 17th 2010
   Clean Install from scratch
@@ -26,5 +29,7 @@ June 17th 2010
        $psql anage_development
     7. run vacuum (5mins)
     8. #vacuum analyze;
-    9. at this point you may want to run Taxon.rebuild_lineages! from console since we performed a vacuum analyze and things are faster
-    10. script/server
+    9. run Species.rebuild_stats (2.5mins for 4k species)
+    10. run Taxon.rebuild_stats
+    11. at this point you may want to run Taxon.rebuild_lineages! from console since we performed a vacuum analyze and things are faster
+    12. script/server
