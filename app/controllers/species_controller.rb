@@ -45,9 +45,8 @@ class SpeciesController < ApplicationController
         @species = @taxon.paginated_sorted_species(params[:page])
         render :partial => "table", :layout => false
       end
-
       format.json do
-        render :json =>  @taxon.children_of_rank(@taxon.rank + 2).to_json(
+        render :json =>  @taxon.children_of_rank(@taxon.rank + 3).to_json(
                  :only => :name,
                  :methods => [
                    :avg_lifespan,
