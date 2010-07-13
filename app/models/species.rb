@@ -1,15 +1,6 @@
-# == Schema Information
-#
-# Table name: taxa
-#
-#  id          :integer         not null, primary key
-#  name        :string(255)
-#  parent_id   :integer
-#  lft         :integer
-#  rgt         :integer
-#  rank        :integer
-#  lineage_ids :string(255)
-#
+require 'progressbar'
+require 'db/seed_methods'
+include SeedMethods
 
 class Species < Taxon
   ActiveRecord::Base.include_root_in_json = false
@@ -20,7 +11,26 @@ class Species < Taxon
   has_many :lifespans     , :dependent => :destroy, :foreign_key => :species_id
   has_many :litter_sizes  , :dependent => :destroy, :foreign_key => :species_id
   
-  after_save :move_to_genus
+  # after_create :move_to_genus
+  
+  def self.rebuild_stats
+    species = Species.find_all_by_rank(6)
+    
+    progress "Building Stats", species.size do |progress_bar|
+      species.each do |s|
+        s.precalculate_stats
+        progress_bar.inc
+      end
+    end
+  end
+  
+  def precalculate_stats
+    self.avg_lifespan      = self.lifespan_in_days
+    self.avg_birth_weight  = self.birth_weight_in_grams
+    self.avg_adult_weight  = self.adult_weight_in_grams
+    self.avg_litter_size   = self.litter_size
+    self.save
+  end
 
   def validate
     unless self.parent_id && Taxon.find(self.parent_id) && Taxon.find(self.parent_id).rank == 5

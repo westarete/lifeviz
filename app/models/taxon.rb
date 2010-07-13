@@ -1,16 +1,3 @@
-# == Schema Information
-#
-# Table name: taxa
-#
-#  id          :integer         not null, primary key
-#  name        :string(255)
-#  parent_id   :integer
-#  lft         :integer
-#  rgt         :integer
-#  rank        :integer
-#  lineage_ids :string(255)
-#
-
 class Taxon < ActiveRecord::Base
   acts_as_nested_set
   
@@ -26,6 +13,32 @@ class Taxon < ActiveRecord::Base
   
   validates_presence_of :rank, :message => "must be set"
   validates_presence_of :name, :message => "can't be blank"
+  
+
+  def self.rebuild_stats
+    rank = 5
+    while rank >= 0
+      taxon = Taxon.find_all_by_rank(rank)
+      progress "Building Taxon Stats for rank #{rank}", taxon.size do |progress_bar|
+        taxon.each do |t|
+          t.precalculate_stats
+          progress_bar.inc
+        end
+      end
+      rank -= 1
+    end
+  end
+  
+  def precalculate_stats
+    children = self.children
+    if children.any?
+      self.avg_lifespan     = self.children.collect(&:avg_lifespan).delete_if{|x| x.nil?}.sum     / children.size.to_f
+      self.avg_litter_size  = self.children.collect(&:avg_litter_size).delete_if{|x| x.nil?}.sum  / children.size.to_f
+      self.avg_adult_weight = self.children.collect(&:avg_adult_weight).delete_if{|x| x.nil?}.sum / children.size.to_f
+      self.avg_birth_weight = self.children.collect(&:avg_birth_weight).delete_if{|x| x.nil?}.sum / children.size.to_f
+      self.save
+    end
+  end
   
   def paginated_sorted_species(page)
     begin
