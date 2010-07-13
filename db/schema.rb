@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100612083154) do
+ActiveRecord::Schema.define(:version => 20100707145800) do
 
   create_table "adult_weights", :force => true do |t|
     t.integer  "species_id",     :null => false
@@ -68,6 +68,10 @@ ActiveRecord::Schema.define(:version => 20100612083154) do
     t.integer "rgt"
     t.integer "rank"
     t.string  "lineage_ids"
+    t.float   "avg_adult_weight"
+    t.float   "avg_birth_weight"
+    t.float   "avg_lifespan"
+    t.float   "avg_litter_size"
   end
 
   add_index "taxa", ["id"], :name => "index_taxa_on_id"
