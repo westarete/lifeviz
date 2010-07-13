@@ -14,6 +14,7 @@ class Taxon < ActiveRecord::Base
   validates_presence_of :rank, :message => "must be set"
   validates_presence_of :name, :message => "can't be blank"
   
+  RANK_LABELS = %w(Kingdom Phylum Class Order Family Genus Species)
 
   def self.rebuild_stats
     rank = 5
@@ -96,6 +97,41 @@ class Taxon < ActiveRecord::Base
     unless leaf?
       children.each {|child| child.rebuild_lineage_branch(id, lineage_ids)}
     end
+  end
+  
+  def hierarchy
+    self.lineage_ids.split(',').map{|id| id.to_i}
+  end
+  
+  # returns an array of arrays. 
+  # full_ancestry[0] is an array of the ancestors at rank 0
+  # full_ancestry[1] is an array of the ancestors at rank 1, etc
+  def full_ancestry(options = {})
+    options = {:include_children => false}.merge(options)
+    
+    hierarchy_array = self.hierarchy
+    hierarchy_array << 1 # for the top-level, rank0 terms
+    hierarchy_array << self.id if options[:include_children]
+
+    ancestry = self.class.find_all_by_parent_id(hierarchy_array, :order => 'rank asc, name asc')
+  
+  
+    # Makes our 1D array into a 2D array ordered by     
+    returning Array.new do |ranked_ancestry|
+      ancestry.each do |term|
+        rank = term.rank.to_i
+        ranked_ancestry[rank] ||= []
+        ranked_ancestry[rank] << term
+      end
+    end
+  end
+  
+  def rank_in_words
+    RANK_LABELS[self.rank.to_i]
+  end
+  
+  def scientific_name 
+    (id == 1) ? 'All Taxa' : read_attribute(:name)
   end
   
 end
