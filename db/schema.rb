@@ -9,11 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(:version => 20100707145800) do
-=======
 ActiveRecord::Schema.define(:version => 20100708184107) do
->>>>>>> master
 
   create_table "adult_weights", :force => true do |t|
     t.integer  "species_id",      :null => false
