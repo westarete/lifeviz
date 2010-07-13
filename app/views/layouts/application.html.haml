@@ -1,14 +1,17 @@
 !!!
 %html
   %head
-
     = stylesheet_link_tag 'screen.css', :media => 'screen, projection'
     = stylesheet_link_tag 'jquery-ui.css', :media => 'print'
     /[if lt IE 8]
       = stylesheet_link_tag 'ie.css', :media => 'screen, projection'
     = javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"
     = javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"
-    = javascript_include_tag 'application', 'jquery.coolinput', 'protovis-r3.2', 'graph'
+    = javascript_include_tag  'protovis-r3.2', 'application', 'jquery.coolinput', 'lifeviz.graph'
+    = yield :include_javascript
+    %script{:type => 'text/javascript'}
+      = yield :javascript
+
   %body
     #main
       = render :partial => "/shared/user_control"
@@ -19,4 +22,3 @@
     
     #presence
       =render :partial => "shared/karma"
-    

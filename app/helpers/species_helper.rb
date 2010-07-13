@@ -7,9 +7,9 @@ module SpeciesHelper
       when "Days"
         "%.2f Days" % species.lifespan_in_days
       when "Months"
-        "%.2f Months" % (species.lifespan_in_days / 30.0)
+        "%.2f Months" % (species.avg_lifespan / 30.0)
       when "Years"
-        "%.2f Years" % (species.lifespan_in_days / 365.0)
+        "%.2f Years" % (species.avg_lifespan / 365.0)
       end
     else
       "N/A"
@@ -21,9 +21,9 @@ module SpeciesHelper
     if species.birth_weights.any?
       case species.birth_weights.group_by(&:units).values.max{|a,b| a.size <=> b.size}.first.units
       when "Grams"
-        "%.2f Grams" % species.birth_weight_in_grams
+        "%.2f Grams" % species.avg_birth_weight
       when "Kilograms"
-        "%.2f Kilograms" % (species.birth_weight_in_grams / 1000.0)
+        "%.2f Kilograms" % (species.avg_birth_weight / 1000.0)
       end
     else
       "N/A"
@@ -35,9 +35,9 @@ module SpeciesHelper
     if species.adult_weights.any?
       case species.adult_weights.group_by(&:units).values.max{|a,b| a.size <=> b.size}.first.units
       when "Grams"
-        "%.2f Grams" % species.adult_weight_in_grams
+        "%.2f Grams" % species.avg_adult_weight
       when "Kilograms"
-        "%.2f Kilograms" % (species.adult_weight_in_grams / 1000.0)
+        "%.2f Kilograms" % (species.avg_adult_weight / 1000.0)
       end
     else
       "N/A"
@@ -47,7 +47,7 @@ module SpeciesHelper
   # Get the average lifespan, else display N/A
   def litter_size(species)
     if species.litter_sizes.any?
-      "%.1f" % species.litter_size
+      "%.1f" % species.avg_litter_size
     else
       "N/A"
     end
