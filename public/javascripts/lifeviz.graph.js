@@ -172,7 +172,7 @@ $(function(){
     // Send out an XHR to load the next taxonomic selector dropdown
     // Unless the user has selected "All", or is at the species level,
     var taxa_timeout;
-    if(selected_id && !li.hasClass('rank_4') ) {
+    if(selected_id && !li.hasClass('rank_5') ) {
       $.ajax({
         url: '/species/' + species_id + '/children',
         beforeSend: function(){
