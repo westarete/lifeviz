@@ -51,9 +51,9 @@ class Taxon < ActiveRecord::Base
     lineage_ids.split(/,/).collect { |ancestor_id| Taxon.find(ancestor_id) }
   end
   
-  # this method needs to be smarter... what if we want 2 ranks down?
   def children_of_rank(rank)
-    if rank && self.rank < rank && rank < 7
+    if rank && self.rank < rank
+      rank = 6 if rank > 6
       Species.find_by_sql("SELECT * FROM taxa WHERE lft >= #{self.lft} AND rgt <= #{self.rgt} AND rank = #{rank} ORDER BY name ASC")
     else
       raise 'rank not set properly'
