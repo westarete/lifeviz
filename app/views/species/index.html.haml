@@ -3,8 +3,10 @@
 %span#nav_spinner.spinner &nbsp
 %ul#taxonomic_selector.clearfix
   = taxon_dropdowns(@taxon, @taxon_ancestry)
-#graph{:taxon_id => @taxon.id}
-%span#graph_spinner.spinner
-%span#species_spinner.spinner
-#species
-  = render :partial => "table"
+#data
+  #graph{:taxon_id => @taxon.id}
+  %span#graph_spinner.spinner
+  
+  %span#species_spinner.spinner
+  #species
+    = render :partial => "table"

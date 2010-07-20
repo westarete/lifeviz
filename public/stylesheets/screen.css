@@ -159,7 +159,7 @@ a.dark:active, a.darkPos:active, a.darkNeg:active { background-color: #fae158 !i
 #nav_spinner { margin: 25px 0px 0px 25px; width: 32px; }
 
 /* line 16, ../../app/stylesheets/partials/_taxonomy.sass */
-#graph_spinner { top: 490px; left: 50%; margin-left: -16px; width: 32px; }
+#graph_spinner { top: 460px; left: 50%; margin-left: -16px; width: 32px; }
 
 /* line 21, ../../app/stylesheets/partials/_taxonomy.sass */
 #species_spinner { background: 0 0 no-repeat url("../images/loader2.gif"); top: 750px; left: 50%; width: 200px; margin-left: -100px; }
@@ -168,7 +168,7 @@ a.dark:active, a.darkPos:active, a.darkNeg:active { background-color: #fae158 !i
 .spinner { background: 0 0 no-repeat url("../images/loader.gif"); position: absolute; display: none; height: 32px; clear: both; }
 
 /* line 33, ../../app/stylesheets/partials/_taxonomy.sass */
-#graph { display: none; width: 900px; margin: 30px auto; text-align: center; }
+#graph_spinner { display: none; width: 900px; margin: 30px auto; text-align: center; }
 
 /* line 1, ../../app/stylesheets/partials/_color.sass */
 .gold { color: #cd7f32; }
@@ -187,62 +187,64 @@ body #main { padding-top: 2em; width: 950px; margin: 0 auto; overflow: hidden; d
 /* line 8, ../../../../../../opt/local/lib/ruby/gems/1.8/gems/compass-0.10.1/frameworks/compass/stylesheets/compass/utilities/general/_hacks.scss */
 body #main { display: block; }
 /* line 9, ../../app/stylesheets/partials/_structure.sass */
+body #main #data { text-align: center; }
+/* line 11, ../../app/stylesheets/partials/_structure.sass */
 body #top_presence { top: -1; right: 0; height: 55px; padding: 0; position: fixed; z-index: 99; }
-/* line 16, ../../app/stylesheets/partials/_structure.sass */
+/* line 18, ../../app/stylesheets/partials/_structure.sass */
 body #top_presence #user_control { margin-right: 30px; display: block; padding: 15px; background-color: rgba(255, 255, 255, 0.8); -moz-border-radius-bottomleft: 10px; -webkit-border-bottom-left-radius: 10px; -moz-border-radius-bottomright: 10px; -webkit-border-bottom-right-radius: 10px; border: 1px solid gray; }
-/* line 26, ../../app/stylesheets/partials/_structure.sass */
-body #top_presence #user_control a { margin: 0 !important; }
 /* line 28, ../../app/stylesheets/partials/_structure.sass */
+body #top_presence #user_control a { margin: 0 !important; }
+/* line 30, ../../app/stylesheets/partials/_structure.sass */
 body #top_presence #user_control #logged_in_as { font-weight: 600; display: block; padding-bottom: 10px; }
-/* line 32, ../../app/stylesheets/partials/_structure.sass */
-body #top_presence #user_control #logged_in_as a { float: right; }
 /* line 34, ../../app/stylesheets/partials/_structure.sass */
-body #top_presence #user_control #login-buttons { width: 170px; }
+body #top_presence #user_control #logged_in_as a { float: right; }
 /* line 36, ../../app/stylesheets/partials/_structure.sass */
-body #top_presence #user_control #login, body #top_presence #user_control #signup { display: none; }
+body #top_presence #user_control #login-buttons { width: 170px; }
 /* line 38, ../../app/stylesheets/partials/_structure.sass */
+body #top_presence #user_control #login, body #top_presence #user_control #signup { display: none; }
+/* line 40, ../../app/stylesheets/partials/_structure.sass */
 body #top_presence #user_control #login { width: 275px; height: 90px; }
-/* line 41, ../../app/stylesheets/partials/_structure.sass */
-body #top_presence #user_control #login .form-row { display: block; }
 /* line 43, ../../app/stylesheets/partials/_structure.sass */
-body #top_presence #user_control #login .form-row .alt { float: right; }
+body #top_presence #user_control #login .form-row { display: block; }
 /* line 45, ../../app/stylesheets/partials/_structure.sass */
-body #top_presence #user_control #login .form-row #user_email, body #top_presence #user_control #login .form-row #user_password { width: 120px; }
+body #top_presence #user_control #login .form-row .alt { float: right; }
 /* line 47, ../../app/stylesheets/partials/_structure.sass */
-body #top_presence #user_control #login .form-row #user_openid_identifier { width: 237px; }
+body #top_presence #user_control #login .form-row #user_email, body #top_presence #user_control #login .form-row #user_password { width: 120px; }
 /* line 49, ../../app/stylesheets/partials/_structure.sass */
+body #top_presence #user_control #login .form-row #user_openid_identifier { width: 237px; }
+/* line 51, ../../app/stylesheets/partials/_structure.sass */
 body #top_presence #user_control #login .form-row .remember-me { font-size: 70%; font-weight: 400; }
-/* line 52, ../../app/stylesheets/partials/_structure.sass */
-body #top_presence #user_control #login .form-row .email, body #top_presence #user_control #login .form-row .password, body #top_presence #user_control #login .form-row .remember-me { padding-right: 5px; }
 /* line 54, ../../app/stylesheets/partials/_structure.sass */
-body #top_presence #user_control #login .form-row .email, body #top_presence #user_control #login .form-row .password, body #top_presence #user_control #login .form-row .remember-me { float: left; }
+body #top_presence #user_control #login .form-row .email, body #top_presence #user_control #login .form-row .password, body #top_presence #user_control #login .form-row .remember-me { padding-right: 5px; }
 /* line 56, ../../app/stylesheets/partials/_structure.sass */
+body #top_presence #user_control #login .form-row .email, body #top_presence #user_control #login .form-row .password, body #top_presence #user_control #login .form-row .remember-me { float: left; }
+/* line 58, ../../app/stylesheets/partials/_structure.sass */
 body #top_presence #user_control #login .form-row .submit { float: right; padding-top: 8px; }
-/* line 59, ../../app/stylesheets/partials/_structure.sass */
-body #top_presence #user_control #login .form-row .regular_button, body #top_presence #user_control #login .form-row .openid_button { float: right; }
 /* line 61, ../../app/stylesheets/partials/_structure.sass */
+body #top_presence #user_control #login .form-row .regular_button, body #top_presence #user_control #login .form-row .openid_button { float: right; }
+/* line 63, ../../app/stylesheets/partials/_structure.sass */
 body #top_presence #user_control #login #openid { display: none; }
-/* line 64, ../../app/stylesheets/partials/_structure.sass */
+/* line 66, ../../app/stylesheets/partials/_structure.sass */
 body #top_presence #header { margin-bottom: 1em; }
-/* line 68, ../../app/stylesheets/partials/_structure.sass */
+/* line 70, ../../app/stylesheets/partials/_structure.sass */
 body #top_presence #content table { margin: 0; width: auto !important; }
-/* line 71, ../../app/stylesheets/partials/_structure.sass */
+/* line 73, ../../app/stylesheets/partials/_structure.sass */
 body #top_presence #content table td.permalink { font-weight: 600; font-size: 1.5em; }
-/* line 74, ../../app/stylesheets/partials/_structure.sass */
+/* line 76, ../../app/stylesheets/partials/_structure.sass */
 body #top_presence #footer { clear: both; margin-top: 1em; }
-/* line 77, ../../app/stylesheets/partials/_structure.sass */
-body #top_presence #footer a { vertical-align: middle; }
 /* line 79, ../../app/stylesheets/partials/_structure.sass */
+body #top_presence #footer a { vertical-align: middle; }
+/* line 81, ../../app/stylesheets/partials/_structure.sass */
 body #bottom_presence { bottom: 0; right: 0; height: 55px; padding: 0; position: fixed; z-index: 99; }
-/* line 86, ../../app/stylesheets/partials/_structure.sass */
+/* line 88, ../../app/stylesheets/partials/_structure.sass */
 body #bottom_presence #karma-widget { margin-right: 30px; height: 100%; width: 110px; float: right; background: url(/images/karma_tiny.gif) no-repeat -5px -5px; -moz-border-radius-topleft: 10px; -webkit-border-top-left-radius: 10px; -moz-border-radius-topright: 10px; -webkit-border-top-right-radius: 10px; border: 1px solid gray; background-color: rgba(255, 255, 255, 0.8); padding: 15px 15px 15px 75px; }
-/* line 99, ../../app/stylesheets/partials/_structure.sass */
+/* line 101, ../../app/stylesheets/partials/_structure.sass */
 body #bottom_presence #karma-widget #karma, body #bottom_presence #karma-widget #achievements { font-weight: 600; }
 
-/* line 103, ../../app/stylesheets/partials/_structure.sass */
+/* line 105, ../../app/stylesheets/partials/_structure.sass */
 .spinner { display: none; }
 
-/* line 106, ../../app/stylesheets/partials/_structure.sass */
+/* line 108, ../../app/stylesheets/partials/_structure.sass */
 .button_row { margin-top: 1em; }
 
 /* line 18, ../../../../../../opt/local/lib/ruby/gems/1.8/gems/compass-0.10.1/frameworks/blueprint/stylesheets/blueprint/_form.scss */
@@ -271,24 +273,24 @@ form input.text:focus, form input.title:focus, form input[type=text]:focus, form
 form input.text, form input.title, form input[type=text], form input[type=password] { width: 300px; }
 /* line 48, ../../../../../../opt/local/lib/ruby/gems/1.8/gems/compass-0.10.1/frameworks/blueprint/stylesheets/blueprint/_form.scss */
 form textarea { width: 390px; height: 250px; }
-/* line 111, ../../app/stylesheets/partials/_structure.sass */
-form .fieldWithErrors { display: inline; }
 /* line 113, ../../app/stylesheets/partials/_structure.sass */
+form .fieldWithErrors { display: inline; }
+/* line 115, ../../app/stylesheets/partials/_structure.sass */
 form .fieldWithErrors input { border: 1px solid red; }
 
-/* line 116, ../../app/stylesheets/partials/_structure.sass */
+/* line 118, ../../app/stylesheets/partials/_structure.sass */
 .form_input { margin-bottom: 1em; }
 
 /* new clearfix from perishablepress.com */
-/* line 122, ../../app/stylesheets/partials/_structure.sass */
+/* line 124, ../../app/stylesheets/partials/_structure.sass */
 .clearfix:after { visibility: hidden; display: block; font-size: 0; content: " "; clear: both; height: 0; }
 
-/* line 131, ../../app/stylesheets/partials/_structure.sass */
+/* line 133, ../../app/stylesheets/partials/_structure.sass */
 #backgroundGray { display: none; position: fixed; _position: absolute; height: 100%; width: 100%; top: 0; left: 0; background: black; border: 1px solid #cecece; z-index: 1; opacity: 0.8; }
 
-/* line 145, ../../app/stylesheets/partials/_structure.sass */
+/* line 147, ../../app/stylesheets/partials/_structure.sass */
 #popup { display: none; position: fixed; _position: absolute; height: 200px; width: 700px; z-index: 2; }
-/* line 153, ../../app/stylesheets/partials/_structure.sass */
+/* line 155, ../../app/stylesheets/partials/_structure.sass */
 #popup h2, #popup h3, #popup h4 { color: white !important; }
 
 /* line 1, ../../app/stylesheets/partials/_typography.sass */
