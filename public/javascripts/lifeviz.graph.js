@@ -158,6 +158,7 @@ $(function(){
     // If we're at the Kingdom level (no parent select box), we set it to the ubiota id of UBT
     if(!selected_id) {
       var parent_id = li.prev().children("select").val();
+      $('#nav_spinner').css('display', 'none'); // hide spinner after 'all' is selected
       if(parent_id === undefined) {
         species_id = 1; // UBT
       } else {
@@ -182,10 +183,10 @@ $(function(){
         },
         success: function(response){
           li.after(response);
+          $('#nav_spinner').css('display', 'none');
         },
         complete: function(err){
           clearTimeout(taxa_timeout);
-          $('#navigation_spinner').fadeOut();
         }
       });
     }

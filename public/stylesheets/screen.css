@@ -155,7 +155,19 @@ a.dark:active, a.darkPos:active, a.darkNeg:active { background-color: #fae158 !i
 /* line 11, ../../app/stylesheets/partials/_taxonomy.sass */
 #taxonomic_selector li input { display: block; }
 
-/* line 14, ../../app/stylesheets/partials/_taxonomy.sass */
+/* line 13, ../../app/stylesheets/partials/_taxonomy.sass */
+#nav_spinner { margin: 25px 0px 0px 25px; width: 32px; }
+
+/* line 16, ../../app/stylesheets/partials/_taxonomy.sass */
+#graph_spinner { top: 490px; left: 50%; margin-left: -16px; width: 32px; }
+
+/* line 21, ../../app/stylesheets/partials/_taxonomy.sass */
+#species_spinner { background: 0 0 no-repeat url("../images/loader2.gif"); top: 750px; left: 50%; width: 200px; margin-left: -100px; }
+
+/* line 27, ../../app/stylesheets/partials/_taxonomy.sass */
+.spinner { background: 0 0 no-repeat url("../images/loader.gif"); position: absolute; display: none; height: 32px; clear: both; }
+
+/* line 33, ../../app/stylesheets/partials/_taxonomy.sass */
 #graph { display: none; width: 900px; margin: 30px auto; text-align: center; }
 
 /* line 1, ../../app/stylesheets/partials/_color.sass */
@@ -171,83 +183,66 @@ a.dark:active, a.darkPos:active, a.darkNeg:active { background-color: #fae158 !i
 .karma-purple { color: #aa00aa; }
 
 /* line 4, ../../app/stylesheets/partials/_structure.sass */
-body #main { padding-top: 2em; width: 950px; margin: 0 auto; overflow: hidden; display: inline-block; margin-bottom: 65px; }
+body #main { padding-top: 2em; width: 950px; margin: 0 auto; overflow: hidden; display: inline-block; position: relative; margin-bottom: 65px; }
 /* line 8, ../../../../../../opt/local/lib/ruby/gems/1.8/gems/compass-0.10.1/frameworks/compass/stylesheets/compass/utilities/general/_hacks.scss */
 body #main { display: block; }
-/* line 8, ../../app/stylesheets/partials/_structure.sass */
+/* line 9, ../../app/stylesheets/partials/_structure.sass */
 body #top_presence { top: -1; right: 0; height: 55px; padding: 0; position: fixed; z-index: 99; }
-/* line 15, ../../app/stylesheets/partials/_structure.sass */
+/* line 16, ../../app/stylesheets/partials/_structure.sass */
 body #top_presence #user_control { margin-right: 30px; display: block; padding: 15px; background-color: rgba(255, 255, 255, 0.8); -moz-border-radius-bottomleft: 10px; -webkit-border-bottom-left-radius: 10px; -moz-border-radius-bottomright: 10px; -webkit-border-bottom-right-radius: 10px; border: 1px solid gray; }
-/* line 25, ../../app/stylesheets/partials/_structure.sass */
+/* line 26, ../../app/stylesheets/partials/_structure.sass */
 body #top_presence #user_control a { margin: 0 !important; }
-/* line 27, ../../app/stylesheets/partials/_structure.sass */
-<<<<<<< HEAD
-body #main #footer a { vertical-align: middle; }
-/* line 29, ../../app/stylesheets/partials/_structure.sass */
-body #presence { bottom: 0; right: 0; height: 55px; padding: 0; position: fixed; z-index: 99; }
-/* line 36, ../../app/stylesheets/partials/_structure.sass */
-body #presence #karma-widget { margin-right: 30px; height: 100%; width: 110px; float: right; background: url(/images/karma_tiny.gif) no-repeat -5px -5px; -moz-border-radius-topleft: 10px; -webkit-border-top-left-radius: 10px; -moz-border-radius-topright: 10px; -webkit-border-top-right-radius: 10px; border: 1px solid gray; background-color: rgba(255, 255, 255, 0.8); padding: 15px 15px 15px 75px; }
-/* line 49, ../../app/stylesheets/partials/_structure.sass */
-body #presence #karma-widget #karma, body #presence #karma-widget #achievements { font-weight: 600; }
-
-/* line 54, ../../app/stylesheets/partials/_structure.sass */
-.spinner { display: none; }
-
-/* line 57, ../../app/stylesheets/partials/_structure.sass */
-#login-buttons { float: right; }
-
-=======
+/* line 28, ../../app/stylesheets/partials/_structure.sass */
 body #top_presence #user_control #logged_in_as { font-weight: 600; display: block; padding-bottom: 10px; }
-/* line 31, ../../app/stylesheets/partials/_structure.sass */
+/* line 32, ../../app/stylesheets/partials/_structure.sass */
 body #top_presence #user_control #logged_in_as a { float: right; }
-/* line 33, ../../app/stylesheets/partials/_structure.sass */
+/* line 34, ../../app/stylesheets/partials/_structure.sass */
 body #top_presence #user_control #login-buttons { width: 170px; }
-/* line 35, ../../app/stylesheets/partials/_structure.sass */
+/* line 36, ../../app/stylesheets/partials/_structure.sass */
 body #top_presence #user_control #login, body #top_presence #user_control #signup { display: none; }
-/* line 37, ../../app/stylesheets/partials/_structure.sass */
+/* line 38, ../../app/stylesheets/partials/_structure.sass */
 body #top_presence #user_control #login { width: 275px; height: 90px; }
-/* line 40, ../../app/stylesheets/partials/_structure.sass */
+/* line 41, ../../app/stylesheets/partials/_structure.sass */
 body #top_presence #user_control #login .form-row { display: block; }
-/* line 42, ../../app/stylesheets/partials/_structure.sass */
+/* line 43, ../../app/stylesheets/partials/_structure.sass */
 body #top_presence #user_control #login .form-row .alt { float: right; }
-/* line 44, ../../app/stylesheets/partials/_structure.sass */
+/* line 45, ../../app/stylesheets/partials/_structure.sass */
 body #top_presence #user_control #login .form-row #user_email, body #top_presence #user_control #login .form-row #user_password { width: 120px; }
-/* line 46, ../../app/stylesheets/partials/_structure.sass */
+/* line 47, ../../app/stylesheets/partials/_structure.sass */
 body #top_presence #user_control #login .form-row #user_openid_identifier { width: 237px; }
-/* line 48, ../../app/stylesheets/partials/_structure.sass */
+/* line 49, ../../app/stylesheets/partials/_structure.sass */
 body #top_presence #user_control #login .form-row .remember-me { font-size: 70%; font-weight: 400; }
-/* line 51, ../../app/stylesheets/partials/_structure.sass */
+/* line 52, ../../app/stylesheets/partials/_structure.sass */
 body #top_presence #user_control #login .form-row .email, body #top_presence #user_control #login .form-row .password, body #top_presence #user_control #login .form-row .remember-me { padding-right: 5px; }
-/* line 53, ../../app/stylesheets/partials/_structure.sass */
+/* line 54, ../../app/stylesheets/partials/_structure.sass */
 body #top_presence #user_control #login .form-row .email, body #top_presence #user_control #login .form-row .password, body #top_presence #user_control #login .form-row .remember-me { float: left; }
-/* line 55, ../../app/stylesheets/partials/_structure.sass */
+/* line 56, ../../app/stylesheets/partials/_structure.sass */
 body #top_presence #user_control #login .form-row .submit { float: right; padding-top: 8px; }
-/* line 58, ../../app/stylesheets/partials/_structure.sass */
+/* line 59, ../../app/stylesheets/partials/_structure.sass */
 body #top_presence #user_control #login .form-row .regular_button, body #top_presence #user_control #login .form-row .openid_button { float: right; }
->>>>>>> master
-/* line 60, ../../app/stylesheets/partials/_structure.sass */
+/* line 61, ../../app/stylesheets/partials/_structure.sass */
 body #top_presence #user_control #login #openid { display: none; }
-/* line 63, ../../app/stylesheets/partials/_structure.sass */
+/* line 64, ../../app/stylesheets/partials/_structure.sass */
 body #top_presence #header { margin-bottom: 1em; }
-/* line 67, ../../app/stylesheets/partials/_structure.sass */
+/* line 68, ../../app/stylesheets/partials/_structure.sass */
 body #top_presence #content table { margin: 0; width: auto !important; }
-/* line 70, ../../app/stylesheets/partials/_structure.sass */
+/* line 71, ../../app/stylesheets/partials/_structure.sass */
 body #top_presence #content table td.permalink { font-weight: 600; font-size: 1.5em; }
-/* line 73, ../../app/stylesheets/partials/_structure.sass */
+/* line 74, ../../app/stylesheets/partials/_structure.sass */
 body #top_presence #footer { clear: both; margin-top: 1em; }
-/* line 76, ../../app/stylesheets/partials/_structure.sass */
+/* line 77, ../../app/stylesheets/partials/_structure.sass */
 body #top_presence #footer a { vertical-align: middle; }
-/* line 78, ../../app/stylesheets/partials/_structure.sass */
+/* line 79, ../../app/stylesheets/partials/_structure.sass */
 body #bottom_presence { bottom: 0; right: 0; height: 55px; padding: 0; position: fixed; z-index: 99; }
-/* line 85, ../../app/stylesheets/partials/_structure.sass */
+/* line 86, ../../app/stylesheets/partials/_structure.sass */
 body #bottom_presence #karma-widget { margin-right: 30px; height: 100%; width: 110px; float: right; background: url(/images/karma_tiny.gif) no-repeat -5px -5px; -moz-border-radius-topleft: 10px; -webkit-border-top-left-radius: 10px; -moz-border-radius-topright: 10px; -webkit-border-top-right-radius: 10px; border: 1px solid gray; background-color: rgba(255, 255, 255, 0.8); padding: 15px 15px 15px 75px; }
-/* line 98, ../../app/stylesheets/partials/_structure.sass */
+/* line 99, ../../app/stylesheets/partials/_structure.sass */
 body #bottom_presence #karma-widget #karma, body #bottom_presence #karma-widget #achievements { font-weight: 600; }
 
-/* line 102, ../../app/stylesheets/partials/_structure.sass */
-#spinner { display: none; }
+/* line 103, ../../app/stylesheets/partials/_structure.sass */
+.spinner { display: none; }
 
-/* line 105, ../../app/stylesheets/partials/_structure.sass */
+/* line 106, ../../app/stylesheets/partials/_structure.sass */
 .button_row { margin-top: 1em; }
 
 /* line 18, ../../../../../../opt/local/lib/ruby/gems/1.8/gems/compass-0.10.1/frameworks/blueprint/stylesheets/blueprint/_form.scss */
@@ -276,24 +271,24 @@ form input.text:focus, form input.title:focus, form input[type=text]:focus, form
 form input.text, form input.title, form input[type=text], form input[type=password] { width: 300px; }
 /* line 48, ../../../../../../opt/local/lib/ruby/gems/1.8/gems/compass-0.10.1/frameworks/blueprint/stylesheets/blueprint/_form.scss */
 form textarea { width: 390px; height: 250px; }
-/* line 110, ../../app/stylesheets/partials/_structure.sass */
+/* line 111, ../../app/stylesheets/partials/_structure.sass */
 form .fieldWithErrors { display: inline; }
-/* line 112, ../../app/stylesheets/partials/_structure.sass */
+/* line 113, ../../app/stylesheets/partials/_structure.sass */
 form .fieldWithErrors input { border: 1px solid red; }
 
-/* line 115, ../../app/stylesheets/partials/_structure.sass */
+/* line 116, ../../app/stylesheets/partials/_structure.sass */
 .form_input { margin-bottom: 1em; }
 
 /* new clearfix from perishablepress.com */
-/* line 121, ../../app/stylesheets/partials/_structure.sass */
+/* line 122, ../../app/stylesheets/partials/_structure.sass */
 .clearfix:after { visibility: hidden; display: block; font-size: 0; content: " "; clear: both; height: 0; }
 
-/* line 130, ../../app/stylesheets/partials/_structure.sass */
+/* line 131, ../../app/stylesheets/partials/_structure.sass */
 #backgroundGray { display: none; position: fixed; _position: absolute; height: 100%; width: 100%; top: 0; left: 0; background: black; border: 1px solid #cecece; z-index: 1; opacity: 0.8; }
 
-/* line 144, ../../app/stylesheets/partials/_structure.sass */
+/* line 145, ../../app/stylesheets/partials/_structure.sass */
 #popup { display: none; position: fixed; _position: absolute; height: 200px; width: 700px; z-index: 2; }
-/* line 152, ../../app/stylesheets/partials/_structure.sass */
+/* line 153, ../../app/stylesheets/partials/_structure.sass */
 #popup h2, #popup h3, #popup h4 { color: white !important; }
 
 /* line 1, ../../app/stylesheets/partials/_typography.sass */

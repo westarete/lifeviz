@@ -1,12 +1,10 @@
 = render :partial => "/shared/header", :locals => { :title => "LifeViz", :subtitle => "Please browse the species below.", :flash => flash }
 
+%span#nav_spinner.spinner &nbsp
 %ul#taxonomic_selector.clearfix
   = taxon_dropdowns(@taxon, @taxon_ancestry)
-  %span#navigation_spinner.spinner= image_tag 'loader.gif'
-
-#graph{:taxon_id => @taxon.id}    
-  %span#graph_spinner.spinner
-
+#graph{:taxon_id => @taxon.id}
+%span#graph_spinner.spinner
+%span#species_spinner.spinner
 #species
-  %span#species_spinner.spinner
   = render :partial => "table"
