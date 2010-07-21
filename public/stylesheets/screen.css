@@ -395,11 +395,11 @@ h2 { margin-top: 0.25em; }
 #species { margin-bottom: 1em; }
 
 /* line 4, ../../app/stylesheets/partials/_species.sass */
-table#longevity, table#birth_weights, table#adult_weights, table#litter_sizes { width: auto; }
+table#species { width: auto; }
 /* line 7, ../../app/stylesheets/partials/_species.sass */
-table#longevity thead th, table#birth_weights thead th, table#adult_weights thead th, table#litter_sizes thead th { background-color: white; }
+table#species thead th { background-color: white; }
 /* line 10, ../../app/stylesheets/partials/_species.sass */
-table#longevity td.actions div, table#birth_weights td.actions div, table#adult_weights td.actions div, table#litter_sizes td.actions div { display: block; float: left; }
+table#species td.actions div { display: block; float: left; }
 
 /* line 15, ../../app/stylesheets/partials/_species.sass */
 .imr, .mrdt { float: left; }
