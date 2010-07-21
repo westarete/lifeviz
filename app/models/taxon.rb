@@ -21,16 +21,19 @@ class Taxon < ActiveRecord::Base
     Taxon.find(1).rebuild_lineage_branch(nil) # Run rebuild_lineage on root node.
   end
 
-  def self.rebuild_stats
-    rank = 5
-    while rank >= 0
-      taxon = Taxon.find_all_by_rank(rank)
-      progress "Building Taxon Stats for rank #{rank}", taxon.size do |progress_bar|
-        taxon.each do |t|
-          t.precalculate_stats
+  def self.rebuild_stats(rank_specified=nil)
+    rank_specified ? (rank = rank_specified) : (rank = 5)
+    while rank >= 0      
+      size = Taxon.count(:all, :conditions => {:rank => rank}) / 50
+      progress "Building Taxon Stats for rank #{rank}", size do |progress_bar|
+        Taxon.find_in_batches( :batch_size => 50 ) do |taxon_batch|
+          taxon_batch.each do |t|
+            t.precalculate_stats
+          end
           progress_bar.inc
         end
-      end
+      end      
+      break unless rank_specified.nil?
       rank -= 1
     end
   end
