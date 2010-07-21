@@ -277,20 +277,22 @@ form textarea { width: 390px; height: 250px; }
 form .fieldWithErrors { display: inline; }
 /* line 115, ../../app/stylesheets/partials/_structure.sass */
 form .fieldWithErrors input { border: 1px solid red; }
-
 /* line 118, ../../app/stylesheets/partials/_structure.sass */
+form #user_openid_identifier.title { width: 600px; }
+
+/* line 121, ../../app/stylesheets/partials/_structure.sass */
 .form_input { margin-bottom: 1em; }
 
 /* new clearfix from perishablepress.com */
-/* line 124, ../../app/stylesheets/partials/_structure.sass */
+/* line 127, ../../app/stylesheets/partials/_structure.sass */
 .clearfix:after { visibility: hidden; display: block; font-size: 0; content: " "; clear: both; height: 0; }
 
-/* line 133, ../../app/stylesheets/partials/_structure.sass */
+/* line 136, ../../app/stylesheets/partials/_structure.sass */
 #backgroundGray { display: none; position: fixed; _position: absolute; height: 100%; width: 100%; top: 0; left: 0; background: black; border: 1px solid #cecece; z-index: 1; opacity: 0.8; }
 
-/* line 147, ../../app/stylesheets/partials/_structure.sass */
+/* line 150, ../../app/stylesheets/partials/_structure.sass */
 #popup { display: none; position: fixed; _position: absolute; height: 200px; width: 700px; z-index: 2; }
-/* line 155, ../../app/stylesheets/partials/_structure.sass */
+/* line 158, ../../app/stylesheets/partials/_structure.sass */
 #popup h2, #popup h3, #popup h4 { color: white !important; }
 
 /* line 1, ../../app/stylesheets/partials/_typography.sass */
