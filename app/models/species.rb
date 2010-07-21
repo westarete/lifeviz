@@ -68,6 +68,7 @@ class Species < Taxon
 
 end
 
+
 # == Schema Information
 #
 # Table name: taxa
@@ -84,3 +85,4 @@ end
 #  avg_lifespan     :float
 #  avg_litter_size  :float
 #
+
