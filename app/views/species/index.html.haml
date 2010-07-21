@@ -217,6 +217,7 @@
               },
               success: function(response){
                 li.after(response);
+                $('#nav_spinner').css('display', 'none');
               },
               complete: function(err){
                 clearTimeout(taxa_timeout);
