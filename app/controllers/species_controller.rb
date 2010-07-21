@@ -14,8 +14,24 @@ class SpeciesController < ApplicationController
       @taxon = Taxon.root
       @disable_remaining_dropdowns = "disabled"
     end
+    
+    @taxon_ancestry = @taxon.full_ancestry(:include_children => true) # for taxon dropdowns
+
+    
     @rank = @taxon.rank
     @species = @taxon.paginated_sorted_species(params[:page])
+  end
+  
+  # This populates the taxon dropdowns that run across the top of the page
+  # /terms/1234/children and returns a list of 1234's children terms.
+  def children
+    @children      = Taxon.find_all_by_parent_id(params[:id], :order => 'name asc')
+    @rank          = @children.first.rank
+    @rank_in_words = @children.first.rank_in_words
+    render :partial => 'taxon_select', :layout => false, :locals => { :children => @children, :rank => @rank, :rank_in_words => @rank_in_words }
+  rescue Exception => e
+    logger.error(e)
+    render :text => "No item found", :status => 404
   end
   
   def data
@@ -30,15 +46,14 @@ class SpeciesController < ApplicationController
         render :partial => "table", :layout => false
       end
       format.json do
-        render :json => @taxon.complete_species.to_json(
-          :only => :name,
-          :methods => [
-            :lifespan_in_days,
-            :birth_weight_in_grams,
-            :adult_weight_in_grams,
-            :litter_size
-          ]
-        )
+        render :json =>  @taxon.children_of_rank(@taxon.rank + 3).to_json(
+                 :only => :name,
+                 :methods => [
+                   :avg_lifespan,
+                   :avg_birth_weight,
+                   :avg_adult_weight,
+                   :avg_litter_size
+                 ])
       end
     end
   end

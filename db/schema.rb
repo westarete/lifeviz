@@ -84,6 +84,10 @@ ActiveRecord::Schema.define(:version => 20100709203032) do
     t.integer "rgt"
     t.integer "rank"
     t.string  "lineage_ids"
+    t.float   "avg_adult_weight"
+    t.float   "avg_birth_weight"
+    t.float   "avg_lifespan"
+    t.float   "avg_litter_size"
   end
 
   add_index "taxa", ["id"], :name => "index_taxa_on_id"

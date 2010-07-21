@@ -1,16 +1,3 @@
-# == Schema Information
-#
-# Table name: taxa
-#
-#  id          :integer         not null, primary key
-#  name        :string(255)
-#  parent_id   :integer
-#  lft         :integer
-#  rgt         :integer
-#  rank        :integer
-#  lineage_ids :string(255)
-#
-
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Species do
@@ -105,19 +92,37 @@ describe Species do
     end
   end
   
-  describe "#all_data_available?" do
-    subject { species.all_data_available? }
-    context "when there's not data available" do
-      it { should be_false }
-    end
-    context "when there is data available" do
-      before do 
-        species.litter_sizes.build(:measure => 1)
-        species.birth_weights.build(:value => 500, :units => "Grams")
-        species.lifespans.build(:value => 20, :units => "Days")
-        species.adult_weights.build(:value => 500, :units => "Grams")
-      end
-      it { should be_true}
-    end
-  end
+  # describe "#all_data_available?" do
+  #   subject { species.all_data_available? }
+  #   context "when there's not data available" do
+  #     it { should be_false }
+  #   end
+  #   context "when there is data available" do
+  #     before do 
+  #       species.litter_sizes.build(:measure => 1)
+  #       species.birth_weights.build(:value => 500, :units => "Grams")
+  #       species.lifespans.build(:value => 20, :units => "Days")
+  #       species.adult_weights.build(:value => 500, :units => "Grams")
+  #     end
+  #     it { should be_true}
+  #   end
+  # end
 end
+
+# == Schema Information
+#
+# Table name: taxa
+#
+#  id               :integer         not null, primary key
+#  name             :string(255)
+#  parent_id        :integer
+#  lft              :integer
+#  rgt              :integer
+#  rank             :integer
+#  lineage_ids      :string(255)
+#  avg_adult_weight :float
+#  avg_birth_weight :float
+#  avg_lifespan     :float
+#  avg_litter_size  :float
+#
+
