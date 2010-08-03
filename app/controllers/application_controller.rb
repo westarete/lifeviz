@@ -28,9 +28,9 @@ class ApplicationController < ActionController::Base
       ! current_user.nil?
     end
     
-    def karma
-      current_user.karma
-    end
+    # def karma
+    #   current_user.karma
+    # end
     
     def require_user
       unless current_user

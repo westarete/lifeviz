@@ -10,7 +10,7 @@ class LifespansController < ApplicationController
     @lifespan.species = @species
     if @lifespan.save
       flash[:success] = "Lifespan annotation created."
-      flash[:karma_updated] = true
+      # flash[:karma_updated] = true
       redirect_to @species
     else
       flash.now[:failure] = "Lifespan annotation failed becase ", @lifespan.errors.full_messages.to_sentence.downcase, "."
