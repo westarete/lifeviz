@@ -1,0 +1,93 @@
+------------------------------------------------------------------------------
+Table displays values in graph
+
+As a visitor looking at the parallel coordinates graph,
+I want each line in the table to represent one line in the graph,
+So that I can see the identity and value of each data point.
+
+Given that I'm looking at class Mammalia,
+Then I should see a row for each order that belongs to class Mammalia.
+
+- Start with a name column.
+- Columns should be ordered in the same sequence as the axes.
+- No pagination. All records should be displayed.
+
+------------------------------------------------------------------------------
+Table is sortable
+
+As a visitor looking at the parallel coordinates graph,
+I want sort the table of values by any of the columns,
+In order to quickly identify interesting data points.
+
+- Sort by any column. 
+- It should not require a page reload.
+- No need for the sorting status to be reflected in the URL (i.e. linkable).
+  It's fine to implement this solely in the widget.
+
+------------------------------------------------------------------------------
+Display all combinations of aggregations in table(s)
+
+As a visitor looking at the parallel coordinates graph,
+I want to see all the different values of aggregations for each variable,
+So that I can better understand the distribution of values in the data.
+
+Right now we're only calculating average. For each of the 4 variables (lifespan, birth weight, adult weight, litter size), calculate and display each of these 4 aggregations:
+- Average
+- Minimum
+- Maximum
+- Standard Deviation
+
+The UI for this story is temporary. It's a simple view intended to expose the fact that the different aggregations are being calculated for each variable. A later story will allow the user to select between 2 and 8 variable/aggregations to display. But for now we're just going to show them all (currently 16 combinations, until we get more variables).
+
+- Displaying these values should be just as fast as displaying the current data.
+- Like the current data, the values do not need to be perfectly up to date. It's fine if they're say, an hour out of date.
+- Since this is a temporary view of the data, it's fine to display this as four tables, one for each aggregation. So in addition to the current "average" table, there will be a similar table for minimums, a similar table for maximums, etc.
+
+------------------------------------------------------------------------------
+Units are scaled to appropriate magnitude
+
+As a visitor looking at the parallel coordinates graph,
+I want the units to be scaled to a precision 
+	such that I'm never looking at values greater than 1000,
+So that the numbers are easier to read and understand. 
+
+Given that I'm looking at class Mammalia,
+And there is a order who has a birth weight value of 150_000 grams,
+Then I should see it represented as 150kg.
+
+Given that I'm looking at class Mammalia,
+And there is an order who has a lifespan of 10_000 days,
+Then I should see it represented as 27 years.
+
+- Scale time to days, months, or years.
+- Scale weight to grams or kilograms.
+- If value is still greater than 999, use commas to separate thousands.
+- Do this anywhere numbers are displayed; axes limits, table cells, etc.
+- Implies that units will need to be displayed within table cells along with
+  values, since different units could occur within one column.
+
+------------------------------------------------------------------------------
+A user can select which variable/aggregation combinations to display in the table
+
+As a visitor looking at the parallel coordinates graph,
+I want to be able to select which variables and which aggregations to display
+	in the table,
+So that I can isolate only the combinations that are interesting to me.
+
+Given that I'm on the "Adjust Axes" screen,
+When I set my first axis to "Minimum Lifespan",
+And I set my second axis to "Maximum Lifespan",
+And I set my third axis to "Standard Deviation Birth Weight",
+And I set my fourth axis to "Standard Deviation Adult Weight",
+And I set my fifth axis to "Average Litter Size",
+And I click "Done",
+Then I should see the standard fixed axes in the parallel coordinates graph,
+And I should see the data table with my selected columns and values.
+
+With this story, we go back to showing one table. 
+
+- The graph is unaffected by this story. It continues to have fixed axes.
+- I can add new axes, up to a maximum of 8 (at developer's discretion).
+- I can remove axes, down to a minimum of 2 (need at least that much for graph, eventually).
+- I can modify any axis.
+- Not able to drag/drop reorder axes. Can just modify/add/remove them.
