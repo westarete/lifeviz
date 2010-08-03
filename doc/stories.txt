@@ -90,4 +90,4 @@ With this story, we go back to showing one table.
 - I can add new axes, up to a maximum of 8 (at developer's discretion).
 - I can remove axes, down to a minimum of 2 (need at least that much for graph, eventually).
 - I can modify any axis.
-- Not able to drag/drop reorder axes. Can just modify/add/remove them.
+- Not able to drag/drop reorder axes (no need). Can just modify/add/remove them.
