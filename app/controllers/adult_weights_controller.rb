@@ -10,7 +10,7 @@ class AdultWeightsController < ApplicationController
     @adult_weight.species = @species
     if @adult_weight.save
       flash[:success] = "Adult weight created."
-      # flash[:karma_updated] = true
+      flash[:karma_updated] = true
       redirect_to @species
     else
       flash.now[:failure] = "Adult weight annotation failed becase ", @adult_weight.errors.full_messages.to_sentence.downcase, "."
