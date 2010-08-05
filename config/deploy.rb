@@ -16,6 +16,7 @@ set :repository,  "git@github.com:westarete/anage.git"
 
 # Set the files that should be symlinked to their shared counterparts.
 set :shared, %w{ 
-  config/database.yml 
+  config/database.yml
   config/initializers/session_store.rb
+  config/initializers/karma.rb
 }

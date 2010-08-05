@@ -21,10 +21,10 @@ Rails::Initializer.run do |config|
   # config.gem "aws-s3", :lib => "aws/s3"
   
   # Alternate template and stylesheet engine.
-  config.gem 'haml', :version => '3.0.5'
+  config.gem 'haml', :version => '3.0.15'
   
   # Stylesheet library.
-  config.gem 'compass', :version => '0.10.1'
+  config.gem 'compass', :version => '0.10.3'
 
   # Show text-based progress bar for long-running console tasks.
   config.gem 'progressbar', :version => '0.9.0'  
