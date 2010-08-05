@@ -112,17 +112,20 @@ describe AdultWeight do
 end
 
 
+
 # == Schema Information
 #
 # Table name: adult_weights
 #
-#  id              :integer         not null, primary key
-#  species_id      :integer         not null
-#  value_in_grams  :decimal(, )     not null
-#  created_at      :datetime
-#  updated_at      :datetime
-#  units           :string(255)
-#  created_by      :integer
-#  created_by_name :string(255)
+#  id               :integer         not null, primary key
+#  species_id       :integer         not null
+#  value_in_grams   :decimal(, )     not null
+#  created_at       :datetime
+#  updated_at       :datetime
+#  units            :string(255)
+#  created_by       :integer
+#  created_by_name  :string(255)
+#  citation         :string(255)
+#  citation_context :text
 #
 

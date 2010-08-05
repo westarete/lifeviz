@@ -14,10 +14,11 @@ class Species < Taxon
   # after_create :move_to_genus # do we really need this? delete after the next rebuild if it wasn't needed
   
   def self.rebuild_stats
-    species = Species.find_all_by_rank(6)
-    progress "Building Stats", species.size do |progress_bar|
-      species.each do |s|
-        s.precalculate_stats
+    progress "Building Stats", (Taxon.species.count / 50) do |progress_bar|
+      Taxon.species.find_in_batches( :batch_size => 50 ) do |species_batch|
+        species_batch.each do |s|
+          s.precalculate_stats
+        end
         progress_bar.inc
       end
     end
@@ -67,6 +68,7 @@ class Species < Taxon
 
 end
 
+
 # == Schema Information
 #
 # Table name: taxa
@@ -83,3 +85,4 @@ end
 #  avg_lifespan     :float
 #  avg_litter_size  :float
 #
+

@@ -4,7 +4,10 @@ body
   #main
     :padding-top 2em
     +container
+    :position relative
     :margin-bottom 65px
+    #data
+      :text-align center
   #top_presence
     :top -1
     :right 0
@@ -111,6 +114,9 @@ form
     :display inline
     input
       :border 1px solid red
+  // various form element changes
+  #user_openid_identifier.title
+    :width 600px
   
 .form_input
   :margin-bottom 1em

@@ -8,6 +8,8 @@
     %br
     = f.text_field :value, :class => "text", :style => "width: 50px"
     = f.select :units, options_for_select(["Grams", "Kilograms"], @adult_weight.units)
+  
+  = render :partial => "/shared/citation_form", :locals => {:f => f}
 
   .form_input
     %button{:type => "submit", :name => "commit", :value => "Update", :class => 'button positive', :id => "update-adult-weight"} Submit Change

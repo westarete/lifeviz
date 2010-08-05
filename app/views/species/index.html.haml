@@ -193,6 +193,7 @@
           // If we're at the Kingdom level (no parent select box), we set it to the ubiota id of UBT
           if(!selected_id) {
             var parent_id = li.prev().children("select").val();
+            $('#navigation_spinner').fadeOut();
             if(parent_id === undefined) {
               species_id = 1; // UBT
             } else {
@@ -217,12 +218,14 @@
               },
               success: function(response){
                 li.after(response);
+                $('#nav_spinner').css('display', 'none');
               },
               complete: function(err){
                 clearTimeout(taxa_timeout);
-                $('#navigation_spinner').fadeOut();
               }
             });
+          } else {
+            $('#nav_spinner').css('display', 'none');
           }
   
           // Send out an XHR to fetch data to update the graph
@@ -265,13 +268,13 @@
 
 = render :partial => "/shared/header", :locals => { :title => "LifeViz", :subtitle => "Please browse the species below.", :flash => flash }
 
+%span#nav_spinner.spinner &nbsp
 %ul#taxonomic_selector.clearfix
   = taxon_dropdowns(@taxon, @taxon_ancestry)
-  %span#navigation_spinner.spinner= image_tag 'loader.gif'
-
-#graph{:taxon_id => @taxon.id}    
+#data
+  #graph{:taxon_id => @taxon.id}
   %span#graph_spinner.spinner
-
-#species
+  
   %span#species_spinner.spinner
-  = render :partial => "table"
+  #species
+    = render :partial => "table"
