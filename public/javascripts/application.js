@@ -12,7 +12,10 @@ $(function(){
             (window).width()/2-this.width()/2}, 200, 'linear');
         }
     } 
-   
+
+    // Table Sort
+    $(".speciestable").tablesorter(); 
+
    // Login interface
    $('#login_button').click(function(){
        $('#login-buttons').hide();
@@ -51,3 +54,4 @@ $(function(){
   });
     
 });
+
