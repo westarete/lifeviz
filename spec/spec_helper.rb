@@ -1,12 +1,16 @@
 # This file is copied to ~/spec when you run 'ruby script/generate rspec'
 # from the project root directory.
-ENV["RAILS_ENV"] ||= 'test'
+ENV["RAILS_ENV"] = 'test'
 require File.expand_path(File.join(File.dirname(__FILE__),'..','config','environment'))
 require 'spec/autorun'
 require 'spec/rails'
-
 require 'capybara/rails'
 require 'capybara/dsl'
+require File.expand_path(File.dirname(__FILE__) + "/blueprints")
+require 'shoulda'
+require 'authlogic/test_case'
+include Authlogic::TestCase
+activate_authlogic
 
 # Change api key for karma, so we can expect it.
 KARMA_API_KEY = 'karmatestapikey'
@@ -22,16 +26,10 @@ Spec::Runner.configure do |config|
   config.include(Capybara, :type => :integration)
 end
 
-# Use machinist blueprints.
-require File.expand_path(File.dirname(__FILE__) + "/blueprints")
+##### COMMON TEST CODE #####
 
-# Use shoulda matchers
-require 'shoulda'
-
-# Get AuthLogic running.
-require 'authlogic/test_case'
-include Authlogic::TestCase
-activate_authlogic
+# Should this be refactored to a separate file to keep spec_helper easier to
+# read? Just a thought.
 
 # Stub out the actual karma server so it's talking to our fake data instead.
 def stub_karma_server(json=nil)
