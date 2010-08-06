@@ -1,7 +1,7 @@
 # Be sure to restart your server when you modify this file
 
 # Specifies gem version of Rails to use when vendor/rails is not present
-RAILS_GEM_VERSION = '2.3.5' unless defined? RAILS_GEM_VERSION
+RAILS_GEM_VERSION = '2.3.8' unless defined? RAILS_GEM_VERSION
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
@@ -21,13 +21,13 @@ Rails::Initializer.run do |config|
   # config.gem "aws-s3", :lib => "aws/s3"
   
   # Alternate template and stylesheet engine.
-  config.gem 'haml', :version => '3.0.5'
+  config.gem 'haml', :version => '3.0.15'
   
   # Stylesheet library.
-  config.gem 'compass', :version => '0.10.1'
+  config.gem 'compass', :version => '0.10.3'
 
   # Show text-based progress bar for long-running console tasks.
-  config.gem 'progressbar', :version => '0.9.0'  
+  config.gem 'progressbar', :version => '0.9.0'
   
   # Nested sets for storing hierarchies.
   config.gem 'awesome_nested_set', :version => '1.4.3'
@@ -46,7 +46,10 @@ Rails::Initializer.run do |config|
   config.gem 'rest-client', :lib => 'restclient', :version => '1.3.0'
   
   # Hoptoad notifier
-  config.gem 'hoptoad_notifier', :version => '2.1.3'
+  config.gem 'hoptoad_notifier', :version => '2.3.2'
+
+  # Analyze performance (visit http://localhost:3000/newrelic)
+  config.gem 'newrelic_rpm', :version => '2.12.3'
 
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
