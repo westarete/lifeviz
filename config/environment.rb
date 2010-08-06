@@ -71,4 +71,4 @@ Rails::Initializer.run do |config|
   # config.i18n.default_locale = :de
 end
 
-Sass::Plugin.options[:style] = :compact
+Sass::Plugin.options[:style] = :compressed
