@@ -87,7 +87,11 @@ class Taxon < ActiveRecord::Base
   end
   
   def hierarchy
-    self.lineage_ids.split(',').map{|id| id.to_i}
+    if self.lineage_ids.nil?
+      []
+    else
+      self.lineage_ids.split(',').map{|id| id.to_i}
+    end
   end
     
   def paginated_sorted_species(page)

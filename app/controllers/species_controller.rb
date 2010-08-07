@@ -19,7 +19,7 @@ class SpeciesController < ApplicationController
 
     
     @rank = @taxon.rank
-    @species = @taxon.paginated_sorted_species(params[:page])
+    @children = @taxon.children
   end
   
   # This populates the taxon dropdowns that run across the top of the page
@@ -42,7 +42,31 @@ class SpeciesController < ApplicationController
     end
     respond_to do |format|
       format.html do
-        @species = @taxon.paginated_sorted_species(params[:page])
+        @children = @taxon.children
+        render :partial => "table", :layout => false
+      end
+      format.json do
+        render :json =>  @taxon.children_of_rank(@taxon.rank + 3).to_json(
+                 :only => :name,
+                 :methods => [
+                   :avg_lifespan,
+                   :avg_birth_weight,
+                   :avg_adult_weight,
+                   :avg_litter_size
+                 ])
+      end
+    end
+  end
+  
+  def species_data
+    if params[:taxon_id] && ! params[:taxon_id].blank?
+      @taxon = Taxon.find(params[:taxon_id])
+    else
+      @taxon = Taxon.find(1)
+    end
+    respond_to do |format|
+      format.html do
+        @children = @taxon.species
         render :partial => "table", :layout => false
       end
       format.json do

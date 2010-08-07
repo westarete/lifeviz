@@ -2,17 +2,15 @@
   %thead
     %tr
       %th Scientific Name
-      %th Lifespan
-      %th Birth Weight
-      %th Adult Weight
-      %th Litter Size
+      %th Avg. Lifespan
+      %th Avg. Birth Weight
+      %th Avg. Adult Weight
+      %th Avg. Litter Size
   %tbody
-    - @species.each do |species|
+    - @children.each do |taxon|
       %tr
-        %td.name= link_to species.name, species_path(species.id)
-        %td= lifespan_with_units(species)
-        %td= birth_weight_with_units(species)
-        %td= adult_weight_with_units(species)
-        %td= litter_size(species)
-
-= will_paginate @species, :params => {:controller => :species, :action => :index}
+        %td.name= link_to taxon.name, taxon_path(:rank => taxon.rank_in_words.downcase, :taxon => taxon.name)
+        %td= taxon.avg_lifespan
+        %td= taxon.avg_birth_weight
+        %td= taxon.avg_adult_weight
+        %td= taxon.avg_litter_size
