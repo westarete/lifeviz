@@ -74,13 +74,10 @@ module SpeciesHelper
   def taxon_dropdowns(taxon, ancestry)
     lineage = taxon.hierarchy
     lineage << taxon.id
-    
     returning String.new do |html|
       ancestry.each_with_index do |ancestor_taxa, rank|
-        logger.warn("TAXON " << taxon.inspect)
-        logger.warn("ANCESTOR " << ancestor_taxa.inspect)
         rank_in_words = ancestor_taxa.first.rank_in_words
-        html << controller.render_to_string(:partial => 'taxon_select', :layout => false, :locals => { :children => ancestor_taxa, :rank => rank, :rank_in_words => rank_in_words, :selected => lineage[rank] })
+        html << controller.render_to_string(:partial => 'taxon_select', :layout => false, :locals => { :children => ancestor_taxa, :rank => rank, :rank_in_words => rank_in_words, :selected => lineage[rank + 1] })
       end
     end
   end
