@@ -266,7 +266,7 @@
         });
       });
 
-= render :partial => "/shared/header", :locals => { :title => "#{@taxon.rank_in_words}: #{@taxon.name}", :flash => flash }
+= render :partial => "/shared/header", :locals => { :title => species_header(@taxon), :flash => flash }
 
 %span#nav_spinner.spinner &nbsp
 %ul#taxonomic_selector.clearfix
