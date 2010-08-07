@@ -39,6 +39,9 @@ Rails::Initializer.run do |config|
   # Pagination
   config.gem 'will_paginate', :version => '2.3.11'
   
+  # For database methods.
+  config.gem 'hpricot', :version => '>=0.8.0'
+  
   # Null object pattern.
   config.gem 'activerecord_null_object', :version => "0.2.0"
   
