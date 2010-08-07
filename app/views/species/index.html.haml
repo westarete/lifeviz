@@ -218,14 +218,18 @@
               },
               success: function(response){
                 li.after(response);
-                $('#nav_spinner').css('display', 'none');
+                $('#nav_spinner').hide();
+              },
+              error: function(response){
+                console.warn(response);
+                $('#nav_spinner').hide();
               },
               complete: function(err){
                 clearTimeout(taxa_timeout);
               }
             });
           } else {
-            $('#nav_spinner').css('display', 'none');
+            $('#nav_spinner').hide();
           }
   
           // Send out an XHR to fetch data to update the graph
@@ -240,10 +244,15 @@
               }, 500);
             },
             success: function(json_response) {
+              console.warn(json_response);
               if(json_response.length > 0) {
                 data = JSON.parse(json_response);
                 build_graph(data);
               } 
+            },
+            error: function(response){
+              console.warn(response);
+              $('#graph_spinner').fadeOut();
             },
             complete: function () {
               clearTimeout(graph_timeout);
