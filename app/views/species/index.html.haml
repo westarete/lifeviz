@@ -83,14 +83,15 @@
 
       var line = change.add(pv.Panel)
           .data(function() data)
-          .visible(function(d) dims.every(function(t)
-              (d[t] >= filter[t].min) && (d[t] <= filter[t].max)))
         .add(pv.Line)
           .data(dims)
           .left(function(t, d) x(t))
           .bottom(function(t, d) y[t](d[t]))
           .strokeStyle(function(t, d) c[active](d[active]))
-          .lineWidth(1);
+          .lineWidth(3)
+          .event("mouseover", function() this.strokeStyle("red") )
+          .event("mouseout", function() this.strokeStyle(function(t, d) c[active](d[active])))
+
 
       // Updater for slider and resizer.
       function update(d) {
@@ -162,7 +163,7 @@
           data.filter( function(d) !isNaN(d[t]) ),
           function(d) Math.floor(d[t]),
           function(d) Math.ceil(d[t])
-        ).range("steelblue", "brown"));
+        ).range("black", "blue"));
            
         // update filter
         filter = pv.dict(dims, function(t) {
