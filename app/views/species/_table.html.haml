@@ -1,14 +1,16 @@
-%table
-  %tr
-    %th Scientific Name
-    %th Avg. Lifespan
-    %th Avg. Birth Weight
-    %th Avg. Adult Weight
-    %th Avg. Litter Size
-  - @children.each do |taxon|
+%table.speciestable
+  %thead
     %tr
-      %td.name= link_to taxon.name, taxon_path(:rank => taxon.rank_in_words.downcase, :taxon => taxon.name)
-      %td= taxon.avg_lifespan
-      %td= taxon.avg_birth_weight
-      %td= taxon.avg_adult_weight
-      %td= taxon.avg_litter_size
+      %th Scientific Name
+      %th Avg. Lifespan
+      %th Avg. Birth Weight
+      %th Avg. Adult Weight
+      %th Avg. Litter Size
+  %tbody
+    - @children.each do |taxon|
+      %tr
+        %td.name= link_to taxon.name, taxon_path(:rank => taxon.rank_in_words.downcase, :taxon => taxon.name)
+        %td= taxon.avg_lifespan
+        %td= taxon.avg_birth_weight
+        %td= taxon.avg_adult_weight
+        %td= taxon.avg_litter_size
