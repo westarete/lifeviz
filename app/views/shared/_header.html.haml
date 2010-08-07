@@ -1,7 +1,7 @@
 #header
   - if title
     %h1= title
-  - if subtitle
+  - if respond_to?(:subtitle) && subtitle
     %h2= subtitle
   %hr
 #flash
