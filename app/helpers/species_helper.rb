@@ -1,5 +1,13 @@
 module SpeciesHelper
   
+  def species_header(taxon)
+    if taxon.id != 1
+      "#{@taxon.rank_in_words}: #{@taxon.name}"
+    else
+      "Welcome to Lifeviz."
+    end
+  end
+  
   # Get the mode of the lifespans' units, and the average of the lifespan values, and return it in a string
   def lifespan_with_units(species)
     if species.avg_lifespan
@@ -66,11 +74,10 @@ module SpeciesHelper
   def taxon_dropdowns(taxon, ancestry)
     lineage = taxon.hierarchy
     lineage << taxon.id
-    
     returning String.new do |html|
       ancestry.each_with_index do |ancestor_taxa, rank|
         rank_in_words = ancestor_taxa.first.rank_in_words
-        html << controller.render_to_string(:partial => 'taxon_select', :layout => false, :locals => { :children => ancestor_taxa, :rank => rank, :rank_in_words => rank_in_words, :selected => lineage[rank] })
+        html << controller.render_to_string(:partial => 'taxon_select', :layout => false, :locals => { :children => ancestor_taxa, :rank => rank, :rank_in_words => rank_in_words, :selected => lineage[rank + 1] })
       end
     end
   end
