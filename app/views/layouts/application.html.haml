@@ -11,11 +11,10 @@
     = yield :include_javascript
     %script{:type => 'text/javascript'}
       = yield :javascript
-
+  #topbar
   %body
-    #top_presence
-      = render :partial => "/shared/user_control"
     #main
+      = render :partial => "/shared/header"
       = yield
       = render :partial => "/shared/footer"
     
