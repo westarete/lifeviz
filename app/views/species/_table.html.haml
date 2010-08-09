@@ -8,7 +8,7 @@
       %th Avg. Litter Size
   %tbody
     - @children.each do |taxon|
-      %tr
+      %tr{:id => taxon.id}
         %td.name= link_to taxon.name, taxon_path(:rank => taxon.rank_in_words.downcase, :taxon => taxon.name)
         %td= taxon.avg_lifespan
         %td= taxon.avg_birth_weight

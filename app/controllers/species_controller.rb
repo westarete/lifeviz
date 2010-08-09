@@ -46,13 +46,14 @@ class SpeciesController < ApplicationController
         render :partial => "table", :layout => false
       end
       format.json do
-        render :json =>  @taxon.children_of_rank(@taxon.rank + 3).to_json(
+        render :json =>  @taxon.children_of_rank(@taxon.rank + 1).to_json(
                  :only => :name,
                  :methods => [
                    :avg_lifespan,
                    :avg_birth_weight,
                    :avg_adult_weight,
-                   :avg_litter_size
+                   :avg_litter_size,
+                   :id
                  ])
       end
     end
