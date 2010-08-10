@@ -15,12 +15,8 @@ $(function(){
 
   // Table Sort
   $(".speciestable").tablesorter(); 
-    
-  $('#create-species').click(function() {
-     $("#backgroundGray").fadeIn(3000);
-     $('#popup').centerScreen();
-     $("#popup").fadeIn(5000);
-  });
-    
+  
+  
+  
 });
 
