@@ -32,7 +32,7 @@
                 data.filter(function(d) !isNaN(d[t])),
               function(d) Math.floor(d[t]),
               function(d) Math.ceil(d[t])
-              ).range("steelblue", "brown"));
+              ).range("#015367", "#60B9CE"));
       
       /* Interaction state. */
       var filter =  pv.dict(
@@ -85,12 +85,17 @@
           .data(function() data)
           .visible(function(d) dims.every(function(t)
               (d[t] >= filter[t].min) && (d[t] <= filter[t].max)))
+        .add(pv.Panel)
+          .def("active", false)
         .add(pv.Line)
           .data(dims)
           .left(function(t, d) x(t))
           .bottom(function(t, d) y[t](d[t]))
-          .strokeStyle(function(t, d) c[active](d[active]))
-          .lineWidth(1);
+          .strokeStyle(function(t, d) this.parent.active() ? "#FF0700" : c[active](d[active]))
+          .lineWidth(4)
+          .event("mouseover", function() this.parent.active(true) )
+          .event("mouseout", function() this.parent.active(false) )
+          ;
 
       // Updater for slider and resizer.
       function update(d) {
