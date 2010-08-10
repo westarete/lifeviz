@@ -2,8 +2,8 @@ class TaxaController < ApplicationController
   before_filter :load_taxonomy
   
   def index
-    if params[:taxon]
-      if ! @taxon = Taxon.find_by_name(params[:taxon].capitalize)
+    if params[:taxon] && params[:rank]
+      if ! @taxon = Taxon.find_by_name_and_rank(params[:taxon], params[:rank])
         @taxon = Taxon.root
         @disable_remaining_dropdowns = "disabled"
         flash.now[:notice] = "#{params[:rank].capitalize} #{params[:taxon].capitalize} could not be found."

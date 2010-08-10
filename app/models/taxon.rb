@@ -43,6 +43,10 @@ class Taxon < ActiveRecord::Base
     find(1)
   end
   
+  def self.find_by_name_and_rank(name, rank)
+    self.find(:first, :conditions => {:name => name.capitalize, :rank => RANK_LABELS.find_index{|l| l.downcase == rank.downcase}})
+  end
+  
   def all_data_available?
     avg_lifespan && avg_lifespan != 0 &&
     avg_birth_weight && avg_birth_weight != 0 &&
