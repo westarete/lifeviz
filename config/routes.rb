@@ -36,18 +36,11 @@ ActionController::Routing::Routes.draw do |map|
     i.connect '/species/:species_id/litter_sizes/:id' ,:action => :update ,:conditions => {:method => :put  }
   end
   
-  # AJAX Navigation
-  map.taxonomy_dropdown '/taxonomy/dropdown/:rank', 
-    :controller => :taxonomy_navigation, 
-    :action => :dropdown_options, 
-    :rank => /(kingdoms|phylums|classes|orders|families|genuses|species)/,
-    :conditions => {:method => :get}
+  map.with_options :controller => :taxa, :rank => /(kingdom|phylum|class|order|family|genus)/ do |t|
+    t.taxon '/:rank/:taxon', :action => :index, :conditions => {:method => :get}
+    t.data '/taxa/data.:format', :action => :data, :conditions => {:method => :get}
+    t.taxonomy_dropdown '/taxonomy/dropdown/:rank', :action => :dropdown_options, :conditions => {:method => :get}
+  end
   
-  map.taxon '/:rank/:taxon',
-    :controller => :species,
-    :action => :index,
-    :rank => /(kingdom|phylum|class|order|family|genus)/,
-    :conditions => {:method => :get}
-  
-  map.root :controller => :species
+  map.root :controller => :taxa
 end
