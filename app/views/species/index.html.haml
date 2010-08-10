@@ -3,7 +3,7 @@
     :plain
       var li = $(this).parent(); // used to track which rank is shown
       var taxon_id = $('#graph').attr('taxon_id');
-      var data = $.ajax({ type: "GET", url: '/species/data.json', data: {taxon_id: taxon_id}, async: false }).responseText;
+      var data = $.ajax({ type: "GET", url: '/taxa/data.json', data: {taxon_id: taxon_id}, async: false }).responseText;
       data = JSON.parse(data);
       
       // The units and dimensions to visualize, in order.
@@ -153,15 +153,13 @@
     :plain
       $(function(){
         $('#taxonomic_selector select').live('change', function(){
-          
-  
+          window.open(("../" + this.options[this.selectedIndex].value), '_top');
         });
       });
-
 
 %ul#taxonomic_selector.clearfix
   = taxon_dropdowns(@taxon, @taxon_ancestry)
 #data
   #graph{:taxon_id => @taxon.id}
-  #taxa
+  #species
     = render :partial => "table"

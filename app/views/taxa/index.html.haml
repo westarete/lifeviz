@@ -153,7 +153,6 @@
     :plain
       $(function(){
         $('#taxonomic_selector select').live('change', function(){
-          console.log(asdf = this);
           window.open(("../" + this.options[this.selectedIndex].value), '_top');
         });
       });
