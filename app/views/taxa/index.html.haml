@@ -3,15 +3,14 @@
     :plain
       var li = $(this).parent(); // used to track which rank is shown
       var taxon_id = $('#graph').attr('taxon_id');
-      var data = $.ajax({ type: "GET", url: '/taxa/data.json', data: {taxon_id: taxon_id}, async: false }).responseText;
-      data = JSON.parse(data);
+      var data = $.table("#taxatable").objs();
       
       // The units and dimensions to visualize, in order.
       var units = {
-        avg_lifespan:       {name: "lifespan", unit: " days"},
-        avg_birth_weight:   {name: "birth weight", unit: " g"},
-        avg_adult_weight:   {name: "adult weight", unit: " g"},
-        avg_litter_size:    {name: "litter size", unit: ""}
+        "Avg. Lifespan":    {name: "lifespan", unit: " days"},
+        "Avg. Birth Weight":   {name: "birth weight", unit: " g"},
+        "Avg. Adult Weight":   {name: "adult weight", unit: " g"},
+        "Avg. Litter Size":    {name: "litter size", unit: ""}
       }
 
       var dims = pv.keys(units);
@@ -42,7 +41,7 @@
                           max: y[t].domain()[1]
                         };
                       }
-                    ), active = "avg_lifespan";
+                    ), active = "Avg. Lifespan";
 
       // root container
       var vis = new pv.Panel()
@@ -154,13 +153,14 @@
       
       vis.render();
       
-  %script{:type => 'text/javascript'}
-    :plain
-      $(function(){
-        $('#taxonomic_selector select').live('change', function(){
-          window.open(("../" + this.options[this.selectedIndex].value), '_top');
-        });
+      $('#taxonomic_selector select').live('change', function(){
+        window.open(("../" + this.options[this.selectedIndex].value), '_top');
       });
+            
+      // Table Sort
+      $("#speciestable, #taxatable").tablesorter();
+      
+      $("#taxatable").table();
 
 %ul#taxonomic_selector.clearfix
   = taxon_dropdowns(@taxon, @taxon_ancestry)
@@ -168,3 +168,4 @@
   #graph{:taxon_id => @taxon.id}
   #taxa
     = render :partial => "table"
+  %table#datatable
