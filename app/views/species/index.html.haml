@@ -294,9 +294,6 @@
   
         });
       });
-
-= render :partial => "/shared/header", :locals => { :title => species_header(@taxon), :flash => flash }
-
 %span#nav_spinner.spinner &nbsp
 %ul#taxonomic_selector.clearfix
   = taxon_dropdowns(@taxon, @taxon_ancestry)

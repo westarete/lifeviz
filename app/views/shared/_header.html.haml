@@ -1,8 +1,15 @@
-#header
-  - if title
-    %h1= title
-  - if respond_to?(:subtitle) && subtitle
-    %h2= subtitle
-  %hr
+%table.uiheader
+  %tr
+    %td
+      #header
+        %h2
+          LifeViz
+    %td{:style => "text-align:right"}
+      %h3
+        Karma [34] (Contributor)
+        |
+        Log in
+        |
+        Sign up
 #flash
   = render :partial => "/shared/flash", :locals => { :flash => flash }
