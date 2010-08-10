@@ -16,7 +16,26 @@ $(function(){
   // Table Sort
   $(".speciestable").tablesorter(); 
   
-  
+  // Login interface
+  $('#login_button').click(function(){
+     $('#login-buttons').hide();
+     $('#login').show();
+  });
+
+  $('#login_cancel_button').click(function(){
+     $('#login').hide();
+     $('#login-buttons').show();
+  });
+
+  $('.regular_button').click(function(){
+    $('#openid').hide();
+    $('#standard').show();
+  });
+
+  $('.openid_button').click(function(){
+    $('#standard').hide();
+    $('#openid').show();
+  });
   
 });
 

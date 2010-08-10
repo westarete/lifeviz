@@ -1,11 +1,61 @@
-table.uiheader
+#topbar
+  :background-color #015367
+  :position absolute
+  :width 100%
+  :height 47px
+  :z-index -1
+#uiheader
   :color #ffffff
   :left 0px
-  :height 41px
+  :height 40px
   :width 100%
-  :padding-bottom 10px
-  h2
+  :margin-bottom 20px
+  :clear both
+  #header
+    :float left
+    :padding-top 6px
+  #options
+    :float right
+  h2, h3
     :color white
-  h3
+    :margin 0
+  a
     :color white
+    :text-decoration none
+    &:hover
+      :text-decoration underline
 
+  #login-buttons
+    :padding-top 10px
+  #login, #signup
+    :display none
+  #standard, #openid
+    :float left
+  #login
+    .form-row
+      :display block
+      .alt
+        :float right
+      #user_email, #user_password
+        :width 120px
+      #user_openid_identifier
+        :width 262px
+      .remember-me
+        :font-size 70%
+        :font-weight 400
+      .email, .password, .remember-me
+        :padding-right 5px
+      .email, .password, .remember-me
+        :float left
+      .submit
+        :float right
+        :padding-top 8px
+      .regular_button, .openid_button
+        :float right
+      #login_cancel_button
+        :color black
+      #login-defaults
+        :float right
+        :padding-left 10px
+    #openid
+      :display none
