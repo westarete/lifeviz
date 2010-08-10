@@ -3,7 +3,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :users
   
   map.resources :species, :collection => { :data => :get, :species_data => :get }, :member => {:children => :get}
-  map.genus '/genus/:taxon', :controller => :species, :action => :index, :conditions => {:method => :get}
+  map.genus '/genus/:genus', :controller => :species, :action => :index, :conditions => {:method => :get}
 
   map.with_options :controller => :lifespans do |a|
     a.new_lifespan '/species/:species_id/lifespans/new', :action => :new, :conditions => {:method => :get}

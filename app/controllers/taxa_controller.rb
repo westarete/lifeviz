@@ -16,8 +16,6 @@ class TaxaController < ApplicationController
     end
     
     @taxon_ancestry = @taxon.full_ancestry(:include_children => true) # for taxon dropdowns
-
-    
     @rank = @taxon.rank
     @children = @taxon.children
   end

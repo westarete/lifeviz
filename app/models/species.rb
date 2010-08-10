@@ -65,6 +65,10 @@ class Species < Taxon
       errors.add_to_base "Species needs to belong to a genus"
     end
   end
+  
+  def scientific_name
+    "#{parent.name} #{name}"
+  end
 
 end
 

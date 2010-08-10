@@ -1,4 +1,16 @@
 class SpeciesController < ApplicationController
+  before_filter :load_taxonomy
+  
+  def index
+    if params[:genus].nil? || ! @taxon = Taxon.find_by_name(params[:genus].capitalize)
+        flash.now[:notice] = "Genus #{params[:genus].capitalize} could not be found."
+        redirect_to :back
+    else
+      @taxon_ancestry = @taxon.full_ancestry(:include_children => false) # for taxon dropdowns
+      @rank = @taxon.rank
+      @species = @taxon.paginated_sorted_species(params[:page])
+    end
+  end
   
   def species_data
     if params[:taxon_id] && ! params[:taxon_id].blank?
