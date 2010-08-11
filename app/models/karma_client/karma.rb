@@ -61,6 +61,9 @@ module KarmaClient
       # If the user is not defined yet, create it and try again.
       create_user_on_karma_server
       retry
+    rescue RestClient::Exception => e
+      p e.response
+      nil
     end
     
   end
