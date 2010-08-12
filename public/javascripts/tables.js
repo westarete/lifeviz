@@ -333,8 +333,12 @@ jQuery.fn.row.genericRowProperties = function(type){
     return d;
   }
 
-  this.texts = function(){ return jQuery.map( this.$.children(type),
-    function(td) { return jQuery(td).text() }) };
+  this.texts = function(){ 
+	return jQuery.map( this.$.children(type), function(td) { 
+			i =  jQuery(td).find('input');
+			return i.length > 0 ? i.val() : jQuery(td).text() 
+		}) 
+  };
 
   // table is optional parameter to avoid Dom lookup of table
   this.td_helper = function(column, tds, table){
