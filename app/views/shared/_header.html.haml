@@ -5,9 +5,28 @@
     #login-buttons
       %h3
         - if logged_in?
-          Karma [34] (Contributor)
+          Karma:
+          - if current_user.karma.total 
+            %span.red
+              = current_user.karma.total
+          - else
+            nil  
           |
-          = link_to current_user.name, edit_user_path(current_user)
+          Level:
+          - if current_user.karma.levels.gold?
+            %span.gold Gold
+          - elsif current_user.karma.levels.silver?
+            %span.silver Silver
+          - elsif current_user.karma.levels.bronze?
+            %span.bronze Bronze
+          - else
+            %span.detail *dust*
+          |
+          = link_to current_user.name.to_s + ":", edit_user_path(current_user) 
+          - if 10 <= current_user.karma.total
+            Contributor
+          - else 
+            User
           |
           = link_to "Log out", user_session_path, :method => :delete
         - else
