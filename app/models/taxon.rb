@@ -44,7 +44,9 @@ class Taxon < ActiveRecord::Base
   end
   
   def self.find_by_name_and_rank(name, rank)
-    self.find(:first, :conditions => {:name => name.capitalize, :rank => RANK_LABELS.find_index{|l| l.downcase == rank.downcase}})
+    rank_match = RANK_LABELS.find { |l| l.downcase == rank.downcase }
+    rank_match_index = RANK_LABELS.index(rank_match)
+    self.find(:first, :conditions => {:name => name.capitalize, :rank => rank_match_index})
   end
   
   def all_data_available?
