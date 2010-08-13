@@ -11,7 +11,7 @@
     - @children.each do |taxon|
       %tr
         %td
-          %input{ :type => 'checkbox' }
+          %input.select_taxon{ :type => 'checkbox' }
         - if taxon.rank_in_words.downcase == "genus"
           %td.name= link_to taxon.name, genus_path(:genus => taxon.name)
         - else
