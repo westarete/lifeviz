@@ -1,5 +1,3 @@
-= render :partial => "/shared/header", :locals => { :title => @species.name, :subtitle => "", :flash => flash }
-
 %h2 Editing Litter Size
 
 - form_for :litter_size, :url => { :action => :update }, :html => {:method => :put} do |f|

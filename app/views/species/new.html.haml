@@ -1,5 +1,3 @@
-= render :partial => "/shared/header", :locals => { :title => "New Species", :subtitle => "", :flash => flash }
-
 - form_for :species, :url => {:action => :create}, :html => {:method => :post} do |f|
   = render :partial => "/taxa/dropdown_options"
   = render :partial => "form", :object => f

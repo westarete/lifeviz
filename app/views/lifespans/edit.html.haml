@@ -1,5 +1,3 @@
-= render :partial => "/shared/header", :locals => { :title => @species.name, :subtitle => "", :flash => flash }
-
 %h2 Editing Lifespan
 
 - form_for :lifespan, :url => { :action => :update }, :html => {:method => :put} do |f|
