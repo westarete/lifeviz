@@ -14,6 +14,7 @@ $(function(){
   } 
 
   // Table Sort
+  $(".taxatable").tablesorter(); 
   $(".speciestable").tablesorter(); 
   
   // Login interface
