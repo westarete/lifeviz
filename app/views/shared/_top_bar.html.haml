@@ -5,16 +5,31 @@
     #login-buttons
       %h3
         - if logged_in?
-          Karma [34] (Contributor)
-          |
-          = link_to current_user.name, edit_user_path(current_user)
-          |
+          Karma:
+          - if current_user.karma.total 
+            %span.red
+              = current_user.karma.total
+          Level:
+          - if current_user.karma.levels.gold?
+            %span.gold Gold
+          - elsif current_user.karma.levels.silver?
+            %span.silver Silver
+          - elsif current_user.karma.levels.bronze?
+            %span.bronze Bronze
+          - else
+            %span.detail *dust*
+          - if 10 <= current_user.karma.total
+            Contributor:
+            %span.green
+              = link_to current_user.name.to_s, edit_user_path(current_user) 
+          - else
+            User:
+            %span.blue
+              = link_to current_user.name.to_s, edit_user_path(current_user) 
           = link_to "Log out", user_session_path, :method => :delete
         - else
           Powered by Karma!
-          |
           = link_to "Log in", "#", :id => "login_button"
-          |
           = link_to "Sign up", new_user_path
     #login
       - form_tag user_session_path, :method => :post do
