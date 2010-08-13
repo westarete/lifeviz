@@ -1,0 +1,19 @@
+%table.taxatable
+  %thead
+    %tr
+      %th= @children.first.rank_in_words
+      %th Avg. Lifespan
+      %th Avg. Birth Weight
+      %th Avg. Adult Weight
+      %th Avg. Litter Size
+  %tbody
+    - @children.each do |taxon|
+      %tr
+        - if taxon.rank_in_words.downcase == "genus"
+          %td.name= link_to taxon.name, genus_path(:genus => taxon.name)
+        - else
+          %td.name= link_to taxon.name, taxon_path(:rank => taxon.rank_in_words.downcase, :taxon => taxon.name)
+        %td= taxon.avg_lifespan
+        %td= taxon.avg_birth_weight
+        %td= taxon.avg_adult_weight
+        %td= taxon.avg_litter_size

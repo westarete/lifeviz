@@ -1,0 +1,9 @@
+- select_id = "taxonomic_selector_#{rank}"
+- selected_dropdown = selected.name rescue nil
+- options = children.map{|c| [c.scientific_name, "#{c.rank_in_words.downcase}/#{c.name.downcase}"] }.unshift(['All', nil])
+- options = options.unshift(["#{selected_dropdown}", nil]) unless last
+
+%li.taxonomic_selector_item{:id => "taxonomic_selector_rank_#{rank}", :class => "rank_#{rank}"}
+  = label_tag select_id, rank_in_words
+  %br
+  = select_tag select_id, options_for_select(options, 0)

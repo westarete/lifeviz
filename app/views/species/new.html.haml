@@ -1,7 +1,7 @@
 = render :partial => "/shared/header", :locals => { :title => "New Species", :subtitle => "", :flash => flash }
 
 - form_for :species, :url => {:action => :create}, :html => {:method => :post} do |f|
-  = render :partial => "/taxonomy_navigation/dropdowns"
+  = render :partial => "/taxa/dropdown_options"
   = render :partial => "form", :object => f
   %h4 WARNING! Creating a species can take several minutes, as it reorganizes the taxonomy.
   %button{:type => "submit", :name => "commit", :value => "Create", :class => 'button positive', :id => "create-species"} Create Species

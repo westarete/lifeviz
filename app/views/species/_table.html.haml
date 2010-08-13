@@ -1,16 +1,18 @@
-%table
-  %tr
-    %th Scientific Name
-    %th Lifespan
-    %th Birth Weight
-    %th Adult Weight
-    %th Litter Size
-  - @species.each do |species|
+%table.speciestable
+  %thead
     %tr
-      %td.name= link_to species.name, species_path(species.id)
-      %td= lifespan_with_units(species)
-      %td= birth_weight_with_units(species)
-      %td= adult_weight_with_units(species)
-      %td= litter_size(species)
+      %th Latin Name
+      %th Lifespan
+      %th Birth Weight
+      %th Adult Weight
+      %th Litter Size
+  %tbody
+    - @species.each do |species|
+      %tr
+        %td.name= link_to species.name, species_path(species.id)
+        %td= lifespan_with_units(species)
+        %td= birth_weight_with_units(species)
+        %td= adult_weight_with_units(species)
+        %td= litter_size(species)
 
 = will_paginate @species, :params => {:controller => :species, :action => :index}

@@ -1,7 +1,0 @@
-- select_id = "taxonomic_selector_#{rank}"
-- selected_dropdown_option = selected rescue nil # just in case selected is not passed in as a local
-
-%li.taxonimic_selector_item{ :id => "taxonomic_selector_rank_#{rank}", :class => "rank_#{rank}" }
-  = label_tag select_id, rank_in_words
-  %br
-  = select_tag select_id, options_for_select(children.map{|c| [c.scientific_name, c.id]}.unshift(['All', nil]), selected_dropdown_option)

@@ -1,67 +1,11 @@
 // Main Structure
-
 body
   #main
-    :padding-top 2em
     +container
     :position relative
     :margin-bottom 65px
     #data
       :text-align center
-  #top_presence
-    :top -1
-    :right 0
-    :height 55px
-    :padding 0
-    :position fixed
-    :z-index 99
-    #user_control
-      :margin-right 30px
-      :display block
-      :padding 15px
-      :background-color rgba(255,255,255,.8)
-      -moz-border-radius-bottomleft: 10px
-      -webkit-border-bottom-left-radius: 10px      
-      -moz-border-radius-bottomright: 10px
-      -webkit-border-bottom-right-radius: 10px
-      :border 1px solid gray
-      a
-        :margin 0 !important
-      #logged_in_as
-        :font-weight 600
-        :display block
-        :padding-bottom 10px
-        a
-          :float right
-      #login-buttons
-        :width 170px
-      #login, #signup
-        :display none
-      #login
-        :width 275px
-        :height 90px
-        .form-row
-          :display block
-          .alt
-            :float right
-          #user_email, #user_password
-            :width 120px
-          #user_openid_identifier
-            :width 237px
-          .remember-me
-            :font-size 70%
-            :font-weight 400
-          .email, .password, .remember-me
-            :padding-right 5px
-          .email, .password, .remember-me
-            :float left
-          .submit
-            :float right
-            :padding-top 8px
-          .regular_button, .openid_button
-            :float right
-        #openid
-          :display none
         
     #header
       :margin-bottom 1em
