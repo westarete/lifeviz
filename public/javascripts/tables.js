@@ -335,8 +335,12 @@ jQuery.fn.row.genericRowProperties = function(type){
 
   this.texts = function(){ 
 	return jQuery.map( this.$.children(type), function(td) { 
-			i =  jQuery(td).find('input');
-			return i.length > 0 ? i.val() : jQuery(td).text() 
+			i =  jQuery(td).find('input:checkbox'); 
+			if ( i.length > 0 ) { 					// see if checkbox exists
+				return jQuery(td).find('input:checkbox:checked').length > 0 ? 'true' : 'false' // checked?
+			} else {
+				return jQuery(td).text() 
+			}
 		}) 
   };
 
