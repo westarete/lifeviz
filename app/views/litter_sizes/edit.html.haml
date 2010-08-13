@@ -7,6 +7,8 @@
     = f.label :value, "Litter size"
     %br
     = f.text_field :measure, :class => "text", :style => "width: 50px"
+  
+  = render :partial => "/shared/citation_form", :locals => {:f => f}
 
   .form_input
     %button{:type => "submit", :name => "commit", :value => "Update", :class => 'button positive', :id => "update-litter-size"} Submit Change

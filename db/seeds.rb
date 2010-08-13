@@ -4,9 +4,9 @@ require 'hpricot'
 require 'pp'
 require 'ruby-debug'
 include SeedMethods
-UBIOTA        = "db/data/ubiota_taxonomy.psv.bz2"
-ANAGE         = "db/data/anage.xml.bz2"
-ANAGE_UBIOTA  = "db/data/hagrid_ubid.txt"
+UBIOTA          = "db/data/ubiota_taxonomy.psv.bz2"
+LIFEVIZ         = "db/data/lifeviz.xml.bz2"
+LIFEVIZ_UBIOTA  = "db/data/hagrid_ubid.txt"
 
 # Count the number of taxa in a file.
 def num_taxa_lines_bz2(filename)
@@ -14,7 +14,7 @@ def num_taxa_lines_bz2(filename)
   puts "Calculating total size of job"
   IO.popen("bunzip2 -c #{filename}").each do |line|
     id, term, rank, hierarchy, parent_id, num_children, hierarchy_ids = line.split("|")
-    next if rank == "rank"
+    next if rank  == "rank"
     break if rank == "6"
     num_lines += 1
   end
@@ -79,58 +79,58 @@ def rebuild_lineages
   sql.commit_db_transaction
 end
 
-# Create species from anage/ubiota using hagrid_ubid as the bridge
-# Collect species data from Anage
+# Create species from lifeviz/ubiota using hagrid_ubid as the bridge
+# Collect species data from Lifeviz
 # Collect taxonomy species name and hierarchy from ubiota
 def create_species_and_data
   new_species       = []
   orphaned_species  = []
   
   # Entrance message
-  puts "** Creating new species from anage/ubiota files using hagrid_ubid as the bridge"
-  puts " NOTE: new species are species with data imported from anage, orphaned species are "
-  puts "       ubiota species with no associated anage data"
+  puts "** Creating new species from lifeviz/ubiota files using hagrid_ubid as the bridge"
+  puts " NOTE: new species are species with data imported from lifeviz, orphaned species are "
+  puts "       ubiota species with no associated lifeviz data"
   
   # Open files
   puts "** Opening data files..."
-  anage         = IO.popen("bunzip2 -c #{ANAGE}")
-  ubiota        = IO.popen("bunzip2 -c #{UBIOTA}")
-  map           = IO.readlines(ANAGE_UBIOTA)
-  anage && ubiota && map ? (puts "success") : (puts "*failed"; exit!)
+  lifeviz = IO.popen("bunzip2 -c #{LIFEVIZ}")
+  ubiota  = IO.popen("bunzip2 -c #{UBIOTA}")
+  map     = IO.readlines(LIFEVIZ_UBIOTA)
+  lifeviz && ubiota && map ? (puts "success") : (puts "*failed"; exit!)
 
   # Dump all related data
   puts "** Removing any existing age, litter sizes, adult weights,birth weights data..." 
   Lifespan.destroy_all && LitterSize.destroy_all && AdultWeight.destroy_all && BirthWeight.destroy_all ? (puts "success") : (puts "failed"; exit!)
   
-  # Load taxon from anage, let's use hpricot
-  puts "** Loading anage data, let's use hpricot..."
-  doc               = Hpricot::XML(anage)
-  anage_species     = (doc/'names')
-  anage_ages        = (doc/'age')
-  anage_development = (doc/'development')
-  puts  "success: #{anage_species.size} species loaded with #{anage_ages.size} ages}"
+  # Load taxon from lifeviz, let's use hpricot
+  puts "** Loading lifeviz data, let's use hpricot..."
+  doc                 = Hpricot::XML(lifeviz)
+  lifeviz_species     = (doc/'names')
+  lifeviz_ages        = (doc/'age')
+  lifeviz_development = (doc/'development')
+  puts  "success: #{lifeviz_species.size} species loaded with #{lifeviz_ages.size} ages}"
   
-  puts "anage species: #{anage_species.size}, anage ages: #{anage_ages.size}, anage devs: #{anage_development.size}"
+  puts "lifeviz species: #{lifeviz_species.size}, lifeviz ages: #{lifeviz_ages.size}, lifeviz devs: #{lifeviz_development.size}"
     
-  # Create new species array to load anage species and attributes we want
-  puts "** Loading new species and storing anage data from anage dump..."
+  # Create new species array to load lifeviz species and attributes we want
+  puts "** Loading new species and storing lifeviz data from lifeviz dump..."
   development_index = 0
-  progress "Storing data", anage_species.length do |progress_bar|
-    anage_species.each_with_index do |s, index|
+  progress "Storing data", lifeviz_species.length do |progress_bar|
+    lifeviz_species.each_with_index do |s, index|
       hagrid        = (s/'id_hagr').inner_html
       x = {}
-      x[:synonyms]  = (s/'name_common').inner_html
-      x[:age]       = (anage_ages[index]/'tmax').inner_html
-      x[:hagrid]    = hagrid
+      x[:synonyms] = (s/'name_common').inner_html
+      x[:age]      = (lifeviz_ages[index]/'tmax').inner_html
+      x[:hagrid]   = hagrid
 
-      while anage_development[development_index] && (anage_development[development_index]/'hagrid').inner_html.to_i < hagrid.to_i
-        puts "#{(anage_development[development_index]/'hagrid').inner_html} is less than #{hagrid}"
+      while lifeviz_development[development_index] && (lifeviz_development[development_index]/'hagrid').inner_html.to_i < hagrid.to_i
+        puts "#{(lifeviz_development[development_index]/'hagrid').inner_html} is less than #{hagrid}"
         development_index += 1
       end
       
       # development attributes matches the current species id
-      if anage_development[development_index] && (anage_development[development_index]/'hagrid').inner_html.to_i == hagrid.to_i
-        development = anage_development[development_index]
+      if lifeviz_development[development_index] && (lifeviz_development[development_index]/'hagrid').inner_html.to_i == hagrid.to_i
+        development = lifeviz_development[development_index]
         if development && (development/'hagrid').inner_html == hagrid
           x[:adult_weight]  = (development/'adult_weight').inner_html.to_f
           x[:birth_weight]  = (development/'birth_weight').inner_html.to_f

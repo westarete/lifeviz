@@ -12,10 +12,11 @@ require 'hoptoad_notifier/capistrano'   # Hoptoad notification
 set :application, "lifeviz"
 
 # Location of the source code.
-set :repository,  "git@github.com:westarete/anage.git"
+set :repository,  "git@github.com:westarete/lifeviz.git"
 
 # Set the files that should be symlinked to their shared counterparts.
 set :shared, %w{ 
-  config/database.yml 
+  config/database.yml
   config/initializers/session_store.rb
+  config/initializers/karma.rb
 }
