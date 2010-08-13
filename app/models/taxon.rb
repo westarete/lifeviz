@@ -18,12 +18,13 @@ class Taxon < ActiveRecord::Base
   
   # This method rebuilds lineage_ids for the entire taxonomy.
   def self.rebuild_lineages!
+    # ActiveRecord::Base.connection.execute "UPDATE taxa SET lineage_ids = NULL;"  # This step takes forever. Run it only if you have to.
     Taxon.find(1).rebuild_lineage_branch(nil) # Run rebuild_lineage on root node.
   end
 
   def self.rebuild_stats(rank_specified=nil)
     rank_specified ? (rank = rank_specified) : (rank = 5)
-    while rank >= 0      
+    while rank >= 0
       size = Taxon.count(:all, :conditions => {:rank => rank}) / 50
       progress "Building Taxon Stats for rank #{rank}", size do |progress_bar|
         Taxon.find_in_batches( :batch_size => 50 ) do |taxon_batch|
@@ -32,7 +33,7 @@ class Taxon < ActiveRecord::Base
           end
           progress_bar.inc
         end
-      end      
+      end
       break unless rank_specified.nil?
       rank -= 1
     end
@@ -44,7 +45,9 @@ class Taxon < ActiveRecord::Base
   end
   
   def self.find_by_name_and_rank(name, rank)
-    self.find(:first, :conditions => {:name => name.capitalize, :rank => RANK_LABELS.find_index{|l| l.downcase == rank.downcase}})
+    rank_match = RANK_LABELS.find { |l| l.downcase == rank.downcase }
+    rank_match_index = RANK_LABELS.index(rank_match)
+    self.find(:first, :conditions => {:name => name.capitalize, :rank => rank_match_index})
   end
   
   def all_data_available?
@@ -133,7 +136,7 @@ class Taxon < ActiveRecord::Base
     
     update_attributes(:lineage_ids => lineage_ids)
     
-    unless leaf?
+    unless rank == 6
       children.each {|child| child.rebuild_lineage_branch(id, lineage_ids)}
     end
   end
