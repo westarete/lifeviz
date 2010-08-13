@@ -11,7 +11,6 @@
               = current_user.karma.total
           - else
             nil  
-          |
           Level:
           - if current_user.karma.levels.gold?
             %span.gold Gold
@@ -21,19 +20,18 @@
             %span.bronze Bronze
           - else
             %span.detail *dust*
-          |
-          = link_to current_user.name.to_s + ":", edit_user_path(current_user) 
           - if 10 <= current_user.karma.total
-            Contributor
-          - else 
-            User
-          |
+            Contributor:
+            %span.green
+              = link_to current_user.name.to_s, edit_user_path(current_user) 
+          - else
+            User:
+            %span.blue
+              = link_to current_user.name.to_s, edit_user_path(current_user) 
           = link_to "Log out", user_session_path, :method => :delete
         - else
           Powered by Karma!
-          |
           = link_to "Log in", "#", :id => "login_button"
-          |
           = link_to "Sign up", new_user_path
     #login
       - form_tag user_session_path, :method => :post do
