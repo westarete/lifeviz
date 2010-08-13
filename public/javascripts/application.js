@@ -14,8 +14,7 @@ $(function(){
   } 
 
   // Table Sort
-  $(".taxatable").tablesorter(); 
-  $(".speciestable").tablesorter(); 
+  $(".taxatable, .speciestable").tablesorter();
   
   // Login interface
   $('#login_button').click(function(){
