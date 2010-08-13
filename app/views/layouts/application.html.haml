@@ -5,9 +5,11 @@
     = stylesheet_link_tag 'jquery-ui.css', :media => 'print'
     /[if lt IE 8]
       = stylesheet_link_tag 'ie.css', :media => 'screen, projection'
+    /[if IE]
+      <script type="text/javascript" src="/javascripts/svg.js" data-path="/javascripts/"></script>
     = javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"
     = javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/jquery-ui.min.js"
-    = javascript_include_tag  'protovis-r3.3', 'jquery.tablesorter', 'application', 'jquery.coolinput', 'jquery.address'
+    = javascript_include_tag 'svg', 'protovis-r3.3', 'jquery.tablesorter', 'application', 'jquery.coolinput', 'jquery.address'
     = yield :include_javascript
     %script{:type => 'text/javascript'}
       = yield :javascript
