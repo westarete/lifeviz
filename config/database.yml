@@ -6,6 +6,10 @@
 development:
   adapter: postgresql
   database: lifeviz_development
+  
+full_set:
+  adapter: postgresql
+  database: lifeviz_production
 
 test: &TEST
   adapter: postgresql
