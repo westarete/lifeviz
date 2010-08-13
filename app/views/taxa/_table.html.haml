@@ -1,6 +1,7 @@
 %table#taxatable
   %thead
     %tr
+      %th Select
       %th= @children.first.rank_in_words
       %th Avg. Lifespan
       %th Avg. Birth Weight
@@ -9,6 +10,8 @@
   %tbody
     - @children.each do |taxon|
       %tr
+        %td
+          %input.select_taxon{ :type => 'checkbox' }
         - if taxon.rank_in_words.downcase == "genus"
           %td.name= link_to taxon.name, genus_path(:genus => taxon.name)
         - else

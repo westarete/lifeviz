@@ -333,8 +333,16 @@ jQuery.fn.row.genericRowProperties = function(type){
     return d;
   }
 
-  this.texts = function(){ return jQuery.map( this.$.children(type),
-    function(td) { return jQuery(td).text() }) };
+  this.texts = function(){ 
+	return jQuery.map( this.$.children(type), function(td) { 
+			i =  jQuery(td).find('input:checkbox'); 
+			if ( i.length > 0 ) { 					// see if checkbox exists
+				return jQuery(td).find('input:checkbox:checked').length > 0 ? 'true' : 'false' // checked?
+			} else {
+				return jQuery(td).text() 
+			}
+		}) 
+  };
 
   // table is optional parameter to avoid Dom lookup of table
   this.td_helper = function(column, tds, table){

@@ -161,6 +161,10 @@
       $("#speciestable, #taxatable").tablesorter();
       
       $("#taxatable").table();
+      
+      $('.select_taxon').click(function(){
+        data = $.table("#taxatable").objs()
+      });
 
 %ul#taxonomic_selector.clearfix
   = taxon_dropdowns(@taxon, @taxon_ancestry)
