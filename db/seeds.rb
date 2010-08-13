@@ -283,7 +283,11 @@ def create_species_and_data
   
   # Exit message
   puts "Species creation is completed"
-  puts "NOTE: don't forget to run Taxon.rebuild! ... it will take a while & vacuum analyze"
+  
+  puts "** Running Taxon.rebuild! "
+  Taxon.rebuild!
+  puts "success\n\n"
+  puts "NOTE: don't forget to run vacuum analyze\n"
 end
 
 # Execute taxonomy creation method
