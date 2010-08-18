@@ -2,10 +2,10 @@
   %thead
     %tr
       %th Latin Name
-      %th Lifespan
-      %th Birth Weight
-      %th Adult Weight
-      %th Litter Size
+      %th{:class => "{sorter: 'digit'}"} Lifespan
+      %th{:class => "{sorter: 'digit'}"} Birth Weight
+      %th{:class => "{sorter: 'digit'}"} Adult Weight
+      %th{:class => "{sorter: 'digit'}"} Litter Size
   %tbody
     - @species.each do |species|
       %tr

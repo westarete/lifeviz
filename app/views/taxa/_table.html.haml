@@ -2,10 +2,10 @@
   %thead
     %tr
       %th= @children.first.rank_in_words
-      %th Avg. Lifespan
-      %th Avg. Birth Weight
-      %th Avg. Adult Weight
-      %th Avg. Litter Size
+      %th{:class => "{sorter: 'digit'}"} Avg. Lifespan
+      %th{:class => "{sorter: 'digit'}"} Avg. Birth Weight
+      %th{:class => "{sorter: 'digit'}"} Avg. Adult Weight
+      %th{:class => "{sorter: 'digit'}"} Avg. Litter Size
   %tbody
     - @children.each do |taxon|
       %tr
