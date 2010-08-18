@@ -9,7 +9,7 @@
       %th Avg. Litter Size
   %tbody
     - @children.each do |taxon|
-      %tr
+      %tr.taxon
         %td
           %input.select_taxon{ :type => 'checkbox' }
         - if taxon.rank_in_words.downcase == "genus"

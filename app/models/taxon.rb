@@ -143,8 +143,9 @@ class Taxon < ActiveRecord::Base
   
   # Rebuild lineage_ids for this taxon.
   def rebuild_lineage_ids
-    unless Taxon.first.blank? || parent_id.nil? || parent.lineage_ids.blank?
-      self.lineage_ids = (parent.lineage_ids + "," + parent_id.to_s)
+    p = self.parent
+    unless parent_id.nil? || p.lineage_ids.blank?
+      self.lineage_ids = (p.lineage_ids + "," + parent_id.to_s)
     end
   end
   

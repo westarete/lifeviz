@@ -163,7 +163,13 @@
       $("#taxatable").table();
       
       $('.select_taxon').click(function(){
-        data = $.table("#taxatable").objs()
+        $(this).parent().parent().toggleClass("selected");
+        data = $.table("#taxatable").objs();
+      });
+      
+      $('#taxatable tr.taxon').hover(function() {
+        $(this).toggleClass("hover");
+        data = $.table("#taxatable").objs();
       });
 
 %ul#taxonomic_selector.clearfix
