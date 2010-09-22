@@ -2,6 +2,7 @@ source 'http://rubygems.org'
 
 # Web framework.
 gem 'rails', '2.3.8'
+gem 'activesupport', '2.3.8'
 
 # View design.
 gem 'haml', '3.0.15'
@@ -51,6 +52,8 @@ end
 
 group :test do
   gem 'ZenTest'
+  gem 'autotest-rails'
+  gem 'mocha'
   gem 'machinist', '>= 1.0.6'
   gem 'faker', '>= 0.3.1'
   gem 'capybara', '>= 0.3.9'
