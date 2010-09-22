@@ -18,7 +18,7 @@ gem 'progressbar', '0.9.0'
 gem 'awesome_nested_set', '1.4.3'
 
 # Authentication
-gem 'ruby-openid', '>=2.0.4', :require => 'openid'
+gem 'rack-openid', '>=0.2.1'
 gem 'authlogic', '2.1.3'
 gem 'authlogic-oid', '1.0.4'
 
