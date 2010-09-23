@@ -4,6 +4,9 @@ source 'http://rubygems.org'
 gem 'rails', '2.3.8'
 gem 'activesupport', '2.3.8'
 
+# srv
+gem 'unicorn', '1.1.3'
+
 # View design.
 gem 'haml', '3.0.15'
 gem 'compass', '0.10.3'
