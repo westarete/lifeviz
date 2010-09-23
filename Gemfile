@@ -4,8 +4,11 @@ source 'http://rubygems.org'
 gem 'rails', '2.3.8'
 gem 'activesupport', '2.3.8'
 
-# srv
+# server
 gem 'unicorn', '1.1.3'
+
+# debugger
+gem 'ruby-debug'
 
 # View design.
 gem 'haml', '3.0.15'
