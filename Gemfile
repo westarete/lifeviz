@@ -56,6 +56,7 @@ group :development do
   gem 'capistrano-helpers', '0.5.0'
   gem 'git'
   gem 'tinder'
+  gem 'launchy'
 end
 
 group :test do

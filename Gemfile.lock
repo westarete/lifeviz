@@ -39,6 +39,7 @@ GEM
     columnize (0.3.1)
     compass (0.10.3)
       haml (>= 3.0.4)
+    configuration (1.1.0)
     crack (0.1.8)
     culerity (0.2.12)
     eventmachine (0.12.10)
@@ -54,6 +55,9 @@ GEM
     httparty (0.6.1)
       crack (= 0.1.8)
     json_pure (1.4.6)
+    launchy (0.3.7)
+      configuration (>= 0.0.5)
+      rake (>= 0.8.1)
     linecache (0.43)
     machinist (1.0.6)
     mime-types (1.16)
@@ -136,6 +140,7 @@ DEPENDENCIES
   haml (= 3.0.15)
   hoptoad_notifier (= 2.3.5)
   hpricot (>= 0.8.0)
+  launchy
   machinist (>= 1.0.6)
   mocha
   newrelic_rpm (= 2.13.1)
