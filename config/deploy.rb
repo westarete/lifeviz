@@ -19,5 +19,5 @@ set :shared, %w{
   config/database.yml
   config/initializers/session_store.rb
   config/initializers/karma.rb
-  vendor/bundler
+  vendor/bundle
 }
