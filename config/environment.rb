@@ -42,3 +42,4 @@ Rails::Initializer.run do |config|
 end
 
 Sass::Plugin.options[:style] = :compressed
+Sass::Plugin.options[:never_update] = true if ENV['RAILS_ENV'] == 'production' || ENV['RAILS_ENV'] == 'staging'
