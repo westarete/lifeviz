@@ -1,3 +1,5 @@
+require 'lib/monkeypatches'
+
 class Taxon < ActiveRecord::Base
   acts_as_nested_set
   
@@ -25,15 +27,18 @@ class Taxon < ActiveRecord::Base
   def self.rebuild_stats(rank_specified=nil)
     rank_specified ? (rank = rank_specified) : (rank = 5)
     while rank >= 0
+      puts "Calculating size at rank #{RANK_LABELS[rank]}."
       size = Taxon.count(:all, :conditions => {:rank => rank}) / 50
-      progress "Building Taxon Stats for rank #{rank}", size do |progress_bar|
-        Taxon.find_in_batches( :batch_size => 50 ) do |taxon_batch|
+      puts "#{size} batches to complete. Calculating stats at rank #{RANK_LABELS[rank]}."
+      progress "Rank: #{rank}", size do |progress_bar|
+        Taxon.find_in_batches( :batch_size => 50, :conditions => {:rank => rank} ) do |taxon_batch|
           taxon_batch.each do |t|
-            t.precalculate_stats
+            t.precalculate_stats(t.children)
           end
           progress_bar.inc
         end
       end
+      puts "Done."
       break unless rank_specified.nil?
       rank -= 1
     end
@@ -51,10 +56,10 @@ class Taxon < ActiveRecord::Base
   end
   
   def all_data_available?
-    avg_lifespan && avg_lifespan != 0 &&
-    avg_birth_weight && avg_birth_weight != 0 &&
-    avg_adult_weight && avg_adult_weight != 0 &&
-    avg_litter_size && avg_litter_size != 0
+    avg_lifespan && ! avg_lifespan.be_close(0) &&
+    avg_birth_weight && ! avg_birth_weight.be_close(0) &&
+    avg_adult_weight && ! avg_adult_weight.be_close(0) &&
+    avg_litter_size && ! avg_litter_size.be_close(0)
   end
   
   def parents
@@ -109,13 +114,11 @@ class Taxon < ActiveRecord::Base
     end
   end  
     
-  def precalculate_stats
-    children = self.children
+  def precalculate_stats(children = self.children)
     if children.any?
-      self.avg_lifespan     = self.children.collect(&:avg_lifespan).delete_if{|x| x.nil?}.sum     / children.size.to_f
-      self.avg_litter_size  = self.children.collect(&:avg_litter_size).delete_if{|x| x.nil?}.sum  / children.size.to_f
-      self.avg_adult_weight = self.children.collect(&:avg_adult_weight).delete_if{|x| x.nil?}.sum / children.size.to_f
-      self.avg_birth_weight = self.children.collect(&:avg_birth_weight).delete_if{|x| x.nil?}.sum / children.size.to_f
+      [:avg_lifespan, :avg_litter_size, :avg_adult_weight, :avg_birth_weight].each do |property|
+        self[property]= calculate_avg(children.collect(&property))
+      end
       self.save
     end
   end
@@ -160,6 +163,17 @@ class Taxon < ActiveRecord::Base
     end
   end
   
+  private
+  
+  def calculate_avg(array)
+    sum = array.delete_if{|x| x.nil? || x.be_close(0.0, 0.00000000000001)}.sum
+    if sum != 0
+      sum / array.size.to_f
+    else
+      nil
+    end
+  end
+  
 end
 
 # == Schema Information
@@ -178,4 +192,3 @@ end
 #  avg_lifespan     :float
 #  avg_litter_size  :float
 #
-
