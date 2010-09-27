@@ -19,14 +19,10 @@ context "User viewing the species detail page" do
   end
   
   it 'sees the species scientific name as a title' do
-    page.should have_xpath("//h1", :text => species.name)
+    page.should have_xpath("//h2", :text => species.name)
   end
   
   context "can see the species' adult weight list" do
-    it "has a adult weight list" do
-      page.should have_xpath("//*[@id='adult_weights']")
-    end
-    
     it "has adult_weights" do
       species.adult_weights.each do |aw|
         page.should have_xpath("//*[@class='adult_weight']", :text => "#{aw.value.to_s} #{aw.units.downcase}")
@@ -42,7 +38,7 @@ context "User viewing the species detail page" do
     end
     
     it "sees the species scientific name as title" do
-      page.should have_xpath("//h1", :text => species.name)
+      page.should have_xpath("//h2", :text => species.name)
     end
     
     it 'sees the new adult weight' do
@@ -62,7 +58,7 @@ context "User viewing the species detail page" do
     end
     
     it 'sees the species scientific name as a title' do
-      page.should have_xpath("//h1", :text => species.name)
+      page.should have_xpath("//h2", :text => species.name)
     end
     
     it 'sees the new adult weight' do
@@ -81,7 +77,7 @@ context "User viewing the species detail page" do
     end
     
     it "sees the species' page" do
-      page.should have_xpath("//h1", :text => species.name)
+      page.should have_xpath("//h2", :text => species.name)
     end
     
     it 'sees success message' do

@@ -11,7 +11,7 @@ context "User viewing the species index page" do
   before do
     species
     other_species    
-    visit species_index_path
+    visit genus_path(species.parent.name)
   end
   
   it "sees a list of species" do
@@ -21,7 +21,6 @@ context "User viewing the species index page" do
   context "each species" do
     
     it "has a name" do
-      save_and_open_page
       Species.all.each do |s|
         page.should have_xpath("//*[@class='name']", :text => species.name)
       end

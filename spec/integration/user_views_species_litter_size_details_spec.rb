@@ -19,14 +19,10 @@ context "User viewing the species detail page" do
   end
   
   it 'sees the species scientific name as a title' do
-    page.should have_xpath("//h1", :text => species.name)
+    page.should have_xpath("//h2", :text => species.name)
   end
   
   context "can see the species' litter size list" do
-    it "has a litter size list" do
-      page.should have_xpath("//*[@id='litter_sizes']")
-    end
-    
     it "has litter sizes" do
       species.litter_sizes.each do |l|
         page.should have_xpath("//*[@class='litter_size']", :text => l.measure.to_s)
@@ -42,7 +38,7 @@ context "User viewing the species detail page" do
     end
     
     it "sees the species scientific name as title" do
-      page.should have_xpath("//h1", :text => species.name)
+      page.should have_xpath("//h2", :text => species.name)
     end
     
     it 'sees the new litter size' do
@@ -62,7 +58,7 @@ context "User viewing the species detail page" do
     end
     
     it 'sees the species scientific name as a title' do
-      page.should have_xpath("//h1", :text => species.name)
+      page.should have_xpath("//h2", :text => species.name)
     end
     
     it 'sees the new litter size' do
@@ -80,7 +76,7 @@ context "User viewing the species detail page" do
     end
     
     it "sees the species' page" do
-      page.should have_xpath("//h1", :text => species.name)
+      page.should have_xpath("//h2", :text => species.name)
     end
     
     it 'sees success message' do
