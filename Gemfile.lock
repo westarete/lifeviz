@@ -36,12 +36,17 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       selenium-webdriver (>= 0.0.3)
+    capybara-envjs (0.1.6)
+      capybara (>= 0.3.9)
+      envjs (>= 0.3.7)
     columnize (0.3.1)
     compass (0.10.3)
       haml (>= 3.0.4)
     configuration (1.1.0)
     crack (0.1.8)
     culerity (0.2.12)
+    envjs (0.3.8)
+      johnson (>= 2.0.0.pre3)
     eventmachine (0.12.10)
     faker (0.3.1)
     ffi (0.6.3)
@@ -54,6 +59,8 @@ GEM
     hpricot (0.8.2)
     httparty (0.6.1)
       crack (= 0.1.8)
+    johnson (2.0.0.pre3)
+      stackdeck (~> 0.2)
     json_pure (1.4.6)
     launchy (0.3.7)
       configuration (>= 0.0.5)
@@ -107,6 +114,7 @@ GEM
       json_pure
       rubyzip
     shoulda (2.11.3)
+    stackdeck (0.2.0)
     tinder (1.4.0)
       activesupport
       eventmachine
@@ -134,6 +142,7 @@ DEPENDENCIES
   capistrano (= 2.5.19)
   capistrano-helpers (= 0.5.0)
   capybara (>= 0.3.9)
+  capybara-envjs
   compass (= 0.10.3)
   faker (>= 0.3.1)
   git

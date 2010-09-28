@@ -67,4 +67,5 @@ group :test do
   gem 'faker', '>= 0.3.1'
   gem 'capybara', '>= 0.3.9'
   gem 'shoulda', '>= 2.11.3'
+  gem 'capybara-envjs'
 end
