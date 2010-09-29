@@ -35,7 +35,8 @@ def create_taxonomy
   # Remove any existing taxa
   puts "Removing any existing taxa..."
   Taxon.delete_all
-  
+
+  # the data we import contains ids and expects we start at 1
   puts "Setting taxon id sequence back to 1"
   ActiveRecord::Base.connection.execute "SELECT setval('taxa_id_seq',1);"
 
@@ -43,38 +44,44 @@ def create_taxonomy
   progress "Loading seed data...", num_taxa_lines_bz2(UBIOTA) do |progress_bar|
     IO.popen("bunzip2 -c #{UBIOTA}").each do |line|
       id, term, rank, hierarchy, parent_id, num_children, hierarchy_ids = line.split("|")
+
+      # skip the header
       next if rank == "rank"
+
+      # we aren't working with species at this point
       break if rank == "6"
-      taxon = Taxon.new
-      taxon['id'] = id.to_i
-      taxon.name = term
-      taxon.rank = rank.to_i
-      if parent_id == "-1"
-        taxon.parent_id = nil
-      else
-        taxon.parent_id = parent_id.to_i
-      end
+
+      taxon           = Taxon.new
+      taxon['id']     = id.to_i
+      taxon.name      = term
+      taxon.rank      = rank.to_i
+      taxon.parent_id = parent_id == "-1" ? nil : parent_id.to_i
+
       taxon.send(:create_without_callbacks)
+
       progress_bar.inc
     end
   end
-  
-  lastval = ActiveRecord::Base.connection.execute "SELECT MAX(ID) FROM taxa;"
-  newval = lastval.max["max"].to_i + 1
-  ActiveRecord::Base.connection.execute "SELECT setval('taxa_id_seq', #{newval});"
+
+  # psql sequence doesn't increment if you set ids by hand. we need to have it
+  # pickup where our last taxon id left off.
+  last_taxon_id = ActiveRecord::Base.connection.execute "SELECT MAX(ID) FROM taxa;"
+  next_taxon_id = last_taxon_id.max["max"].to_i + 1
+  ActiveRecord::Base.connection.execute "SELECT setval('taxa_id_seq', #{next_taxon_id});"
 end
 
+# TODO: remove this method if the data will include the lineage ids
 def rebuild_lineages
   sql = ActiveRecord::Base.connection();
-	sql.begin_db_transaction
-	
+  sql.begin_db_transaction
+
   # Clear all lineage_ids
   puts "** Clearing existing lineage data..."
   sql.execute "UPDATE taxa SET lineage_ids = NULL;"
   puts "success"
-  
+
   Taxon.rebuild_lineages!
-  
+
   puts  "success: #{Taxon.count} taxa set"
   sql.commit_db_transaction
 end
@@ -85,12 +92,12 @@ end
 def create_species_and_data
   new_species       = []
   orphaned_species  = []
-  
+
   # Entrance message
   puts "** Creating new species from lifeviz/ubiota files using hagrid_ubid as the bridge"
   puts " NOTE: new species are species with data imported from lifeviz, orphaned species are "
   puts "       ubiota species with no associated lifeviz data"
-  
+
   # Open files
   puts "** Opening data files..."
   lifeviz = IO.popen("bunzip2 -c #{LIFEVIZ}")
@@ -99,156 +106,190 @@ def create_species_and_data
   lifeviz && ubiota && map ? (puts "success") : (puts "*failed"; exit!)
 
   # Dump all related data
-  puts "** Removing any existing age, litter sizes, adult weights,birth weights data..." 
-  Lifespan.destroy_all && LitterSize.destroy_all && AdultWeight.destroy_all && BirthWeight.destroy_all ? (puts "success") : (puts "failed"; exit!)
-  
-  # Load taxon from lifeviz, let's use hpricot
-  puts "** Loading lifeviz data, let's use hpricot..."
+  puts "** Removing any existing age, litter sizes, adult weights,birth weights data..."
+  Lifespan.delete_all && LitterSize.delete_all && AdultWeight.delete_all && BirthWeight.delete_all ? (puts "success") : (puts "failed"; exit!)
+
+  # Load taxon from lifeviz using hpricot
+  puts "** Loading lifeviz data..."
   doc                 = Hpricot::XML(lifeviz)
-  lifeviz_species     = (doc/'names')
+  lifeviz_names       = (doc/'names')
   lifeviz_ages        = (doc/'age')
   lifeviz_development = (doc/'development')
-  puts  "success: #{lifeviz_species.size} species loaded with #{lifeviz_ages.size} ages}"
-  
-  puts "lifeviz species: #{lifeviz_species.size}, lifeviz ages: #{lifeviz_ages.size}, lifeviz devs: #{lifeviz_development.size}"
-    
-  # Create new species array to load lifeviz species and attributes we want
-  puts "** Loading new species and storing lifeviz data from lifeviz dump..."
-  development_index = 0
-  progress "Storing data", lifeviz_species.length do |progress_bar|
-    lifeviz_species.each_with_index do |s, index|
+
+  puts  "success: #{lifeviz_names.size} names, #{lifeviz_ages.size} ages, #{lifeviz_development.size} development records loaded"
+
+  # Collect lifeviz data so it's manageble and easy to create into new species
+  puts "** Staging new species..."
+
+  pointer = 0
+  progress "Staging", lifeviz_names.length do |progress_bar|
+    lifeviz_names.each_with_index do |s, index|
       hagrid        = (s/'id_hagr').inner_html
       x = {}
       x[:synonyms] = (s/'name_common').inner_html
       x[:age]      = (lifeviz_ages[index]/'tmax').inner_html
       x[:hagrid]   = hagrid
 
-      while lifeviz_development[development_index] && (lifeviz_development[development_index]/'hagrid').inner_html.to_i < hagrid.to_i
-        puts "#{(lifeviz_development[development_index]/'hagrid').inner_html} is less than #{hagrid}"
-        development_index += 1
-      end
-      
-      # development attributes matches the current species id
-      if lifeviz_development[development_index] && (lifeviz_development[development_index]/'hagrid').inner_html.to_i == hagrid.to_i
-        development = lifeviz_development[development_index]
-        if development && (development/'hagrid').inner_html == hagrid
+      if lifeviz_development[pointer]
+
+        # the development records are a bit tricky. there isn't always a record
+        # for each species so we need to use a separate index and will need to
+        # have the dev record id falling behind catchup to the current record id (hagrid)
+        # NOTE: this iterates until the condition is met
+        while (lifeviz_development[pointer]/'hagrid').inner_html.to_i < hagrid.to_i
+          pointer += 1
+        end
+
+        # development attributes matches the current species id
+        if (lifeviz_development[pointer]/'hagrid').inner_html.to_i == hagrid.to_i
+          development       = lifeviz_development[pointer]
           x[:adult_weight]  = (development/'adult_weight').inner_html.to_f
           x[:birth_weight]  = (development/'birth_weight').inner_html.to_f
           x[:litter_size]   = (development/'litter_size').inner_html.to_f
-        else
-          x[:adult_weight]  = ""
-          x[:birth_weight]  = ""
-          x[:litter_size]   = ""
+          pointer += 1
         end
-        development_index += 1
+
       end
 
+      # store into the array so be created later
       new_species << x
+
       progress_bar.inc
     end
   end
 
-  puts "success: #{new_species.size} new species loaded in memory"
-    
+  puts "success: #{new_species.size} species staged"
+
   # Load ubid ids into new species from mapping
-  puts "** Loading mapped ubiota ids into new species..."
-  new_species_pointer = 0
+  puts "** Assigning mapped ubiota ids species..."
+  pointer = 0
+
+  # handle the mapping of (hagrid to ubid) line by line
   map.each do |line|
+
+    # lifeviz id that is mapped to ubiota id
     hagrid, ubid = line.split(/\s+/)
-    while hagrid != new_species[new_species_pointer][:hagrid]
-      new_species_pointer += 1
-    end
-    new_species[new_species_pointer][:ubid] = ubid.to_i
+
+    # there are species that aren't in the map so we'll want to skip them
+    pointer += 1 until new_species[pointer][:hagrid] == hagrid
+
+    # this species matches the mapped hagrid so assign it's mapped ubid
+    new_species[pointer][:ubid] = ubid.to_i
   end
   puts "success"
-  
-  # Remove any new species that have no ubid from mapping
+
+  # Remove any new species that didn't exist in the mapping and were skipped
   count = new_species.size
-  puts "** Delete any new species that do not have a ubiota id mapped..."
+  puts "** Deleting any species that are not mapped to ubiota ids..."
   new_species.delete_if { |species| species[:ubid] == nil }
   puts "success: deleted #{count - new_species.size} species, #{new_species.size} remaining"
-  
-  # Sort species by ubid
-  puts "** Sorting new species by ubid..."
+
+  # Sort species by ubid so it will be easier to work with and will be much
+  # faster to increment
+  puts "** Sorting species by ubiota ids..."
   new_species = new_species.sort_by { |each| each[:ubid] }
   puts "success"
-  
+
   # Find and load ubiota genus ids and species name for each species
   #   Ensure the rank is 6 (species level)
   #   Set taxon_id to nil if the species inside ubiota doesn't exist
-  puts "** Looking up and loading each new species' genus id from the ubiota data (few minutes)..."
-  x = 0
+  puts "** Loading ubiota data for each species..."
+  pointer = 0
   a_couple = 0
-  progress "Loading seed data...", num_lines_bz2(UBIOTA) do |progress_bar|
+  progress "Loading...", num_lines_bz2(UBIOTA) do |progress_bar|
     ubiota.each do |line|
-      id, term, rank, hierarchy, parent_id, num_children, hierarchy_ids = line.split("|")
-  
+      ubiota_id, term, rank, hierarchy, parent_id, num_children, hierarchy_ids = line.split("|")
+
       # skip if we're not looking at a species level taxon
-      if rank.to_i != 6   
+      if rank.to_i != 6
         progress_bar.inc
         next
       end
-  
-      if new_species[x].nil? || id.to_i != new_species[x][:ubid]
+
+      # TODO: this can be rewritten to be clearer
+      # store a ubiota species as an orphan if
+      if new_species[pointer].nil? || new_species[pointer][:ubid] != ubiota_id.to_i
         y = {:taxon_id => parent_id.to_i, :name => term.to_s}
         orphaned_species << y
-        if !new_species[x].nil? then new_species[x][:taxon_id] = nil end
-        if !new_species[x].nil? && id.to_i > new_species[x][:ubid] then x += 1 end
+        if ! new_species[pointer].nil? then new_species[pointer][:taxon_id] = nil end
+        if ! new_species[pointer].nil? && ubiota_id.to_i > new_species[pointer][:ubid] then pointer += 1 end
       else
-        new_species[x][:taxon_id] = parent_id.to_i
-        new_species[x][:name]     = term.to_s
-        x += 1
+        new_species[pointer][:taxon_id] = parent_id.to_i
+        new_species[pointer][:name]     = term.to_s
+        pointer += 1
       end
+
+     # # Proposed rewrite for above TODO. be sure to double check.
+     # # Store ubiota data for matched species. there are many species in
+     # # ubiota data that aren't staged (orphans) that should be added to the
+     # # staged species (called orphans) and also staged species that aren't
+     # # in ubiota that need to be skipped
+     # if new_species[pointer] && new_species[pointer][:ubid] == ubiota_id.to_i
+     #   new_species[pointer][:taxon_id] = parent_id.to_i
+     #   new_species[pointer][:name]     = term.to_s
+     #   pointer += 1
+     # else
+     #   if new_species[pointer]
+     #     new_species[pointer][:taxon_id] = nil
+     #     pointer += 1 while ubiota_id.to_i > new_species[pointer][:ubid]
+     #   end
+     #   orphan = {:taxon_id => parent_id.to_i, :name => term.to_s}
+     #   orphaned_species << orphan
+     # end
+
       progress_bar.inc
     end
   end
-  puts "success: traversed #{x} new species and #{orphaned_species.size} orphaned species"
-   
-  # Remove any new species that has no genus in ubiota 
+  puts "success: traversed #{pointer} staged species and added #{orphaned_species.size} species to be staged"
+
+  # Remove any new species that has no genus in ubiota
   count = new_species.size
-  puts "** Delete any species that had no genus id... (NOTE THIS)"
+  puts "** Delete any species that had no genus id... "
   new_species.delete_if { |species| species[:taxon_id] == nil }
   puts "success: deleted #{count - new_species.size} species, #{new_species.size} remaining"
-  
-  # Remove any orphaned species that has no genus in ubiota 
+
+  # Remove any orphaned species that has no genus in ubiota
   count = orphaned_species.size
-  puts "** Delete any orphaned species that had no genus id... (NOTE THIS)"
+  puts "** Delete any newly staged species that had no genus id... "
   orphaned_species.delete_if { |species| species[:taxon_id] == 0 }
   puts "success: deleted #{count - orphaned_species.size} species, #{orphaned_species.size} remaining"
 
-  # Create species with all the new species stored in memory
+  # Create all staged species
   count   = 0
   fcount  = 0
   age_nil = 0
   birth_weight_nil = 0
   adult_weight_nil = 0
   litter_size_nil  = 0
-  puts "** Saving all the new species..."
+
+  puts "** Saving staged species..."
   start_time = Time.now
   progress "Species", new_species.length do |progress_bar|
     new_species.each_with_index do |s, index|
       taxon   = Taxon.find_by_id(s[:taxon_id])
-      if taxon.nil?
-        fcount += 1
-      else
+      if taxon
+
         species = Taxon.find_by_name(s[:name])
         if species.nil?
           species = Taxon.new(:name => s[:name], :parent_id => taxon.id, :rank => 6)
           species.send(:create_without_callbacks)
         end
-        
+
+        # only create these if the data was previously set
         age          = Lifespan.new(:value_in_days => (s[:age].to_f * 365), :units => "Years", :species_id => species.id)   if ! s[:age].blank?
         birth_weight = BirthWeight.new(:value_in_grams => (s[:birth_weight]), :units => "Grams", :species_id => species.id) if ! s[:birth_weight].blank?
         adult_weight = AdultWeight.new(:value_in_grams => (s[:adult_weight]), :units => "Grams", :species_id => species.id) if ! s[:adult_weight].blank?
-        litter_size  = LitterSize.new(:measure => (s[:litter_size]), :species_id => species.id) if ! s[:litter_size].blank?
-        
-        age.nil?          ? (age_nil += 1) : age.send(:create_without_callbacks)
+        litter_size  = LitterSize.new(:measure => (s[:litter_size]), :species_id => species.id)                             if ! s[:litter_size].blank?
+        age.nil?          ? (age_nil += 1)          : age.send(:create_without_callbacks)
         adult_weight.nil? ? (adult_weight_nil += 1) : adult_weight.send(:create_without_callbacks)
         birth_weight.nil? ? (birth_weight_nil += 1) : birth_weight.send(:create_without_callbacks)
         litter_size.nil?  ? (litter_size_nil += 1)  : litter_size.send(:create_without_callbacks)
 
+      else
+        fcount += 1
       end
       count = index
+
       progress_bar.inc
     end
   end
@@ -257,33 +298,35 @@ def create_species_and_data
   puts "success: saved #{count - adult_weight_nil} adult weights"
   puts "success: saved #{count - birth_weight_nil} birth weights"
   puts "success: saved #{count - litter_size_nil} litter sizes"
-  
+
   puts "failure: #{fcount} species didn't have taxons matching taxon_id in our database" if fcount != 0
-  
-  # Create orphaned species with all the species stored in memory
+
+  # Create orphaned species
   count   = 0
   fcount  = 0
   puts "** Saving all the orphaned species..."
   progress "Orphans", orphaned_species.length do |progress_bar|
     orphaned_species.each_with_index do |s, index|
       taxon   = Taxon.find_by_id(s[:taxon_id])
-      if taxon == nil
+      if taxon
+        species = Taxon.new(:name => s[:name], :parent_id => taxon.id, :rank => 6)
+        # species.send(:create_without_callbacks)
+      else
        puts "fail: no taxon found with and id of #{s[:taxon_id].to_s} for species with ubid of #{s[:ubid].to_s}"
        fcount += 1
-      else
-       species = Taxon.new(:name => s[:name], :parent_id => taxon.id, :rank => 6)
-       # species.send(:create_without_callbacks)
       end
+
       count = index
+
       progress_bar.inc
     end
   end
-  puts "success: Phew!... saved #{count - fcount} species"  
+  puts "success: Phew!... saved #{count - fcount} species"
   puts "failure: #{fcount} species didn't have taxons matching taxon_id in our database" if fcount != 0
-  
+
   # Exit message
   puts "Species creation is completed"
-  
+
   puts "** Running Taxon.rebuild! "
   Taxon.rebuild!
   puts "success\n\n"
