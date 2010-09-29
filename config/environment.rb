@@ -19,40 +19,7 @@ Rails::Initializer.run do |config|
   # config.gem "hpricot", :version => '0.6', :source => "http://code.whytheluckystiff.net"
   # config.gem "sqlite3-ruby", :lib => "sqlite3"
   # config.gem "aws-s3", :lib => "aws/s3"
-  
-  # Alternate template and stylesheet engine.
-  config.gem 'haml', :version => '3.0.15'
-  
-  # Stylesheet library.
-  config.gem 'compass', :version => '0.10.3'
 
-  # Show text-based progress bar for long-running console tasks.
-  config.gem 'progressbar', :version => '0.9.0'
-  
-  # Nested sets for storing hierarchies.
-  config.gem 'awesome_nested_set', :version => '1.4.3'
-  
-  # Authentication
-  config.gem 'authlogic', :version => '2.1.3'
-  config.gem "authlogic-oid", :lib => "authlogic_openid", :version => "1.0.4"
-  
-  # Pagination
-  config.gem 'will_paginate', :version => '2.3.11'
-  
-  # For database methods.
-  config.gem 'hpricot', :version => '>=0.8.0'
-  
-  # Null object pattern.
-  config.gem 'activerecord_null_object', :version => "0.2.0"
-  
-  # Talk to karma server.
-  config.gem 'rest-client', :lib => 'restclient', :version => '1.3.0'
-  
-  # Hoptoad notifier
-  config.gem 'hoptoad_notifier', :version => '2.3.2'
-
-  # Analyze performance (visit http://localhost:3000/newrelic)
-  config.gem 'newrelic_rpm', :version => '2.12.3'
 
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
@@ -75,3 +42,4 @@ Rails::Initializer.run do |config|
 end
 
 Sass::Plugin.options[:style] = :compressed
+Sass::Plugin.options[:never_update] = true if ENV['RAILS_ENV'] == 'production' || ENV['RAILS_ENV'] == 'staging' || ENV['RAILS_ENV'] == 'beta'

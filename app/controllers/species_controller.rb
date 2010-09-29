@@ -3,7 +3,7 @@ class SpeciesController < ApplicationController
   
   def index
     if params[:genus].nil? || ! @taxon = Taxon.find_by_name(params[:genus].capitalize)
-        flash.now[:notice] = "Genus #{params[:genus].capitalize} could not be found."
+        flash.now[:notice] = "Genus #{params[:genus].capitalize if params[:genus]} could not be found."
         redirect_to :back
     else
       @taxon_ancestry = @taxon.full_ancestry(:include_children => false) # for taxon dropdowns
