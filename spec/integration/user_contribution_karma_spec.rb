@@ -44,5 +44,9 @@ describe "When a user makes a contribution" do
       # page.should have_content("your level is #{subject.karma_level}")
     end
   end
+  
+  after(:all) do
+    Capybara.use_default_driver
+  end
 
 end

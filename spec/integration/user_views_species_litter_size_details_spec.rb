@@ -7,14 +7,14 @@ context "User viewing the species detail page" do
   
   let(:species) { Species.make(:parent_id => Taxon.find_by_rank(5).id ) }
   let(:bad_litter_size)  { LitterSize.make(:species => species, :measure => 1) }
-  let(:user) { User.make }
+  let(:user) { User.make(:password => 'password', :password_confirmation => 'password') }
   
   before do
     stub_karma_server
     species
     bad_litter_size
     3.times { species.litter_sizes.make  }
-    log_in
+    log_in(user)
     visit species_path(species)
   end
   
