@@ -1,8 +1,8 @@
-def log_in
+def log_in(user)
   visit root_path
   click 'Log in'
   fill_in 'user_email', :with => user.email
-  fill_in 'user_password', :with => "secret"
+  fill_in 'user_password', :with => "password"
   click 'Login'
 end
 
