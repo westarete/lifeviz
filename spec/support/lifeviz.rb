@@ -12,6 +12,12 @@ def make_biological_classification(rank = 5)
     make_biological_classification(rank - 1)
   else
     parent_id = make_biological_classification(rank - 1)
-    Taxon.create(:rank => rank.to_i, :parent_id => parent_id, :lineage_ids => Taxon.find(parent_id).lineage_ids+",#{parent_id+1}", :name => Faker::Name.first_name).id
+    taxon = Taxon.create(
+      :rank => rank.to_i,
+      :parent_id => parent_id,
+      :lineage_ids => (parent_id == false ? "1" : Taxon.find(parent_id).lineage_ids+",#{parent_id+1}"),
+      :name => Faker::Name.first_name
+    )
+    return taxon.id
   end
 end
