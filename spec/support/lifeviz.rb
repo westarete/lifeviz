@@ -1,5 +1,8 @@
 def log_in(user)
   visit root_path
+  if page.has_content?("Log out")
+    click "Log out"
+  end
   click 'Log in'
   fill_in 'user_email', :with => user.email
   fill_in 'user_password', :with => "password"

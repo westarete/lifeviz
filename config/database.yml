@@ -13,7 +13,7 @@ full_set:
 
 test: &TEST
   adapter: postgresql
-  database: lifeviz_test
+  database: lifeviz_test<%=ENV['TEST_ENV_NUMBER']%>
 
 cucumber:
   <<: *TEST

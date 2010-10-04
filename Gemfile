@@ -68,4 +68,5 @@ group :test do
   gem 'capybara', '>= 0.3.9'
   gem 'shoulda', '>= 2.11.3'
   gem 'capybara-envjs'
+  gem 'specjour'
 end

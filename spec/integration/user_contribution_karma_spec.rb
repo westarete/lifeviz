@@ -1,12 +1,14 @@
 require 'spec_helper'
 
+# make sure we have biological classification before we create species
+make_biological_classification(5)
+
 describe "When a user makes a contribution" do
 
-  subject { User.make(:password => "password", :password_confirmation => "password" ) }
+  subject { User.find_or_create_by_email(:email => "jim@westarete.com", :password => 'password', :password_confirmation => 'password') }
   
   before(:all) do
      Capybara.current_driver = :selenium 
-     stub_karma_server 
      log_in(subject)
   end
 
@@ -14,6 +16,7 @@ describe "When a user makes a contribution" do
     let(:karma) {subject.karma.total}
     
     before(:all) do
+      @old_karma = karma
       visit root_path
       select "Animalia",   :from => "Kingdom"
       select "Aniphylum",  :from => "Phylum"
@@ -37,7 +40,7 @@ describe "When a user makes a contribution" do
     end
 
     it "displays the user's total new karma" do
-      page.should have_content("Your total karma is now #{karma + 1}")
+      page.should have_content("Your total karma is now #{@old_karma + 1}")
     end
 
     it "displays the new current level" do 
