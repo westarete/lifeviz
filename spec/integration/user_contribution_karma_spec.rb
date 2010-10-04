@@ -8,7 +8,7 @@ describe "When a user makes a contribution" do
   subject { User.find_or_create_by_email(:email => "jim@westarete.com", :password => 'password', :password_confirmation => 'password') }
   
   before(:all) do
-     Capybara.current_driver = :selenium 
+     Capybara.current_driver = :selenium
      log_in(subject)
   end
 

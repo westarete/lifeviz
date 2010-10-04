@@ -42,7 +42,7 @@ describe KarmaClient::Tags do
     it "should send the changes back to the karma server" do
       resource = mock('resource')
       resource.should_receive(:post).with('adjustment[value]=3')
-      RestClient::Resource.should_receive(:new).with("http://#{KARMA_SERVER_HOSTNAME}/users/bobexamplecom/tags/plants/adjustments.json", "", "karmatestapikey").and_return(resource)
+      RestClient::Resource.should_receive(:new).with("http://#{KARMA_SERVER_HOSTNAME}/users/bobexamplecom/tags/plants/adjustments.json", "", KARMA_API_KEY).and_return(resource)
       @tags.plants += 3
     end
   end
