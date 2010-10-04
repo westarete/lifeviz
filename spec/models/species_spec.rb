@@ -10,7 +10,6 @@ describe Species do
   before(:each) do    
     # Set lft and rgt values for every taxon. Necessary!
     Taxon.rebuild!
-    Taxon.rebuild_lineages!
   end
   
   describe "#validate" do

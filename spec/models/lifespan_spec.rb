@@ -6,7 +6,6 @@ describe Lifespan do
   before(:all) do    
     # Set lft and rgt values for every taxon. Necessary!
     Taxon.rebuild!
-    Taxon.rebuild_lineages!
   end
   
   before(:each) do

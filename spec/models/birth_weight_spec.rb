@@ -1,4 +1,7 @@
-require 'spec_helper'
+require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+
+# make sure we have biological classification before we create species
+make_biological_classification(5)
 
 describe BirthWeight do
   fixtures :taxa
@@ -13,7 +16,6 @@ describe BirthWeight do
   before(:all) do    
     # Set lft and rgt values for every taxon. Necessary!
     Taxon.rebuild!
-    Taxon.rebuild_lineages!
   end
   
   describe "#value" do
