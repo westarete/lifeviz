@@ -16,6 +16,9 @@ gem env gemdir
 # Install gems.
 bundle --no-color install
 
+# Set display for selenium
+export DISPLAY=:42.0
+
 # Prepare and run the tets.
 export SPEC_OPTS="-f s"
 rake db:create:all db:migrate spec
