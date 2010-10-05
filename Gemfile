@@ -46,6 +46,8 @@ gem 'hoptoad_notifier', '2.3.5'
 # Analyze performance (visit http://localhost:3000/newrelic)
 gem 'newrelic_rpm', '2.13.1'
 
+gem 'ephemeral_response', '0.3.2'
+
 group :development, :test do
   gem 'rspec-rails', '1.3.2'
 end
@@ -55,9 +57,9 @@ group :development do
   gem 'capistrano', '2.5.19'
   gem 'capistrano-helpers', '0.5.0'
   gem 'capistrano-ext'
-  gem 'git'
-  gem 'tinder'
-  gem 'launchy'
+  gem 'git', '1.2.5'
+  gem 'tinder', '1.4.0'
+  gem 'launchy', '0.3.7'
 end
 
 group :test do
