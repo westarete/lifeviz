@@ -1,0 +1,21 @@
+#!/bin/bash
+# Continuous Integration build script.
+
+# Set up rvm
+export PATH=$PATH:~/.rvm/bin
+set +x # Silence tracing
+source ~/.rvm/scripts/rvm
+set -e # Exit on any error
+cd .   # Kick off the rvmrc
+set -x # Resume tracing
+
+# Verify environment.
+ruby -v
+gem env gemdir
+
+# Install gems.
+bundle --no-color install
+
+# Prepare and run the tets.
+export SPEC_OPTS="--format documentation --no-color"
+rake db:create:all db:migrate spec
