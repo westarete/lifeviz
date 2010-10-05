@@ -7,10 +7,6 @@ context "User viewing the taxa in a class" do
   subject { Taxon.find_by_rank(2)}
   let(:user) { User.make }
   
-  before(:all) do
-    stub_karma_server
-  end
-  
   before(:each) do
     visit "/class/#{subject.name}"
   end

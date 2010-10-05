@@ -43,13 +43,11 @@ describe "When a user makes a contribution" do
       page.should have_content("Your total karma is now #{@old_karma + 1}")
     end
 
-    it "displays the new current level" do 
-      # page.should have_content("your level is #{subject.karma_level}")
-    end
+    it "displays the new current level" # do 
+     #      # page.should have_content("your level is #{subject.karma_level}")
+     #    end
   end
   
-  after(:all) do
-    Capybara.use_default_driver
-  end
+  after(:all) { Capybara.use_default_driver }
 
 end

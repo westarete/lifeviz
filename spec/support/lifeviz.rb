@@ -1,11 +1,12 @@
+# NOTE: selenium is required to run log_in
 def log_in(user)
   visit root_path
   if page.has_content?("Log out")
-    click "Log out"
+    click_link "Log out"
   end
   click 'Log in'
-  fill_in 'user_email', :with => user.email
-  fill_in 'user_password', :with => "password"
+  fill_in 'user_email'    ,:with => user.email
+  fill_in 'user_password' ,:with => "password"
   click 'Login'
 end
 
