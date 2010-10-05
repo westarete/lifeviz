@@ -27,6 +27,8 @@ GEM
       net-sftp (>= 2.0.0)
       net-ssh (>= 2.0.14)
       net-ssh-gateway (>= 1.0.0)
+    capistrano-ext (1.2.1)
+      capistrano (>= 1.0.0)
     capistrano-helpers (0.5.0)
       capistrano (>= 2.0.0)
     capybara (0.3.9)
@@ -144,6 +146,7 @@ DEPENDENCIES
   autotest-rails
   awesome_nested_set (= 1.4.3)
   capistrano (= 2.5.19)
+  capistrano-ext
   capistrano-helpers (= 0.5.0)
   capybara (>= 0.3.9)
   capybara-envjs
