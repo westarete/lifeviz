@@ -17,5 +17,5 @@ gem env gemdir
 bundle --no-color install
 
 # Prepare and run the tets.
-export SPEC_OPTS="--format documentation"
+export SPEC_OPTS="-f s"
 rake db:create:all db:migrate spec
