@@ -20,6 +20,8 @@ module KarmaClient
     def gold?
       @total >= 8
     end
+    
+    
   
   end
 end

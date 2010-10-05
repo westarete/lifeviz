@@ -4,6 +4,7 @@ ubt:
   rank: -1
   lft: 1
   rgt: 16
+  lineage_ids: "1"
 kingdom:
   id: 2
   name: Animalia
@@ -11,6 +12,7 @@ kingdom:
   parent_id: 1
   lft: 2
   rgt: 15
+  lineage_ids: "1,2"
 phylum:
   id: 3
   name: Aniphylum
@@ -18,6 +20,7 @@ phylum:
   parent_id: 2
   lft: 3
   rgt: 14
+  lineage_ids: "1,2,3"
 class:
   id: 4
   name: Classamilia
@@ -25,6 +28,7 @@ class:
   parent_id: 3
   lft: 4
   rgt: 13
+  lineage_ids: "1,2,3,4"
 order:
   id: 5
   name: Aniorder
@@ -32,6 +36,7 @@ order:
   parent_id: 4
   lft: 5
   rgt: 12
+  lineage_ids: "1,2,3,4,5"
 family:
   id: 6
   name: Famimilia
@@ -39,6 +44,7 @@ family:
   parent_id: 5
   lft: 6
   rgt: 11
+  lineage_ids: "1,2,3,4,5,6"
 genus:
   id: 7
   name: Genimilia
@@ -46,6 +52,7 @@ genus:
   parent_id: 6
   lft: 7
   rgt: 10
+  lineage_ids: "1,2,3,4,5,6,7"
 species:
   id: 8
   name: Specimilia
@@ -53,6 +60,7 @@ species:
   parent_id: 7
   lft: 8
   rgt: 9
+  lineage_ids: "1,2,3,4,5,6,7,8"
   
   
 

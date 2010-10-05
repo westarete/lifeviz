@@ -3,8 +3,6 @@ require 'lib/monkeypatches'
 class Taxon < ActiveRecord::Base
   acts_as_nested_set
   
-  before_save :rebuild_lineage_ids
-  
   named_scope :kingdoms, lambda { |conditions| conditions ||= {}; {:conditions => {:rank => 0}.merge(conditions), :order => :name} }
   named_scope :phylums,  lambda { |conditions| conditions ||= {}; {:conditions => {:rank => 1}.merge(conditions), :order => :name} }
   named_scope :classes,  lambda { |conditions| conditions ||= {}; {:conditions => {:rank => 2}.merge(conditions), :order => :name} }
@@ -17,12 +15,6 @@ class Taxon < ActiveRecord::Base
   validates_presence_of :name, :message => "can't be blank"
   
   RANK_LABELS = %w(Kingdom Phylum Class Order Family Genus Species)
-  
-  # This method rebuilds lineage_ids for the entire taxonomy.
-  def self.rebuild_lineages!
-    # ActiveRecord::Base.connection.execute "UPDATE taxa SET lineage_ids = NULL;"  # This step takes forever. Run it only if you have to.
-    Taxon.find(1).rebuild_lineage_branch(nil) # Run rebuild_lineage on root node.
-  end
 
   def self.rebuild_stats(rank_specified=nil)
     rank_specified ? (rank = rank_specified) : (rank = 5)
@@ -125,30 +117,6 @@ class Taxon < ActiveRecord::Base
   
   def rank_in_words
     RANK_LABELS[self.rank.to_i]
-  end
-  
-  # This is a recursive method to rebuild a tree of lineage_ids.
-  def rebuild_lineage_branch(parent_id, parent_lineage_ids="")
-    lineage_ids = if parent_id.nil?  # Root node
-                    ""
-                  elsif parent_lineage_ids == "" || parent_id == 1 # Child of root node
-                    "1"
-                  else
-                    parent_lineage_ids + "," + parent_id.to_s
-                  end     
-    
-    update_attributes(:lineage_ids => lineage_ids)
-    
-    unless rank == 6
-      children.each {|child| child.rebuild_lineage_branch(id, lineage_ids)}
-    end
-  end
-  
-  # Rebuild lineage_ids for this taxon.
-  def rebuild_lineage_ids
-    unless Taxon.first.blank? || parent_id.nil? || parent.lineage_ids.blank?
-      self.lineage_ids = (parent.lineage_ids + "," + parent_id.to_s)
-    end
   end
   
   def scientific_name 

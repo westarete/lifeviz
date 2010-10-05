@@ -11,10 +11,7 @@ $(function(){
       obj.animate({ top: $(window).height()/2-this.height()/2, left: $
       (window).width()/2-this.width()/2}, 200, 'linear');
     }
-  } 
-
-  // Table Sort
-  $(".taxatable, .speciestable").tablesorter();
+  }
   
   // Login interface
   $('#login_button').click(function(){

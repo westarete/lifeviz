@@ -8,3 +8,5 @@ rerun.txt
 .DS_Store
 */**/.DS_Store
 capybara*
+spec/fixtures/ephemeral_response/*
+.specjour/*

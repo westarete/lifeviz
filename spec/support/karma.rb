@@ -1,6 +1,3 @@
-# Change api key for karma, so we can expect it.
-KARMA_API_KEY = 'karmatestapikey'
-
 # Stub out the actual karma server so it's talking to our fake data instead.
 def stub_karma_server(json=nil)
   # A sample json response from the karma server.

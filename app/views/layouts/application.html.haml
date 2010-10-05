@@ -2,12 +2,14 @@
 %html
   %head
     = stylesheet_link_tag 'screen.css', :media => 'screen, projection'
-    = stylesheet_link_tag 'jquery-ui.css', :media => 'print'
+    = stylesheet_link_tag 'jquery-ui.css', :media => 'screen, projection'
+    = stylesheet_link_tag 'print.css', :media => 'print'
     /[if lt IE 8]
       = stylesheet_link_tag 'ie.css', :media => 'screen, projection'
     = javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"
     = javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/jquery-ui.min.js"
-    = javascript_include_tag  'protovis-r3.2', 'jquery.tablesorter', 'jquery.metadata', 'application', 'jquery.coolinput', 'jquery.address'
+    = javascript_include_tag 'protovis-r3.2', 'jquery.tablesorter', 'jquery.coolinput', 'jquery.address', 'tables'
+    = javascript_include_tag 'application'
     = yield :include_javascript
     %script{:type => 'text/javascript'}
       = yield :javascript
@@ -17,3 +19,4 @@
       = render :partial => "/shared/top_bar"
       = yield
       = render :partial => "/shared/footer"
+      
