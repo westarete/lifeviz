@@ -31,7 +31,7 @@ gem 'authlogic-oid', '1.0.4'
 # Pagination
 gem 'will_paginate', '2.3.11'
 
-# For database methods.
+# For seeding database.
 gem 'hpricot', '>=0.8.0'
 
 # Null object pattern.
@@ -46,6 +46,7 @@ gem 'hoptoad_notifier', '2.3.5'
 # Analyze performance (visit http://localhost:3000/newrelic)
 gem 'newrelic_rpm', '2.13.1'
 
+# Cache API calls for stubbing.
 gem 'ephemeral_response', '0.3.2'
 
 group :development, :test do
@@ -59,17 +60,24 @@ group :development do
   gem 'capistrano-ext'
   gem 'git', '1.2.5'
   gem 'tinder', '1.4.0'
-  gem 'launchy', '0.3.7'
 end
 
 group :test do
+  # Automatically run tests.
   gem 'ZenTest'
   gem 'autotest-rails'
+  
+  # Test gems, and testing helpers.
   gem 'mocha'
   gem 'machinist', '>= 1.0.6'
   gem 'faker', '>= 0.3.1'
   gem 'capybara', '>= 0.3.9'
   gem 'shoulda', '>= 2.11.3'
   gem 'capybara-envjs'
+  
+  # Run multiple tests at the same time.
   gem 'specjour'
+  
+  # Needed by capybara to show pages.
+  gem 'launchy', '0.3.7'
 end
