@@ -1,0 +1,56 @@
+<mockup version="1.0" skin="sketch" measuredW="834" measuredH="442" mockupW="824" mockupH="432">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::Title" x="126" y="106" w="217" h="-1" measuredW="217" measuredH="41" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>28</size>
+        <text>Order%3A%20Carnivora</text>
+      </controlProperties>
+    </control>
+    <control controlID="22" controlTypeID="com.balsamiq.mockups::MenuBar" x="0" y="0" w="824" h="29" measuredW="745" measuredH="29" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>%09%09%09%09LifeViz%09%09%09%09%09%09%09%09Karma%3A%200%20Level%3A%20*dust*%20User%3A%20developer%20Log%20out</text>
+      </controlProperties>
+    </control>
+    <control controlID="25" controlTypeID="com.balsamiq.mockups::Label" x="128" y="87" w="-1" h="-1" measuredW="78" measuredH="19" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>10</size>
+        <text>Scientific%20Name</text>
+      </controlProperties>
+    </control>
+    <control controlID="30" controlTypeID="com.balsamiq.mockups::List" x="122" y="155" w="462" h="249" measuredW="100" measuredH="231" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <borderStyle>none</borderStyle>
+        <text>Lifespan%20%20%20%20%20%20%20%20%20%20Citation%09%09%20%20%20%20Source%20%20%20%20%20%20%20Actions%20%20%0A73%20years%09%20%20%20%20www.blah.com%09%20%20%20%20Ipsum%09%09%09%09%09%0A%20%0AAdult%20Weight%0A15.00%20kilograms%20%20%20%20%20Ipsum%09%09%0A%20%0ABirth%20Weight%0A0%20grams%09%09%09%09%09%0A%20%0ALitter%20Size%0A1.5%20pounds</text>
+      </controlProperties>
+    </control>
+    <control controlID="32" controlTypeID="com.balsamiq.mockups::Button" x="128" y="404" w="-1" h="-1" measuredW="92" measuredH="28" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>12</size>
+        <text>Add%20Lifespan</text>
+      </controlProperties>
+    </control>
+    <control controlID="33" controlTypeID="com.balsamiq.mockups::Button" x="234" y="404" w="-1" h="-1" measuredW="123" measuredH="28" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>12</size>
+        <text>Add%20Adult%20Weight</text>
+      </controlProperties>
+    </control>
+    <control controlID="34" controlTypeID="com.balsamiq.mockups::Button" x="369" y="404" w="-1" h="-1" measuredW="121" measuredH="28" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>12</size>
+        <text>Add%20Birth%20Weight</text>
+      </controlProperties>
+    </control>
+    <control controlID="35" controlTypeID="com.balsamiq.mockups::Button" x="502" y="404" w="-1" h="-1" measuredW="106" measuredH="28" zOrder="7" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>12</size>
+        <text>Add%20Litter%20Size</text>
+      </controlProperties>
+    </control>
+    <control controlID="41" controlTypeID="com.balsamiq.mockups::TextArea" x="126" y="35" w="563" h="44" measuredW="200" measuredH="140" zOrder="8" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>You%20just%20received%202%20points%20of%20karma%20for%20contributing%20a%20new%20annotation.%20Your%20total%20karma%20is%20now%2012%2C%20and%20your%20level%20is%20%22Contributor%22.</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>
