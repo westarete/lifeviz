@@ -11,6 +11,10 @@ context "User viewing the taxa in a class" do
     visit "/class/#{subject.name}"
   end
   
+  before(:all) do
+    stub_karma_server
+  end
+  
   it "should have a class dropdown with the class taxon selected" do
     find(:css, "select#taxonomic_selector_2").value.should == subject.name
   end

@@ -8,6 +8,7 @@ describe 'User interacts with species litter size' do
   
   before(:all)  do
     Capybara.current_driver = :selenium
+    stub_karma_server
     log_in(user) 
   end
 

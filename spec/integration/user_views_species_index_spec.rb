@@ -8,6 +8,10 @@ context "User viewing the species index page" do
   let(:species)       { Species.make(:parent_id => Taxon.find_by_rank(5).id ) }
   let(:other_species) { Species.make(:parent_id => Taxon.find_by_rank(5).id ) }
   
+  before(:all) do
+    stub_karma_server
+  end
+  
   before do
     species
     other_species    
