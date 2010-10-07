@@ -4,12 +4,6 @@ source 'http://rubygems.org'
 gem 'rails', '2.3.8'
 gem 'activesupport', '2.3.8'
 
-# server
-gem 'unicorn', '1.1.3'
-
-# debugger
-gem 'ruby-debug'
-
 # View design.
 gem 'haml', '3.0.15'
 gem 'compass', '0.10.3'
@@ -24,7 +18,7 @@ gem 'progressbar', '0.9.0'
 gem 'awesome_nested_set', '1.4.3'
 
 # Authentication
-gem 'rack-openid', '>=0.2.1'
+gem 'rack-openid', '1.2.0'
 gem 'authlogic', '2.1.3'
 gem 'authlogic-oid', '1.0.4'
 
@@ -46,37 +40,47 @@ gem 'hoptoad_notifier', '2.3.5'
 # Analyze performance (visit http://localhost:3000/newrelic)
 gem 'newrelic_rpm', '2.13.1'
 
-# Cache API calls for stubbing.
-gem 'ephemeral_response', '0.3.2'
-
-group :development, :test do
-  gem 'rspec-rails', '1.3.2'
-end
-
 group :development do
+  # Faster development server
+  gem 'unicorn', '1.1.3'
+
+  # debugger
+  gem 'ruby-debug', '0.10.3'
+
   # Deployment.
   gem 'capistrano', '2.5.19'
   gem 'capistrano-helpers', '0.5.3'
-  gem 'capistrano-ext'
+  gem 'capistrano-ext', '1.2.1'
   gem 'git', '1.2.5'
   gem 'tinder', '1.4.0'
 end
 
 group :test do
+  gem 'rspec-rails', '1.3.2'
+
   # Automatically run tests.
-  gem 'ZenTest'
-  gem 'autotest-rails'
+  gem 'ZenTest', '4.4.0'
+  
+  gem 'autotest-rails', '4.1.0'
   
   # Test gems, and testing helpers.
-  gem 'mocha'
-  gem 'machinist', '>= 1.0.6'
-  gem 'faker', '>= 0.3.1'
-  gem 'capybara', '>= 0.3.9'
-  gem 'shoulda', '>= 2.11.3'
-  gem 'capybara-envjs'
+  gem 'mocha', '0.9.8'
+
+  gem 'machinist', '1.0.6'
+
+  gem 'faker', '0.3.1'
+
+  gem 'capybara', '0.3.9'
+
+  gem 'shoulda', '2.11.3'
+
+  gem 'capybara-envjs', '0.1.6'
   
+  # Cache API calls for stubbing.
+  gem 'ephemeral_response', '0.3.2'
+
   # Run multiple tests at the same time.
-  gem 'specjour'
+  gem 'specjour', '0.2.5'
   
   # Needed by capybara to show pages.
   gem 'launchy', '0.3.7'
