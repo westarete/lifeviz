@@ -2,21 +2,25 @@
   %thead
     %tr
       %th Select
-      %th= @children.first.rank_in_words
+      %th= @children.first.rank_in_words if !@children.empty?
       %th{:class => "{sorter: 'digit'}"} Avg. Lifespan
       %th{:class => "{sorter: 'digit'}"} Avg. Birth Weight
       %th{:class => "{sorter: 'digit'}"} Avg. Adult Weight
       %th{:class => "{sorter: 'digit'}"} Avg. Litter Size
   %tbody
-    - @children.each do |taxon|
-      %tr.taxon
-        %td
-          %input.select_taxon{ :type => 'checkbox' }
-        - if taxon.rank_in_words.downcase == "genus"
-          %td.name= link_to taxon.name, genus_path(:genus => taxon.name)
-        - else
-          %td.name= link_to taxon.name, taxon_path(:rank => taxon.rank_in_words.downcase, :taxon => taxon.name)
-        %td= taxon.avg_lifespan
-        %td= taxon.avg_birth_weight
-        %td= taxon.avg_adult_weight
-        %td= taxon.avg_litter_size
+    - if @children.empty?
+      %tr 
+        %td{:cols => 6} Taxa not available.
+    -else
+      - @children.each do |taxon|
+        %tr.taxon
+          %td
+            %input.select_taxon{ :type => 'checkbox' }
+          - if taxon.rank_in_words.downcase == "genus"
+            %td.name= link_to taxon.name, genus_path(:genus => taxon.name)
+          - else
+            %td.name= link_to taxon.name, taxon_path(:rank => taxon.rank_in_words.downcase, :taxon => taxon.name)
+          %td= taxon.avg_lifespan
+          %td= taxon.avg_birth_weight
+          %td= taxon.avg_adult_weight
+          %td= taxon.avg_litter_size
