@@ -22,3 +22,13 @@ export DISPLAY=:42.0
 # Prepare and run the tets.
 export SPEC_OPTS="-f s"
 rake db:create:all db:migrate spec
+
+# Determine what revision we're testing.
+revision=`git show --format=oneline | head -1 | cut -d ' ' -f 1`
+
+# Deploy to staging.
+cap staging deploy -s branch=$revision
+
+# Ensure that some key pages display properly.
+curl http://lifeviz.staging.westarete.com/ | grep -3 "Animalia"
+
