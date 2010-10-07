@@ -1,7 +1,9 @@
 %table#taxatable
   %thead
     %tr
-      %th Select
+      %th.hidden ID
+      %th.hidden Select
+      %th.hidden Hover
       %th= @children.first.rank_in_words if !@children.empty?
       %th{:class => "{sorter: 'digit'}"} Avg. Lifespan
       %th{:class => "{sorter: 'digit'}"} Avg. Birth Weight
@@ -14,13 +16,14 @@
     -else
       - @children.each do |taxon|
         %tr.taxon
-          %td
-            %input.select_taxon{ :type => 'checkbox' }
+          %td.hidden.id= taxon.id
+          %td.hidden.select
+          %td.hidden.hover
           - if taxon.rank_in_words.downcase == "genus"
             %td.name= link_to taxon.name, genus_path(:genus => taxon.name)
           - else
             %td.name= link_to taxon.name, taxon_path(:rank => taxon.rank_in_words.downcase, :taxon => taxon.name)
-          %td= taxon.avg_lifespan
-          %td= taxon.avg_birth_weight
-          %td= taxon.avg_adult_weight
-          %td= taxon.avg_litter_size
+          %td= sprintf("%2.2f", taxon.avg_lifespan) if taxon.avg_lifespan
+          %td= sprintf("%2.2f", taxon.avg_birth_weight) if taxon.avg_birth_weight
+          %td= sprintf("%2.2f", taxon.avg_adult_weight) if taxon.avg_adult_weight
+          %td= sprintf("%2.2f", taxon.avg_litter_size) if taxon.avg_litter_size

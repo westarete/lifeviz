@@ -34,5 +34,18 @@ $(function(){
     $('#openid').show();
   });
   
+  updateData = function() {
+    data = $.table("#taxatable").objs();
+  };
+  
+  $.fn.toggleX = function(selector) {
+    td = $(this).children(selector);
+    if (td.html() == "X") {
+      td.html("");
+    } else {
+      td.html("X");
+    };
+  };
+  
 });
 

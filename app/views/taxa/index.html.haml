@@ -21,10 +21,10 @@
           x = pv.Scale.ordinal(dims).splitFlush(0, w),
           y = pv.dict(
                 dims,
-                function(t) pv.Scale.linear(  
-                  data.filter( function(d) !isNaN(d[t]) ), 
-                  function(d) Math.floor(d[t]),      
-                  function(d) Math.ceil(d[t])       
+                function(t) pv.Scale.linear(
+                  data.filter( function(d) !isNaN(d[t]) ),
+                  function(d) Math.floor(d[t]),
+                  function(d) Math.ceil(d[t])
                 ).range(0, h)
               ),
           c = pv.dict(dims, function(t) pv.Scale.linear(
@@ -53,7 +53,7 @@
           .bottom(20)
           .canvas('graph'); // where to put it
 
-      // The parallel coordinates display.
+      // The parallel coordinates display - thin lines.
       vis.add(pv.Panel)
           .data(function() data)
           .visible(function(d) dims.every(function(t)
@@ -77,7 +77,7 @@
           .font("bold 10px sans-serif")
           .text(function(d) units[d].name);
 
-      // The parallel coordinates display.
+      // The parallel coordinates display - thicker lines from being filtered.
       var change = vis.add(pv.Panel);
 
       var line = change.add(pv.Panel)
@@ -92,8 +92,8 @@
           .bottom(function(t, d) y[t](d[t]))
           .strokeStyle(function(t, d) this.parent.active() ? "#FF0700" : c[active](d[active]))
           .lineWidth(4)
-          .event("mouseover", function() this.parent.active(true) )
-          .event("mouseout", function() this.parent.active(false) )
+          .event("mouseover", function(d) this.parent.active(true) )
+          .event("mouseout", function(d) this.parent.active(false) )
           ;
 
       // Updater for slider and resizer.
@@ -162,14 +162,16 @@
       
       $("#taxatable").table();
       
-      $('.select_taxon').click(function(){
-        $(this).parent().parent().toggleClass("selected");
-        data = $.table("#taxatable").objs();
+      $('#taxatable tr.taxon').click(function(){
+        $(this).toggleClass("selected");
+        $(this).toggleX(".select");
+        updateData();
       });
       
       $('#taxatable tr.taxon').hover(function() {
         $(this).toggleClass("hover");
-        data = $.table("#taxatable").objs();
+        $(this).toggleX(".hover");
+        updateData();
       });
 
 %ul#taxonomic_selector.clearfix
