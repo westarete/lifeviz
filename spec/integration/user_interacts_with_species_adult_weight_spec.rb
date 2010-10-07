@@ -8,7 +8,8 @@ describe 'User interacts with species adult weight' do
   
   before(:all)  do
     Capybara.current_driver = :selenium
-    log_in(user) 
+    stub_karma_server
+    log_in(user)
   end
   
   after(:all) { Capybara.use_default_driver }
