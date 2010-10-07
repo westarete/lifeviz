@@ -25,7 +25,7 @@ table#taxa, table#species
 #species_age_mortality_rate_doubling_time
   :width 100px
   
-table.taxatable, table.speciestable
+table#taxatable, table#speciestable
   :padding 30px 0
   thead
     th
@@ -35,18 +35,25 @@ table.taxatable, table.speciestable
       :font-weight bold 
       :padding-left 20px
       :border-right 1px solid #dad9c7
+  tbody
+    tr.selected
+      :background #C0F73E
+    tr.hover
+      :color #FF0700
+      a
+        :color #FF0700
       
-table.taxatable .header, table.speciestable .header
+table#taxatable .header, table#speciestable .header
   :background-image url(/images/table_bg.gif)
   :background-repeat no-repeat
   :background-position center left
 
-table.taxatable .headerSortUp, table.speciestable .headerSortUp
+table#taxatable .headerSortUp, table#speciestable .headerSortUp
   :background-image url(/images/table_asc.gif)
   :background-repeat no-repeat
   :background-position center left
   
-table.taxatable .headerSortDown, table.speciestable .headerSortDown
+table#taxatable .headerSortDown, table#speciestable .headerSortDown
   :background-image url(/images/table_desc.gif)
   :background-repeat no-repeat
   :background-position center left
