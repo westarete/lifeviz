@@ -1,34 +1,35 @@
 #!/bin/bash
 # Continuous Integration build script.
 
-# Set up rvm
+echo '========== Set Up RVM ==============================================='
 export PATH=$PATH:~/.rvm/bin
-set +x # Silence tracing
 source ~/.rvm/scripts/rvm
 set -e # Exit on any error
 cd .   # Kick off the rvmrc
-set -x # Resume tracing
+set -x # Echo each command
 
-# Verify environment.
+echo '========== Verify Environment ======================================='
 ruby -v
 gem env gemdir
+env
 
-# Install gems.
+echo '========== Install Gems ============================================='
 bundle --no-color install
 
+echo '========== Run Specs ================================================'
 # Set display for selenium
 export DISPLAY=:42.0
-
-# Prepare and run the tets.
+# Set rspec output options
 export SPEC_OPTS="-f s"
 rake db:create:all db:migrate spec
 
+echo '========== Deploy To Staging ========================================'
 # Determine what revision we're testing.
 revision=`git show --format=oneline | head -1 | cut -d ' ' -f 1`
-
 # Deploy to staging.
 cap staging deploy -s branch=$revision
 
+echo '========== Verify Content ==========================================='
 # Ensure that some key pages display properly.
 curl http://lifeviz.staging.westarete.com/ | grep -3 "Animalia"
 
