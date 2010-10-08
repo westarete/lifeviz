@@ -26,7 +26,7 @@ gem 'authlogic-oid', '1.0.4'
 gem 'will_paginate', '2.3.11'
 
 # For seeding database.
-gem 'hpricot', '>=0.8.0'
+gem 'hpricot', '0.8.2'
 
 # Null object pattern.
 gem 'activerecord_null_object', '0.2.0'
