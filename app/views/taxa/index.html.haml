@@ -90,7 +90,7 @@
           .data(dims)
           .left(function(t, d) x(t))
           .bottom(function(t, d) y[t](d[t]))
-          .strokeStyle(function(t, d) this.parent.active() ? "#FF0700" : c[active](d[active]))
+          .strokeStyle(function(t, d) d["Hover"] == "X" ? "#FF0700" : d["Select"] == "X" ? "#C0F73E" : (c[active](d[active])))
           .lineWidth(4)
           .event("mouseover", function(d) this.parent.active(true) )
           .event("mouseout", function(d) this.parent.active(false) )
@@ -166,12 +166,14 @@
         $(this).toggleClass("selected");
         $(this).toggleX(".select");
         updateData();
+        vis.render();
       });
       
       $('#taxatable tr.taxon').hover(function() {
         $(this).toggleClass("hover");
         $(this).toggleX(".hover");
         updateData();
+        vis.render();
       });
 
 %ul#taxonomic_selector.clearfix
