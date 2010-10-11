@@ -10,3 +10,4 @@ rerun.txt
 capybara*
 spec/fixtures/ephemeral_response/*
 .specjour/*
+.idea
