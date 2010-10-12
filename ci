@@ -11,7 +11,7 @@ set -x # Echo each command
 echo '========== Verify Environment ======================================='
 ruby -v
 gem env gemdir
-env
+env | sort
 
 echo '========== Install Gems ============================================='
 bundle --no-color install
