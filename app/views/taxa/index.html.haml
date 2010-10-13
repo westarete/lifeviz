@@ -3,7 +3,7 @@
     :plain
       var li = $(this).parent(); // used to track which rank is shown
       var taxon_id = $('#graph').attr('taxon_id');
-      var data = $.table("#taxatable").objs();
+      updateData();
       
       // The units and dimensions to visualize, in order.
       var units = {
@@ -163,9 +163,11 @@
       $("#taxatable").table();
       
       $('#taxatable tr.taxon').click(function(){
+        var taxon_id = $(this).attr("taxon_id");
         $(this).toggleClass("selected");
         $(this).toggleX(".select");
         updateData();
+        toggleParameter("highlight_" + taxon_id, taxon_id);
         vis.render();
       });
       

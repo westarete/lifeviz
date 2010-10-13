@@ -11,8 +11,8 @@ $(function(){
       obj.animate({ top: $(window).height()/2-this.height()/2, left: $
       (window).width()/2-this.width()/2}, 200, 'linear');
     }
-  }
-  
+  };
+
   // Login interface
   $('#login_button').click(function(){
      $('#login-buttons').hide();
@@ -33,19 +33,26 @@ $(function(){
     $('#standard').hide();
     $('#openid').show();
   });
-  
+
   updateData = function() {
     data = $.table("#taxatable").objs();
   };
-  
+
   $.fn.toggleX = function(selector) {
     td = $(this).children(selector);
     if (td.html() == "X") {
       td.html("");
     } else {
       td.html("X");
-    };
+    }
   };
-  
-});
 
+  toggleParameter = function (parameter, value) {
+    if ($.inArray(parameter, $.address.parameterNames()) == -1) {
+      $.address.parameter(parameter, value, true)
+    } else {
+      $.address.parameter(parameter, null, true)
+    }
+  };
+
+});
