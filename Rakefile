@@ -6,5 +6,9 @@ require(File.join(File.dirname(__FILE__), 'config', 'boot'))
 require 'rake'
 require 'rake/testtask'
 require 'rake/rdoctask'
-require 'specjour/tasks/specjour'
 require 'tasks/rails'
+
+begin
+  require 'specjour/tasks/specjour'
+rescue LoadError
+end
