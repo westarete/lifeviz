@@ -56,7 +56,8 @@ group :development do
 end
 
 group :test do
-  gem 'rspec-rails', '1.3.2'
+  gem 'rspec', '= 1.3.0'
+  gem 'rspec-rails', '= 1.3.2'
 
   # Automatically run tests.
   gem 'ZenTest', '4.4.0'
