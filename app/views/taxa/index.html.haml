@@ -152,31 +152,45 @@
           .text(function(d) filter[d.dim].max.toFixed(0) + units[d.dim].unit);
       
       vis.render();
-      
+
+  :javascript
+    function toggleSelected(row) {
+      var taxon_id = $(row).attr("taxon_id");
+      $(row).toggleClass("selected");
+      $(row).toggleX(".select");
+      updateData();
+      toggleParameter("highlight_" + taxon_id, taxon_id);
+      vis.render();
+    };
+
+    $(document).ready(function() {
+
       $('#taxonomic_selector select').live('change', function(){
         window.open(("../" + this.options[this.selectedIndex].value), '_top');
       });
-            
+
       // Table Sort
       $("#speciestable, #taxatable").tablesorter();
-      
+
       $("#taxatable").table();
-      
+
       $('#taxatable tr.taxon').click(function(){
-        var taxon_id = $(this).attr("taxon_id");
-        $(this).toggleClass("selected");
-        $(this).toggleX(".select");
-        updateData();
-        toggleParameter("highlight_" + taxon_id, taxon_id);
-        vis.render();
+        toggleSelected(this);
       });
-      
+
       $('#taxatable tr.taxon').hover(function() {
         $(this).toggleClass("hover");
         $(this).toggleX(".hover");
         updateData();
         vis.render();
       });
+
+      $.each($.address.parameterNames(), function(index, value) {
+
+      });
+
+    })
+
 
 %ul#taxonomic_selector.clearfix
   = taxon_dropdowns(@taxon, @taxon_ancestry)
