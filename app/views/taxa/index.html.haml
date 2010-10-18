@@ -210,12 +210,13 @@
 
       // Pre-highlight any rows determined by the parameters.
       $.address.change(function (){
-      clearTableSelections();
+        clearTableSelections();
         $.each($.address.parameterNames(), function(index, value) {
           highlight = value.match(/\d+$/)[0]
           row = $('#taxatable .taxon[taxon_id~=value]'.replace('value', highlight));
           toggleSelected(row);
         });
+        vis.render();
       });
 
 
