@@ -156,6 +156,10 @@
   :javascript
     function updateData() {
       data = $.table("#taxatable").objs();
+    function clearTableSelections() {
+      $('#taxatable .taxon.selected').each(function(index, row) {
+        toggleSelected(row);
+      });
     };
 
     function toggleSelected(row) {
@@ -193,11 +197,15 @@
     $(document).ready(function() {
 
       // Pre-highlight any rows determined by the parameters.
-      $.each($.address.parameterNames(), function(index, value) {
-        highlight = value.match(/\d+$/)[0]
-        row = $('#taxatable .taxon[taxon_id~=value]'.replace('value', highlight));
-        toggleSelected(row);
+      $.address.change(function (){
+      clearTableSelections();
+        $.each($.address.parameterNames(), function(index, value) {
+          highlight = value.match(/\d+$/)[0]
+          row = $('#taxatable .taxon[taxon_id~=value]'.replace('value', highlight));
+          toggleSelected(row);
+        });
       });
+
 
       // Taxonomy dropdown navigation.
       $('#taxonomic_selector select').live('change', function(){
