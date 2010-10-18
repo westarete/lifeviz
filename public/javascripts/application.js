@@ -34,25 +34,4 @@ $(function(){
     $('#openid').show();
   });
 
-  updateData = function() {
-    data = $.table("#taxatable").objs();
-  };
-
-  $.fn.toggleX = function(selector) {
-    td = $(this).children(selector);
-    if (td.html() == "X") {
-      td.html("");
-    } else {
-      td.html("X");
-    }
-  };
-
-  toggleParameter = function (parameter, value) {
-    if ($.inArray(parameter, $.address.parameterNames()) == -1) {
-      $.address.parameter(parameter, value, true)
-    } else {
-      $.address.parameter(parameter, null, true)
-    }
-  };
-
 });

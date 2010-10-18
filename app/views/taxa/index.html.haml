@@ -154,6 +154,10 @@
       vis.render();
 
   :javascript
+    function updateData() {
+      data = $.table("#taxatable").objs();
+    };
+
     function toggleSelected(row) {
       var taxon_id = $(row).attr("taxon_id");
       $(row).toggleClass("selected");
@@ -161,35 +165,65 @@
       updateData();
     };
 
+    function toggleHovered(row) {
+      var taxon_id = $(row).attr("taxon_id");
+      $(row).toggleClass("hover");
+      $(row).toggleX(".hover");
+      updateData();
+    };
+
+    function toggleParameter(parameter, value) {
+      if ($.inArray(parameter, $.address.parameterNames()) == -1) {
+        $.address.parameter(parameter, value, true)
+      } else {
+        $.address.parameter(parameter, null, true)
+      }
+    };
+
+    // jQuery plugin function to toggle an "X" in a table cell.
+    $.fn.toggleX = function(selector) {
+      td = $(this).children(selector);
+      if (td.html() == "X") {
+        td.html("");
+      } else {
+        td.html("X");
+      }
+    };
+
     $(document).ready(function() {
 
+      // Pre-highlight any rows determined by the parameters.
+      $.each($.address.parameterNames(), function(index, value) {
+        highlight = value.match(/\d+$/)[0]
+        row = $('#taxatable .taxon[taxon_id~=value]'.replace('value', highlight));
+        toggleSelected(row);
+      });
+
+      // Taxonomy dropdown navigation.
       $('#taxonomic_selector select').live('change', function(){
         window.open(("../" + this.options[this.selectedIndex].value), '_top');
       });
 
-      // Table Sort
-      $("#speciestable, #taxatable").tablesorter();
+      // Make the table sortable.
+      $("#taxatable").tablesorter();
 
+      // Turn the table into a 'table' object, used by that jQuery plugin for turning it into data.
       $("#taxatable").table();
 
+      // If table row is clicked, highlight it and the corresponding line in the graph.
       $('#taxatable tr.taxon').click(function(){
         toggleSelected(this);
         toggleParameter("highlight_" + $(this).attr("taxon_id"), "true");
         vis.render();
       });
 
+      // If table row is hovered, highlight it and the corresponding line in the graph.
       $('#taxatable tr.taxon').hover(function() {
-        $(this).toggleClass("hover");
-        $(this).toggleX(".hover");
-        updateData();
+        toggleHovered(this);
+        // If you're comparing me to the above callback... I don't save hovered information in the params. :-)
         vis.render();
       });
 
-      $.each($.address.parameterNames(), function(index, value) {
-        highlight = value.match(/\d+$/)[0]
-        row = $('#taxatable .taxon[taxon_id~=value]'.replace('value', highlight));
-        toggleSelected(row);
-      });
     })
 
 
