@@ -7,15 +7,15 @@
         - if logged_in?
           Karma:
           - if current_user.karma.total 
-            %span.red
+            %strong.red
               = current_user.karma.total
           Level:
           - if current_user.karma.levels.gold?
-            %span.gold Gold
+            %strong.gold Gold
           - elsif current_user.karma.levels.silver?
-            %span.silver Silver
+            %strong.silver Silver
           - elsif current_user.karma.levels.bronze?
-            %span.bronze Bronze
+            %strong.bronze Bronze
           - else
             %span.detail *dust*
           - if 10 <= current_user.karma.total
