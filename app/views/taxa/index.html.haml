@@ -156,6 +156,18 @@
   :javascript
     function updateData() {
       data = $.table("#taxatable").objs();
+      data = data.sort(function(a, b) {
+        if (a["Hover"] == "X")
+          {return 1}
+        else if (a["Select"] == "X" && b["Select"] != "X")
+          {return 1}
+        else if ((a["Select"] == "X" && b["Select"] == "X") || (a["Select"] != "X" && b["Select"] != "X"))
+          {return 0}
+        else if (a["Select"] != "X" && b["Select"] == "X")
+          {return -1}
+      });
+    };
+
     function clearTableSelections() {
       $('#taxatable .taxon.selected').each(function(index, row) {
         toggleSelected(row);
