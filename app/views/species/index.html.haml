@@ -3,29 +3,28 @@
     :plain
       var li = $(this).parent(); // used to track which rank is shown
       var taxon_id = $('#graph').attr('taxon_id');
-      var data = $.ajax({ type: "GET", url: '/taxa/data.json', data: {taxon_id: taxon_id}, async: false }).responseText;
-      data = JSON.parse(data);
-      
+      updateData();
+
       // The units and dimensions to visualize, in order.
       var units = {
-        avg_lifespan:       {name: "lifespan", unit: " days"},
-        avg_birth_weight:   {name: "birth weight", unit: " g"},
-        avg_adult_weight:   {name: "adult weight", unit: " g"},
-        avg_litter_size:    {name: "litter size", unit: ""}
+        "Avg. Lifespan, days":    {name: "lifespan", unit: " days"},
+        "Avg. Birth Weight, g":   {name: "birth weight", unit: " g"},
+        "Avg. Adult Weight, g":   {name: "adult weight", unit: " g"},
+        "Avg. Litter Size":    {name: "litter size", unit: ""}
       }
 
       var dims = pv.keys(units);
 
       /* Sizing and scales. */
-      var w = 820,
-          h = 420,
+      var w = 890,
+          h = 260,
           x = pv.Scale.ordinal(dims).splitFlush(0, w),
           y = pv.dict(
                 dims,
-                function(t) pv.Scale.linear(  
-                  data.filter( function(d) !isNaN(d[t]) ), 
-                  function(d) Math.floor(d[t]),      
-                  function(d) Math.ceil(d[t])       
+                function(t) pv.Scale.linear(
+                  data.filter( function(d) !isNaN(d[t]) ),
+                  function(d) Math.floor(d[t]),
+                  function(d) Math.ceil(d[t])
                 ).range(0, h)
               ),
           c = pv.dict(dims, function(t) pv.Scale.linear(
@@ -33,7 +32,7 @@
               function(d) Math.floor(d[t]),
               function(d) Math.ceil(d[t])
               ).range("#015367", "#60B9CE"));
-      
+
       /* Interaction state. */
       var filter =  pv.dict(
                       dims, function(t) {
@@ -42,7 +41,7 @@
                           max: y[t].domain()[1]
                         };
                       }
-                    ), active = "avg_lifespan";
+                    ), active = "Avg. Lifespan, days";
 
       // root container
       var vis = new pv.Panel()
@@ -54,7 +53,7 @@
           .bottom(20)
           .canvas('graph'); // where to put it
 
-      // The parallel coordinates display.
+      // The parallel coordinates display - thin lines.
       vis.add(pv.Panel)
           .data(function() data)
           .visible(function(d) dims.every(function(t)
@@ -78,7 +77,7 @@
           .font("bold 10px sans-serif")
           .text(function(d) units[d].name);
 
-      // The parallel coordinates display.
+      // The parallel coordinates display - thicker lines from being filtered.
       var change = vis.add(pv.Panel);
 
       var line = change.add(pv.Panel)
@@ -86,16 +85,17 @@
           .visible(function(d) dims.every(function(t)
               (d[t] >= filter[t].min) && (d[t] <= filter[t].max)))
         .add(pv.Panel)
-          .def("active", false)
+          .def("hover", false)
+          .def("select", false)
         .add(pv.Line)
           .data(dims)
           .left(function(t, d) x(t))
           .bottom(function(t, d) y[t](d[t]))
-          .strokeStyle(function(t, d) this.parent.active() ? "#FF0700" : c[active](d[active]))
-          .lineWidth(4)
-          .event("mouseover", function() this.parent.active(true) )
-          .event("mouseout", function() this.parent.active(false) )
-          ;
+          .strokeStyle(function(t, d) (this.parent.hover() || d["Hover"] == "X") ? "#FF0700" : d["Select"] == "X" ? "#C0F73E" : (c[active](d[active])))
+          .lineWidth(5)
+          .event("mouseover", function(t, d) turnHoveredOn($('#taxatable .taxon[taxon_id~=value]'.replace('value', d["ID"]))) )
+          .event("mouseout", function(t, d) turnHoveredOff($('#taxatable .taxon[taxon_id~=value]'.replace('value', d["ID"]))) )
+          .event("click", function(t, d) toggleSelected($('#taxatable .taxon[taxon_id~=value]'.replace('value', d["ID"]))));
 
       // Updater for slider and resizer.
       function update(d) {
@@ -151,20 +151,132 @@
       handle.anchor("top").add(pv.Label)
           .textBaseline("bottom")
           .text(function(d) filter[d.dim].max.toFixed(0) + units[d.dim].unit);
-      
+
       vis.render();
-      
-  %script{:type => 'text/javascript'}
-    :plain
-      $(function(){
-        $('#taxonomic_selector select').live('change', function(){
-          window.open(("../" + this.options[this.selectedIndex].value), '_top');
-        });
+
+  :javascript
+    function updateData() {
+      data = $.table("#taxatable").objs();
+      /*
+        Here, we're sorting data by hovers on top, then selected values, and finally non-selected values on bottom.
+      */
+      data = data.sort(function(a, b) {
+        if (a["Hover"] == "X")
+          {return 1}
+        else if (a["Select"] == "X" && b["Select"] != "X")
+          {return 1}
+        else if ((a["Select"] == "X" && b["Select"] == "X") || (a["Select"] != "X" && b["Select"] != "X"))
+          {return 0}
+        else if (a["Select"] != "X" && b["Select"] == "X")
+          {return -1}
       });
+    };
+
+    function clearTableSelections() {
+      $('#taxatable .taxon.selected').each(function(index, row) {
+        toggleSelected(row);
+      });
+    };
+
+    function clearTableHovers() {
+      $('#taxatable .taxon.hover').each(function(index, row) {
+      $(row).removeClass("hover");
+      $(row).children(".hover").html("");
+      });
+    };
+
+    function toggleSelected(row) {
+      var taxon_id = $(row).attr("taxon_id");
+      $(row).toggleClass("selected");
+      $(row).toggleX(".select");
+      updateData();
+    };
+
+    function toggleHovered(row) {
+      var taxon_id = $(row).attr("taxon_id");
+      $(row).toggleClass("hover");
+      $(row).toggleX(".hover");
+      updateData();
+    };
+
+    function turnHoveredOn(row) {
+      clearTableHovers();
+      $(row).addClass("hover");
+      $(row).children(".hover").html("X");
+      updateData();
+      vis.render();
+    };
+
+    function turnHoveredOff(row) {
+      $(row).removeClass("hover");
+      $(row).children(".hover").html("");
+      updateData();
+      vis.render();
+    };
+
+    function toggleParameter(parameter, value) {
+      if ($.inArray(parameter, $.address.parameterNames()) == -1) {
+        $.address.parameter(parameter, value, true)
+      } else {
+        $.address.parameter(parameter, null, true)
+      }
+    };
+
+    // jQuery plugin function to toggle an "X" in a table cell.
+    $.fn.toggleX = function(selector) {
+      td = $(this).children(selector);
+      if (td.html() == "X") {
+        td.html("");
+      } else {
+        td.html("X");
+      }
+    };
+
+    $(document).ready(function() {
+
+      // Pre-highlight any rows determined by the parameters.
+      $.address.change(function (){
+        clearTableSelections();
+        $.each($.address.parameterNames(), function(index, value) {
+          highlight = value.match(/\d+$/)[0]
+          row = $('#taxatable .taxon[taxon_id~=value]'.replace('value', highlight));
+          toggleSelected(row);
+        });
+        vis.render();
+      });
+
+      // Taxonomy dropdown navigation.
+      $('#taxonomic_selector select').live('change', function(){
+        window.open(("../" + this.options[this.selectedIndex].value), '_top');
+      });
+
+      // Make the table sortable.
+      $("#taxatable").tablesorter();
+
+      // Turn the table into a 'table' object, used by that jQuery plugin for turning it into data.
+      $("#taxatable").table();
+
+      // If table row is clicked, highlight it and the corresponding line in the graph.
+      $('#taxatable tr.taxon').click(function(event){
+        if (event.target.constructor == HTMLTableCellElement) {
+          toggleSelected(this);
+          toggleParameter("highlight_" + $(this).attr("taxon_id"), "true");
+          vis.render();
+        }
+      });
+
+      // If table row is hovered, highlight it and the corresponding line in the graph.
+      $('#taxatable tr.taxon').hover(function() {
+        toggleHovered(this);
+        // If you're comparing me to the above callback... I don't save hovered information in the params. :-)
+        vis.render();
+      });
+
+    })
 
 %ul#taxonomic_selector.clearfix
   = taxon_dropdowns(@taxon, @taxon_ancestry)
 #data
   #graph{:taxon_id => @taxon.id}
-  #species
+  #taxa
     = render :partial => "table"

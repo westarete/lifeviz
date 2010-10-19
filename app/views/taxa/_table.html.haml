@@ -5,9 +5,9 @@
       %th.hidden Select
       %th.hidden Hover
       %th= @children.first.rank_in_words if !@children.empty?
-      %th{:class => "{sorter: 'digit'}"} Avg. Lifespan
-      %th{:class => "{sorter: 'digit'}"} Avg. Birth Weight
-      %th{:class => "{sorter: 'digit'}"} Avg. Adult Weight
+      %th{:class => "{sorter: 'digit'}"} Avg. Lifespan, days
+      %th{:class => "{sorter: 'digit'}"} Avg. Birth Weight, g
+      %th{:class => "{sorter: 'digit'}"} Avg. Adult Weight, g
       %th{:class => "{sorter: 'digit'}"} Avg. Litter Size
   %tbody
     - if @children.empty?
