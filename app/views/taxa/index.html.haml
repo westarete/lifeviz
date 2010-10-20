@@ -92,19 +92,7 @@
           .text(function(t, d) y[t](d[t]))
           .event("mouseover", function(t, d) turnHoveredOn($('#taxatable .taxon[taxon_id~=value]'.replace('value', d["ID"]))) )
           .event("mouseout", function(t, d) turnHoveredOff($('#taxatable .taxon[taxon_id~=value]'.replace('value', d["ID"]))) )
-          .event("click", function(t, d) toggleSelected($('#taxatable .taxon[taxon_id~=value]'.replace('value', d["ID"]))))
-        .add(pv.Bar)
-          .height(30)
-          .width(100)
-          .lineWidth(0)
-          .left(function(t, d) t == dims[dims.length-1] ? x(t) - 110 : t == dims[0] ? x(t) + 10 : x(t) - 50)
-          .fillStyle("rgba(0, 0, 0, 0.8)")
-          .visible(function(t, d) d["Hover"] == "X" && d[t])  /* Visible if the data exists, and is hovered. */
-        .add(pv.Label)
-          .text(function(t, d) d[t] + units[t].unit)
-          .textStyle("white")
-          .left(function(t, d) t == dims[dims.length-1] ? x(t) - 100 : t == dims[0] ? x(t) + 20 : x(t) - 40)
-          .bottom(function(t, d) y[t](d[t]) + 9);
+          .event("click", function(t, d) toggleSelected($('#taxatable .taxon[taxon_id~=value]'.replace('value', d["ID"]))));
 
       // Updater for slider and resizer.
       function update(d) {
@@ -143,6 +131,23 @@
       handle.anchor("top").add(pv.Label)
           .textBaseline("bottom")
           .text(function(d) filter[d.dim].max.toFixed(0) + units[d.dim].unit);
+
+      var tooltip = change.add(pv.Panel)
+          .data(function() data)
+        .add(pv.Bar)
+          .data(dims)
+          .height(30)
+          .width(100)
+          .lineWidth(0)
+          .bottom(function(t, d) y[t](d[t]))
+          .left(function(t, d) t == dims[dims.length-1] ? x(t) - 110 : t == dims[0] ? x(t) + 10 : x(t) - 50)
+          .fillStyle("rgba(0, 0, 0, 0.8)")
+          .visible(function(t, d) d["Hover"] == "X" && d[t])  /* Visible if the data exists, and is hovered. */
+        .add(pv.Label)
+          .text(function(t, d) d[t] + units[t].unit)
+          .textStyle("white")
+          .left(function(t, d) t == dims[dims.length-1] ? x(t) - 100 : t == dims[0] ? x(t) + 20 : x(t) - 40)
+          .bottom(function(t, d) y[t](d[t]) + 9);
 
       vis.render();
 
