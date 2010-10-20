@@ -192,13 +192,6 @@
       updateData();
     };
 
-    function toggleHovered(row) {
-      var taxon_id = $(row).attr("taxon_id");
-      $(row).toggleClass("hover");
-      $(row).toggleX(".hover");
-      updateData();
-    };
-
     function turnHoveredOn(row) {
       clearTableHovers();
       $(row).addClass("hover");
@@ -266,11 +259,16 @@
       });
 
       // If table row is hovered, highlight it and the corresponding line in the graph.
-      $('#taxatable tr.taxon').hover(function() {
-        toggleHovered(this);
-        // If you're comparing me to the above callback... I don't save hovered information in the params. :-)
-        vis.render();
-      });
+      $('#taxatable tr.taxon').hover(
+        function() {
+          clearTableHovers();
+          turnHoveredOn(this);
+          // If you're comparing me to the above callback... I don't save hovered information in the params. :-)
+        },
+        function () {
+          turnHoveredOff(this);
+        }
+      );
 
     })
 
