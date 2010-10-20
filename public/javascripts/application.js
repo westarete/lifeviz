@@ -1,4 +1,4 @@
-$(function(){
+$(document).ready(function() {
 
   $.fn.centerScreen = function(loaded) {
     var obj = this;
