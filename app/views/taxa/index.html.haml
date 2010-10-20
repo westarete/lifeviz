@@ -97,13 +97,13 @@
           .height(30)
           .width(100)
           .lineWidth(0)
-          .left(function(t, d) x(t) + 10)
+          .left(function(t, d) t == dims[dims.length-1] ? x(t) - 110 : t == dims[0] ? x(t) + 10 : x(t) - 50)
           .fillStyle("rgba(0, 0, 0, 0.8)")
-          .visible(function(t, d) d["Hover"] == "X" && d[t])
+          .visible(function(t, d) d["Hover"] == "X" && d[t])  /* Visible if the data exists, and is hovered. */
         .add(pv.Label)
           .text(function(t, d) d[t] + units[t].unit)
           .textStyle("white")
-          .left(function(t, d) x(t) + 20)
+          .left(function(t, d) t == dims[dims.length-1] ? x(t) - 100 : t == dims[0] ? x(t) + 20 : x(t) - 40)
           .bottom(function(t, d) y[t](d[t]) + 9);
 
       // Updater for slider and resizer.
