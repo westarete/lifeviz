@@ -25,9 +25,7 @@ context "User viewing the species index page" do
   context "each species" do
     
     it "has a name" do
-      Species.all.each do |s|
-        page.should have_xpath("//*[@class='name']", :text => species.name)
-      end
+      Species.all.each { |specie| page.should have_xpath("//*[@class='name']", :text => specie.name) }
     end
     
   end
