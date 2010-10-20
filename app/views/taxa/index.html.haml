@@ -150,6 +150,23 @@
           .left(function(t, d) t == dims[dims.length-1] ? x(t) - 20 : t == dims[0] ? x(t) + 20 : x(t))
           .bottom(function(t, d) y[t](d[t]) + 9);
 
+      var nametooltip = change.add(pv.Bar)
+          .data(function() data)
+          .height(30)
+          .width(140)
+          .lineWidth(0)
+          .top(0)
+          .left(w/2 - 70)
+          .fillStyle("rgba(0, 0, 0, 0.8)")
+          .visible(function(d) d["Hover"] == "X")  /* Visible if the data exists, and is hovered. */
+        .add(pv.Label)
+          .text(function(d) d["Name"])
+          .textStyle("white")
+          .textAlign("center")
+          .font("bold 12px sans-serif")
+          .top(22)
+          .left(w/2);
+
       vis.render();
 
   :javascript
