@@ -116,29 +116,12 @@
         return false;
       }
 
-      // Updater for slider and resizer.
-      function selectAll(d) {
-        if (d.dy < 3) {
-          var t = d.dim;
-          filter[t].m.max(y[t].domain()[0], y[t].invert(0));
-          filter[t].max = Math.min(y[t].domain()[1], y[t].invert(h));
-          d.y = 0; d.dy = h;
-          active = t;
-          change.render();
-        }
-        return false;
-      }
-
       /* Handle select and drag */
       var handle = change.add(pv.Panel)
           .data(dims.map(function(dim) { return {y:0, dy:h, dim:dim}; }))
           .left(function(t) x(t.dim) - 30)
           .width(60)
           .fillStyle("rgba(0,0,0,.001)")
-          .cursor("crosshair")
-          .event("mousedown", pv.Behavior.select())
-          .event("select", update)
-          .event("selectend", selectAll)
         .add(pv.Bar)
           .left(25)
           .top(function(d) d.y)
