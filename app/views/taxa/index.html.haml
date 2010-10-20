@@ -82,10 +82,9 @@
 
       var line = change.add(pv.Panel)
           .data(function() data)
-          .visible(function(d) dims.every(function(t)
-              (d[t] >= filter[t].min) && (d[t] <= filter[t].max)))
         .add(pv.Line)
           .data(dims)
+          .visible(function(t, d) d[t])
           .left(function(t, d) x(t))
           .bottom(function(t, d) y[t](d[t]))
           .strokeStyle(function(t, d) d["Hover"] == "X" ? "#FF0700" : d["Select"] == "X" ? "#C0F73E" : (c[active](d[active])))
