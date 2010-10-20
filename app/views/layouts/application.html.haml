@@ -8,7 +8,8 @@
       = stylesheet_link_tag 'ie.css', :media => 'screen, projection'
     = javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"
     = javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/jquery-ui.min.js"
-    = javascript_include_tag 'protovis-r3.2', 'jquery.tablesorter', 'jquery.coolinput', 'jquery.address', 'tables'
+    = javascript_include_tag 'jquery.tablesorter', 'jquery.coolinput', 'jquery.address', 'jquery.tipsy', 'tables'
+    = javascript_include_tag 'protovis-r3.2'
     = javascript_include_tag 'application'
     = yield :include_javascript
     %script{:type => 'text/javascript'}
