@@ -146,7 +146,8 @@
         .add(pv.Label)
           .text(function(t, d) d[t] + units[t].unit)
           .textStyle("white")
-          .left(function(t, d) t == dims[dims.length-1] ? x(t) - 100 : t == dims[0] ? x(t) + 20 : x(t) - 40)
+          .textAlign(function(t, d) t == dims[dims.length-1] ? "right" : t == dims[0] ? "left" : "center")
+          .left(function(t, d) t == dims[dims.length-1] ? x(t) - 20 : t == dims[0] ? x(t) + 20 : x(t))
           .bottom(function(t, d) y[t](d[t]) + 9);
 
       vis.render();
