@@ -178,8 +178,7 @@
         else
           value["order"] = 3;
         return value;
-      });
-      data = data.sort(function(a, b) {
+      }).sort(function(a, b) {
         return b["order"] - a["order"];
       });
     };
