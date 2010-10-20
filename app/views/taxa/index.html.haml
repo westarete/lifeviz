@@ -22,7 +22,7 @@
           y = pv.dict(
                 dims,
                 function(t) pv.Scale.linear(
-                  data.filter( function(d) !isNaN(d[t]) ),
+                  data.filter( function(d) dims.map(function(dim) d[dim]).indexOf("") == -1 ),
                   function(d) Math.floor(d[t]),
                   function(d) Math.ceil(d[t])
                 ).range(0, h)
@@ -82,9 +82,9 @@
 
       var line = change.add(pv.Panel)
           .data(function() data)
+          .visible(function(d) dims.map(function(dim) d[dim]).indexOf("") == -1)
         .add(pv.Line)
           .data(dims)
-          .visible(function(t, d) d[t])
           .left(function(t, d) x(t))
           .bottom(function(t, d) y[t](d[t]))
           .strokeStyle(function(t, d) d["Hover"] == "X" ? "#FF0700" : d["Select"] == "X" ? "#C0F73E" : (c[active](d[active])))
