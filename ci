@@ -14,7 +14,7 @@ gem env gemdir
 env | sort
 
 echo '========== Install Gems ============================================='
-bundle --no-color install
+bundle --no-color --local install
 
 echo '========== Run Specs ================================================'
 # Set display for selenium
