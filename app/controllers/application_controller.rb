@@ -5,7 +5,6 @@ class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
   helper_method :current_user_session, :current_user, :load_taxonomy, :logged_in?
-  filter_parameter_logging :password, :password_confirmation
   public :render_to_string
 
   private

@@ -81,7 +81,7 @@ class Taxon < ActiveRecord::Base
   
   
     # Makes our 1D array into a 2D array ordered by     
-    returning Array.new do |ranked_ancestry|
+    Array.new.tap do |ranked_ancestry|
       ancestry.each do |term|
         rank = term.rank.to_i
         ranked_ancestry[rank] ||= []
