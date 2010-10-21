@@ -2,14 +2,14 @@ require File.dirname(__FILE__) + '/spec_helper'
 
 describe Version do
   before(:each) do
-    RAILS_ROOT = '/tmp' if ! defined?(RAILS_ROOT)
+    Rails.root = '/tmp' if ! defined?(Rails.root)
     Rails = stub('Rails') if ! defined?(Rails)
-    Rails.stub!(:root => stub('root', :join => "#{RAILS_ROOT}/VERSION"))
+    Rails.stub!(:root => stub('root', :join => "#{Rails.root}/VERSION"))
   end
   
   describe ".path" do
     it "should return a pathname object to the version file" do
-      Version.path.to_s.should == "#{RAILS_ROOT}/VERSION"
+      Version.path.to_s.should == "#{Rails.root}/VERSION"
     end
   end
   

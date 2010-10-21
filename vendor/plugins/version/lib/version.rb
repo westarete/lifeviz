@@ -110,8 +110,7 @@ class Version
     end
     
     config = YAML::load_file('config/campfire.yml')
-    campfire = Tinder::Campfire.new(config['account'])
-    campfire.login(config['email'], config['password'])
+    campfire = Tinder::Campfire.new config['account'], :token => config['bot_token']
     room = campfire.find_room_by_name(config['room'])
     room.speak("#{username} just released version #{self} of #{application}")
     room.leave

@@ -1,8 +1,7 @@
 source 'http://rubygems.org'
 
 # Web framework.
-gem 'rails', '2.3.10'
-gem 'activesupport', '2.3.10'
+gem 'rails', '3.0.1'
 
 # View design.
 gem 'haml', '3.0.22'
@@ -15,7 +14,7 @@ gem 'pg', '0.9.0'
 gem 'progressbar', '0.9.0'
 
 # Nested sets for storing hierarchies.
-gem 'awesome_nested_set', '1.4.3'
+gem 'nested_set', '1.5.2'
 
 # Authentication
 gem 'rack-openid', '1.2.0'
@@ -23,7 +22,7 @@ gem 'authlogic', '2.1.6'
 gem 'authlogic-oid', '1.0.4'
 
 # Pagination
-gem 'will_paginate', '2.3.11'
+gem 'will_paginate', '2.3.15'
 
 # For seeding database.
 gem 'hpricot', '0.8.2'
@@ -56,8 +55,8 @@ group :development do
 end
 
 group :test do
-  gem 'rspec', '= 1.3.0'
-  gem 'rspec-rails', '= 1.3.2'
+  gem 'rspec', '2.0.1'
+  gem 'rspec-rails', '2.0.1'
 
   # Automatically run tests.
   gem 'ZenTest', '4.4.0'
