@@ -1,12 +1,12 @@
 source 'http://rubygems.org'
 
 # Web framework.
-gem 'rails', '2.3.8'
-gem 'activesupport', '2.3.8'
+gem 'rails', '2.3.10'
+gem 'activesupport', '2.3.10'
 
 # View design.
-gem 'haml', '3.0.15'
-gem 'compass', '0.10.3'
+gem 'haml', '3.0.22'
+gem 'compass', '0.10.5'
 
 # Database.
 gem 'pg', '0.9.0'
@@ -19,7 +19,7 @@ gem 'awesome_nested_set', '1.4.3'
 
 # Authentication
 gem 'rack-openid', '1.2.0'
-gem 'authlogic', '2.1.3'
+gem 'authlogic', '2.1.6'
 gem 'authlogic-oid', '1.0.4'
 
 # Pagination
@@ -35,14 +35,14 @@ gem 'activerecord_null_object', '0.2.0'
 gem 'rest-client', '1.3.0', :require => "restclient"
 
 # Hoptoad notifier
-gem 'hoptoad_notifier', '2.3.5'
+gem 'hoptoad_notifier', '2.3.10'
 
 # Analyze performance (visit http://localhost:3000/newrelic)
-gem 'newrelic_rpm', '2.13.1'
+gem 'newrelic_rpm', '2.13.2'
 
 group :development do
   # Faster development server
-  gem 'unicorn', '1.1.3'
+  gem 'unicorn', '1.1.4'
 
   # debugger
   gem 'ruby-debug', '0.10.3'
@@ -61,21 +61,21 @@ group :test do
 
   # Automatically run tests.
   gem 'ZenTest', '4.4.0'
-  
   gem 'autotest-rails', '4.1.0'
   
   # Test gems, and testing helpers.
   gem 'mocha', '0.9.8'
 
+  # Create dummy data for tests.
   gem 'machinist', '1.0.6'
-
   gem 'faker', '0.3.1'
 
+  # Integration testing engine.
   gem 'capybara', '0.3.9'
-
-  gem 'shoulda', '2.11.3'
-
   gem 'capybara-envjs', '0.1.6'
+
+  # RSpec matchers.
+  gem 'shoulda', '2.11.3'
   
   # Cache API calls for stubbing.
   gem 'ephemeral_response', '0.3.2'
