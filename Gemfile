@@ -21,9 +21,6 @@ gem 'rack-openid', '1.2.0'
 gem 'authlogic', '2.1.6'
 gem 'authlogic-oid', '1.0.4'
 
-# Pagination
-gem 'will_paginate', '2.3.15'
-
 # For seeding database.
 gem 'hpricot', '0.8.2'
 

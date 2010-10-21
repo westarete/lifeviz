@@ -187,7 +187,6 @@ GEM
     tzinfo (0.3.23)
     unicorn (1.1.4)
       rack
-    will_paginate (2.3.15)
 
 PLATFORMS
   ruby
@@ -227,4 +226,3 @@ DEPENDENCIES
   specjour (= 0.2.5)
   tinder (= 1.4.0)
   unicorn (= 1.1.4)
-  will_paginate (= 2.3.15)
