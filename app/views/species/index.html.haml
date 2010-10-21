@@ -22,7 +22,7 @@
           y = pv.dict(
                 dims,
                 function(t) pv.Scale.linear(
-                  data.filter( function(d) !isNaN(d[t]) ),
+                  data.filter( function(d) dims.map(function(dim) d[dim]).indexOf("") == -1 ),
                   function(d) Math.floor(d[t]),
                   function(d) Math.ceil(d[t])
                 ).range(0, h)
@@ -31,7 +31,7 @@
                 data.filter(function(d) !isNaN(d[t])),
               function(d) Math.floor(d[t]),
               function(d) Math.ceil(d[t])
-              ).range("#015367", "#60B9CE"));
+              ).range("#014357", "#70C9DE"));
 
       /* Interaction state. */
       var filter =  pv.dict(
@@ -82,17 +82,14 @@
 
       var line = change.add(pv.Panel)
           .data(function() data)
-          .visible(function(d) dims.every(function(t)
-              (d[t] >= filter[t].min) && (d[t] <= filter[t].max)))
-        .add(pv.Panel)
-          .def("hover", false)
-          .def("select", false)
+          .visible(function(d) dims.map(function(dim) d[dim]).indexOf("") == -1)
         .add(pv.Line)
           .data(dims)
           .left(function(t, d) x(t))
           .bottom(function(t, d) y[t](d[t]))
-          .strokeStyle(function(t, d) (this.parent.hover() || d["Hover"] == "X") ? "#FF0700" : d["Select"] == "X" ? "#C0F73E" : (c[active](d[active])))
+          .strokeStyle(function(t, d) d["Hover"] == "X" ? "#FF0700" : d["Select"] == "X" ? "#C0F73E" : (c[active](d[active])))
           .lineWidth(5)
+          .text(function(t, d) y[t](d[t]))
           .event("mouseover", function(t, d) turnHoveredOn($('#taxatable .taxon[taxon_id~=value]'.replace('value', d["ID"]))) )
           .event("mouseout", function(t, d) turnHoveredOff($('#taxatable .taxon[taxon_id~=value]'.replace('value', d["ID"]))) )
           .event("click", function(t, d) toggleSelected($('#taxatable .taxon[taxon_id~=value]'.replace('value', d["ID"]))));
@@ -107,29 +104,12 @@
         return false;
       }
 
-      // Updater for slider and resizer.
-      function selectAll(d) {
-        if (d.dy < 3) {
-          var t = d.dim;
-          filter[t].m.max(y[t].domain()[0], y[t].invert(0));
-          filter[t].max = Math.min(y[t].domain()[1], y[t].invert(h));
-          d.y = 0; d.dy = h;
-          active = t;
-          change.render();
-        }
-        return false;
-      }
-
       /* Handle select and drag */
       var handle = change.add(pv.Panel)
           .data(dims.map(function(dim) { return {y:0, dy:h, dim:dim}; }))
           .left(function(t) x(t.dim) - 30)
           .width(60)
           .fillStyle("rgba(0,0,0,.001)")
-          .cursor("crosshair")
-          .event("mousedown", pv.Behavior.select())
-          .event("select", update)
-          .event("selectend", selectAll)
         .add(pv.Bar)
           .left(25)
           .top(function(d) d.y)
@@ -152,6 +132,41 @@
           .textBaseline("bottom")
           .text(function(d) filter[d.dim].max.toFixed(0) + units[d.dim].unit);
 
+      var tooltip = change.add(pv.Panel)
+          .data(function() data)
+        .add(pv.Bar)
+          .data(dims)
+          .height(30)
+          .width(100)
+          .lineWidth(0)
+          .bottom(function(t, d) y[t](d[t]))
+          .left(function(t, d) t == dims[dims.length-1] ? x(t) - 110 : t == dims[0] ? x(t) + 10 : x(t) - 50)
+          .fillStyle("rgba(0, 0, 0, 0.8)")
+          .visible(function(t, d) d["Hover"] == "X" && d[t])  /* Visible if the data exists, and is hovered. */
+        .add(pv.Label)
+          .text(function(t, d) d[t] + units[t].unit)
+          .textStyle("white")
+          .textAlign(function(t, d) t == dims[dims.length-1] ? "right" : t == dims[0] ? "left" : "center")
+          .left(function(t, d) t == dims[dims.length-1] ? x(t) - 20 : t == dims[0] ? x(t) + 20 : x(t))
+          .bottom(function(t, d) y[t](d[t]) + 9);
+
+      var nametooltip = change.add(pv.Bar)
+          .data(function() data)
+          .height(30)
+          .width(180)
+          .lineWidth(0)
+          .top(0)
+          .left(w/2 - 90)
+          .fillStyle("rgba(0, 0, 0, 0.8)")
+          .visible(function(d) d["Hover"] == "X")  /* Visible if the data exists, and is hovered. */
+        .add(pv.Label)
+          .text(function(d) d["Name"])
+          .textStyle("white")
+          .textAlign("center")
+          .font("bold 12px sans-serif")
+          .top(22)
+          .left(w/2);
+
       vis.render();
 
   :javascript
@@ -160,15 +175,16 @@
       /*
         Here, we're sorting data by hovers on top, then selected values, and finally non-selected values on bottom.
       */
-      data = data.sort(function(a, b) {
-        if (a["Hover"] == "X")
-          {return 1}
-        else if (a["Select"] == "X" && b["Select"] != "X")
-          {return 1}
-        else if ((a["Select"] == "X" && b["Select"] == "X") || (a["Select"] != "X" && b["Select"] != "X"))
-          {return 0}
-        else if (a["Select"] != "X" && b["Select"] == "X")
-          {return -1}
+      data = $.each(data, function(index, value) {
+        if (value["Hover"] == "X")
+          value["order"] = 1;
+        else if (value["Select"] == "X")
+          value["order"] = 2;
+        else
+          value["order"] = 3;
+        return value;
+      }).sort(function(a, b) {
+        return b["order"] - a["order"];
       });
     };
 
@@ -189,13 +205,6 @@
       var taxon_id = $(row).attr("taxon_id");
       $(row).toggleClass("selected");
       $(row).toggleX(".select");
-      updateData();
-    };
-
-    function toggleHovered(row) {
-      var taxon_id = $(row).attr("taxon_id");
-      $(row).toggleClass("hover");
-      $(row).toggleX(".hover");
       updateData();
     };
 
@@ -258,7 +267,7 @@
 
       // If table row is clicked, highlight it and the corresponding line in the graph.
       $('#taxatable tr.taxon').click(function(event){
-        if (event.target.constructor == HTMLTableCellElement) {
+        if (event.target.constructor == HTMLTableCellElement) {  // Make sure we're not clicking an anchor
           toggleSelected(this);
           toggleParameter("highlight_" + $(this).attr("taxon_id"), "true");
           vis.render();
@@ -266,13 +275,19 @@
       });
 
       // If table row is hovered, highlight it and the corresponding line in the graph.
-      $('#taxatable tr.taxon').hover(function() {
-        toggleHovered(this);
-        // If you're comparing me to the above callback... I don't save hovered information in the params. :-)
-        vis.render();
-      });
+      $('#taxatable tr.taxon').hover(
+        function() {
+          clearTableHovers();
+          turnHoveredOn(this);
+          // If you're comparing me to the above callback... I don't save hovered information in the params. :-)
+        },
+        function () {
+          turnHoveredOff(this);
+        }
+      );
 
     })
+
 
 %ul#taxonomic_selector.clearfix
   = taxon_dropdowns(@taxon, @taxon_ancestry)
