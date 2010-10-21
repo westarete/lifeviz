@@ -98,14 +98,6 @@ class Taxon < ActiveRecord::Base
     end
   end
     
-  def paginated_sorted_species(page)
-    begin
-      Species.paginate_by_sql("SELECT * FROM taxa WHERE lft >= #{self.lft} AND rgt <= #{self.rgt} AND rank = 6 ORDER BY name ASC", :page => page)
-    rescue
-      raise "Left and Right attributes were nil!"
-    end
-  end  
-    
   def precalculate_stats(children = self.children)
     if children.any?
       [:avg_lifespan, :avg_litter_size, :avg_adult_weight, :avg_birth_weight].each do |property|

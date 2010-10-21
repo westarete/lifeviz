@@ -8,7 +8,7 @@ class SpeciesController < ApplicationController
     else
       @taxon_ancestry = @taxon.full_ancestry(:include_children => false) # for taxon dropdowns
       @rank = @taxon.rank
-      @species = @taxon.paginated_sorted_species(params[:page])
+      @species = @taxon.species
     end
   end
   

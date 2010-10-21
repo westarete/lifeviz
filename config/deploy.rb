@@ -21,3 +21,6 @@ set :shared, %w{
   config/initializers/karma.rb
   vendor/bundle
 }
+
+        require 'config/boot'
+        require 'hoptoad_notifier/capistrano'

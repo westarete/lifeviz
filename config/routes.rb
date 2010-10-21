@@ -1,4 +1,4 @@
-Lifeviz::Application.routes.draw do |map|
+Lifeviz::Application.routes.draw do
   resource :user_session
   resources :users
   resources :species do
