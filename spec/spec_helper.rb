@@ -4,6 +4,7 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'capybara/rails'
 require 'capybara/dsl'
+include Capybara
 require File.expand_path(File.dirname(__FILE__) + "/blueprints")
 require 'shoulda'
 require 'authlogic/test_case'

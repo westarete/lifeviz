@@ -35,5 +35,6 @@ Lifeviz::Application.routes.draw do
   match '/:rank/:taxon' => 'taxa#index', :as => "taxon", :rank => /(kingdom|phylum|class|order|family)/, :via => "get"
   match '/taxa/data.:format' => 'taxa#data', :as => "data", :rank => /(kingdom|phylum|class|order|family)/, :via => "get"
   match '/taxonomy/dropdown/:rank' => 'taxa#dropdown_options', :as => "taxonomy_dropdown", :rank => /(kingdom|phylum|class|order|family)/, :via => "get"
+  
   root :to => 'taxa#index'
 end

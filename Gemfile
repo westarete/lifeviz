@@ -36,7 +36,7 @@ gem 'hoptoad_notifier', '2.3.10'
 # Analyze performance (visit http://localhost:3000/newrelic)
 gem 'newrelic_rpm', '2.13.2'
 
-group :development do
+group :development, :test do
   # Faster development server
   gem 'unicorn', '1.1.4'
 
@@ -49,9 +49,10 @@ group :development do
   gem 'capistrano-ext', '1.2.1'
   gem 'git', '1.2.5'
   gem 'tinder', '1.4.0'
-end
-
-group :test do
+  
+  #----  TEST GEMS  ----#
+  # Test gems have to be here, so we don't have to call RAILS_ENV=test every
+  # time we want to run specs through rake.
   gem 'rspec', '2.0.1'
   gem 'rspec-rails', '2.0.1'
 

@@ -19,7 +19,7 @@ describe Species do
       @taxon.validate
     end
     it "should ensure rank of parent is at the genus level" do
-      @taxon.errors[:base].should == "Species needs to belong to a genus"
+      @taxon.errors[:base].should == ["Species needs to belong to a genus"]
     end
   end
   

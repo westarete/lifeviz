@@ -3,7 +3,7 @@ require 'spec_helper'
 # make sure we have biological classification before we navigate a heirarchy
 make_biological_classification(5)
 
-context "User viewing the taxa in a class" do
+describe "User viewing the taxa in a class" do
   subject { Taxon.find_by_rank(2)}
   let(:user) { User.make }
   
