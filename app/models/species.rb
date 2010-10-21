@@ -25,6 +25,8 @@ class Species < Taxon
     end
   end
 
+  default_scope :conditions => {:rank => 6}
+
   # Return the average adult weight in grams.
   def adult_weight_in_grams
     weights = adult_weights.collect(&:value_in_grams).delete_if{|x| x.nil? || x.be_close(0.0, 0.0000000000001) } if adult_weights.any?
