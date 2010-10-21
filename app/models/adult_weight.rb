@@ -10,10 +10,7 @@ class AdultWeight < ActiveRecord::Base
   validates_presence_of   :units
   validates_inclusion_of  :units, :in => %w( Grams Kilograms )
   validates_presence_of   :value_in_grams
-  
-  def validate
-    should_be_greater_than_zero
-  end
+  validate :should_be_greater_than_zero
   
   def should_be_greater_than_zero
     unless value_in_grams.nil?

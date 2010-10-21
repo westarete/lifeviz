@@ -6,12 +6,9 @@ class LitterSize < ActiveRecord::Base
   
   belongs_to :species
   
-  validates_presence_of :species_id
-  validates_presence_of :measure
-
-  def validate
-    should_be_greater_than_zero
-  end
+  validates :species_id, :presence => true
+  validates :measure, :presence => true
+  validate :should_be_greater_than_zero
   
   def should_be_greater_than_zero
     unless measure.nil?
