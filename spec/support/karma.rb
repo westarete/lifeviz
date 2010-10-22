@@ -21,7 +21,16 @@ def stub_karma_server(json=nil)
      }
   }
   # Stub the RestClient Resource to use our objects instead of querying the server.
-  RestClient::Resource.stub(:new) {json}
+  resource = mock('resource', :get => json, :post => nil, :put => nil)
+  # Stub the RestClient Resource to use our objects instead of querying the server.
+  RestClient::Resource.stub!(:new => resource)
+  
+  
+  resource = mock('resource')
+  resource.should_receive(:post).with('adjustment[value]=3')
+  RestClient::Resource.should_receive(:new).with("http://#{KARMA_SERVER_HOSTNAME}/users/bobexamplecom/tags/plants/adjustments.json", "", KARMA_API_KEY).and_return(resource)
+  @tags.plants += 3
+  
 end
 
 def stub_karma_server_after_contribution(json=nil)

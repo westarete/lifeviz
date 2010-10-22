@@ -73,9 +73,6 @@ group :development, :test do
 
   # RSpec matchers.
   gem 'shoulda', '2.11.3'
-  
-  # Cache API calls for stubbing.
-  gem 'ephemeral_response', '0.3.2'
 
   # Run multiple tests at the same time.
   gem 'specjour', '0.2.5'
