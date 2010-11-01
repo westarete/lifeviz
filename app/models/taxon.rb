@@ -97,6 +97,14 @@ class Taxon < ActiveRecord::Base
       self.lineage_ids.split(',').map{|id| id.to_i}
     end
   end
+  
+  def to_jstree
+    data = {'data' => self.name, 'attr' => {'id' => self.id}}
+    data['state'] = 'closed' unless leaf?
+
+    data.to_json
+  end
+  
     
   def paginated_sorted_species(page)
     begin

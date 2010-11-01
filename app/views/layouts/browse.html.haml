@@ -5,7 +5,7 @@
     %title Lifeviz
 
     = javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"
-    = javascript_include_tag "browse"
+    = javascript_include_tag 'jquery.jstree', "browse"
     = yield :include_javascript
     %script{:type => 'text/javascript'}
       = yield :javascript
