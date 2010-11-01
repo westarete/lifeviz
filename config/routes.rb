@@ -2,6 +2,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resource  :user_session
   map.resources :users
   
+  map.browse '/browse', :controller => :browse, :action => :index, :conditions => {:method => :get}
+  
   map.resources :species, :collection => { :data => :get, :species_data => :get }, :member => {:children => :get}
   map.genus '/genus/:genus', :controller => :species, :action => :index, :conditions => {:method => :get}
 
