@@ -98,11 +98,15 @@ class Taxon < ActiveRecord::Base
     end
   end
   
-  def to_jstree
-    data = {'data' => self.name, 'attr' => {'id' => self.id}}
-    data['state'] = 'closed' unless leaf?
-
-    data.to_json
+  # Used for populating the JSTree browser via ajax
+  def to_json(options={})
+    if options[:jstree]
+      data = {'data' => self.name, 'attr' => {'id' => self.id}}
+      data['state'] = 'closed' unless leaf?
+      data.to_json
+    else 
+      super(options)
+    end
   end
   
     

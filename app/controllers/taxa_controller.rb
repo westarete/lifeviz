@@ -23,11 +23,11 @@ class TaxaController < ApplicationController
   # This populates the taxon dropdowns that run across the top of the page
   # /taxa/1234/children and returns a list of 1234's children terms.
   def children  
-    @children = Taxon.find_all_by_parent_id(params[:id])
+    @children = Taxon.find_all_by_parent_id(params[:id], :order => 'name ASC')
     
     respond_to do |format|
       format.json do 
-        render :json => @children.to_jstree
+        render :json => @children.to_json(:jstree => true)
       end
     end
   end

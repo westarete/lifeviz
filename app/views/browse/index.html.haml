@@ -1,1 +1,29 @@
-JSTREE goes here
+#tree_browser
+
+- content_for :javascript do
+  :plain
+    $(document).ready(function(){
+      $('#tree_browser').jstree({
+        json_data: {
+          data: #{@kingdoms.to_json(:jstree => true)},
+          ajax: {
+            url: function(node) {
+              return "/taxa/" + node.attr('id') + "/children.json";
+            }
+          }
+        },
+        ui: {
+          select_limit: 1,
+          selected_parent_close: "deselect"
+        },
+        themes: {
+          url: '/themes/classic/style.css',
+          theme: 'classic',
+          icons: false
+        },
+        core: {
+          animation: 200
+        },
+        plugins: ["json_data", "ui", "themes"]
+      });
+    });

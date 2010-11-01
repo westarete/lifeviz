@@ -1,6 +1,6 @@
 class BrowseController < ApplicationController
   layout 'browse'
   def index
-    #render JSTree
+    @kingdoms = Taxon.kingdoms
   end
 end
