@@ -1,0 +1,14 @@
+!!!
+%html
+  %head
+    %meta{'http-equiv' => "X-UA-Compatible", :content => "chrome=1"}
+    %title Lifeviz
+
+    = javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"
+    = javascript_include_tag "browse"
+    = yield :include_javascript
+    %script{:type => 'text/javascript'}
+      = yield :javascript
+  %body
+    #main
+      = yield
