@@ -41,6 +41,7 @@ ActionController::Routing::Routes.draw do |map|
     t.taxon '/:rank/:taxon', :action => :index, :conditions => {:method => :get}
     t.data '/taxa/data.:format', :action => :data, :conditions => {:method => :get}
     t.taxonomy_dropdown '/taxonomy/dropdown/:rank', :action => :dropdown_options, :conditions => {:method => :get}
+    t.children '/taxa/:id/children.:format', :action => :children, :conditions => {:method => :get}
   end
   
   map.root :controller => :taxa
