@@ -22,6 +22,9 @@ gem 'rack-openid', '1.2.0'
 gem 'authlogic', '2.1.6'
 gem 'authlogic-oid', '1.0.4'
 
+# Unit conversion library
+gem 'quantity', '0.1.1'
+
 # Pagination
 gem 'will_paginate', '2.3.11'
 
