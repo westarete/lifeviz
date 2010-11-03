@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100709203032) do
+ActiveRecord::Schema.define(:version => 20101102213209) do
 
   create_table "adult_weights", :force => true do |t|
     t.integer  "species_id",       :null => false
@@ -75,6 +75,28 @@ ActiveRecord::Schema.define(:version => 20100709203032) do
     t.integer "timestamp",  :null => false
     t.string  "server_url"
     t.string  "salt",       :null => false
+  end
+
+  create_table "statistics", :force => true do |t|
+    t.integer  "taxon_id"
+    t.float    "minimum_lifespan"
+    t.float    "minimum_adult_weight"
+    t.float    "minimum_litter_size"
+    t.float    "minimum_birth_weight"
+    t.float    "maximum_lifespan"
+    t.float    "maximum_adult_weight"
+    t.float    "maximum_litter_size"
+    t.float    "maximum_birth_weight"
+    t.float    "average_lifespan"
+    t.float    "average_adult_weight"
+    t.float    "average_litter_size"
+    t.float    "average_birth_weight"
+    t.float    "standard_deviation_lifespan"
+    t.float    "standard_deviation_adult_weight"
+    t.float    "standard_deviation_litter_size"
+    t.float    "standard_deviation_birth_weight"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "taxa", :force => true do |t|
