@@ -1,4 +1,4 @@
-require 'progressbar'
+a
 require 'db/seed_methods'
 include SeedMethods
 require 'lib/monkeypatches'
@@ -56,10 +56,10 @@ class Species < Taxon
   end
 
   def precalculate_stats
-    self.avg_lifespan      = self.lifespan_in_days
-    self.avg_birth_weight  = self.birth_weight_in_grams
-    self.avg_adult_weight  = self.adult_weight_in_grams
-    self.avg_litter_size   = self.litter_size
+    self.statistics.average_lifespan      = self.lifespan_in_days
+    self.statistics.average_birth_weight  = self.birth_weight_in_grams
+    self.statistics.average_adult_weight  = self.adult_weight_in_grams
+    self.statistics.average_litter_size   = self.litter_size
     self.save
   end
 

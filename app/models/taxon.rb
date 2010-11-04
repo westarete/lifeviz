@@ -1,4 +1,5 @@
 require 'lib/monkeypatches'
+require 'progressbar'
 
 class Taxon < ActiveRecord::Base
   acts_as_nested_set
@@ -24,13 +25,13 @@ class Taxon < ActiveRecord::Base
       puts "Calculating size at rank #{RANK_LABELS[rank]}."
       size = Taxon.count(:all, :conditions => {:rank => rank}) / 50
       puts "#{size} batches to complete. Calculating stats at rank #{RANK_LABELS[rank]}."
-      progress "Rank: #{rank}", size do |progress_bar|
+      #progress    "Rank: #{rank}", size do |progress_bar|
         Taxon.find_in_batches( :batch_size => 50, :conditions => {:rank => rank} ) do |taxon_batch|
           taxon_batch.each do |t|
             t.precalculate_stats(t.children)
           end
-          progress_bar.inc
-        end
+       #   progress_bar.inc
+      #  end
       end
       puts "Done."
       break unless rank_specified.nil?
@@ -110,11 +111,13 @@ class Taxon < ActiveRecord::Base
     
   def precalculate_stats(children = self.children)
     if children.any?
-      [:avg_lifespan, :avg_litter_size, :avg_adult_weight, :avg_birth_weight].each do |property|
-        self[property]= calculate_avg(children.collect(&property))
-      end
-      self.save
-    end
+      stats = Statistics.new
+         [:average_lifespan, :average_litter_size, :average_adult_weight, :average_birth_weight].each do |property|
+           stats[property] = calculate_avg(children.collect(&property))
+         end
+         self.statistics = stats
+         self.statistics.save
+       end
   end
   
   def rank_in_words
