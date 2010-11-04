@@ -1,4 +1,3 @@
-a
 require 'db/seed_methods'
 include SeedMethods
 require 'lib/monkeypatches'
@@ -15,11 +14,9 @@ class Species < Taxon
   # after_create :move_to_genus # do we really need this? delete after the next rebuild if it wasn't needed
   
   def self.rebuild_stats
-    progress "Rank: 6", (Taxon.species.count / 50) do |progress_bar|
-      Taxon.species.find_in_batches( :batch_size => 50 ) do |species_batch|
-        species_batch.each do |s|
-          s.precalculate_stats
-        end
+    progress "Rank: 6", (Species.count) do |progress_bar|
+      Species.all.each do |s|
+        s.precalculate_stats
         progress_bar.inc
       end
     end
@@ -56,11 +53,12 @@ class Species < Taxon
   end
 
   def precalculate_stats
+    self.statistics ||= Statistics.new
     self.statistics.average_lifespan      = self.lifespan_in_days
     self.statistics.average_birth_weight  = self.birth_weight_in_grams
     self.statistics.average_adult_weight  = self.adult_weight_in_grams
     self.statistics.average_litter_size   = self.litter_size
-    self.save
+    self.statistics.save
   end
 
   def validate
