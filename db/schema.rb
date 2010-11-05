@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101102213209) do
+ActiveRecord::Schema.define(:version => 20101105151949) do
 
   create_table "adult_weights", :force => true do |t|
     t.integer  "species_id",       :null => false
@@ -23,6 +23,9 @@ ActiveRecord::Schema.define(:version => 20101102213209) do
     t.text     "citation_context"
   end
 
+  add_index "adult_weights", ["id"], :name => "index_adult_weights_on_id", :unique => true
+  add_index "adult_weights", ["species_id"], :name => "index_adult_weights_on_species_id"
+
   create_table "birth_weights", :force => true do |t|
     t.integer  "species_id"
     t.decimal  "value_in_grams"
@@ -35,6 +38,7 @@ ActiveRecord::Schema.define(:version => 20101102213209) do
     t.text     "citation_context"
   end
 
+  add_index "birth_weights", ["id"], :name => "index_birth_weights_on_id", :unique => true
   add_index "birth_weights", ["species_id"], :name => "index_birth_weights_on_species_id"
 
   create_table "lifespans", :force => true do |t|
@@ -50,6 +54,7 @@ ActiveRecord::Schema.define(:version => 20101102213209) do
   end
 
   add_index "lifespans", ["id"], :name => "index_species_on_id"
+  add_index "lifespans", ["species_id"], :name => "index_lifespans_on_species_id"
 
   create_table "litter_sizes", :force => true do |t|
     t.integer  "species_id",       :null => false
@@ -61,6 +66,9 @@ ActiveRecord::Schema.define(:version => 20101102213209) do
     t.string   "citation"
     t.text     "citation_context"
   end
+
+  add_index "litter_sizes", ["id"], :name => "index_litter_sizes_on_id", :unique => true
+  add_index "litter_sizes", ["species_id"], :name => "index_litter_sizes_on_species_id"
 
   create_table "open_id_authentication_associations", :force => true do |t|
     t.integer "issued"
@@ -99,6 +107,9 @@ ActiveRecord::Schema.define(:version => 20101102213209) do
     t.datetime "updated_at"
   end
 
+  add_index "statistics", ["id"], :name => "index_statistics_on_id", :unique => true
+  add_index "statistics", ["taxon_id"], :name => "index_statistics_on_taxon_id", :unique => true
+
   create_table "taxa", :force => true do |t|
     t.string  "name"
     t.integer "parent_id"
@@ -106,10 +117,6 @@ ActiveRecord::Schema.define(:version => 20101102213209) do
     t.integer "rgt"
     t.integer "rank"
     t.string  "lineage_ids"
-    t.float   "avg_adult_weight"
-    t.float   "avg_birth_weight"
-    t.float   "avg_lifespan"
-    t.float   "avg_litter_size"
   end
 
   add_index "taxa", ["id"], :name => "index_taxa_on_id"
@@ -130,6 +137,8 @@ ActiveRecord::Schema.define(:version => 20101102213209) do
     t.string   "name"
   end
 
+  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
+  add_index "users", ["id"], :name => "index_users_on_id", :unique => true
   add_index "users", ["openid_identifier"], :name => "index_users_on_openid_identifier"
 
 end
