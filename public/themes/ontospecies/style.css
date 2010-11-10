@@ -1,0 +1,115 @@
+/* @override http://localhost:3000/themes/ontospecies/style.css */
+
+/*
+ * jsTree ontospecies theme 1.0
+ * Supported features: dots/no-dots, icons/no-icons, focused, loading
+ * Supported plugins: ui (hovered, clicked), checkbox, contextmenu, search
+ */
+ 
+
+.mondrian.jstree-ontospecies ins { display: none; }
+.mondrian.jstree-ontospecies .term a {
+	color: transparent;
+	background-color: transparent;
+}
+
+
+ 
+.jstree-ontospecies ins { background-repeat:no-repeat; background-color:transparent; background-position: center center; }
+
+.jstree-ontospecies li { background-position: left top; background-image: url(2px-black.gif); background-repeat: repeat-y;  }
+
+.jstree-ontospecies li:first-child { background: url(node-first.gif) left top no-repeat, 
+                                                 url(2px-black.gif) left top repeat-y; }
+.jstree-ontospecies li.jstree-last { background-image: url(node-last.gif); background-repeat: no-repeat; }
+.jstree-ontospecies li.jstree-last:first-child { background:url(2px-black.gif) left 8px no-repeat;}
+
+.jstree-ontospecies .jstree-open  > .term { background-image: url(2px-black.gif); background-repeat: repeat-x; background-position: left 8px;  }
+.jstree-ontospecies .jstree-open   .term > ins { background-image: url(minus.gif); }
+.jstree-ontospecies .jstree-closed .term > ins { background-image: url(plus.gif); }
+.jstree-ontospecies .jstree-leaf   .term > ins { background-image: url(no-children.gif); }
+.jstree-ontospecies a { background-color: #fff;}
+
+.jstree-ontospecies .jstree-hovered { background:#e7f4f9; border:1px solid #e7f4f9; padding:0 2px 0 1px; }
+.jstree-ontospecies .jstree-clicked { background:navy; border:1px solid navy; padding:0 2px 0 1px; color:white; }
+.jstree-ontospecies a .jstree-icon { background-position:-56px -19px; }
+.jstree-ontospecies .jstree-open > a .jstree-icon { background-position:-56px -36px; }
+.jstree-ontospecies a.jstree-loading .jstree-icon { background:url("throbber.gif") center center no-repeat !important; }
+
+.jstree-ontospecies.jstree-focused { background:white; }
+
+
+/* fluid tree */
+.jstree-ontospecies ul {
+	float: left;
+	display: inline;
+	overflow: hidden;
+}
+.jstree-ontospecies ul { width: 100%; }
+.jstree-ontospecies ul ul {  width: 85.7%; }
+.jstree-ontospecies ul ul ul {  width: 83.3%; }
+.jstree-ontospecies ul ul ul ul {  width: 80.0%; }
+.jstree-ontospecies ul ul ul ul ul { width: 75.0%; }
+.jstree-ontospecies ul ul ul ul ul ul { width: 66.7%; }
+.jstree-ontospecies ul ul ul ul ul ul ul { width: 50.0%; }
+
+.jstree-ontospecies ul .term { width: 14.3%;}
+.jstree-ontospecies ul ul .term { width:  16.7%;}
+.jstree-ontospecies ul ul ul .term { width: 20.0%;}
+.jstree-ontospecies ul ul ul ul .term { width: 25.0%;}
+.jstree-ontospecies ul ul ul ul ul .term { width: 33.3%;}
+.jstree-ontospecies ul ul ul ul ul ul .term { width: 50%;}
+.jstree-ontospecies ul ul ul ul ul ul ul .term { width: 50%;}
+
+.jstree-ontospecies li {
+	overflow: hidden;
+	margin: 0;
+	padding: 0;
+}
+
+.jstree-ontospecies .term {
+	position: relative;
+	float: left;
+	display: inline;
+}
+
+
+
+
+.jstree-ontospecies .jstree-no-dots li, 
+.jstree-ontospecies .jstree-no-dots .jstree-leaf > ins { background:transparent; }
+.jstree-ontospecies .jstree-no-dots .jstree-open > ins { background-position:-18px 0; }
+.jstree-ontospecies .jstree-no-dots .jstree-closed > ins { background-position:0 0; }
+
+.jstree-ontospecies .jstree-no-icons a .jstree-icon { display:none; }
+
+.jstree-ontospecies .jstree-search { font-style:italic; }
+
+.jstree-ontospecies .jstree-no-icons .jstree-checkbox { display:inline-block; }
+.jstree-ontospecies .jstree-no-checkboxes .jstree-checkbox { display:none !important; }
+.jstree-ontospecies .jstree-checked > a > .jstree-checkbox { background-position:-38px -19px; }
+.jstree-ontospecies .jstree-unchecked > a > .jstree-checkbox { background-position:-2px -19px; }
+.jstree-ontospecies .jstree-undetermined > a > .jstree-checkbox { background-position:-20px -19px; }
+.jstree-ontospecies .jstree-checked > a > .jstree-checkbox:hover { background-position:-38px -37px; }
+.jstree-ontospecies .jstree-unchecked > a > .jstree-checkbox:hover { background-position:-2px -37px; }
+.jstree-ontospecies .jstree-undetermined > a > .jstree-checkbox:hover { background-position:-20px -37px; }
+
+#vakata-dragged.jstree-ontospecies ins { background:transparent !important; }
+#vakata-dragged.jstree-ontospecies .jstree-ok { background:url("d.png") -2px -53px no-repeat !important; }
+#vakata-dragged.jstree-ontospecies .jstree-invalid { background:url("d.png") -18px -53px no-repeat !important; }
+#jstree-marker.jstree-ontospecies { background:url("d.png") -41px -57px no-repeat !important; }
+
+.jstree-ontospecies a.jstree-search { color:aqua; }
+
+#vakata-contextmenu.jstree-ontospecies-context, 
+#vakata-contextmenu.jstree-ontospecies-context li ul { background:#f0f0f0; border:1px solid #979797; -moz-box-shadow: 1px 1px 2px #999; -webkit-box-shadow: 1px 1px 2px #999; box-shadow: 1px 1px 2px #999; }
+#vakata-contextmenu.jstree-ontospecies-context li { }
+#vakata-contextmenu.jstree-ontospecies-context a { color:black; }
+#vakata-contextmenu.jstree-ontospecies-context a:hover, 
+#vakata-contextmenu.jstree-ontospecies-context .vakata-hover > a { padding:0 5px; background:#e8eff7; border:1px solid #aecff7; color:black; -moz-border-radius:2px; -webkit-border-radius:2px; border-radius:2px; }
+#vakata-contextmenu.jstree-ontospecies-context li.jstree-contextmenu-disabled a, 
+#vakata-contextmenu.jstree-ontospecies-context li.jstree-contextmenu-disabled a:hover { color:silver; background:transparent; border:0; padding:1px 4px; }
+#vakata-contextmenu.jstree-ontospecies-context li.vakata-separator { background:white; border-top:1px solid #e0e0e0; margin:0; }
+#vakata-contextmenu.jstree-ontospecies-context li ul { margin-left:-4px; }
+
+/* TODO: IE6 support - the `>` selectors */

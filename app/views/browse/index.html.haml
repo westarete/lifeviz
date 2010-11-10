@@ -1,8 +1,11 @@
 #tree_browser
+%a#mondrian{:href => '#'} Make it Mondrian
 
 - content_for :javascript do
   :plain
     $(document).ready(function(){
+      $('#mondrian').click(function(){ $('#tree_browser').toggleClass('mondrian');});
+
       $('#tree_browser').jstree({
         json_data: {
           data: #{@kingdoms.to_json(:jstree => true)},
@@ -17,8 +20,8 @@
           selected_parent_close: "deselect"
         },
         themes: {
-          url: '/themes/classic/style.css',
-          theme: 'classic',
+          url: '/themes/ontospecies/style.css',
+          theme: 'ontospecies',
           icons: false
         },
         core: {
