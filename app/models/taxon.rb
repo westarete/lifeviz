@@ -1,5 +1,6 @@
 require 'lib/monkeypatches'
-require 'progressbar'
+require 'db/seed_methods'
+include SeedMethods
 
 class Taxon < ActiveRecord::Base
   acts_as_nested_set
@@ -19,22 +20,42 @@ class Taxon < ActiveRecord::Base
   
   RANK_LABELS = %w(Kingdom Phylum Class Order Family Genus Species)
 
+  after_create :create_statistics_object
+
+  def self.rebuild_statistics_objects
+    puts "Collecting taxon ids"
+    taxon_ids = Taxon.all.collect(&:id)
+    puts "Collecting statistics taxon ids"
+    statistics_taxon_ids = Statistics.all.collect(&:taxon_id)
+    puts "Finding taxa without statistics objects"
+    statistics_to_create = taxon_ids - statistics_taxon_ids
+    puts "Creating statistics objects"
+    progress    "Creating", statistics_to_create.count do |progress_bar|
+      statistics_to_create.each do |taxon_id|
+        Statistics.create(:taxon_id => taxon_id)
+        progress_bar.inc
+      end
+    end
+  end
+
   def self.rebuild_stats(rank_specified=nil)
-    rank_specified ? (rank = rank_specified) : (rank = 5)
+    rank_specified ? (rank = rank_specified) : (rank = 6)
     while rank >= 0
       puts "Calculating size at rank #{RANK_LABELS[rank]}."
       size = Taxon.count(:all, :conditions => {:rank => rank}) / 50
       puts "#{size} batches to complete. Calculating stats at rank #{RANK_LABELS[rank]}."
-      #progress    "Rank: #{rank}", size do |progress_bar|
+      progress    "#{RANK_LABELS[rank]}", size do |progress_bar|
         Taxon.find_in_batches( :batch_size => 50, :conditions => {:rank => rank} ) do |taxon_batch|
           taxon_batch.each do |t|
-            t.precalculate_stats(t.children)
+            t.statistics.calculate_lifespan
+            t.statistics.calculate_adult_weight
+            t.statistics.calculate_birth_weight
+            t.statistics.calculate_litter_size
           end
-       #   progress_bar.inc
-      #  end
+          progress_bar.inc
+        end
       end
       puts "Done."
-      break unless rank_specified.nil?
       rank -= 1
     end
   end
@@ -51,10 +72,10 @@ class Taxon < ActiveRecord::Base
   end
   
   def all_data_available?
-    avg_lifespan && ! avg_lifespan.be_close(0) &&
-    avg_birth_weight && ! avg_birth_weight.be_close(0) &&
-    avg_adult_weight && ! avg_adult_weight.be_close(0) &&
-    avg_litter_size && ! avg_litter_size.be_close(0)
+    self.statistics.average_lifespan && ! self.statistics.average_lifespan.be_close(0) &&
+    self.statistics.average_birth_weight && ! self.statistics.average_birth_weight.be_close(0) &&
+    self.statistics.average_adult_weight && ! self.statistics.average_adult_weight.be_close(0) &&
+    self.statistics.average_litter_size && ! self.statistics.average_litter_size.be_close(0)
   end
   
   def parents
@@ -107,17 +128,6 @@ class Taxon < ActiveRecord::Base
     rescue
       raise "Left and Right attributes were nil!"
     end
-  end  
-    
-  def precalculate_stats(children = self.children)
-    if children.any?
-      stats = Statistics.new
-         [:average_lifespan, :average_litter_size, :average_adult_weight, :average_birth_weight].each do |property|
-           stats[property] = calculate_avg(children.collect(&property))
-         end
-         self.statistics = stats
-         self.statistics.save
-       end
   end
   
   def rank_in_words
@@ -138,13 +148,9 @@ class Taxon < ActiveRecord::Base
   
   private
   
-  def calculate_avg(array)
-    sum = array.delete_if{|x| x.nil? || x.be_close(0.0, 0.00000000000001)}.sum
-    if sum != 0
-      sum / array.size.to_f
-    else
-      nil
-    end
+  def create_statistics_object
+    Rails.logger.info "Creating statistics for taxon #{self.id}"
+    self.create_statistics
   end
   
 end

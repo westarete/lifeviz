@@ -1,11 +1,23 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Taxon do
-  fixtures :taxa
+  fixtures :taxa, :lifespans
   
   before(:each) do    
     # Set lft and rgt values for every taxon. Necessary!
     Taxon.rebuild!
+  end
+  
+  describe "#create_statistics" do
+    before do
+      @family = Taxon.find_by_rank(4)
+      @genus = Taxon.new(:parent_id => @family.id, :rank => 5, :name => "genusgenus")
+      @genus.save!
+    end
+    it "should create a statistics object via the callback" do
+      @genus.statistics.should be_an_instance_of(Statistics)
+      @genus.statistics.taxon_id.should == @genus.id
+    end
   end
   
 end
@@ -26,4 +38,3 @@ end
 #  avg_lifespan     :float
 #  avg_litter_size  :float
 #
-
