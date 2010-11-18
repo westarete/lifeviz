@@ -25,8 +25,6 @@ class LitterSize < ActiveRecord::Base
 
 end
 
-
-
 # == Schema Information
 #
 # Table name: litter_sizes
@@ -41,4 +39,3 @@ end
 #  citation         :string(255)
 #  citation_context :text
 #
-
