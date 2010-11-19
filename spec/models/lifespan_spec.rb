@@ -1,16 +1,29 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Lifespan do
-  fixtures :taxa
-  
-  before(:all) do    
-    # Set lft and rgt values for every taxon. Necessary!
-    Taxon.rebuild!
-  end
   
   before(:each) do
-    @species = Species.find(8)
+    @species = Species.make
     @lifespan = @species.lifespans.new
+  end
+  
+  it { should belong_to :species }
+  it { should validate_presence_of :species_id }
+  it { should validate_presence_of :value_in_days }
+  
+  describe "after_save" do
+    context "when saving a new lifespan" do
+      before do
+        make_statistics_set
+        Lifespan.create!(:value_in_days => 30, :units => "Days", :species_id => @species1.id)
+      end
+      it "should recalculate the litter size" do
+        @species1.statistics.minimum_lifespan.should == 10.0
+        @species1.statistics.maximum_lifespan.should == 30.0
+        @species1.statistics.average_lifespan.should == 20.0
+        @species1.statistics.standard_deviation_lifespan.should be_close(10.0, 0.001)
+      end
+    end
   end
   
   describe "#value" do

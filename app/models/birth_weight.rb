@@ -24,6 +24,10 @@ class BirthWeight < ActiveRecord::Base
       end
     end
   end
+  
+  def after_save
+    self.species.statistics.calculate_birth_weight
+  end
 
   def to_s
     if units

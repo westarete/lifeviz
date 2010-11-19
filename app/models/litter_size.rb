@@ -22,6 +22,10 @@ class LitterSize < ActiveRecord::Base
       end
     end
   end
+  
+  def after_save
+    self.species.statistics.calculate_litter_size
+  end
 
 end
 
