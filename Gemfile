@@ -58,7 +58,8 @@ group :development do
   gem 'tinder', '1.4.0'
 end
 
-group :test do
+group :development, :test do
+  # Our test gems have to exist in both groups!
   gem 'rspec', '= 1.3.0'
   gem 'rspec-rails', '= 1.3.2'
 

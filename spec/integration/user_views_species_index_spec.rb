@@ -14,7 +14,9 @@ context "User viewing the species index page" do
   
   before do
     species
-    other_species    
+    other_species
+    # TODO: Figure out why we don't have enough stats objects at this point.
+    Taxon.rebuild_statistics_objects
     visit genus_path(species.parent.name)
   end
   

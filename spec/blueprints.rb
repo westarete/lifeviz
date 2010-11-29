@@ -20,6 +20,10 @@ Species.blueprint do
   rank 6
 end
 
+Statistics.blueprint do
+  
+end
+
 Lifespan.blueprint do
   species
   value_in_days { rand }

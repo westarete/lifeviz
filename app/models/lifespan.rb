@@ -9,7 +9,7 @@ class Lifespan < ActiveRecord::Base
   validates_presence_of   :species_id
   validates_presence_of   :units
   validates_inclusion_of  :units, :in => %w( Days Months Years )
-  validates_presence_of   :value
+  validates_presence_of   :value_in_days
   
   def validate
     should_be_greater_than_zero
@@ -23,6 +23,10 @@ class Lifespan < ActiveRecord::Base
         errors.add(:value, "should be a positive number")
       end
     end
+  end
+  
+  def after_save
+    self.species.statistics.calculate_lifespan
   end
   
   def to_s

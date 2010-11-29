@@ -5,17 +5,29 @@ make_biological_classification(5)
 
 describe LitterSize do
   
-  let(:species) { Species.make(:parent_id => Taxon.find_by_rank(5).id ) }
-  let(:litter_size)  { species.litter_sizes.new }
-  
-  before do
-    species
-    litter_size
+  before(:each) do
+    @species = Species.make
+    @litter_size = @species.litter_sizes.new
   end
 
   it { should belong_to(:species)               }
   it { should validate_presence_of(:species_id) }
   it { should validate_presence_of(:measure)    }
+  
+  describe "after_save" do
+    context "when saving a new litter size" do
+      before do
+        make_statistics_set
+        LitterSize.create!(:measure => 30, :species_id => @species1.id)
+      end
+      it "should recalculate the litter size stats" do
+        @species1.statistics.minimum_litter_size.should == 10.0
+        @species1.statistics.maximum_litter_size.should == 30.0
+        @species1.statistics.average_litter_size.should == 20.0
+        @species1.statistics.standard_deviation_litter_size.should be_close(10.0, 0.001)
+      end
+    end
+  end
   
 end
 

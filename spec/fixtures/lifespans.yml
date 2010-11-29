@@ -1,0 +1,20 @@
+1:
+  id: 1
+  species_id: 8
+  value_in_days: 100
+  units: Months
+2:
+  id: 2
+  species_id: 8
+  value_in_days: 200
+  units: Months
+3:
+  id: 3
+  species_id: 8
+  value_in_days: 300
+  units: Months
+4:
+  id: 4
+  species_id: 8
+  value_in_days: 400
+  units: Months

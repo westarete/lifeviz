@@ -11,30 +11,33 @@ class SpeciesController < ApplicationController
       @species = @taxon.paginated_sorted_species(params[:page])
     end
   end
-  
-  def species_data
-    if params[:taxon_id] && ! params[:taxon_id].blank?
-      @taxon = Taxon.find(params[:taxon_id])
-    else
-      @taxon = Taxon.find(1)
-    end
-    respond_to do |format|
-      format.html do
-        @children = @taxon.species
-        render :partial => "table", :layout => false
-      end
-      format.json do
-        render :json =>  @taxon.children_of_rank(@taxon.rank + 3).to_json(
-                 :only => :name,
-                 :methods => [
-                   :avg_lifespan,
-                   :avg_birth_weight,
-                   :avg_adult_weight,
-                   :avg_litter_size
-                 ])
-      end
-    end
-  end
+
+  # Clinton: I don't know if we actually use this. Commenting it out to see if
+  #          stuff breaks. Now, the graph uses javascript and the table in the
+  #          view to get its data.
+  # def species_data
+  #   if params[:taxon_id] && ! params[:taxon_id].blank?
+  #     @taxon = Taxon.find(params[:taxon_id])
+  #   else
+  #     @taxon = Taxon.find(1)
+  #   end
+  #   respond_to do |format|
+  #     format.html do
+  #       @children = @taxon.species
+  #       render :partial => "table", :layout => false
+  #     end
+  #     format.json do
+  #       render :json =>  @taxon.children_of_rank(@taxon.rank + 3).to_json(
+  #                :only => :name,
+  #                :methods => [
+  #                  :avg_lifespan,
+  #                  :avg_birth_weight,
+  #                  :avg_adult_weight,
+  #                  :avg_litter_size
+  #                ])
+  #     end
+  #   end
+  # end
 
   def new
     @species = Species.new
