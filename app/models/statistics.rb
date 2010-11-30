@@ -89,3 +89,30 @@ class Statistics < ActiveRecord::Base
     save!
   end
 end
+
+# == Schema Information
+#
+# Table name: statistics
+#
+#  id                              :integer         not null, primary key
+#  taxon_id                        :integer
+#  minimum_lifespan                :float
+#  minimum_adult_weight            :float
+#  minimum_litter_size             :float
+#  minimum_birth_weight            :float
+#  maximum_lifespan                :float
+#  maximum_adult_weight            :float
+#  maximum_litter_size             :float
+#  maximum_birth_weight            :float
+#  average_lifespan                :float
+#  average_adult_weight            :float
+#  average_litter_size             :float
+#  average_birth_weight            :float
+#  standard_deviation_lifespan     :float
+#  standard_deviation_adult_weight :float
+#  standard_deviation_litter_size  :float
+#  standard_deviation_birth_weight :float
+#  created_at                      :datetime
+#  updated_at                      :datetime
+#
+
