@@ -4,17 +4,17 @@ def stub_karma_server(json=nil)
   json ||= %{
     {
       "total":7,
-      "user_path":"/users/bobexamplecom.json",
-      "user":"bobexamplecom",
+      "user_path":"/users/jimwestaretecom.json",
+      "user":"jimwestaretecom",
       "tags": {
         "add_annotation": {
           "total":4,
-          "adjustments_path":"/users/bobexamplecom/tags/add_annotation/adjustments.json",
+          "adjustments_path":"/users/jimwestaretecom/tags/add_annotation/adjustments.json",
           "tag_path":"/tags/add_annotation.json"
          },
          "add_comment": {
            "total":3,
-           "adjustments_path":"/users/bobexamplecom/tags/add_comment/adjustments.json",
+           "adjustments_path":"/users/jimwestaretecom/tags/add_comment/adjustments.json",
            "tag_path":"/tags/add_comment.json"
          }
        }
@@ -31,18 +31,18 @@ def stub_karma_server_after_contribution(json=nil)
   # A sample json response from the karma server.
   json ||= %{
     {
-      "total":7,
-      "user_path":"/users/bobexamplecom.json",
-      "user":"bobexamplecom",
+      "total":8,
+      "user_path":"/users/jimwestaretecom.json",
+      "user":"jimwestaretecom",
       "tags": {
         "add_annotation": {
           "total":5,
-          "adjustments_path":"/users/bobexamplecom/tags/add_annotation/adjustments.json",
+          "adjustments_path":"/users/jimwestaretecom/tags/add_annotation/adjustments.json",
           "tag_path":"/tags/add_annotation.json"
          },
          "add_comment": {
            "total":3,
-           "adjustments_path":"/users/bobexamplecom/tags/add_comment/adjustments.json",
+           "adjustments_path":"/users/jimwestaretecom/tags/add_comment/adjustments.json",
            "tag_path":"/tags/add_comment.json"
          }
        }

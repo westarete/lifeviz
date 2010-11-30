@@ -50,7 +50,7 @@
     %th Litter Size
   - @species.litter_sizes.each do |litter_size|
     %tr
-      %td.litter_size= litter_size.measure
+      %td.litter_size= litter_size
       %td.citation= litter_size.citation
       %td.Source= litter_size.created_by
       - if current_user

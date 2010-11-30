@@ -1,4 +1,7 @@
-require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require 'spec_helper'
+
+# make sure we have biological classification before we create species
+make_biological_classification(5)
 
 describe AdultWeight do
   
@@ -31,12 +34,10 @@ describe AdultWeight do
     before(:each) do
       @adult_weight.value_in_grams = 1000
     end
-    
     context "when units is Grams" do
       before { @adult_weight.units = "Grams" }
       it { should == 1000 }
     end
-    
     context "when units is Kilograms" do
       before { @adult_weight.units = "Kilograms" }
       it { should == 1 }
@@ -114,7 +115,7 @@ describe AdultWeight do
       before(:each) do
         @adult_weight.units = "Kilograms"
       end
-      it { @adult_weight.to_s.should == "2 kilograms" }
+      it { @adult_weight.to_s.should == "2.0 kilogram" }
     end
   end
   

@@ -1,7 +1,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Statistics do
-    
+  
   describe "calculate_lifespan" do
     context "for a given species' lifespans" do
       before do

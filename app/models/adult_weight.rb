@@ -28,15 +28,11 @@ class AdultWeight < ActiveRecord::Base
   def after_save
     self.species.statistics.calculate_adult_weight
   end
-  
+
   def to_s
-    if units
-      "#{value} #{units}".downcase
-    else
-      ""
-    end
+    value.to_s
   end
-  
+
   def value
     if value_in_grams && units
       in_units(units)
@@ -49,21 +45,15 @@ class AdultWeight < ActiveRecord::Base
     return if v.blank? || v.nil?
     @value = v
     v = v.to_f
-    self.value_in_grams = case units
-      when 'Grams' then v
-      when 'Kilograms' then v * 1000
+    if self.units
+      self.value_in_grams = v.send(units.downcase)
     end
   end
   
   def in_units(units)
-    case units
-      when 'Grams'  then value_in_grams
-      when 'Kilograms' then value_in_grams.to_i / 1000
-    end
+    value_in_grams.grams.send("to_#{units.downcase}")
   end
 end
-
-
 
 # == Schema Information
 #
@@ -80,4 +70,3 @@ end
 #  citation         :string(255)
 #  citation_context :text
 #
-

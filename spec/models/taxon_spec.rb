@@ -1,8 +1,9 @@
-require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require 'spec_helper'
+
+# make sure we have biological classification before we create species
+make_biological_classification(5)
 
 describe Taxon do
-  fixtures :taxa, :lifespans
-  
   before(:each) do    
     # Set lft and rgt values for every taxon. Necessary!
     Taxon.rebuild!
@@ -19,7 +20,6 @@ describe Taxon do
       @genus.statistics.taxon_id.should == @genus.id
     end
   end
-  
 end
 
 # == Schema Information

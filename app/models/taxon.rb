@@ -19,9 +19,9 @@ class Taxon < ActiveRecord::Base
   validates_presence_of :name, :message => "can't be blank"
   
   RANK_LABELS = %w(Kingdom Phylum Class Order Family Genus Species)
-
+  
   after_create :create_statistics_object
-
+  
   def self.rebuild_statistics_objects
     puts "Collecting taxon ids"
     taxon_ids = Taxon.all.collect(&:id)
@@ -37,7 +37,7 @@ class Taxon < ActiveRecord::Base
       end
     end
   end
-
+  
   def self.rebuild_stats(rank_specified=nil)
     rank_specified ? (rank = rank_specified) : (rank = 6)
     while rank >= 0
@@ -100,10 +100,10 @@ class Taxon < ActiveRecord::Base
     hierarchy_array = self.hierarchy
     hierarchy_array << 1 # for the top-level, rank0 terms
     hierarchy_array << self.id if options[:include_children]
-
+    
     ancestry = self.class.find_all_by_parent_id(hierarchy_array, :order => 'rank asc, name asc')
-  
-  
+    
+    
     # Makes our 1D array into a 2D array ordered by     
     returning Array.new do |ranked_ancestry|
       ancestry.each do |term|
@@ -121,7 +121,7 @@ class Taxon < ActiveRecord::Base
       self.lineage_ids.split(',').map{|id| id.to_i}
     end
   end
-    
+  
   def paginated_sorted_species(page)
     begin
       Species.paginate_by_sql("SELECT * FROM taxa WHERE lft >= #{self.lft} AND rgt <= #{self.rgt} AND rank = 6 ORDER BY name ASC", :page => page)

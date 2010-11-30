@@ -1,4 +1,4 @@
-require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require 'spec_helper'
 
 # make sure we have biological classification before we create species
 make_biological_classification(5)
@@ -31,8 +31,6 @@ describe LitterSize do
   
 end
 
-
-
 # == Schema Information
 #
 # Table name: litter_sizes
@@ -47,4 +45,3 @@ end
 #  citation         :string(255)
 #  citation_context :text
 #
-

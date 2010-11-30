@@ -1,4 +1,5 @@
 class Lifespan < ActiveRecord::Base
+  require 'quantity/all'
   include Annotation
   
   before_create :set_created_by
@@ -30,11 +31,7 @@ class Lifespan < ActiveRecord::Base
   end
   
   def to_s
-    if units
-      "#{value} #{units}".downcase
-    else
-      ""
-    end
+    value.to_s
   end
   
   def value
@@ -49,27 +46,15 @@ class Lifespan < ActiveRecord::Base
     return if v.blank? || v.nil?
     @value = v
     v = v.to_f
-    self.value_in_days = case units
-      when 'Years'  then v * 365
-      when 'Months' then v * 30
-      when 'Days'   then v
+    if self.units
+      self.value_in_days = Quantity.new(v, units.downcase.to_sym).days
     end
   end
   
-  def in_units(unit)
-    case unit
-      when 'Years'  then value_in_days.to_i / 365
-      when 'Months' then value_in_days.to_i / 30
-      when 'Days'   then value_in_days
-    end
+  def in_units(units)
+    Quantity.new(value_in_days, :days).send("to_#{units.downcase}")
   end
-  
 end
-
-
-
-
-
 
 # == Schema Information
 #
@@ -86,4 +71,3 @@ end
 #  citation         :string(255)
 #  citation_context :text
 #
-

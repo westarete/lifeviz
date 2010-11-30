@@ -1,4 +1,7 @@
-require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require 'spec_helper'
+
+# make sure we have biological classification before we create species
+make_biological_classification(5)
 
 describe BirthWeight do
   
@@ -114,7 +117,7 @@ describe BirthWeight do
       before(:each) do
         @birth_weight.units = "Kilograms"
       end
-      it { @birth_weight.to_s.should == "2 kilograms" }
+      it { @birth_weight.to_s.should == "2.0 kilogram" }
     end
   end
   
@@ -135,4 +138,3 @@ end
 #  citation         :string(255)
 #  citation_context :text
 #
-

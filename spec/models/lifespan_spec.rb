@@ -1,4 +1,7 @@
-require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require 'spec_helper'
+
+# make sure we have biological classification before we create species
+make_biological_classification(5)
 
 describe Lifespan do
   
@@ -27,7 +30,6 @@ describe Lifespan do
   end
   
   describe "#value" do
-    
     describe "when units is Years" do
       before(:each) do
         @lifespan.value_in_days = 365
@@ -37,7 +39,6 @@ describe Lifespan do
         @lifespan.value.should == 1
       end
     end
-    
     describe "when units is Months" do
       before(:each) do
         @lifespan.value_in_days = 360
@@ -47,7 +48,6 @@ describe Lifespan do
         @lifespan.value.should == 12
       end
     end
-    
     describe "when units is Days" do
       before(:each) do
         @lifespan.value_in_days = 366
@@ -57,7 +57,6 @@ describe Lifespan do
         @lifespan.value.should == 366
       end
     end
-    
   end
   
   describe "#value=" do
@@ -140,10 +139,9 @@ describe Lifespan do
         @lifespan.units = "Months"
       end
       it "should return '2 months'" do
-        @lifespan.to_s.should == "2 months"
+        @lifespan.to_s.should == "2.0 month"
       end
     end
-    
   end
   
 end
@@ -163,4 +161,3 @@ end
 #  citation         :string(255)
 #  citation_context :text
 #
-
