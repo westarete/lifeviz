@@ -28,8 +28,8 @@
           - else
             %td.name= link_to taxon.name, taxon_path(:rank => taxon.rank_in_words.downcase, :taxon => taxon.name)
           %td= taxon.statistics.average_lifespan
-          %td= sprintf("%2.2f", taxon.statistics.average_birth_weight) if taxon.statistics.average_birth_weight
-          %td= sprintf("%2.2f", taxon.statistics.average_adult_weight) if taxon.statistics.average_adult_weight
+          %td= taxon.statistics.average_birth_weight
+          %td= taxon.statistics.average_adult_weight
           %td= sprintf("%2.2f", taxon.statistics.average_litter_size) if taxon.statistics.average_litter_size
 %table#taxatable
   %thead
@@ -60,9 +60,9 @@
             %td.name= link_to taxon.name, genus_path(:genus => taxon.name)
           - else
             %td.name= link_to taxon.name, taxon_path(:rank => taxon.rank_in_words.downcase, :taxon => taxon.name)
-          %td= sprintf("%2.2f", taxon.statistics.minimum_lifespan) if taxon.statistics.minimum_lifespan
-          %td= sprintf("%2.2f", taxon.statistics.minimum_birth_weight) if taxon.statistics.minimum_birth_weight
-          %td= sprintf("%2.2f", taxon.statistics.minimum_adult_weight) if taxon.statistics.minimum_adult_weight
+          %td= taxon.statistics.minimum_lifespan
+          %td= taxon.statistics.minimum_birth_weight
+          %td= taxon.statistics.minimum_adult_weight
           %td= sprintf("%2.2f", taxon.statistics.minimum_litter_size) if taxon.statistics.minimum_litter_size
 %table#taxatable
   %thead
@@ -93,9 +93,9 @@
             %td.name= link_to taxon.name, genus_path(:genus => taxon.name)
           - else
             %td.name= link_to taxon.name, taxon_path(:rank => taxon.rank_in_words.downcase, :taxon => taxon.name)
-          %td= sprintf("%2.2f", taxon.statistics.maximum_lifespan) if taxon.statistics.maximum_lifespan
-          %td= sprintf("%2.2f", taxon.statistics.maximum_birth_weight) if taxon.statistics.maximum_birth_weight
-          %td= sprintf("%2.2f", taxon.statistics.maximum_adult_weight) if taxon.statistics.maximum_adult_weight
+          %td= taxon.statistics.maximum_lifespan
+          %td= taxon.statistics.maximum_birth_weight
+          %td= taxon.statistics.maximum_adult_weight
           %td= sprintf("%2.2f", taxon.statistics.maximum_litter_size) if taxon.statistics.maximum_litter_size
 %table#taxatable
   %thead
@@ -126,7 +126,7 @@
             %td.name= link_to taxon.name, genus_path(:genus => taxon.name)
           - else
             %td.name= link_to taxon.name, taxon_path(:rank => taxon.rank_in_words.downcase, :taxon => taxon.name)
-          %td= sprintf("%2.2f", taxon.statistics.standard_deviation_lifespan) if taxon.statistics.standard_deviation_lifespan
-          %td= sprintf("%2.2f", taxon.statistics.standard_deviation_birth_weight) if taxon.statistics.standard_deviation_birth_weight
-          %td= sprintf("%2.2f", taxon.statistics.standard_deviation_adult_weight) if taxon.statistics.standard_deviation_adult_weight
+          %td= taxon.statistics.standard_deviation_lifespan
+          %td= taxon.statistics.standard_deviation_birth_weight
+          %td= taxon.statistics.standard_deviation_adult_weight
           %td= sprintf("%2.2f", taxon.statistics.standard_deviation_litter_size) if taxon.statistics.standard_deviation_litter_size

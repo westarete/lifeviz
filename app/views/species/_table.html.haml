@@ -22,7 +22,7 @@
           %td.hidden.hover
           %td.hidden.name= species.name
           %td.name= link_to species.name, species_path(species.id)
-          %td= sprintf("%2.2f", species.statistics.average_lifespan) if species.statistics.average_lifespan
-          %td= sprintf("%2.2f", species.statistics.average_birth_weight) if species.statistics.average_birth_weight
-          %td= sprintf("%2.2f", species.statistics.average_adult_weight) if species.statistics.average_adult_weight
+          %td= species.statistics.average_lifespan
+          %td= species.statistics.average_birth_weight
+          %td= species.statistics.average_adult_weight
           %td= sprintf("%2.2f", species.statistics.average_litter_size) if species.statistics.average_litter_size

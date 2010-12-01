@@ -7,21 +7,56 @@ class Statistics < ActiveRecord::Base
                  :adult_weights => 'grams',
                  :birth_weights => 'grams',
                  :litter_sizes  => nil}
-  MONTH = 30
-  YEAR  = 365
+  MONTH    = 30
+  YEAR     = 365
+  KILOGRAM = 1000
   
   belongs_to :taxon, :foreign_key => "taxon_id"
   validates_presence_of :taxon_id
   
-  def average_lifespan
-    if value = self[:average_lifespan]
-      unit = case
-              when value / MONTH < 3 then 'day'
-              when value / YEAR  < 2 then 'month'
-              else                        'year'
-              end
-      pluralized_unit = value == 1 ? unit : unit.pluralize
-      sprintf("%2.2f #{pluralized_unit}", Quantity.new(value, :days).send("to_#{unit}"))
+  # Define lifespan getters.
+  TYPES.each do |type|
+    variable_name = "#{type}_lifespan"
+    define_method(variable_name) do
+      if value = self[variable_name]
+        unit = case
+                when value / MONTH < 3 then 'day'
+                when value / YEAR  < 2 then 'month'
+                else                        'year'
+                end
+        pluralized_unit = value == 1 ? unit : unit.pluralize
+        sprintf("%2.2f #{pluralized_unit}", Quantity.new(value, :days).send("to_#{unit}"))
+      end
+    end
+  end
+  
+  # Define adult_weight getters.
+  TYPES.each do |type|
+    variable_name = "#{type}_adult_weight"
+    define_method(variable_name) do
+      if value = self[variable_name]
+        unit = case
+                when value / KILOGRAM < 1 then 'gram'
+                else                           'kilogram'
+                end
+        pluralized_unit = value == 1 ? unit : unit.pluralize
+        sprintf("%2.2f #{pluralized_unit}", value.grams.send("to_#{unit}"))
+      end
+    end
+  end
+  
+  # Define birth_weight getters.
+  TYPES.each do |type|
+    variable_name = "#{type}_birth_weight"
+    define_method(variable_name) do
+      if value = self[variable_name]
+        unit = case
+                when value / KILOGRAM < 1 then 'gram'
+                else                           'kilogram'
+                end
+        pluralized_unit = value == 1 ? unit : unit.pluralize
+        sprintf("%2.2f #{pluralized_unit}", value.grams.send("to_#{unit}"))
+      end
     end
   end
   
