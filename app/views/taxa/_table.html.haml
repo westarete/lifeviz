@@ -27,7 +27,7 @@
             %td.name= link_to taxon.name, genus_path(:genus => taxon.name)
           - else
             %td.name= link_to taxon.name, taxon_path(:rank => taxon.rank_in_words.downcase, :taxon => taxon.name)
-          %td= sprintf("%2.2f", taxon.statistics.average_lifespan) if taxon.statistics.average_lifespan
+          %td= taxon.statistics.average_lifespan
           %td= sprintf("%2.2f", taxon.statistics.average_birth_weight) if taxon.statistics.average_birth_weight
           %td= sprintf("%2.2f", taxon.statistics.average_adult_weight) if taxon.statistics.average_adult_weight
           %td= sprintf("%2.2f", taxon.statistics.average_litter_size) if taxon.statistics.average_litter_size

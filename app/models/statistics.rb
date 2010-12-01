@@ -1,9 +1,29 @@
 class Statistics < ActiveRecord::Base
-
-  set_table_name "statistics" 
+  include ActionView::Helpers
+  set_table_name "statistics"
+  
+  TYPES = [:average, :minimum, :maximum, :standard_deviation]
+  ANNOTATIONS = {:lifespans     => 'days', 
+                 :adult_weights => 'grams',
+                 :birth_weights => 'grams',
+                 :litter_sizes  => nil}
+  MONTH = 30
+  YEAR  = 365
   
   belongs_to :taxon, :foreign_key => "taxon_id"
   validates_presence_of :taxon_id
+  
+  def average_lifespan
+    if value = self[:average_lifespan]
+      unit = case
+              when value / MONTH < 3 then 'day'
+              when value / YEAR  < 2 then 'month'
+              else                        'year'
+              end
+      pluralized_unit = value == 1 ? unit : unit.pluralize
+      sprintf("%2.2f #{pluralized_unit}", Quantity.new(value, :days).send("to_#{unit}"))
+    end
+  end
   
   def calculate_lifespan
     result = connection.execute "

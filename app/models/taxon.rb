@@ -23,13 +23,13 @@ class Taxon < ActiveRecord::Base
   after_create :create_statistics_object
   
   def self.rebuild_statistics_objects
-    puts "Collecting taxon ids"
+    Rails.logger.info "Collecting taxon ids"
     taxon_ids = Taxon.all.collect(&:id)
-    puts "Collecting statistics taxon ids"
+    Rails.logger.info "Collecting statistics taxon ids"
     statistics_taxon_ids = Statistics.all.collect(&:taxon_id)
-    puts "Finding taxa without statistics objects"
+    Rails.logger.info "Finding taxa without statistics objects"
     statistics_to_create = taxon_ids - statistics_taxon_ids
-    puts "Creating statistics objects"
+    Rails.logger.info "Creating statistics objects"
     progress    "Creating", statistics_to_create.count do |progress_bar|
       statistics_to_create.each do |taxon_id|
         Statistics.create(:taxon_id => taxon_id)
@@ -41,9 +41,9 @@ class Taxon < ActiveRecord::Base
   def self.rebuild_stats(rank_specified=nil)
     rank_specified ? (rank = rank_specified) : (rank = 6)
     while rank >= 0
-      puts "Calculating size at rank #{RANK_LABELS[rank]}."
+      Rails.logger.info "Calculating size at rank #{RANK_LABELS[rank]}."
       size = Taxon.count(:all, :conditions => {:rank => rank}) / 50
-      puts "#{size} batches to complete. Calculating stats at rank #{RANK_LABELS[rank]}."
+      Rails.logger.info "#{size} batches to complete. Calculating stats at rank #{RANK_LABELS[rank]}."
       progress    "#{RANK_LABELS[rank]}", size do |progress_bar|
         Taxon.find_in_batches( :batch_size => 50, :conditions => {:rank => rank} ) do |taxon_batch|
           taxon_batch.each do |t|
@@ -55,7 +55,7 @@ class Taxon < ActiveRecord::Base
           progress_bar.inc
         end
       end
-      puts "Done."
+      Rails.logger.info "Done."
       rank -= 1
     end
   end
