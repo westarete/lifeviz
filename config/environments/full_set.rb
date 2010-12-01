@@ -16,8 +16,4 @@ config.action_controller.perform_caching             = false
 # Don't care if the mailer can't send
 config.action_mailer.raise_delivery_errors = false
 
-# Required gems for development
-
-# Deployment recipes.
-config.gem 'capistrano', :version => '2.5.19'
-config.gem 'capistrano-helpers', :lib => false, :version => '0.4.4'
+config.log_level = :debug

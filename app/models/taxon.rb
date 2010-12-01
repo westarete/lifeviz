@@ -24,9 +24,9 @@ class Taxon < ActiveRecord::Base
   
   def self.rebuild_statistics_objects
     Rails.logger.info "Collecting taxon ids"
-    taxon_ids = Taxon.all.collect(&:id)
+    taxon_ids = Taxon.find(:all, :select => "id").collect(&:id)
     Rails.logger.info "Collecting statistics taxon ids"
-    statistics_taxon_ids = Statistics.all.collect(&:taxon_id)
+    statistics_taxon_ids = Statistics.find(:all, :select => "taxon_id").collect(&:taxon_id)
     Rails.logger.info "Finding taxa without statistics objects"
     statistics_to_create = taxon_ids - statistics_taxon_ids
     Rails.logger.info "Creating statistics objects"
