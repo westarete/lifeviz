@@ -1,4 +1,4 @@
-\require 'spec_helper'
+require 'spec_helper'
 
 # make sure we have biological classification before we create species
 make_biological_classification(5)

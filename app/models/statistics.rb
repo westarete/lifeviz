@@ -134,10 +134,10 @@ class Statistics < ActiveRecord::Base
   def calculate_litter_size
     result = connection.execute "
       SELECT 
-           MIN(litter_sizes.measure),
-           MAX(litter_sizes.measure),
-           AVG(litter_sizes.measure),
-        STDDEV(litter_sizes.measure)
+           MIN(litter_sizes.value),
+           MAX(litter_sizes.value),
+           AVG(litter_sizes.value),
+        STDDEV(litter_sizes.value)
       FROM taxa
       LEFT OUTER JOIN litter_sizes
         ON taxa.id = litter_sizes.species_id

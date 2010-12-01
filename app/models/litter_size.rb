@@ -7,18 +7,18 @@ class LitterSize < ActiveRecord::Base
   belongs_to :species
   
   validates_presence_of :species_id
-  validates_presence_of :measure
+  validates_presence_of :value
 
   def validate
     should_be_greater_than_zero
   end
   
   def should_be_greater_than_zero
-    unless measure.nil?
-      if measure == 0
-        errors.add(:measure, "needs to be greater than zero")
-      elsif !(measure > 0)
-        errors.add(:measure, "should be a positive number")
+    unless value.nil?
+      if value == 0
+        errors.add(:value, "needs to be greater than zero")
+      elsif !(value > 0)
+        errors.add(:value, "should be a positive number")
       end
     end
   end
@@ -28,7 +28,7 @@ class LitterSize < ActiveRecord::Base
   end
   
   def to_s
-    measure.to_s
+    value.to_s
   end
 end
 
