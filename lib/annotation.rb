@@ -1,6 +1,14 @@
 # This is a module to be included in all species annotation models. It has
 # functionality common to all of the annotation models.
 module Annotation
+  def after_save
+    self.species.statistics.calculate_statistics
+  end
+  
+  def after_destroy
+    self.species.statistics.calculate_statistics
+  end
+  
   def add_annotation_point
     if user = User.current_user
       user.karma.tags.add_annotation += 1

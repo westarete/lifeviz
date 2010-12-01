@@ -32,10 +32,10 @@ def make_statistics_set
   @species2 = Species.make(:parent_id => @taxon.id)
   Taxon.rebuild_statistics_objects
   
-  @species1.litter_sizes.create!(:measure => 10)
-  @species1.litter_sizes.create!(:measure => 20)
-  @species2.litter_sizes.create!(:measure => 30)
-  @species2.litter_sizes.create!(:measure => 40)
+  @species1.litter_sizes.create!(:value => 10)
+  @species1.litter_sizes.create!(:value => 20)
+  @species2.litter_sizes.create!(:value => 30)
+  @species2.litter_sizes.create!(:value => 40)
   @species1.birth_weights.create!(:value_in_grams => 10, :units => "Grams")
   @species1.birth_weights.create!(:value_in_grams => 20, :units => "Grams")
   @species2.birth_weights.create!(:value_in_grams => 30, :units => "Grams")

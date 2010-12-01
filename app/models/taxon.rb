@@ -23,19 +23,31 @@ class Taxon < ActiveRecord::Base
   after_create :create_statistics_object
   
   def self.rebuild_statistics_objects
-    Rails.logger.info "Collecting taxon ids"
-    taxon_ids = Taxon.find(:all, :select => "id").collect(&:id)
-    Rails.logger.info "Collecting statistics taxon ids"
-    statistics_taxon_ids = Statistics.find(:all, :select => "taxon_id").collect(&:taxon_id)
-    Rails.logger.info "Finding taxa without statistics objects"
-    statistics_to_create = taxon_ids - statistics_taxon_ids
-    Rails.logger.info "Creating statistics objects"
-    progress    "Creating", statistics_to_create.count do |progress_bar|
-      statistics_to_create.each do |taxon_id|
-        Statistics.create(:taxon_id => taxon_id)
-        progress_bar.inc
-      end
-    end
+    # # Fast, uninformative method!
+    ActiveRecord::Base.connection.execute <<-sql
+      insert into statistics (taxon_id) 
+        select t.id
+        from taxa t 
+        where not exists (
+          select taxon_id
+          from statistics
+          where taxon_id=t.id
+        );
+    sql
+    # # Slow but informative method
+    # Rails.logger.info "Collecting taxon ids"
+    # taxon_ids = Taxon.find(:all, :select => "id").collect(&:id)
+    # Rails.logger.info "Collecting statistics taxon ids"
+    # statistics_taxon_ids = Statistics.find(:all, :select => "taxon_id").collect(&:taxon_id)
+    # Rails.logger.info "Finding taxa without statistics objects"
+    # statistics_to_create = taxon_ids - statistics_taxon_ids
+    # Rails.logger.info "Creating statistics objects"
+    # progress    "Creating", statistics_to_create.count do |progress_bar|
+    #   statistics_to_create.each do |taxon_id|
+    #     Statistics.create(:taxon_id => taxon_id)
+    #     progress_bar.inc
+    #   end
+    # end
   end
   
   def self.rebuild_stats(rank_specified=nil)
@@ -46,12 +58,7 @@ class Taxon < ActiveRecord::Base
       Rails.logger.info "#{size} batches to complete. Calculating stats at rank #{RANK_LABELS[rank]}."
       progress    "#{RANK_LABELS[rank]}", size do |progress_bar|
         Taxon.find_in_batches( :batch_size => 50, :conditions => {:rank => rank} ) do |taxon_batch|
-          taxon_batch.each do |t|
-            t.statistics.calculate_lifespan
-            t.statistics.calculate_adult_weight
-            t.statistics.calculate_birth_weight
-            t.statistics.calculate_litter_size
-          end
+          taxon_batch.each {|t| t.statistics.calculate_statistics }
           progress_bar.inc
         end
       end

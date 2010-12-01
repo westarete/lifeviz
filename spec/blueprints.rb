@@ -44,5 +44,5 @@ end
 
 LitterSize.blueprint do
   species
-  measure { rand(12) + 1 }
+  value { rand(12) + 1 }
 end
