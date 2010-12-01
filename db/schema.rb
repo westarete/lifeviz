@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101119190141) do
+ActiveRecord::Schema.define(:version => 20101201190838) do
 
   create_table "adult_weights", :force => true do |t|
     t.integer  "species_id",       :null => false
@@ -58,7 +58,7 @@ ActiveRecord::Schema.define(:version => 20101119190141) do
 
   create_table "litter_sizes", :force => true do |t|
     t.integer  "species_id",       :null => false
-    t.integer  "measure",          :null => false
+    t.decimal  "value",            :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "created_by"

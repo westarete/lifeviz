@@ -1,4 +1,4 @@
-require 'spec_helper'
+\require 'spec_helper'
 
 # make sure we have biological classification before we create species
 make_biological_classification(5)
@@ -37,7 +37,7 @@ end
 #
 #  id               :integer         not null, primary key
 #  species_id       :integer         not null
-#  measure          :integer         not null
+#  value            :decimal(, )     not null
 #  created_at       :datetime
 #  updated_at       :datetime
 #  created_by       :integer
@@ -45,3 +45,4 @@ end
 #  citation         :string(255)
 #  citation_context :text
 #
+
