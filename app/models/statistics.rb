@@ -60,6 +60,14 @@ class Statistics < ActiveRecord::Base
     end
   end
   
+  # Define birth_weight getters.
+  TYPES.each do |type|
+    variable_name = "#{type}_birth_weight"
+    define_method(variable_name) do
+      self[variable_name] ? sprintf("%2.2f", self[variable_name]) : ""
+    end
+  end
+  
   def calculate_lifespan
     result = connection.execute "
       SELECT 
