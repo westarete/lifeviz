@@ -31,7 +31,7 @@
           %td= sprintf("%2.2f", taxon.statistics.average_birth_weight) if taxon.statistics.average_birth_weight
           %td= sprintf("%2.2f", taxon.statistics.average_adult_weight) if taxon.statistics.average_adult_weight
           %td= sprintf("%2.2f", taxon.statistics.average_litter_size) if taxon.statistics.average_litter_size
-%table#taxatable
+%table.taxatable
   %thead
     %tr
     %h2 Minimum
@@ -64,7 +64,7 @@
           %td= sprintf("%2.2f", taxon.statistics.minimum_birth_weight) if taxon.statistics.minimum_birth_weight
           %td= sprintf("%2.2f", taxon.statistics.minimum_adult_weight) if taxon.statistics.minimum_adult_weight
           %td= sprintf("%2.2f", taxon.statistics.minimum_litter_size) if taxon.statistics.minimum_litter_size
-%table#taxatable
+%table.taxatable
   %thead
     %tr
     %h2 Maximum
@@ -97,7 +97,7 @@
           %td= sprintf("%2.2f", taxon.statistics.maximum_birth_weight) if taxon.statistics.maximum_birth_weight
           %td= sprintf("%2.2f", taxon.statistics.maximum_adult_weight) if taxon.statistics.maximum_adult_weight
           %td= sprintf("%2.2f", taxon.statistics.maximum_litter_size) if taxon.statistics.maximum_litter_size
-%table#taxatable
+%table.taxatable
   %thead
     %tr
     %h2 Standard Deviation
