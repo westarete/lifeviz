@@ -1,15 +1,17 @@
 %table#taxatable
   %thead
     %tr
+    %h2 Average
+    %tr
       %th.hidden ID
       %th.hidden Select
       %th.hidden Hover
       %th.hidden Name
       %th Scientific Name
-      %th{:class => "{sorter: 'digit'}"} Avg. Lifespan, days
-      %th{:class => "{sorter: 'digit'}"} Avg. Birth Weight, g
-      %th{:class => "{sorter: 'digit'}"} Avg. Adult Weight, g
-      %th{:class => "{sorter: 'digit'}"} Avg. Litter Size
+      %th{:class => "{sorter: 'digit'}"} Lifespan, days
+      %th{:class => "{sorter: 'digit'}"} Birth Weight, g
+      %th{:class => "{sorter: 'digit'}"} Adult Weight, g
+      %th{:class => "{sorter: 'digit'}"} Litter Size
   %tbody
     - if @species.empty?
       %tr
@@ -26,3 +28,93 @@
           %td= sprintf("%2.2f", species.statistics.average_birth_weight) if species.statistics.average_birth_weight
           %td= sprintf("%2.2f", species.statistics.average_adult_weight) if species.statistics.average_adult_weight
           %td= sprintf("%2.2f", species.statistics.average_litter_size) if species.statistics.average_litter_size
+%table.taxatable
+  %thead
+    %tr
+    %h2 Minimum
+    %tr
+      %th.hidden ID
+      %th.hidden Select
+      %th.hidden Hover
+      %th.hidden Name
+      %th Scientific Name
+      %th{:class => "{sorter: 'digit'}"} Lifespan, days
+      %th{:class => "{sorter: 'digit'}"} Birth Weight, g
+      %th{:class => "{sorter: 'digit'}"} Adult Weight, g
+      %th{:class => "{sorter: 'digit'}"} Litter Size
+  %tbody
+    - if @species.empty?
+      %tr
+        %td{:cols => 6} Species not available.
+    -else
+      - @species.each do |species|
+        %tr.taxon{:taxon_id => species.id}
+          %td.hidden.id= species.id
+          %td.hidden.select
+          %td.hidden.hover
+          %td.hidden.name= species.name
+          %td.name= link_to species.name, species_path(species.id)
+          %td= sprintf("%2.2f", species.statistics.minimum_lifespan) if species.statistics.minimum_lifespan
+          %td= sprintf("%2.2f", species.statistics.minimum_birth_weight) if species.statistics.minimum_birth_weight
+          %td= sprintf("%2.2f", species.statistics.minimum_adult_weight) if species.statistics.minimum_adult_weight
+          %td= sprintf("%2.2f", species.statistics.minimum_litter_size) if species.statistics.minimum_litter_size
+%table.taxatable
+  %thead
+    %tr
+    %h2 Maximum
+    %tr
+      %th.hidden ID
+      %th.hidden Select
+      %th.hidden Hover
+      %th.hidden Name
+      %th Scientific Name
+      %th{:class => "{sorter: 'digit'}"} Lifespan, days
+      %th{:class => "{sorter: 'digit'}"} Birth Weight, g
+      %th{:class => "{sorter: 'digit'}"} Adult Weight, g
+      %th{:class => "{sorter: 'digit'}"} Litter Size
+  %tbody
+    - if @species.empty?
+      %tr
+        %td{:cols => 6} Species not available.
+    -else
+      - @species.each do |species|
+        %tr.taxon{:taxon_id => species.id}
+          %td.hidden.id= species.id
+          %td.hidden.select
+          %td.hidden.hover
+          %td.hidden.name= species.name
+          %td.name= link_to species.name, species_path(species.id)
+          %td= sprintf("%2.2f", species.statistics.maximum_lifespan) if species.statistics.maximum_lifespan
+          %td= sprintf("%2.2f", species.statistics.maximum_birth_weight) if species.statistics.maximum_birth_weight
+          %td= sprintf("%2.2f", species.statistics.maximum_adult_weight) if species.statistics.maximum_adult_weight
+          %td= sprintf("%2.2f", species.statistics.maximum_litter_size) if species.statistics.maximum_litter_size
+%table.taxatable
+  %thead
+    %tr
+    %h2 Standard Deviation
+    %tr
+      %th.hidden ID
+      %th.hidden Select
+      %th.hidden Hover
+      %th.hidden Name
+      %th Scientific Name
+      %th{:class => "{sorter: 'digit'}"} Lifespan, days
+      %th{:class => "{sorter: 'digit'}"} Birth Weight, g
+      %th{:class => "{sorter: 'digit'}"} Adult Weight, g
+      %th{:class => "{sorter: 'digit'}"} Litter Size
+  %tbody
+    - if @species.empty?
+      %tr
+        %td{:cols => 6} Species not available.
+    -else
+      - @species.each do |species|
+        %tr.taxon{:taxon_id => species.id}
+          %td.hidden.id= species.id
+          %td.hidden.select
+          %td.hidden.hover
+          %td.hidden.name= species.name
+          %td.name= link_to species.name, species_path(species.id)
+          %td= sprintf("%2.2f", species.statistics.standard_deviation_lifespan) if species.statistics.standard_deviation_lifespan
+          %td= sprintf("%2.2f", species.statistics.standard_deviation_birth_weight) if species.statistics.standard_deviation_birth_weight
+          %td= sprintf("%2.2f", species.statistics.standard_deviation_adult_weight) if species.statistics.standard_deviation_adult_weight
+          %td= sprintf("%2.2f", species.statistics.standard_deviation_litter_size) if species.statistics.standard_deviation_litter_size
