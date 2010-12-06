@@ -7,10 +7,10 @@
       
       // The units and dimensions to visualize, in order.
       var units = {
-        "Avg. Lifespan, days":    {name: "lifespan", unit: " days"},
-        "Avg. Birth Weight, g":   {name: "birth weight", unit: " g"},
-        "Avg. Adult Weight, g":   {name: "adult weight", unit: " g"},
-        "Avg. Litter Size":    {name: "litter size", unit: ""}
+        "Lifespan, days":    {name: "lifespan", unit: " days"},
+        "Birth Weight, g":   {name: "birth weight", unit: " g"},
+        "Adult Weight, g":   {name: "adult weight", unit: " g"},
+        "Litter Size":    {name: "litter size", unit: ""}
       }
 
       var dims = pv.keys(units);
@@ -41,7 +41,7 @@
                           max: y[t].domain()[1]
                         };
                       }
-                    ), active = "Avg. Lifespan, days";
+                    ), active = "Lifespan, days";
 
       // root container
       var vis = new pv.Panel()
