@@ -14,7 +14,7 @@
       %th{:class => "{sorter: 'digit'}"} Litter Size
   %tbody
     - if @children.empty?
-      %tr 
+      %tr
         %td{:cols => 6} Taxa not available.
     -else
       - @children.each do |taxon|
