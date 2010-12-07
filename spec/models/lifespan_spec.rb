@@ -21,10 +21,10 @@ describe Lifespan do
         Lifespan.create!(:value_in_days => 30, :units => "Days", :species_id => @species1.id)
       end
       it "should recalculate the litter size" do
-        @species1.statistics.minimum_lifespan.should == 10.0
-        @species1.statistics.maximum_lifespan.should == 30.0
-        @species1.statistics.average_lifespan.should == 20.0
-        @species1.statistics.standard_deviation_lifespan.should be_close(10.0, 0.001)
+        @species1.statistics[:minimum_lifespan].should == 10.0
+        @species1.statistics[:maximum_lifespan].should == 30.0
+        @species1.statistics[:average_lifespan].should == 20.0
+        @species1.statistics[:standard_deviation_lifespan].should be_close(8.340, 0.001)
       end
     end
   end
