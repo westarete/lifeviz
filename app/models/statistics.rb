@@ -25,7 +25,11 @@ class Statistics < ActiveRecord::Base
                 else                        'year'
                 end
         pluralized_unit = value == 1 ? unit : unit.pluralize
-        sprintf("%2.2f #{pluralized_unit}", Quantity.new(value, :days).send("to_#{unit}"))
+        number_to_currency(Quantity.new(value, :days).send("to_#{unit}"), 
+                           :unit => pluralized_unit,
+                           :separator => ".",
+                           :delimiter => ",",
+                           :format => "%n %u")
       end
     end
   end
@@ -40,7 +44,11 @@ class Statistics < ActiveRecord::Base
                 else                           'kilogram'
                 end
         pluralized_unit = value == 1 ? unit : unit.pluralize
-        sprintf("%2.2f #{pluralized_unit}", value.grams.send("to_#{unit}"))
+        number_to_currency(value.grams.send("to_#{unit}"), 
+                           :unit => pluralized_unit,
+                           :separator => ".",
+                           :delimiter => ",",
+                           :format => "%n %u")
       end
     end
   end
@@ -55,7 +63,11 @@ class Statistics < ActiveRecord::Base
                 else                           'kilogram'
                 end
         pluralized_unit = value == 1 ? unit : unit.pluralize
-        sprintf("%2.2f #{pluralized_unit}", value.grams.send("to_#{unit}"))
+        number_to_currency(value.grams.send("to_#{unit}"), 
+                           :unit => pluralized_unit,
+                           :separator => ".",
+                           :delimiter => ",",
+                           :format => "%n %u")
       end
     end
   end
@@ -64,7 +76,14 @@ class Statistics < ActiveRecord::Base
     # Define litter_size getters.
     variable_name = "#{type}_litter_size"
     define_method(variable_name) do
-      self[variable_name] ? sprintf("%2.2f", self[variable_name]) : ""
+      if self[variable_name]
+        number_to_currency(self[variable_name],
+                           :separator => ".",
+                           :delimiter => ",",
+                           :format => "%n")
+      else
+        ""
+      end
     end
   end
   

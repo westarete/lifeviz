@@ -23,6 +23,10 @@ describe Statistics do
       before { @species1.statistics.average_lifespan = 9000 }
       it { should == "24.66 years" }
     end
+    context "when the average_lifespan is 2200000 days" do
+      before { @species1.statistics.average_lifespan = 2200000 }
+      it { should == "6,027.40 years" }
+    end
   end
   
   describe "#average_adult_weight" do
@@ -41,6 +45,10 @@ describe Statistics do
     context "when the average_adult_weight is 2200 grams" do
       before { @species1.statistics.average_adult_weight = 2200 }
       it { should == "2.20 kilograms" }
+    end
+    context "when the average_adult_weight is 2200000 grams" do
+      before { @species1.statistics.average_adult_weight = 2200000 }
+      it { should == "2,200.00 kilograms" }
     end
   end
   
