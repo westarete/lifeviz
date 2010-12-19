@@ -52,10 +52,8 @@ group :development do
 
   # Deployment.
   gem 'capistrano', '2.5.19'
-  gem 'capistrano-helpers', '0.5.7'
+  gem 'capistrano-helpers', '0.6.2'
   gem 'capistrano-ext', '1.2.1'
-  gem 'git', '1.2.5'
-  gem 'tinder', '1.4.0'
 end
 
 group :development, :test do
