@@ -100,7 +100,7 @@ def create_species_and_data
 
   # Dump all related data
   puts "** Removing any existing age, litter sizes, adult weights,birth weights data..." 
-  Lifespan.destroy_all && LitterSize.destroy_all && AdultWeight.destroy_all && BirthWeight.destroy_all ? (puts "success") : (puts "failed"; exit!)
+  Lifespan.delete_all && LitterSize.delete_all && AdultWeight.delete_all && BirthWeight.delete_all ? (puts "success") : (puts "failed"; exit!)
   
   # Load taxon from lifeviz, let's use hpricot
   puts "** Loading lifeviz data, let's use hpricot..."
@@ -132,9 +132,9 @@ def create_species_and_data
       if lifeviz_development[development_index] && (lifeviz_development[development_index]/'hagrid').inner_html.to_i == hagrid.to_i
         development = lifeviz_development[development_index]
         if development && (development/'hagrid').inner_html == hagrid
-          x[:adult_weight]  = (development/'adult_weight').inner_html.to_f
-          x[:birth_weight]  = (development/'birth_weight').inner_html.to_f
-          x[:litter_size]   = (development/'litter_size').inner_html.to_f
+          x[:adult_weight]  = (development/'adult_weight').inner_html.blank? ? nil : (development/'adult_weight').inner_html.to_f
+          x[:birth_weight]  = (development/'birth_weight').inner_html.blank? ? nil : (development/'birth_weight').inner_html.to_f
+          x[:litter_size]   = (development/'litter_size').inner_html.blank?  ? nil : (development/'litter_size').inner_html.to_f
         else
           x[:adult_weight]  = ""
           x[:birth_weight]  = ""
@@ -240,8 +240,7 @@ def create_species_and_data
         age          = Lifespan.new(:value_in_days => (s[:age].to_f * 365), :units => "Years", :species_id => species.id)   if ! s[:age].blank?
         birth_weight = BirthWeight.new(:value_in_grams => (s[:birth_weight]), :units => "Grams", :species_id => species.id) if ! s[:birth_weight].blank?
         adult_weight = AdultWeight.new(:value_in_grams => (s[:adult_weight]), :units => "Grams", :species_id => species.id) if ! s[:adult_weight].blank?
-        litter_size  = LitterSize.new(:measure => (s[:litter_size]), :species_id => species.id) if ! s[:litter_size].blank?
-        
+        litter_size  = LitterSize.new(:value => (s[:litter_size]), :species_id => species.id) if ! s[:litter_size].blank?
         age.nil?          ? (age_nil += 1) : age.send(:create_without_callbacks)
         adult_weight.nil? ? (adult_weight_nil += 1) : adult_weight.send(:create_without_callbacks)
         birth_weight.nil? ? (birth_weight_nil += 1) : birth_weight.send(:create_without_callbacks)
@@ -291,7 +290,7 @@ def create_species_and_data
 end
 
 # Execute taxonomy creation method
-create_taxonomy
+# create_taxonomy
 # Execute species creation method
 create_species_and_data
-rebuild_lineages
+# rebuild_lineages
