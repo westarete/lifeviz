@@ -21,22 +21,6 @@ class User < ActiveRecord::Base
     result
   end
   
-  def level
-    if levels = self.karma.levels
-      if levels.gold?
-        "Gold"
-      elsif levels.silver?
-        "Silver"
-      elsif levels.bronze?
-        "Bronze"
-      else
-        "*dust*"
-      end
-    else
-      "n/a"
-    end
-  end
-  
 end
 
 # == Schema Information
