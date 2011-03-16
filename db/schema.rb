@@ -107,7 +107,7 @@ ActiveRecord::Schema.define(:version => 20101201190838) do
     t.datetime "updated_at"
   end
 
-  add_index "statistics", ["id"], :name => "index_statistics_on_id"
+  add_index "statistics", ["id"], :name => "index_statistics_on_id", :unique => true
   add_index "statistics", ["taxon_id"], :name => "index_statistics_on_taxon_id", :unique => true
 
   create_table "taxa", :force => true do |t|

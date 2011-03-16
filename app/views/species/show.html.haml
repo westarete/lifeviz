@@ -7,13 +7,17 @@
     %th Lifespan
     %th Citation
     %th Source
+    %th User
+    %th 
     - if current_user
       %th Actions
   - @species.lifespans.each do |lifespan|
     %tr
       %td.lifespan= lifespan
       %td.citation= lifespan.citation
-      %td.Source= lifespan.created_by
+      %td.Source 
+      %td.User
+        = "#{lifespan.created_by} [#{lifespan.created_by.karma}]" unless lifespan.created_by.nil?
       - if current_user
         %td.actions   
           = link_to "", edit_lifespan_path(@species, lifespan), :id => "edit_lifespan_#{lifespan.id}", :alt => "Edit lifespan", :class => 'edit_button'
@@ -26,7 +30,9 @@
     %tr
       %td.adult_weight= adult_weight
       %td.citation= adult_weight.citation
-      %td.Source= adult_weight.created_by
+      %td.Source
+      %td.User
+        = "#{adult_weight.created_by} [#{adult_weight.created_by.karma}]" unless adult_weight.created_by.nil?
       - if current_user
         %td.actions   
           = link_to "", edit_adult_weight_path(@species, adult_weight), :id => "edit_adult_weight_#{adult_weight.id}", :alt => "Edit adult weight", :class => 'edit_button'
@@ -39,7 +45,9 @@
     %tr
       %td.birth_weight= birth_weight
       %td.citation= birth_weight.citation
-      %td.Source= birth_weight.created_by
+      %td.Source
+      %td.User
+        = "#{birth_weight.created_by} [#{birth_weight.created_by.karma}]" unless birth_weight.created_by.nil?
       - if current_user
         %td.actions
           = link_to "", edit_birth_weight_path(@species, birth_weight), :id => "edit_birth_weight_#{birth_weight.id}", :alt => "Edit birth weight", :class => 'edit_button'
@@ -52,7 +60,9 @@
     %tr
       %td.litter_size= litter_size
       %td.citation= litter_size.citation
-      %td.Source= litter_size.created_by
+      %td.Source
+      %td.User
+        = "#{litter_size.created_by} [#{litter_size.created_by.karma}]" unless litter_size.created_by.nil?
       - if current_user
         %td.actions   
           = link_to "", edit_litter_size_path(@species, litter_size), :id => "edit_litter_size_#{litter_size.id}", :alt => "Edit litter size", :class => 'edit_button'
