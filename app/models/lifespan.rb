@@ -43,7 +43,7 @@ class Lifespan < ActiveRecord::Base
     @value = v
     v = v.to_f
     if self.units
-      self.value_in_days = Quantity.new(v, units.downcase.to_sym).days
+      self.value_in_days = Quantity.new(v, units.downcase.to_sym)
     end
   end
   

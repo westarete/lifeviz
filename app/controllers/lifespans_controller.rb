@@ -12,6 +12,7 @@ class LifespansController < ApplicationController
       flash[:success] = "Lifespan annotation created."
       flash[:karma_updated] = true
       flash[:karma_increased] = "You just received 1 point of karma for contributing a new annotation. Your total karma is now #{current_user.karma.total}!"
+    redirect_to species_path(:id => @species.id)
     else
       flash.now[:failure] = "Lifespan annotation failed becase ", @lifespan.errors.full_messages.to_sentence.downcase, "."
       render :new
