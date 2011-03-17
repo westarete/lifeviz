@@ -9,15 +9,6 @@
           - if current_user.karma.total 
             %strong.red
               = current_user.karma.total
-          Level:
-          - if current_user.karma.levels.gold?
-            %strong.gold Gold
-          - elsif current_user.karma.levels.silver?
-            %strong.silver Silver
-          - elsif current_user.karma.levels.bronze?
-            %strong.bronze Bronze
-          - else
-            %span.detail *dust*
           - if 10 <= current_user.karma.total
             Contributor:
             %span.green

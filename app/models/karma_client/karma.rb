@@ -29,9 +29,8 @@ module KarmaClient
       end
     end
     
-    # Return the levels object for this user.
-    def levels
-      Levels.new(self.total)
+    def to_s
+      total.to_s
     end
     
     # Return the tags object for this user.

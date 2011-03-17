@@ -11,7 +11,7 @@ class AdultWeightsController < ApplicationController
     if @adult_weight.save
       flash[:success] = "Adult weight created."
       flash[:karma_updated] = true
-      flash[:karma_increased] = "You just received 1 point of karma for contributing a new annotation. Your total karma is now #{current_user.karma.total}, and your level is #{current_user.level}"
+      flash[:karma_increased] = "You just received 1 point of karma for contributing a new annotation. Your total karma is now #{current_user.karma.total}!"
       redirect_to @species
     else
       flash.now[:failure] = "Adult weight annotation failed becase ", @adult_weight.errors.full_messages.to_sentence.downcase, "."

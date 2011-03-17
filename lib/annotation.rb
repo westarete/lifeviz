@@ -18,7 +18,7 @@ module Annotation
   def created_by
     if self[:created_by]
       begin
-        User.find(self[:created_by]).to_s
+        User.find(self[:created_by])
       rescue ActiveRecord::RecordNotFound
         self[:created_by_name]
       end
