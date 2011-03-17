@@ -11,3 +11,4 @@ capybara*
 spec/fixtures/ephemeral_response/*
 .specjour/*
 .idea
+db/data/lifeviz.xml
