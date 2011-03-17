@@ -13,7 +13,7 @@ class Taxon < ActiveRecord::Base
   named_scope :genuses,  lambda { |conditions| conditions ||= {}; {:conditions => {:rank => 5}.merge(conditions), :order => :name} }
   named_scope :species,  lambda { |conditions| conditions ||= {}; {:conditions => {:rank => 6}.merge(conditions), :order => :name} }
   
-  has_one :statistics
+  has_one :statistics, :dependent => :destroy
   
   validates_presence_of :rank, :message => "must be set"
   validates_presence_of :name, :message => "can't be blank"
@@ -21,6 +21,31 @@ class Taxon < ActiveRecord::Base
   RANK_LABELS = %w(Kingdom Phylum Class Order Family Genus Species)
   
   after_create :create_statistics_object
+  
+  # This method rebuilds lineage_ids for the entire taxonomy.
+  def self.rebuild_lineages!
+    Taxon.find(1).rebuild_lineage_branch
+  end
+
+  # This is a recursive method to rebuild a tree of lineage_ids.
+  def rebuild_lineage_branch(parent_id=nil, parent_lineage_ids="")
+    print "| " * rank unless rank == -1
+    print "Calculating lineage for #{id}: #{name}..."
+    lineage_ids = if parent_id.nil?  # Root node
+                    ""
+                  elsif parent_lineage_ids == "" || parent_id == 1 # Child of root node
+                    "1"
+                  else
+                    parent_lineage_ids + "," + parent_id.to_s
+                  end     
+ 
+    update_attributes(:lineage_ids => lineage_ids)
+    puts " success!"
+ 
+    unless rank == 6
+      children.each {|child| child.rebuild_lineage_branch(id, lineage_ids)}
+    end
+  end
   
   def self.rebuild_statistics_objects
     # # Fast, uninformative method!

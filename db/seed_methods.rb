@@ -11,4 +11,15 @@ module SeedMethods
     # Done with the progress bar.
     progress_bar.finish    
   end
+
+  def colorize(text, color_code)
+    "#{color_code}#{text}\033[0m"
+  end
+
+  def failure(text)
+    Rails.logger.info colorize("failure: ", "\033[31m") << text
+  end
+  def success(text)
+    Rails.logger.info colorize("success: ", "\033[32m") << text
+  end
 end

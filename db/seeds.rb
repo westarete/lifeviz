@@ -35,7 +35,7 @@ def create_taxonomy
   # Remove any existing taxa
   puts "Removing any existing taxa..."
   Taxon.delete_all
-  
+
   puts "Setting taxon id sequence back to 1"
   ActiveRecord::Base.connection.execute "SELECT setval('taxa_id_seq',1);"
 
@@ -58,7 +58,7 @@ def create_taxonomy
       progress_bar.inc
     end
   end
-  
+
   lastval = ActiveRecord::Base.connection.execute "SELECT MAX(ID) FROM taxa;"
   newval = lastval.max["max"].to_i + 1
   ActiveRecord::Base.connection.execute "SELECT setval('taxa_id_seq', #{newval});"
@@ -66,16 +66,17 @@ end
 
 def rebuild_lineages
   sql = ActiveRecord::Base.connection();
-	sql.begin_db_transaction
-	
+  sql.begin_db_transaction
+
   # Clear all lineage_ids
   puts "** Clearing existing lineage data..."
-  sql.execute "UPDATE taxa SET lineage_ids = NULL;"
+  sql.execute "alter table taxa drop column lineage_ids;"
+  sql.execute "alter table taxa add column lineage_ids varchar(255);"
   puts "success"
-  
+
   Taxon.rebuild_lineages!
-  
-  puts  "success: #{Taxon.count} taxa set"
+
+  success "#{Taxon.count} taxa set"
   sql.commit_db_transaction
 end
 
@@ -83,14 +84,15 @@ end
 # Collect species data from Lifeviz
 # Collect taxonomy species name and hierarchy from ubiota
 def create_species_and_data
+  sql = ActiveRecord::Base.connection();
   new_species       = []
   orphaned_species  = []
-  
+
   # Entrance message
   puts "** Creating new species from lifeviz/ubiota files using hagrid_ubid as the bridge"
   puts " NOTE: new species are species with data imported from lifeviz, orphaned species are "
   puts "       ubiota species with no associated lifeviz data"
-  
+
   # Open files
   puts "** Opening data files..."
   lifeviz = IO.popen("bunzip2 -c #{LIFEVIZ}")
@@ -99,19 +101,19 @@ def create_species_and_data
   lifeviz && ubiota && map ? (puts "success") : (puts "*failed"; exit!)
 
   # Dump all related data
-  puts "** Removing any existing age, litter sizes, adult weights,birth weights data..." 
+  puts "** Removing any existing age, litter sizes, adult weights,birth weights data..."
   Lifespan.delete_all && LitterSize.delete_all && AdultWeight.delete_all && BirthWeight.delete_all ? (puts "success") : (puts "failed"; exit!)
-  
+
   # Load taxon from lifeviz, let's use hpricot
   puts "** Loading lifeviz data, let's use hpricot..."
   doc                 = Hpricot::XML(lifeviz)
   lifeviz_species     = (doc/'names')
   lifeviz_ages        = (doc/'age')
   lifeviz_development = (doc/'development')
-  puts  "success: #{lifeviz_species.size} species loaded with #{lifeviz_ages.size} ages}"
-  
+  success "#{lifeviz_species.size} species loaded with #{lifeviz_ages.size} ages}"
+
   puts "lifeviz species: #{lifeviz_species.size}, lifeviz ages: #{lifeviz_ages.size}, lifeviz devs: #{lifeviz_development.size}"
-    
+
   # Create new species array to load lifeviz species and attributes we want
   puts "** Loading new species and storing lifeviz data from lifeviz dump..."
   development_index = 0
@@ -127,7 +129,7 @@ def create_species_and_data
         puts "#{(lifeviz_development[development_index]/'hagrid').inner_html} is less than #{hagrid}"
         development_index += 1
       end
-      
+
       # development attributes matches the current species id
       if lifeviz_development[development_index] && (lifeviz_development[development_index]/'hagrid').inner_html.to_i == hagrid.to_i
         development = lifeviz_development[development_index]
@@ -148,8 +150,8 @@ def create_species_and_data
     end
   end
 
-  puts "success: #{new_species.size} new species loaded in memory"
-    
+  success "#{new_species.size} new species loaded in memory"
+
   # Load ubid ids into new species from mapping
   puts "** Loading mapped ubiota ids into new species..."
   new_species_pointer = 0
@@ -161,18 +163,18 @@ def create_species_and_data
     new_species[new_species_pointer][:ubid] = ubid.to_i
   end
   puts "success"
-  
+
   # Remove any new species that have no ubid from mapping
   count = new_species.size
   puts "** Delete any new species that do not have a ubiota id mapped..."
   new_species.delete_if { |species| species[:ubid] == nil }
-  puts "success: deleted #{count - new_species.size} species, #{new_species.size} remaining"
-  
+  success "deleted #{count - new_species.size} species, #{new_species.size} remaining"
+
   # Sort species by ubid
   puts "** Sorting new species by ubid..."
   new_species = new_species.sort_by { |each| each[:ubid] }
   puts "success"
-  
+
   # Find and load ubiota genus ids and species name for each species
   #   Ensure the rank is 6 (species level)
   #   Set taxon_id to nil if the species inside ubiota doesn't exist
@@ -182,13 +184,13 @@ def create_species_and_data
   progress "Loading seed data...", num_lines_bz2(UBIOTA) do |progress_bar|
     ubiota.each do |line|
       id, term, rank, hierarchy, parent_id, num_children, hierarchy_ids = line.split("|")
-  
+
       # skip if we're not looking at a species level taxon
-      if rank.to_i != 6   
+      if rank.to_i != 6
         progress_bar.inc
         next
       end
-  
+
       if new_species[x].nil? || id.to_i != new_species[x][:ubid]
         y = {:taxon_id => parent_id.to_i, :name => term.to_s}
         orphaned_species << y
@@ -202,19 +204,19 @@ def create_species_and_data
       progress_bar.inc
     end
   end
-  puts "success: traversed #{x} new species and #{orphaned_species.size} orphaned species"
-   
-  # Remove any new species that has no genus in ubiota 
+  success "traversed #{x} new species and #{orphaned_species.size} orphaned species"
+
+  # Remove any new species that has no genus in ubiota
   count = new_species.size
   puts "** Delete any species that had no genus id... (NOTE THIS)"
   new_species.delete_if { |species| species[:taxon_id] == nil }
-  puts "success: deleted #{count - new_species.size} species, #{new_species.size} remaining"
-  
-  # Remove any orphaned species that has no genus in ubiota 
+  success "deleted #{count - new_species.size} species, #{new_species.size} remaining"
+
+  # Remove any orphaned species that has no genus in ubiota
   count = orphaned_species.size
   puts "** Delete any orphaned species that had no genus id... (NOTE THIS)"
   orphaned_species.delete_if { |species| species[:taxon_id] == 0 }
-  puts "success: deleted #{count - orphaned_species.size} species, #{orphaned_species.size} remaining"
+  success "deleted #{count - orphaned_species.size} species, #{orphaned_species.size} remaining"
 
   # Create species with all the new species stored in memory
   count   = 0
@@ -236,7 +238,7 @@ def create_species_and_data
           species = Taxon.new(:name => s[:name], :parent_id => taxon.id, :rank => 6)
           species.send(:create_without_callbacks)
         end
-        
+
         age          = Lifespan.new(:value_in_days => (s[:age].to_f * 365), :units => "Years", :species_id => species.id)   if ! s[:age].blank?
         birth_weight = BirthWeight.new(:value_in_grams => (s[:birth_weight]), :units => "Grams", :species_id => species.id) if ! s[:birth_weight].blank?
         adult_weight = AdultWeight.new(:value_in_grams => (s[:adult_weight]), :units => "Grams", :species_id => species.id) if ! s[:adult_weight].blank?
@@ -251,14 +253,14 @@ def create_species_and_data
       progress_bar.inc
     end
   end
-  puts "success: saved #{count - fcount} species in #{Time.now - start_time}"
-  puts "success: saved #{count - age_nil} ages"
-  puts "success: saved #{count - adult_weight_nil} adult weights"
-  puts "success: saved #{count - birth_weight_nil} birth weights"
-  puts "success: saved #{count - litter_size_nil} litter sizes"
-  
-  puts "failure: #{fcount} species didn't have taxons matching taxon_id in our database" if fcount != 0
-  
+  success "saved #{count - fcount} species in #{Time.now - start_time}"
+  success "saved #{count - age_nil} ages"
+  success "saved #{count - adult_weight_nil} adult weights"
+  success "saved #{count - birth_weight_nil} birth weights"
+  success "saved #{count - litter_size_nil} litter sizes"
+
+  failure "#{fcount} species didn't have taxons matching taxon_id in our database" if fcount != 0
+
   # Create orphaned species with all the species stored in memory
   count   = 0
   fcount  = 0
@@ -267,7 +269,7 @@ def create_species_and_data
     orphaned_species.each_with_index do |s, index|
       taxon   = Taxon.find_by_id(s[:taxon_id])
       if taxon == nil
-       puts "fail: no taxon found with and id of #{s[:taxon_id].to_s} for species with ubid of #{s[:ubid].to_s}"
+       failure "no taxon found with and id of #{s[:taxon_id].to_s} for species with ubid of #{s[:ubid].to_s}"
        fcount += 1
       else
        species = Taxon.new(:name => s[:name], :parent_id => taxon.id, :rank => 6)
@@ -277,20 +279,31 @@ def create_species_and_data
       progress_bar.inc
     end
   end
-  puts "success: Phew!... saved #{count - fcount} species"  
-  puts "failure: #{fcount} species didn't have taxons matching taxon_id in our database" if fcount != 0
-  
-  # Exit message
-  puts "Species creation is completed"
+  success "Phew!... saved #{count - fcount} species"
+  failure "#{fcount} species didn't have taxons matching taxon_id in our database" if fcount != 0
   
   puts "** Running Taxon.rebuild! "
   Taxon.rebuild!
   puts "success\n\n"
-  puts "NOTE: don't forget to run vacuum analyze\n"
+  puts "Vacuuming database..."
+  sql.execute "VACUUM ANALYZE;"
+  success "Database vacuumed!"
+  puts "Species creation is completed.\n\n\n"
+end
+
+def create_statistics
+  puts "Creating statistics objects..."
+  Taxon.rebuild_statistics_objects
+  number_of_statistics = Statistics.count
+  success "#{number_of_statistics} objects created"
+  puts "Calculating statistics..."
+  Taxon.rebuild_stats
+  success "Stats calculated!"
 end
 
 # Execute taxonomy creation method
-# create_taxonomy
+create_taxonomy
 # Execute species creation method
 create_species_and_data
-# rebuild_lineages
+rebuild_lineages
+create_statistics
