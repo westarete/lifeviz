@@ -35,12 +35,10 @@ table#taxatable, table#speciestable, table.taxatable, table.speciestable
     :display none
   thead
     th
-      :background-color #60B9CE
-      :border-color #60B9CE !important
       :cursor pointer
       :font-weight bold 
       :padding-left 20px
-      :border-right 1px solid #dad9c7
+      :border-bottom 2px solid #444
   tbody
     tr.selected
       :background #C0F73E
@@ -49,6 +47,12 @@ table#taxatable, table#speciestable, table.taxatable, table.speciestable
       :cursor default
       a
         :color #FF0700
+    tr:nth-child(2n)
+      td
+        :background-color #f3f3f3
+    td
+      :padding-left 20px
+    
       
 table#taxatable .header, table#speciestable .header
   :background-image url(/images/table_bg.gif)
