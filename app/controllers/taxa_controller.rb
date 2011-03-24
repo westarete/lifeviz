@@ -17,7 +17,7 @@ class TaxaController < ApplicationController
     
     @taxon_ancestry = @taxon.full_ancestry(:include_children => true) # for taxon dropdowns
     @rank = @taxon.rank
-    @children = @taxon.children
+    @children = @taxon.children.select{|c| !(c.statistics.average_lifespan.blank? or c.statistics.average_birth_weight.blank? or c.statistics.average_adult_weight.blank? or c.statistics.average_litter_size.blank?) }
   end
   
   # This populates the taxon dropdowns that run across the top of the page
