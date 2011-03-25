@@ -14,6 +14,8 @@ class Taxon < ActiveRecord::Base
   named_scope :species,  lambda { |conditions| conditions ||= {}; {:conditions => {:rank => 6}.merge(conditions), :order => :name} }
   
   has_one :statistics, :dependent => :destroy
+  has_many :citations
+  has_many :references, :through => :citations
   
   validates_presence_of :rank, :message => "must be set"
   validates_presence_of :name, :message => "can't be blank"
@@ -29,8 +31,8 @@ class Taxon < ActiveRecord::Base
 
   # This is a recursive method to rebuild a tree of lineage_ids.
   def rebuild_lineage_branch(parent_id=nil, parent_lineage_ids="")
-    print "| " * rank unless rank == -1
-    print "Calculating lineage for #{id}: #{name}..."
+    # print "| " * rank unless rank == -1
+    # print "Calculating lineage for #{id}: #{name}..."
     lineage_ids = if parent_id.nil?  # Root node
                     ""
                   elsif parent_lineage_ids == "" || parent_id == 1 # Child of root node
@@ -40,7 +42,7 @@ class Taxon < ActiveRecord::Base
                   end     
  
     update_attributes(:lineage_ids => lineage_ids)
-    puts " success!"
+    # puts " success!"
  
     unless rank == 6
       children.each {|child| child.rebuild_lineage_branch(id, lineage_ids)}

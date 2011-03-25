@@ -31,18 +31,17 @@ describe LitterSize do
   
 end
 
+
 # == Schema Information
 #
 # Table name: litter_sizes
 #
-#  id               :integer         not null, primary key
-#  species_id       :integer         not null
-#  value            :decimal(, )     not null
-#  created_at       :datetime
-#  updated_at       :datetime
-#  created_by       :integer
-#  created_by_name  :string(255)
-#  citation         :string(255)
-#  citation_context :text
+#  id              :integer         not null, primary key
+#  species_id      :integer         not null
+#  value           :decimal(, )     not null
+#  created_at      :datetime
+#  updated_at      :datetime
+#  created_by      :integer
+#  created_by_name :string(255)
 #
 
