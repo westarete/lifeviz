@@ -1,10 +1,30 @@
 body
-  :font-family 'Droid Sans' !important
-  :color #222
+  :font-family Cantarell !important
+  :color $font-color
+
+h1
+  @include text-shadow(#fff, 0, 1px, 2px)
+  :font-family 'Droid Serif'
+  :font-weight bold
+  :font-size 2em
+
+.breadcrumbs
+  @include inline-list
+  :font-size 11px
+  :margin-bottom 1em
+  
+  li:after
+    :color #888
+    :content  " > "
+
+  li.current:after
+    :content ''
 
 table#taxatable, table#speciestable, table.taxatable, table.speciestable
-  :font-size 10px
+  :font-size 11px
   :line-height 25px
+
+
 
 //  +blueprint-typography
 //  
