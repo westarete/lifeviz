@@ -111,7 +111,7 @@ class Taxon < ActiveRecord::Base
   end
   
   def parents
-    lineage_ids.split(/,/).collect { |ancestor_id| Taxon.find(ancestor_id) }
+    Taxon.find(hierarchy, :order => 'rank ASC')
   end
   
   def children_of_rank(rank)
