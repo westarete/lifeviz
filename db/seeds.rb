@@ -379,8 +379,8 @@ def create_statistics
   end
 end
 
-# create_references
-# create_taxonomy
+create_references
+create_taxonomy
 create_species_and_data  # Must be run after create_taxonomy
 rebuild_lineages
 create_statistics
