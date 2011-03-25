@@ -104,10 +104,11 @@ class Taxon < ActiveRecord::Base
   end
   
   def all_data_available?
-    self.statistics.average_lifespan && ! self.statistics.average_lifespan.be_close(0) &&
-    self.statistics.average_birth_weight && ! self.statistics.average_birth_weight.be_close(0) &&
-    self.statistics.average_adult_weight && ! self.statistics.average_adult_weight.be_close(0) &&
-    self.statistics.average_litter_size && ! self.statistics.average_litter_size.be_close(0)
+    # this used to have be_close clauses, but they stopped working because Statistics now returns strings instead of floats
+    not (self.statistics.average_lifespan.blank? or 
+         self.statistics.average_birth_weight.blank? or 
+         self.statistics.average_adult_weight.blank? or
+         self.statistics.average_litter_size.blank? )
   end
   
   def parents
