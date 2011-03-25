@@ -16,6 +16,8 @@ class TaxaController < ApplicationController
     end
     
     @taxon_ancestry = @taxon.full_ancestry(:include_children => true) # for taxon dropdowns
+    @parents = @taxon.parents
+    @parents.shift  # Remove UBT/root from the list of parents for Breadcrumbs. 
     @rank = @taxon.rank
     @children = @taxon.children.select{|c| !(c.statistics.average_lifespan.blank? or c.statistics.average_birth_weight.blank? or c.statistics.average_adult_weight.blank? or c.statistics.average_litter_size.blank?) }
   end
