@@ -36,7 +36,7 @@ def create_references
   end
 
   seed "Setting reference id sequence back to 1" do
-    ActiveRecord::Base.connection.execute "SELECT setval('references_id_seq',1);" ? true : false
+    (ActiveRecord::Base.connection.execute "SELECT setval('references_id_seq',1);") ? true : false
   end
   
   # Open files
@@ -308,12 +308,25 @@ def create_species_and_data
       else
         species = Taxon.find_by_name(s[:name])
         if species.nil?
-          species = Taxon.create_without_callbacks(:name => s[:name], :parent_id => taxon.id, :rank => 6)
+          species = Taxon.new(:name => s[:name], :parent_id => taxon.id, :rank => 6)
+          species.create!
         end
-        age          = Lifespan.create_without_callbacks(:value_in_days => (s[:age].to_f * 365), :units => "Years", :species_id => species.id)   if ! s[:age].blank?
-        birth_weight = BirthWeight.create_without_callbacks(:value_in_grams => (s[:birth_weight]), :units => "Grams", :species_id => species.id) if ! s[:birth_weight].blank?
-        adult_weight = AdultWeight.create_without_callbacks(:value_in_grams => (s[:adult_weight]), :units => "Grams", :species_id => species.id) if ! s[:adult_weight].blank?
-        litter_size  = LitterSize.create_without_callbacks(:value => (s[:litter_size]), :species_id => species.id) if ! s[:litter_size].blank?
+        if ! s[:age].blank?
+          age = Lifespan.new(:value_in_days => (s[:age].to_f * 365), :units => "Years", :species_id => species.id)
+          age.save_without_callbacks!
+        end
+        if ! s[:birth_weight].blank?
+          birth_weight = BirthWeight.new(:value_in_grams => (s[:birth_weight]), :units => "Grams", :species_id => species.id)
+          birth_weight.save_without_callbacks!
+        end
+        if ! s[:adult_weight].blank?
+          adult_weight = AdultWeight.new(:value_in_grams => (s[:adult_weight]), :units => "Grams", :species_id => species.id)
+          adult_weight.save_without_callbacks!
+        end
+        if ! s[:litter_size].blank?
+          litter_size = LitterSize.new(:value => (s[:litter_size]), :species_id => species.id)
+          litter_size.save_without_callbacks!
+        end
         s[:references].each do |reference_id|
           Citation.create(:taxon_id => species.id, :reference_id => reference_id)
         end
