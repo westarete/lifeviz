@@ -309,23 +309,23 @@ def create_species_and_data
         species = Taxon.find_by_name(s[:name])
         if species.nil?
           species = Taxon.new(:name => s[:name], :parent_id => taxon.id, :rank => 6)
-          species.create!
+          species.send(:create_without_callbacks)
         end
         if ! s[:age].blank?
           age = Lifespan.new(:value_in_days => (s[:age].to_f * 365), :units => "Years", :species_id => species.id)
-          age.save_without_callbacks!
+          age.send(:create_without_callbacks)
         end
         if ! s[:birth_weight].blank?
           birth_weight = BirthWeight.new(:value_in_grams => (s[:birth_weight]), :units => "Grams", :species_id => species.id)
-          birth_weight.save_without_callbacks!
+          birth_weight.send(:create_without_callbacks)
         end
         if ! s[:adult_weight].blank?
           adult_weight = AdultWeight.new(:value_in_grams => (s[:adult_weight]), :units => "Grams", :species_id => species.id)
-          adult_weight.save_without_callbacks!
+          adult_weight.send(:create_without_callbacks)
         end
         if ! s[:litter_size].blank?
           litter_size = LitterSize.new(:value => (s[:litter_size]), :species_id => species.id)
-          litter_size.save_without_callbacks!
+          litter_size.send(:create_without_callbacks)
         end
         s[:references].each do |reference_id|
           Citation.create(:taxon_id => species.id, :reference_id => reference_id)
@@ -337,9 +337,9 @@ def create_species_and_data
   end
   notice success_string("saved #{count - species_without_parents} species in #{Time.now - start_time}")
   notice success_string("saved #{Lifespan.count} ages")
-  notice success_string("saved #{count - adult_weight_nil} adult weights")
-  notice success_string("saved #{count - birth_weight_nil} birth weights")
-  notice success_string("saved #{count - litter_size_nil} litter sizes")
+  notice success_string("saved #{AdultWeight.count} adult weights")
+  notice success_string("saved #{BirthWeight.count} birth weights")
+  notice success_string("saved #{LitterSize.count} litter sizes")
   notice success_string("saved #{Citation.count} citations for #{Reference.count} references")
   notice failure_string("#{species_without_parents} species didn't have taxons matching taxon_id in our database") if species_without_parents != 0
 
@@ -392,8 +392,8 @@ def create_statistics
   end
 end
 
-create_references
-create_taxonomy
+# create_references
+# create_taxonomy
 create_species_and_data  # Must be run after create_taxonomy
 rebuild_lineages
 create_statistics
