@@ -31,7 +31,7 @@
                 data.filter(function(d) !isNaN(d[t])),
               function(d) Math.floor(d[t]),
               function(d) Math.ceil(d[t])
-              ).range("#014357", "#70C9DE"));
+              ).range("#a5e1f9", "#0086bb"));
       
       /* Interaction state. */
       var filter =  pv.dict(
@@ -87,8 +87,8 @@
           .data(dims)
           .left(function(t, d) x(t))
           .bottom(function(t, d) y[t](d[t]))
-          .strokeStyle(function(t, d) d["Hover"] == "X" ? "#FF0700" : d["Select"] == "X" ? "#C0F73E" : (c[active](d[active])))
-          .lineWidth(5)
+          .strokeStyle(function(t, d) d["Hover"] == "X" ? "#da227e" : d["Select"] == "X" ? "#C0F73E" : (c[active](d[active])))
+          .lineWidth(4)
           .text(function(t, d) y[t](d[t]))
           .event("mouseover", function(t, d) turnHoveredOn($('#taxatable .taxon[taxon_id~=value]'.replace('value', d["ID"]))) )
           .event("mouseout", function(t, d) turnHoveredOff($('#taxatable .taxon[taxon_id~=value]'.replace('value', d["ID"]))) )
