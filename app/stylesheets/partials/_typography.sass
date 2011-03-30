@@ -1,10 +1,32 @@
+@font-face
+  :font-family 'CantarellRegular'
+  :src url('/fonts/Cantarell/Cantarell-Regular-webfont.eot')
+  :src url('/fonts/Cantarell/Cantarell-Regular-webfont.eot?iefix') format('eot'), url('/fonts/Cantarell/Cantarell-Regular-webfont.woff') format('woff'), url('/fonts/Cantarell/Cantarell-Regular-webfont.ttf') format('truetype'), url('/fonts/Cantarell/Cantarell-Regular-webfont.svg#webfont9UOzsjXz') format('svg')
+  :font-weight normal
+  :font-style normal
+
+@font-face
+  :font-family 'CantarellOblique'
+  :src url('/fonts/Cantarell/Cantarell-Oblique-webfont.eot')
+  :src url('/fonts/Cantarell/Cantarell-Oblique-webfont.eot?iefix') format('eot'), url('/fonts/Cantarell/Cantarell-Oblique-webfont.woff') format('woff'), url('/fonts/Cantarell/Cantarell-Oblique-webfont.ttf') format('truetype'), url('/fonts/Cantarell/Cantarell-Oblique-webfont.svg#webfontRl4nowrT') format('svg')
+  :font-weight normal
+  :font-style normal
+
+@font-face
+  :font-family 'AdelleBasicBold'
+  :src url('/fonts/Adelle/adellebasic_bold-webfont.eot')
+  :src url('/fonts/Adelle/adellebasic_bold-webfont.eot?iefix') format('eot'), url('/fonts/Adelle/adellebasic_bold-webfont.woff') format('woff'), url('/fonts/Adelle/adellebasic_bold-webfont.ttf') format('truetype'), url('/fonts/Adelle/adellebasic_bold-webfont.svg#webfontWlS1TmoD') format('svg')
+  :font-weight normal
+  :font-style normal
+
+
 body
-  :font-family Cantarell !important
+  :font-family CantarellRegular !important
   :color $font-color
 
 h1
   @include text-shadow(#fff, 0, 1px, 2px)
-  :font-family 'AdelleBasic-Bold'
+  :font-family AdelleBasicBold
   :font-weight bold
   :font-size 32px
 
@@ -27,6 +49,6 @@ table#taxatable, table#speciestable, table.taxatable, table.speciestable
 
 .tablenote
   :text-align left
-  :font-style italic
+  :font-family 'CantarellOblique'
   :font-size 12px
   :line-height 16px
