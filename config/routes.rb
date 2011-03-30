@@ -44,5 +44,5 @@ ActionController::Routing::Routes.draw do |map|
     t.taxonomy_dropdown '/taxonomy/dropdown/:rank', :action => :dropdown_options, :conditions => {:method => :get}
   end
   
-  map.root :controller => :taxa
+  map.root :controller => :taxa, :action => :index, :rank => 'class', :taxon => 'Mammalia'
 end
