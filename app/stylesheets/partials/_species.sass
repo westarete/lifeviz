@@ -31,6 +31,9 @@ table#taxa, table#species
 
 table#taxatable, table#speciestable, table.taxatable, table.speciestable
   :width 100%
+  :margin-bottom 16px
+  :border-bottom 1px solid #ddd
+  
   .hidden
     :display none
   thead
@@ -43,16 +46,16 @@ table#taxatable, table#speciestable, table.taxatable, table.speciestable
     tr.selected
       :background #C0F73E
     tr.hover
-      :color #FF0700
+      :color $accent-color
       :cursor default
       a
-        :color #FF0700
+        :color $accent-color
+        :border-bottom-color $accent-color
     tr:nth-child(2n)
       td
         :background-color #f3f3f3
     td
-      :padding-left 20px
-    
+      :padding-left 20px    
       
 table#taxatable .header, table#speciestable .header
   :background-image url(/images/table_bg.gif)
@@ -70,3 +73,4 @@ table#taxatable .headerSortDown, table#speciestable .headerSortDown
   :background-position center left
 
 
+.tablenote

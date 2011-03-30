@@ -4,13 +4,14 @@ body
 
 h1
   @include text-shadow(#fff, 0, 1px, 2px)
-  :font-family 'Droid Serif'
+  :font-family 'AdelleBasic-Bold'
   :font-weight bold
-  :font-size 2em
+  :font-size 32px
 
 .breadcrumbs
   @include inline-list
   :font-size 11px
+  :line-height 11px
   :margin-bottom 1em
   
   li:after
@@ -24,19 +25,8 @@ table#taxatable, table#speciestable, table.taxatable, table.speciestable
   :font-size 11px
   :line-height 25px
 
-
-
-//  +blueprint-typography
-//  
-//h1, h2, h3, h4
-//  :font-family "Myriad Pro","Helvetica Neue",Helvetica,Arial,sans-serif !important
-//
-//// Stuff gets smooshed against the top of h2's. Blueprint doesn't leave
-//// enough space, though I think this is a problem with Myriad.
-//h2
-//  :margin-top .25em
-//
-//.detail
-//  :font-size .8em
-//  :color gray
-//
+.tablenote
+  :text-align left
+  :font-style italic
+  :font-size 12px
+  :line-height 16px
