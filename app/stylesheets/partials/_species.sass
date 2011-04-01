@@ -1,16 +1,10 @@
-#species
-  :margin-bottom 1em
-
-// Species table headers  
-table#taxa, table#species
-  :width auto
-  thead
-    th
-      :background-color #ffffff
-  td.actions
-    div
-      :display block
-      :float left
+table#species
+  th, td
+    :padding 0 1em
+  tbody
+    tr:first-child
+      th,td
+        :border-top 1px solid #000
 
 // Form specific view changes.
 .imr, .mrdt
