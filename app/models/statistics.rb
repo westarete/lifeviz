@@ -119,22 +119,22 @@ class Statistics < ActiveRecord::Base
         taxa.lft >= %s AND
         taxa.rgt <= %s
     " % [taxon.lft, taxon.rgt]
-    self.minimum_lifespan                 = result[0]["minimum_lifespan"]
-    self.maximum_lifespan                 = result[0]["maximum_lifespan"]
-    self.average_lifespan                 = result[0]["average_lifespan"]
-    self.standard_deviation_lifespan      = result[0]["standard_deviation_lifespan"]
-    self.minimum_adult_weight             = result[0]["minimum_litter_size"]
-    self.maximum_adult_weight             = result[0]["maximum_litter_size"]
-    self.average_adult_weight             = result[0]["average_litter_size"]
-    self.standard_deviation_adult_weight  = result[0]["standard_deviation_litter_size"]
-    self.minimum_birth_weight             = result[0]["minimum_adult_weight"]
-    self.maximum_birth_weight             = result[0]["maximum_adult_weight"]
-    self.average_birth_weight             = result[0]["average_adult_weight"]
-    self.standard_deviation_birth_weight  = result[0]["standard_deviation_adult_weight"]
-    self.minimum_litter_size              = result[0]["minimum_birth_weight"]
-    self.maximum_litter_size              = result[0]["maximum_birth_weight"]
-    self.average_litter_size              = result[0]["average_birth_weight"]
-    self.standard_deviation_litter_size   = result[0]["standard_deviation_birth_weight"]
+    minimum_lifespan                 = result[0]["minimum_lifespan"].to_f
+    maximum_lifespan                 = result[0]["maximum_lifespan"].to_f
+    average_lifespan                 = result[0]["average_lifespan"].to_f
+    standard_deviation_lifespan      = result[0]["standard_deviation_lifespan"].to_f
+    minimum_adult_weight             = result[0]["minimum_adult_weight"].to_f
+    maximum_adult_weight             = result[0]["maximum_adult_weight"].to_f
+    average_adult_weight             = result[0]["average_adult_weight"].to_f
+    standard_deviation_adult_weight  = result[0]["standard_deviation_adult_weight"].to_f
+    minimum_birth_weight             = result[0]["minimum_birth_weight"].to_f
+    maximum_birth_weight             = result[0]["maximum_birth_weight"].to_f
+    average_birth_weight             = result[0]["average_birth_weight"].to_f
+    standard_deviation_birth_weight  = result[0]["standard_deviation_birth_weight"].to_f
+    minimum_litter_size              = result[0]["minimum_litter_size"].to_f
+    maximum_litter_size              = result[0]["maximum_litter_size"].to_f
+    average_litter_size              = result[0]["average_litter_size"].to_f
+    standard_deviation_litter_size   = result[0]["standard_deviation_litter_size"].to_f
     save!
   end
 end
