@@ -38,7 +38,7 @@ def create_references
   seed "Setting reference id sequence back to 1" do
     (ActiveRecord::Base.connection.execute "SELECT setval('references_id_seq',1);") ? true : false
   end
-  
+
   # Open files
   lifeviz = ""
   seed "Opening data files" do
@@ -53,7 +53,7 @@ def create_references
     (lifeviz_refs.size > 0)
   end
   notice "Created #{lifeviz_refs.size} references"
-  
+
   progress "Storing refs", lifeviz_refs.length do |progress_bar|
     lifeviz_refs.each do |ref|
       newref = Reference.new
@@ -66,7 +66,6 @@ def create_references
       newref.author    = (ref/'author').inner_html
       newref.publisher = (ref/'publisher').inner_html
       newref.year      = (ref/'year').inner_html
-  
       newref.save!
       progress_bar.inc
     end
@@ -131,15 +130,13 @@ end
 # Collect species data from Lifeviz
 # Collect taxonomy species name and hierarchy from ubiota
 def create_species_and_data
-  sql = ActiveRecord::Base.connection();
-  new_species       = []
-  orphaned_species  = []
-
   # Entrance message
   puts "** Creating new species from lifeviz/ubiota files using hagrid_ubid as the bridge"
   puts "   Note! New species are species with data imported from lifeviz. Orphaned species "
   puts "   are ubiota species with no associated lifeviz data."
-
+  sql = ActiveRecord::Base.connection();
+  new_species       = []
+  orphaned_species  = []
 
   # Open files
   lifeviz, ubiota, map = nil
@@ -150,12 +147,19 @@ def create_species_and_data
     lifeviz && ubiota && map ? true : false
   end
 
+  # Dump all species
+  seed "Removing existing species."
+  progress "Deleting", Species.count do |progress_bar|
+    Species.all.each do |species|
+      species.delete
+      progress_bar.inc
+    end
+  end
 
   # Dump all related data
   seed "Removing any existing age, litter sizes, adult weights, birth weights data" do
     Lifespan.delete_all && LitterSize.delete_all && AdultWeight.delete_all && BirthWeight.delete_all ? true : false
   end
-
 
   # Load taxon from lifeviz, let's use hpricot
   lifeviz_species, lifeviz_ages, lifeviz_development, lifeviz_refs = nil
@@ -169,7 +173,6 @@ def create_species_and_data
   end
   notice "#{lifeviz_species.size} species loaded with #{lifeviz_ages.size} ages"
 
-
   # Create new species array to load lifeviz species and attributes we want
   seed "Loading new species and storing lifeviz data from lifeviz dump"
   development_index = ref_index = 0
@@ -180,17 +183,17 @@ def create_species_and_data
       x[:synonyms] = (s/'name_common').inner_html
       x[:age]      = (lifeviz_ages[index]/'tmax').inner_html
       x[:hagrid]   = hagrid
-      while lifeviz_development[development_index] && (lifeviz_development[development_index]/'hagrid').inner_html.to_i < hagrid.to_i
-        puts "#{(lifeviz_development[development_index]/'hagrid').inner_html} is less than #{hagrid}"
+      while lifeviz_development[development_index] && (lifeviz_development[development_index]/'hagrid').inner_html.to_i < hagrid
+        notice "#{(lifeviz_development[development_index]/'hagrid').inner_html} is less than #{hagrid}"
         development_index += 1
       end
       # development attributes matches the current species id
-      if lifeviz_development[development_index] && (lifeviz_development[development_index]/'hagrid').inner_html.to_i == hagrid.to_i
+      if lifeviz_development[development_index] && (lifeviz_development[development_index]/'hagrid').inner_html.to_i == hagrid
         development = lifeviz_development[development_index]
-        if development && (development/'hagrid').inner_html == hagrid
-          x[:adult_weight]  = (development/'adult_weight').inner_html.blank? ? nil : (development/'adult_weight').inner_html.to_f
-          x[:birth_weight]  = (development/'birth_weight').inner_html.blank? ? nil : (development/'birth_weight').inner_html.to_f
-          x[:litter_size]   = (development/'litter_size').inner_html.blank?  ? nil : (development/'litter_size').inner_html.to_f
+        if development && (development/'hagrid').inner_html.to_i == hagrid
+          x[:adult_weight]  = (development/'adult_weight').inner_html.blank? ? "" : (development/'adult_weight').inner_html.to_f
+          x[:birth_weight]  = (development/'birth_weight').inner_html.blank? ? "" : (development/'birth_weight').inner_html.to_f
+          x[:litter_size]   = (development/'litter_size').inner_html.blank?  ? "" : (development/'litter_size').inner_html.to_f
         else
           x[:adult_weight]  = ""
           x[:birth_weight]  = ""
@@ -199,7 +202,7 @@ def create_species_and_data
         development_index += 1
       end
       while lifeviz_refs[ref_index] && (lifeviz_refs[ref_index]/'hagrid').inner_html.to_i < hagrid
-        puts "#{(lifeviz_refs[ref_index]/'hagrid').inner_html} is less than #{hagrid}"
+        notice "#{(lifeviz_refs[ref_index]/'hagrid').inner_html} is less than #{hagrid}"
         ref_index += 1
       end
       if lifeviz_refs[ref_index]
@@ -215,7 +218,6 @@ def create_species_and_data
   end
   notice "#{new_species.length} new species stored"
 
-
   # Load ubid ids into new species from mapping
   seed "Loading mapped ubiota ids into new species" do
     new_species_pointer = 0
@@ -228,7 +230,6 @@ def create_species_and_data
     end
   end
 
-
   # Remove any new species that have no ubid from mapping
   count = new_species.size
   seed "Delete any new species that do not have a ubiota id mapped", 
@@ -239,14 +240,12 @@ def create_species_and_data
   end
   notice "deleted #{count - new_species.size} species, #{new_species.size} remaining"
 
-
   # Sort species by ubid
   seed "Sorting new species by ubid" do
     new_species = new_species.sort_by { |each| each[:ubid] }
     true
   end
-  
-  
+
   # Find and load ubiota genus ids and species name for each species
   #   Ensure the rank is 6 (species level)
   #   Set taxon_id to nil if the species inside ubiota doesn't exist
@@ -257,13 +256,11 @@ def create_species_and_data
   progress "Matching", num_lines do |progress_bar|
     ubiota.each do |line|
       id, term, rank, hierarchy, parent_id, num_children, hierarchy_ids = line.split("|")
-
       # skip if we're not looking at a species level taxon
       if rank.to_i != 6
         progress_bar.inc
         next
       end
-
       if new_species[x].nil? || id.to_i != new_species[x][:ubid]
         y = {:taxon_id => parent_id.to_i, :name => term.to_s}
         orphaned_species << y
@@ -279,14 +276,12 @@ def create_species_and_data
   end
   notice "traversed #{x} new species and #{orphaned_species.size} orphaned species"
 
-
   # Remove any new species that has no genus in ubiota
   count = new_species.size
   seed "Delete any species that had no genus id" do
     new_species.delete_if { |species| species[:taxon_id] == nil }
   end
   notice success_string("deleted #{count - new_species.size} species, #{new_species.size} remaining")
-
 
   # Remove any orphaned species that has no genus in ubiota
   count = orphaned_species.size
@@ -295,54 +290,31 @@ def create_species_and_data
   end
   notice success_string("deleted #{count - orphaned_species.size} species, #{orphaned_species.size} remaining")
 
-
   # Create species with all the new species stored in memory
   count = species_without_parents = 0
-  seed "Saving all the new species"
-  start_time = Time.now
+  seed "Saving all of the new species."
+
   progress "Species", new_species.length do |progress_bar|
-    new_species.each_with_index do |s, index|
-      taxon   = Taxon.find_by_id(s[:taxon_id])
-      if taxon.nil?
-        species_without_parents += 1
-      else
-        species = Taxon.find_by_name(s[:name])
-        if species.nil?
-          species = Taxon.new(:name => s[:name], :parent_id => taxon.id, :rank => 6)
-          species.send(:create_without_callbacks)
-        end
-        if ! s[:age].blank?
-          age = Lifespan.new(:value_in_days => (s[:age].to_f * 365), :units => "Years", :species_id => species.id)
-          age.send(:create_without_callbacks)
-        end
-        if ! s[:birth_weight].blank?
-          birth_weight = BirthWeight.new(:value_in_grams => (s[:birth_weight]), :units => "Grams", :species_id => species.id)
-          birth_weight.send(:create_without_callbacks)
-        end
-        if ! s[:adult_weight].blank?
-          adult_weight = AdultWeight.new(:value_in_grams => (s[:adult_weight]), :units => "Grams", :species_id => species.id)
-          adult_weight.send(:create_without_callbacks)
-        end
-        if ! s[:litter_size].blank?
-          litter_size = LitterSize.new(:value => (s[:litter_size]), :species_id => species.id)
-          litter_size.send(:create_without_callbacks)
-        end
-        s[:references].each do |reference_id|
-          Citation.create(:taxon_id => species.id, :reference_id => reference_id)
-        end
-      end
+    new_species.each_with_index do |taxon, index|
+      s = new_species[index]
+      species = Taxon.new(:name => s[:name], :parent_id => s[:taxon_id], :rank => 6)
+      species.send(:create_without_callbacks)
+      Lifespan.new(:value_in_days => (s[:age].to_f * 365), :units => "Years", :species_id => species.id).send(:create_without_callbacks)   unless s[:age].blank?
+      BirthWeight.new(:value_in_grams => (s[:birth_weight]), :units => "Grams", :species_id => species.id).send(:create_without_callbacks) unless s[:birth_weight].blank?
+      AdultWeight.new(:value_in_grams => (s[:adult_weight]), :units => "Grams", :species_id => species.id).send(:create_without_callbacks) unless s[:adult_weight].blank?
+      LitterSize.new(:value => (s[:litter_size]), :species_id => species.id).send(:create_without_callbacks) unless s[:litter_size].blank?
+      s[:references].each {|reference_id| Citation.create(:taxon_id => species.id, :reference_id => reference_id) }
       count = index
       progress_bar.inc
     end
   end
-  notice success_string("saved #{count - species_without_parents} species in #{Time.now - start_time}")
+  notice success_string("saved #{count - species_without_parents} species")
   notice success_string("saved #{Lifespan.count} ages")
   notice success_string("saved #{AdultWeight.count} adult weights")
   notice success_string("saved #{BirthWeight.count} birth weights")
   notice success_string("saved #{LitterSize.count} litter sizes")
   notice success_string("saved #{Citation.count} citations for #{Reference.count} references")
   notice failure_string("#{species_without_parents} species didn't have taxons matching taxon_id in our database") if species_without_parents != 0
-
 
   # # Create orphaned species with all the species stored in memory
   # count   = 0
@@ -352,7 +324,7 @@ def create_species_and_data
   #   orphaned_species.each_with_index do |s, index|
   #     taxon   = Taxon.find_by_id(s[:taxon_id])
   #     if taxon == nil
-  #      failure "no taxon found with and id of #{s[:taxon_id].to_s} for species with ubid of #{s[:ubid].to_s}"
+  #      notice failure_string("no taxon found with an id of #{s[:taxon_id].to_s} for species with ubid of #{s[:ubid].to_s}")
   #      species_without_parents += 1
   #     else
   #      species = Taxon.new(:name => s[:name], :parent_id => taxon.id, :rank => 6)
@@ -364,18 +336,15 @@ def create_species_and_data
   # end
   # notice success_string("Phew!... saved #{count - species_without_parents} species")
   # notice failure_string("#{species_without_parents} species didn't have taxons matching taxon_id in our database") if species_without_parents != 0
-  
 
   seed "Rebuilding heirarchical tree" do
     Taxon.rebuild!
   end
 
-
   seed "Vacuuming database" do
     sql.execute "VACUUM ANALYZE;"
   end
-  
-  
+
   notice "Species creation is completed."
 end
 
@@ -384,16 +353,19 @@ def create_statistics
   seed "Creating statistics objects" do
     Taxon.rebuild_statistics_objects
     number_of_statistics = Statistics.count
+    true
   end
   notice "#{number_of_statistics} objects created"
-  
+
   seed "Calculating statistics" do
     Taxon.rebuild_stats
   end
+
+  notice "Finished calculating statistics."
 end
 
 # create_references
 # create_taxonomy
-create_species_and_data  # Must be run after create_taxonomy
-rebuild_lineages
+# create_species_and_data  # Must be run after create_taxonomy
+# rebuild_lineages
 create_statistics
