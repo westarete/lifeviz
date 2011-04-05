@@ -1,24 +1,27 @@
-!!!
-%html
-  %head
-    %meta{'http-equiv' => "X-UA-Compatible", :content => "chrome=1"}
-    %title Lifeviz
-    = stylesheet_link_tag 'screen.css', :media => 'screen, projection'
-    = stylesheet_link_tag 'jquery-ui.css', :media => 'screen, projection'
-    = stylesheet_link_tag 'print.css', :media => 'print'
-    /[if lt IE 8]
-      = stylesheet_link_tag 'ie.css', :media => 'screen, projection'
-    = javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"
-    = javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/jquery-ui.min.js"
-    = javascript_include_tag 'jquery.tablesorter', 'jquery.coolinput', 'jquery.address', 'jquery.tipsy', 'tables'
-    = javascript_include_tag 'protovis-r3.2'
-    = javascript_include_tag 'application'
-    = yield :include_javascript
-    %script{:type => 'text/javascript'}
-      = yield :javascript
-  %body
-    #barbackground
-    #main
-      = render :partial => "/shared/top_bar"
-      = yield
-      = render :partial => "/shared/footer"
+!!! 5
+-# paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/
+/[if lt IE 7] <html lang="en" class="no-js ie6">
+/[if IE 7 ]    <html lang="en" class="no-js ie7">
+/[if IE 8 ]    <html lang="en" class="no-js ie8">
+/[if IE 9 ]    <html lang="en" class="no-js ie9">
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+%head
+  %meta{'http-equiv' => "X-UA-Compatible", :content => "chrome=1"}
+  %title Lifeviz
+  = stylesheet_link_tag 'screen.css', :media => 'screen, projection'
+  = stylesheet_link_tag 'jquery-ui.css', :media => 'screen, projection'
+  = stylesheet_link_tag 'print.css', :media => 'print'
+%body
+  #barbackground
+  #main
+    = render :partial => "/shared/top_bar"
+    = yield
+    = render :partial => "/shared/footer"
+
+  -# Move Javascript out of the head to make page render faster
+  = javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"
+  = javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/jquery-ui.min.js"
+  = javascript_include_tag 'jquery.tablesorter', 'jquery.coolinput', 'jquery.address', 'jquery.tipsy', 'tables', 'protovis-r3.2', 'application', :cache => true
+  = yield :include_javascript
+  %script{:type => 'text/javascript'}
+    = yield :javascript

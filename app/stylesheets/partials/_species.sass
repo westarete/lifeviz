@@ -1,20 +1,10 @@
-#species
-  :margin-bottom 1em
-
-// Species table headers  
-table#taxa, table#species
-  :width auto
-  thead
-    th
-      :background-color #ffffff
-  td.actions
-    div
-      :display block
-      :float left
-  .reference
-    :width 500px
-  th
-    :padding-top 1em
+table#species
+  th, td
+    :padding 0 1em
+  tbody
+    tr:first-child
+      th,td
+        :border-top 1px solid #000
 
 // Form specific view changes.
 .imr, .mrdt
@@ -32,41 +22,3 @@ table#taxa, table#species
 #data
   #graph
     :margin 0
-
-table#taxatable, table#speciestable, table.taxatable, table.speciestable
-  :padding 30px 0
-  .hidden
-    :display none
-  thead
-    th
-      :background-color #60B9CE
-      :border-color #60B9CE !important
-      :cursor pointer
-      :font-weight bold 
-      :padding-left 20px
-      :border-right 1px solid #dad9c7
-  tbody
-    tr.selected
-      :background #C0F73E
-    tr.hover
-      :color #FF0700
-      :cursor default
-      a
-        :color #FF0700
-      
-table#taxatable .header, table#speciestable .header
-  :background-image url(/images/table_bg.gif)
-  :background-repeat no-repeat
-  :background-position center left
-
-table#taxatable .headerSortUp, table#speciestable .headerSortUp
-  :background-image url(/images/table_asc.gif)
-  :background-repeat no-repeat
-  :background-position center left
-  
-table#taxatable .headerSortDown, table#speciestable .headerSortDown
-  :background-image url(/images/table_desc.gif)
-  :background-repeat no-repeat
-  :background-position center left
-
-
