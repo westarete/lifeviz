@@ -123,19 +123,18 @@ describe BirthWeight do
   
 end
 
+
 # == Schema Information
 #
 # Table name: birth_weights
 #
-#  id               :integer         not null, primary key
-#  species_id       :integer
-#  value_in_grams   :decimal(, )
-#  units            :string(255)
-#  created_at       :datetime
-#  updated_at       :datetime
-#  created_by       :integer
-#  created_by_name  :string(255)
-#  citation         :string(255)
-#  citation_context :text
+#  id              :integer         not null, primary key
+#  species_id      :integer
+#  value_in_grams  :decimal(, )
+#  units           :string(255)
+#  created_at      :datetime
+#  updated_at      :datetime
+#  created_by      :integer
+#  created_by_name :string(255)
 #
 

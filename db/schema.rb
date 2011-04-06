@@ -9,18 +9,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101201190838) do
+ActiveRecord::Schema.define(:version => 20110317203841) do
 
   create_table "adult_weights", :force => true do |t|
-    t.integer  "species_id",       :null => false
-    t.decimal  "value_in_grams",   :null => false
+    t.integer  "species_id",      :null => false
+    t.decimal  "value_in_grams",  :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "units"
     t.integer  "created_by"
     t.string   "created_by_name"
-    t.string   "citation"
-    t.text     "citation_context"
   end
 
   add_index "adult_weights", ["id"], :name => "index_adult_weights_on_id", :unique => true
@@ -34,12 +32,17 @@ ActiveRecord::Schema.define(:version => 20101201190838) do
     t.datetime "updated_at"
     t.integer  "created_by"
     t.string   "created_by_name"
-    t.string   "citation"
-    t.text     "citation_context"
   end
 
   add_index "birth_weights", ["id"], :name => "index_birth_weights_on_id", :unique => true
   add_index "birth_weights", ["species_id"], :name => "index_birth_weights_on_species_id"
+
+  create_table "citations", :force => true do |t|
+    t.integer  "reference_id", :null => false
+    t.integer  "taxon_id",     :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "lifespans", :force => true do |t|
     t.integer  "species_id"
@@ -49,22 +52,18 @@ ActiveRecord::Schema.define(:version => 20101201190838) do
     t.string   "units"
     t.integer  "created_by"
     t.string   "created_by_name"
-    t.string   "citation"
-    t.text     "citation_context"
   end
 
   add_index "lifespans", ["id"], :name => "index_species_on_id"
   add_index "lifespans", ["species_id"], :name => "index_lifespans_on_species_id"
 
   create_table "litter_sizes", :force => true do |t|
-    t.integer  "species_id",       :null => false
-    t.decimal  "value",            :null => false
+    t.integer  "species_id",      :null => false
+    t.decimal  "value",           :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "created_by"
     t.string   "created_by_name"
-    t.string   "citation"
-    t.text     "citation_context"
   end
 
   add_index "litter_sizes", ["id"], :name => "index_litter_sizes_on_id", :unique => true
@@ -83,6 +82,16 @@ ActiveRecord::Schema.define(:version => 20101201190838) do
     t.integer "timestamp",  :null => false
     t.string  "server_url"
     t.string  "salt",       :null => false
+  end
+
+  create_table "references", :force => true do |t|
+    t.string   "title",      :null => false
+    t.string   "author"
+    t.string   "publisher"
+    t.string   "year"
+    t.integer  "pubmed_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "statistics", :force => true do |t|
@@ -107,7 +116,7 @@ ActiveRecord::Schema.define(:version => 20101201190838) do
     t.datetime "updated_at"
   end
 
-  add_index "statistics", ["id"], :name => "index_statistics_on_id", :unique => true
+  add_index "statistics", ["id"], :name => "index_statistics_on_id"
   add_index "statistics", ["taxon_id"], :name => "index_statistics_on_taxon_id", :unique => true
 
   create_table "taxa", :force => true do |t|

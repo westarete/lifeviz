@@ -1,5 +1,4 @@
-%h2 Average
-%table#taxatable
+%table#taxatable{:title => "Average Values"}
   %thead
     %tr
       %th.hidden ID
@@ -38,3 +37,5 @@
           %td= taxon.statistics.average_birth_weight
           %td= taxon.statistics.average_adult_weight
           %td= taxon.statistics.average_litter_size
+.tablenote
+  %p Note: The values in this table are averages of the species contained in each taxa.
