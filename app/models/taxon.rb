@@ -77,19 +77,15 @@ class Taxon < ActiveRecord::Base
     # end
   end
   
-  def self.rebuild_stats(rank_specified=nil)
-    rank_specified ? (rank = rank_specified) : (rank = 6)
+  def self.rebuild_stats(rank=6)
     while rank >= 0
-      Rails.logger.info "Calculating size at rank #{RANK_LABELS[rank]}."
-      size = Taxon.count(:all, :conditions => {:rank => rank}) / 50
-      Rails.logger.info "#{size} batches to complete. Calculating stats at rank #{RANK_LABELS[rank]}."
-      progress    "#{RANK_LABELS[rank]}", size do |progress_bar|
-        Taxon.find_in_batches( :batch_size => 50, :conditions => {:rank => rank} ) do |taxon_batch|
-          taxon_batch.each {|t| t.statistics.calculate_statistics }
+      size = Taxon.count(:all, :conditions => {:rank => rank})
+      progress "#{RANK_LABELS[rank]}", size do |progress_bar|
+        Taxon.find(:all, :conditions => {:rank => rank} ).each do |taxon|
+          taxon.statistics.calculate_statistics
           progress_bar.inc
         end
       end
-      Rails.logger.info "Done."
       rank -= 1
     end
   end

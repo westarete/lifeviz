@@ -316,26 +316,26 @@ def create_species_and_data
   notice success_string("saved #{Citation.count} citations for #{Reference.count} references")
   notice failure_string("#{species_without_parents} species didn't have taxons matching taxon_id in our database") if species_without_parents != 0
 
-  # # Create orphaned species with all the species stored in memory
-  # count   = 0
-  # species_without_parents  = 0
-  # seed "Saving all the orphaned species"
-  # progress "Saving orphans", orphaned_species.length do |progress_bar|
-  #   orphaned_species.each_with_index do |s, index|
-  #     taxon   = Taxon.find_by_id(s[:taxon_id])
-  #     if taxon == nil
-  #      notice failure_string("no taxon found with an id of #{s[:taxon_id].to_s} for species with ubid of #{s[:ubid].to_s}")
-  #      species_without_parents += 1
-  #     else
-  #      species = Taxon.new(:name => s[:name], :parent_id => taxon.id, :rank => 6)
-  #      # species.send(:create_without_callbacks)
-  #     end
-  #     count = index
-  #     progress_bar.inc
-  #   end
-  # end
-  # notice success_string("Phew!... saved #{count - species_without_parents} species")
-  # notice failure_string("#{species_without_parents} species didn't have taxons matching taxon_id in our database") if species_without_parents != 0
+  # Create orphaned species with all the species stored in memory
+  count   = 0
+  species_without_parents  = 0
+  seed "Saving all the orphaned species"
+  progress "Saving orphans", orphaned_species.length do |progress_bar|
+    orphaned_species.each_with_index do |s, index|
+      taxon   = Taxon.find_by_id(s[:taxon_id])
+      if taxon == nil
+       notice failure_string("no taxon found with an id of #{s[:taxon_id].to_s} for species with ubid of #{s[:ubid].to_s}")
+       species_without_parents += 1
+      else
+       species = Taxon.new(:name => s[:name], :parent_id => taxon.id, :rank => 6)
+       # species.send(:create_without_callbacks)
+      end
+      count = index
+      progress_bar.inc
+    end
+  end
+  notice success_string("Phew!... saved #{count - species_without_parents} species")
+  notice failure_string("#{species_without_parents} species didn't have taxons matching taxon_id in our database") if species_without_parents != 0
 
   seed "Rebuilding heirarchical tree" do
     Taxon.rebuild!
@@ -349,6 +349,11 @@ def create_species_and_data
 end
 
 def create_statistics
+  seed "Deleting existing statistics objects" do
+    Statistics.delete_all
+    true
+  end
+  
   number_of_statistics = nil
   seed "Creating statistics objects" do
     Taxon.rebuild_statistics_objects

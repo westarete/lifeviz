@@ -5,7 +5,7 @@
     %tr
       %td
       %th Measurement
-      %th Citation
+      // %th Citation
       %th Source
       %th User
   %tbody
@@ -14,7 +14,7 @@
         -if i == 0
           %th{:rel => 'row', :colspan => @species.lifespans.length} Lifespan
         %td.lifespan= lifespan
-        %td.citation= lifespan.citation
+        // %td.citation= lifespan.citation
         %td.Source 
         %td.User
           = "#{lifespan.created_by} [#{lifespan.created_by.karma}]" unless lifespan.created_by.nil?
@@ -24,7 +24,7 @@
         -if i == 0
           %th{:rel => 'row', :colspan => @species.birth_weights.length} Birth Weight
         %td.birth_weight= birth_weight
-        %td.citation= birth_weight.citation
+        // %td.citation= birth_weight.citation
         %td.Source 
         %td.User
           = "#{birth_weight.created_by} [#{birth_weight.created_by.karma}]" unless birth_weight.created_by.nil?
@@ -34,7 +34,7 @@
         -if i == 0
           %th{:rel => 'row', :colspan => @species.adult_weights.length} Adult Weight
         %td.adult_weight= adult_weight
-        %td.citation= adult_weight.citation
+        // %td.citation= adult_weight.citation
         %td.Source 
         %td.User
           = "#{adult_weight.created_by} [#{adult_weight.created_by.karma}]" unless adult_weight.created_by.nil?
@@ -44,16 +44,17 @@
         -if i == 0
           %th{:rel => 'row', :colspan => @species.litter_sizes.length} Litter Size
         %td.litter_size= litter_size
-        %td.citation= litter_size.citation
-        %td.Source 
+        // %td.citation= litter_size.citation
+        %td.Source
         %td.User
           = "#{litter_size.created_by} [#{litter_size.created_by.karma}]" unless litter_size.created_by.nil?
-
-  %tr
-    %th References
-  - @species.references.each do |reference|
+  %tbody
     %tr
-      %td.reference= reference
+      %th References
+    - @species.references.each do |reference|
+      %tr
+        %td.reference{:colspan => 4}= reference
+      
 
 - if current_user
   = link_to 'Add Lifespan', new_lifespan_path(@species), :class => "button"
