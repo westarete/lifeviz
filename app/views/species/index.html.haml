@@ -1,19 +1,39 @@
 - content_for :include_javascript do
+  = taxon_limits(@taxon)
   %script{:type => 'text/javascript+protovis'}
     :plain
       var li = $(this).parent(); // used to track which rank is shown
       var taxon_id = $('#graph').attr('taxon_id');
       updateData();
-
+      
       // The units and dimensions to visualize, in order.
       var units = {
-        "Avg. Lifespan, days":    {name: "lifespan", unit: " days"},
-        "Avg. Birth Weight, g":   {name: "birth weight", unit: " g"},
-        "Avg. Adult Weight, g":   {name: "adult weight", unit: " g"},
-        "Avg. Litter Size":    {name: "litter size", unit: ""}
+        "Lifespan, days":    {name: "lifespan"    , unit: " days" },
+        "Birth Weight, g":   {name: "birth weight", unit: " g"    },
+        "Adult Weight, g":   {name: "adult weight", unit: " g"    },
+        "Litter Size":       {name: "litter size" , unit: ""      }
       }
 
       var dims = pv.keys(units);
+
+      // Converts Lifespan, days to just Lifespan
+      var conversion = function(method)
+      {
+        if(method == 'Lifespan, days') { 
+          method = 'Lifespan'
+        }
+        if(method =='Birth Weight, g') {
+          method = 'Birth Weight'
+        }
+        if(method =='Adult Weight, g') {
+          method = 'Adult Weight'
+        }
+        if(method =='Litter Size') {
+          method = 'Litter Size'
+        }
+
+          return method
+      }
 
       /* Sizing and scales. */
       var w = 890,
@@ -23,8 +43,8 @@
                 dims,
                 function(t) pv.Scale.linear(
                   data.filter( function(d) dims.map(function(dim) d[dim]).indexOf("") == -1 ),
-                  function(d) Math.floor(d[t]),
-                  function(d) Math.ceil(d[t])
+                  function(d) d[t],
+                  function(d) d[t]
                 ).range(0, h)
               ),
           c = pv.dict(dims, function(t) pv.Scale.linear(
@@ -41,7 +61,7 @@
                           max: y[t].domain()[1]
                         };
                       }
-                    ), active = "Avg. Lifespan, days";
+                    ), active = "Lifespan, days";
 
       // root container
       var vis = new pv.Panel()
@@ -126,11 +146,11 @@
 
       handle.anchor("bottom").add(pv.Label)
           .textBaseline("top")
-          .text(function(d) filter[d.dim].min.toFixed(0) + units[d.dim].unit);
+          .text(function(d) limits["bottom"][d.dim]);
 
       handle.anchor("top").add(pv.Label)
           .textBaseline("bottom")
-          .text(function(d) filter[d.dim].max.toFixed(0) + units[d.dim].unit);
+          .text(function(d) limits["top"][d.dim]);
 
       var tooltip = change.add(pv.Panel)
           .data(function() data)
@@ -144,7 +164,7 @@
           .fillStyle("rgba(0, 0, 0, 0.8)")
           .visible(function(t, d) d["Hover"] == "X" && d[t])  /* Visible if the data exists, and is hovered. */
         .add(pv.Label)
-          .text(function(t, d) d[t] + units[t].unit)
+          .text(function(t, d) d[conversion(t)])
           .textStyle("white")
           .textAlign(function(t, d) t == dims[dims.length-1] ? "right" : t == dims[0] ? "left" : "center")
           .left(function(t, d) t == dims[dims.length-1] ? x(t) - 20 : t == dims[0] ? x(t) + 20 : x(t))

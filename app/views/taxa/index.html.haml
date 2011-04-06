@@ -1,4 +1,5 @@
 - content_for :include_javascript do
+  = taxon_limits(@taxon)
   %script{:type => 'text/javascript+protovis'}
     :plain
       var li = $(this).parent(); // used to track which rank is shown
@@ -42,8 +43,8 @@
                 dims,
                 function(t) pv.Scale.linear(
                   data.filter( function(d) dims.map(function(dim) d[dim]).indexOf("") == -1 ),
-                  function(d) Math.floor(d[t]),
-                  function(d) Math.ceil(d[t])
+                  function(d) d[t],
+                  function(d) d[t]
                 ).range(0, h)
               ),
           c = pv.dict(dims, function(t) pv.Scale.linear(
@@ -145,11 +146,11 @@
 
       handle.anchor("bottom").add(pv.Label)
           .textBaseline("top")
-          .text(function(d) filter[d.dim].min.toFixed(0) + units[d.dim].unit);
+          .text(function(d) limits["bottom"][d.dim]);
 
       handle.anchor("top").add(pv.Label)
           .textBaseline("bottom")
-          .text(function(d) filter[d.dim].max.toFixed(0) + units[d.dim].unit);
+          .text(function(d) limits["top"][d.dim]);
 
       var tooltip = change.add(pv.Panel)
           .data(function() data)
