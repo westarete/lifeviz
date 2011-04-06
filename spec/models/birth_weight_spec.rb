@@ -22,9 +22,9 @@ describe BirthWeight do
       end
       it "should recalculate the birth weight stats" do
         @species1.statistics[:minimum_birth_weight].should == 10.0
-        @species1.statistics[:maximum_birth_weight].should == 20.0
-        @species1.statistics[:average_birth_weight].should == 15.0
-        @species1.statistics[:standard_deviation_birth_weight].should be_close(5.107, 0.001)
+        @species1.statistics[:maximum_birth_weight].should == 30.0
+        @species1.statistics[:average_birth_weight].should == 20.0
+        @species1.statistics[:standard_deviation_birth_weight].should be_close(8.340, 0.001)
       end
     end
   end

@@ -22,9 +22,9 @@ describe LitterSize do
       end
       it "should recalculate the litter size stats" do
         @species1.statistics[:minimum_litter_size].should == 10.0
-        @species1.statistics[:maximum_litter_size].should == 20.0
-        @species1.statistics[:average_litter_size].should == 15.0
-        @species1.statistics[:standard_deviation_litter_size].should be_close(5.107, 0.001)
+        @species1.statistics[:maximum_litter_size].should == 30.0
+        @species1.statistics[:average_litter_size].should == 20.0
+        @species1.statistics[:standard_deviation_litter_size].should be_close(8.340, 0.001)
       end
     end
   end

@@ -35,40 +35,22 @@ describe 'User interacts with species birth weight' do
         page.should have_xpath("//*[@class='birth_weight']", :text => '5.1')
       end
       
-      context 'edits the birth weight' do
+      context 'deletes the birth weight' do
         
         let(:weight) { subject.birth_weights.first }
         
-        before(:all) do          
-          # find by the id of the button because we have no link text
-          click "edit_birth_weight_#{weight.id}"
-          fill_in 'Birth weight', :with => '6.3'
-          click 'Submit Change'
+        before(:all) do
+          click "delete_birth_weight_#{weight.id}"
         end
         
         it 'should see success message' do
-          page.should have_content('Birth weight updated.')
+          page.should have_content('Birth weight deleted.')
         end
         
-        it "should see the updated birth weight" do
-          page.should have_xpath("//*[@class='birth_weight']", :text => '6.3')
-        end    
-        
-        context 'deletes the birth weight' do
-          
-          before(:all) do
-            click "delete_birth_weight_#{weight.id}"
-          end
-          
-          it 'should see success message' do
-            page.should have_content('Birth weight deleted.')
-          end
-          
-          it "shouldn't see the weight" do
-            page.should_not have_content('6.7')
-          end
-          
+        it "shouldn't see the weight" do
+          page.should_not have_content('6.7')
         end
+        
       end
     end
   end
