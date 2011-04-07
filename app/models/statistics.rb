@@ -119,22 +119,17 @@ class Statistics < ActiveRecord::Base
         taxa.lft >= %s AND
         taxa.rgt <= %s
     " % [taxon.lft, taxon.rgt]
-    self.minimum_lifespan                 = result[0]["minimum_lifespan"].to_f
-    self.maximum_lifespan                 = result[0]["maximum_lifespan"].to_f
-    self.average_lifespan                 = result[0]["average_lifespan"].to_f
-    self.standard_deviation_lifespan      = result[0]["standard_deviation_lifespan"].to_f
-    self.minimum_adult_weight             = result[0]["minimum_adult_weight"].to_f
-    self.maximum_adult_weight             = result[0]["maximum_adult_weight"].to_f
-    self.average_adult_weight             = result[0]["average_adult_weight"].to_f
-    self.standard_deviation_adult_weight  = result[0]["standard_deviation_adult_weight"].to_f
-    self.minimum_birth_weight             = result[0]["minimum_birth_weight"].to_f
-    self.maximum_birth_weight             = result[0]["maximum_birth_weight"].to_f
-    self.average_birth_weight             = result[0]["average_birth_weight"].to_f
-    self.standard_deviation_birth_weight  = result[0]["standard_deviation_birth_weight"].to_f
-    self.minimum_litter_size              = result[0]["minimum_litter_size"].to_f
-    self.maximum_litter_size              = result[0]["maximum_litter_size"].to_f
-    self.average_litter_size              = result[0]["average_litter_size"].to_f
-    self.standard_deviation_litter_size   = result[0]["standard_deviation_litter_size"].to_f
+    
+    ["minimum_lifespan",     "maximum_lifespan",     "average_lifespan",     "standard_deviation_lifespan",
+     "minimum_adult_weight", "maximum_adult_weight", "average_adult_weight", "standard_deviation_adult_weight",
+     "minimum_birth_weight", "maximum_birth_weight", "average_birth_weight", "standard_deviation_birth_weight",
+     "minimum_litter_size",  "maximum_litter_size",  "average_litter_size",  "standard_deviation_litter_size"
+    ].each do |column_name|
+      if result[0][column_name] && ! result[0][column_name].empty?
+        self[column_name] = result[0][column_name].to_f
+      end
+    end
+    
     self.save!
   end
 end
