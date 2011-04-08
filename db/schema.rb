@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110317203841) do
+ActiveRecord::Schema.define(:version => 20110407150119) do
 
   create_table "adult_weights", :force => true do |t|
     t.integer  "species_id",      :null => false
@@ -19,6 +19,8 @@ ActiveRecord::Schema.define(:version => 20110317203841) do
     t.string   "units"
     t.integer  "created_by"
     t.string   "created_by_name"
+    t.text     "citation"
+    t.text     "context"
   end
 
   add_index "adult_weights", ["id"], :name => "index_adult_weights_on_id", :unique => true
@@ -32,17 +34,12 @@ ActiveRecord::Schema.define(:version => 20110317203841) do
     t.datetime "updated_at"
     t.integer  "created_by"
     t.string   "created_by_name"
+    t.text     "citation"
+    t.text     "context"
   end
 
   add_index "birth_weights", ["id"], :name => "index_birth_weights_on_id", :unique => true
   add_index "birth_weights", ["species_id"], :name => "index_birth_weights_on_species_id"
-
-  create_table "citations", :force => true do |t|
-    t.integer  "reference_id", :null => false
-    t.integer  "taxon_id",     :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "lifespans", :force => true do |t|
     t.integer  "species_id"
@@ -52,6 +49,8 @@ ActiveRecord::Schema.define(:version => 20110317203841) do
     t.string   "units"
     t.integer  "created_by"
     t.string   "created_by_name"
+    t.text     "citation"
+    t.text     "context"
   end
 
   add_index "lifespans", ["id"], :name => "index_species_on_id"
@@ -64,6 +63,8 @@ ActiveRecord::Schema.define(:version => 20110317203841) do
     t.datetime "updated_at"
     t.integer  "created_by"
     t.string   "created_by_name"
+    t.text     "citation"
+    t.text     "context"
   end
 
   add_index "litter_sizes", ["id"], :name => "index_litter_sizes_on_id", :unique => true

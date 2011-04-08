@@ -3,7 +3,7 @@ class Reference < ActiveRecord::Base
   
   def to_s
     string = ""
-    string << "<a href=\"http://www.ncbi.nlm.nih.gov/pubmed?term=#{pubmed_id}\">" if pubmed_id
+    # string << "<a href=\"http://www.ncbi.nlm.nih.gov/pubmed?term=#{pubmed_id}\">" if pubmed_id
     
     string << "#{author}. " unless author.blank?
     string << "#{title}. "  unless title.blank?
@@ -14,7 +14,7 @@ class Reference < ActiveRecord::Base
       string << "#{year}. "      unless year.blank?
     end
     
-    string << "</a>" if pubmed_id
+    # string << "</a>" if pubmed_id
     string
   end
 end

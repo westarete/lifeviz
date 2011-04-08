@@ -32,7 +32,7 @@ end
 def create_references
   # Remove any existing references
   seed "Removing any existing references and citations..." do
-    Citation.delete_all && Reference.delete_all ? true : false
+    Reference.delete_all ? true : false
   end
 
   seed "Setting reference id sequence back to 1" do
@@ -182,7 +182,10 @@ def create_species_and_data
       x = {}
       x[:synonyms] = (s/'name_common').inner_html
       x[:age]      = (lifeviz_ages[index]/'tmax').inner_html
+      x[:context]  = (lifeviz_ages[index]/'phenotype').inner_html
       x[:hagrid]   = hagrid
+      x[:references] = x[:context].scan(/\[(\d*)\]/).flatten
+      
       while lifeviz_development[development_index] && (lifeviz_development[development_index]/'hagrid').inner_html.to_i < hagrid
         notice "#{(lifeviz_development[development_index]/'hagrid').inner_html} is less than #{hagrid}"
         development_index += 1
@@ -200,17 +203,6 @@ def create_species_and_data
           x[:litter_size]   = ""
         end
         development_index += 1
-      end
-      while lifeviz_refs[ref_index] && (lifeviz_refs[ref_index]/'hagrid').inner_html.to_i < hagrid
-        notice "#{(lifeviz_refs[ref_index]/'hagrid').inner_html} is less than #{hagrid}"
-        ref_index += 1
-      end
-      if lifeviz_refs[ref_index]
-        x[:references] = []
-        while lifeviz_refs[ref_index] && (lifeviz_refs[ref_index]/'hagrid').inner_html.to_i == hagrid
-          x[:references] << (lifeviz_refs[ref_index]/'id_biblio').inner_html.to_i
-          ref_index += 1
-        end
       end
       new_species << x
       progress_bar.inc
@@ -299,11 +291,17 @@ def create_species_and_data
       s = new_species[index]
       species = Taxon.new(:name => s[:name], :parent_id => s[:taxon_id], :rank => 6)
       species.send(:create_without_callbacks)
-      Lifespan.new(:value_in_days => (s[:age].to_f * 365), :units => "Years", :species_id => species.id).send(:create_without_callbacks)   unless s[:age].blank?
+      unless s[:age].blank?
+        s[:references].each do |reference_id|
+          lifespan = Lifespan.new(:value_in_days => (s[:age].to_f * 365), :units => "Years", :species_id => species.id)
+          lifespan.context = s[:context]
+          lifespan.citation = Reference.find(reference_id).to_s
+          lifespan.send(:create_without_callbacks)
+        end
+      end
       BirthWeight.new(:value_in_grams => (s[:birth_weight]), :units => "Grams", :species_id => species.id).send(:create_without_callbacks) unless s[:birth_weight].blank?
       AdultWeight.new(:value_in_grams => (s[:adult_weight]), :units => "Grams", :species_id => species.id).send(:create_without_callbacks) unless s[:adult_weight].blank?
       LitterSize.new(:value => (s[:litter_size]), :species_id => species.id).send(:create_without_callbacks) unless s[:litter_size].blank?
-      s[:references].each {|reference_id| Citation.create(:taxon_id => species.id, :reference_id => reference_id) }
       count = index
       progress_bar.inc
     end
@@ -313,7 +311,6 @@ def create_species_and_data
   notice success_string("saved #{AdultWeight.count} adult weights")
   notice success_string("saved #{BirthWeight.count} birth weights")
   notice success_string("saved #{LitterSize.count} litter sizes")
-  notice success_string("saved #{Citation.count} citations for #{Reference.count} references")
   notice failure_string("#{species_without_parents} species didn't have taxons matching taxon_id in our database") if species_without_parents != 0
 
   # Create orphaned species with all the species stored in memory
@@ -324,7 +321,7 @@ def create_species_and_data
     orphaned_species.each_with_index do |s, index|
       taxon   = Taxon.find_by_id(s[:taxon_id])
       if taxon == nil
-       notice failure_string("no taxon found with an id of #{s[:taxon_id].to_s} for species with ubid of #{s[:ubid].to_s}")
+       # notice failure_string("no taxon found with an id of #{s[:taxon_id].to_s} for species with ubid of #{s[:ubid].to_s}")
        species_without_parents += 1
       else
        species = Taxon.new(:name => s[:name], :parent_id => taxon.id, :rank => 6)
@@ -369,8 +366,8 @@ def create_statistics
   notice "Finished calculating statistics."
 end
 
-# create_references
-# create_taxonomy
-# create_species_and_data  # Must be run after create_taxonomy
-# rebuild_lineages
+create_references
+create_taxonomy
+create_species_and_data  # Must be run after create_taxonomy
+rebuild_lineages
 create_statistics
