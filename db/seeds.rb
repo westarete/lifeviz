@@ -111,21 +111,6 @@ def create_taxonomy
   end
 end
 
-def rebuild_lineages
-  sql = ActiveRecord::Base.connection();
-  sql.begin_db_transaction
-  # Clear all lineage_ids
-  seed "Clearing existing lineage data" do
-    sql.execute "alter table taxa drop column lineage_ids;"
-    sql.execute "alter table taxa add column lineage_ids varchar(255);"
-  end
-  seed "Rebuilding lineages", :success => "#{Taxon.count} taxa set" do
-    Taxon.rebuild_lineages!
-    true
-  end
-  sql.commit_db_transaction
-end
-
 # Create species from lifeviz/ubiota using hagrid_ubid as the bridge
 # Collect species data from Lifeviz
 # Collect taxonomy species name and hierarchy from ubiota
@@ -343,6 +328,21 @@ def create_species_and_data
   end
 
   notice "Species creation is completed."
+end
+
+def rebuild_lineages
+  sql = ActiveRecord::Base.connection();
+  sql.begin_db_transaction
+  # Clear all lineage_ids
+  seed "Clearing existing lineage data" do
+    sql.execute "alter table taxa drop column lineage_ids;"
+    sql.execute "alter table taxa add column lineage_ids varchar(255);"
+  end
+  seed "Rebuilding lineages", :success => "#{Taxon.count} taxa set" do
+    Taxon.rebuild_lineages!
+    true
+  end
+  sql.commit_db_transaction
 end
 
 def create_statistics
