@@ -52,6 +52,7 @@ class AdultWeight < ActiveRecord::Base
 end
 
 
+
 # == Schema Information
 #
 # Table name: adult_weights
@@ -64,5 +65,7 @@ end
 #  units           :string(255)
 #  created_by      :integer
 #  created_by_name :string(255)
+#  citation        :text
+#  context         :text
 #
 

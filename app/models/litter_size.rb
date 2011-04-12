@@ -29,6 +29,7 @@ class LitterSize < ActiveRecord::Base
 end
 
 
+
 # == Schema Information
 #
 # Table name: litter_sizes
@@ -40,5 +41,7 @@ end
 #  updated_at      :datetime
 #  created_by      :integer
 #  created_by_name :string(255)
+#  citation        :text
+#  context         :text
 #
 
