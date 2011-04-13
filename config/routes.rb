@@ -44,5 +44,9 @@ ActionController::Routing::Routes.draw do |map|
     t.taxonomy_dropdown '/taxonomy/dropdown/:rank', :action => :dropdown_options, :conditions => {:method => :get}
   end
   
-  map.root :controller => :taxa, :action => :index, :rank => 'class', :taxon => 'Mammalia'
+  
+  # Static pages like home and contribute
+  map.connect '/contribute', :controller => :pages, :action => :show, :id => 'contribute'
+  
+  map.root :controller => :pages, :action => :show, :id => 'home'
 end

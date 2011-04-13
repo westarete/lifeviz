@@ -7,7 +7,7 @@
 <!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 %head
   %meta{'http-equiv' => "X-UA-Compatible", :content => "chrome=1"}
-  %title Lifeviz
+  %title= @title ? "#{@title} - LifeViz" : "LifeViz"
   = stylesheet_link_tag 'screen.css', :media => 'screen, projection'
   = stylesheet_link_tag 'jquery-ui.css', :media => 'screen, projection'
   = stylesheet_link_tag 'print.css', :media => 'print'
