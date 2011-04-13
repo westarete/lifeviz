@@ -1,2 +1,27 @@
 %h1 Contribute to LifeViz
-%p HOLY FUCKBALLS YOU CAN DO IT!!!!!@!!@@#
+%p CRIKEY FUCKBALLS GIVE US YOUR DATAZ!!!!!@!!@@#
+
+.login_or_signup
+  #login
+    - form_tag user_session_path, :method => :post do
+      .form-row.clearfix
+        #standard
+          .title
+            %strong Login with Email
+            = link_to "Use OpenID", "#", :class => "openid_button"
+          .email
+            = text_field_tag 'user[email]', '', :class => 'text', :title => "Email"
+          .password
+            = password_field_tag 'user[password]', '', :class => 'text', :title => "Password"
+        #openid
+          .title
+            %strong Login with OpenID
+            = link_to "Use Standard", "#", :class => "regular_button"
+          .openid
+            = text_field_tag 'user[openid_identifier]', '', :class => 'text', :title => "OpenID"
+        #login-defaults
+          .submit.buttons
+            %button{:type => "submit", :name => "commit", :value => "Login", :class => 'button positive'} Login
+
+  #signup
+    = link_to "Sign up", new_user_path

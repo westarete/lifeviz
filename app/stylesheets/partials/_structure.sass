@@ -30,11 +30,19 @@ body
         
 // Static pages like Home and Contribute
 .home
-  #introduction
-    +column(12)
   #screencast
-    +column(12)
+    +column(24)
     +last
+  #introduction
+    +column(24)
+    +last 
+    
+    div
+      +column(6)
+    .macroscope
+      +prepend(6)
+    .bhl_data
+      +last
 
 // Component Styles
 .spinner
