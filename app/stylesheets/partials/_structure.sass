@@ -13,9 +13,6 @@ body
     #uiheader
       :margin-bottom 1.25em
       
-    h1
-      :margin-bottom -4px
-      
     #flash
     #content
       table
@@ -29,6 +26,16 @@ body
       :margin-top 1em
       a
         :vertical-align middle
+        
+        
+// Static pages like Home and Contribute
+.home
+  #introduction
+    +column(12)
+  #screencast
+    +column(12)
+    +last
+
 // Component Styles
 .spinner
   :display none

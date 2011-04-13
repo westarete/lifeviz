@@ -11,7 +11,7 @@
   = stylesheet_link_tag 'screen.css', :media => 'screen, projection'
   = stylesheet_link_tag 'jquery-ui.css', :media => 'screen, projection'
   = stylesheet_link_tag 'print.css', :media => 'print'
-%body
+%body{:class => [controller.controller_name, controller.action_name, h(@body_class)] }
   #barbackground
   #main
     = render :partial => "/shared/top_bar"
