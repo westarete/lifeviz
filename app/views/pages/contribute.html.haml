@@ -1,27 +1,26 @@
 %h1 Contribute to LifeViz
-%p CRIKEY FUCKBALLS GIVE US YOUR DATAZ!!!!!@!!@@#
+%p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ultricies vehicula est a euismod. Suspendisse eu est vitae purus congue ultricies.
 
 .login_or_signup
   #login
+    %h2 Log In to Your Account
     - form_tag user_session_path, :method => :post do
-      .form-row.clearfix
-        #standard
-          .title
-            %strong Login with Email
-            = link_to "Use OpenID", "#", :class => "openid_button"
-          .email
-            = text_field_tag 'user[email]', '', :class => 'text', :title => "Email"
-          .password
-            = password_field_tag 'user[password]', '', :class => 'text', :title => "Password"
-        #openid
-          .title
-            %strong Login with OpenID
-            = link_to "Use Standard", "#", :class => "regular_button"
-          .openid
-            = text_field_tag 'user[openid_identifier]', '', :class => 'text', :title => "OpenID"
-        #login-defaults
-          .submit.buttons
-            %button{:type => "submit", :name => "commit", :value => "Login", :class => 'button positive'} Login
+      %fieldset#standard
+        %legend Login with Email
+        .email
+          %label{ :for => 'user_email' } Email Address
+          = text_field_tag 'user[email]', '', :class => 'text', :title => "Email"
+        .password
+          %label{ :for => 'user_password' } Password 
+          = password_field_tag 'user[password]', '', :class => 'text', :title => "Password"
+      %fieldset#openid
+        %legend Login with OpenID
+        .openid
+          %label{ :for => 'user_openid_identifier' } OpenID URL
+          = text_field_tag 'user[openid_identifier]', '', :class => 'text', :title => "OpenID"
+      %fieldset.buttons
+        %button{:type => "submit", :name => "commit", :value => "Login", :class => 'button positive'} Login
 
   #signup
+    %h2 Create an Account
     = link_to "Sign up", new_user_path

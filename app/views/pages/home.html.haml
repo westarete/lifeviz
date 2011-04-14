@@ -1,7 +1,7 @@
 %h1 Welcome to LifeViz
 
 #screencast
-  = image_tag "http://placekitten.com/g/950/350"
+  = image_tag "http://placekitten.com/950/350"
   
 #introduction
   .macroscope
@@ -13,3 +13,6 @@
   .bhl_data
     %h2 Biodiversity Heritage Library
     %p LifeViz is the online home of lifespan data from the Biodiversity Heritage Library that was mined using natural language processing algorithms.  LifeViz is the first graph-based repository of this data and brings an increased accessibility to previously hard to find data. 
+  .start
+    = link_to 'Start Exploring!', taxon_path(:rank => 'class', :taxon => 'Mammalia'), :class => 'button giant'
+    
