@@ -1,7 +1,7 @@
 %h1 Contribute to LifeViz
 %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ultricies vehicula est a euismod. Suspendisse eu est vitae purus congue ultricies.
 
-.login_or_signup
+#login_or_signup
   #login
     %h2 Log In to Your Account
     - form_tag user_session_path, :method => :post do
@@ -13,6 +13,8 @@
         .password
           %label{ :for => 'user_password' } Password 
           = password_field_tag 'user[password]', '', :class => 'text', :title => "Password"
+      .field_divider
+        %span.or or
       %fieldset#openid
         %legend Login with OpenID
         .openid
