@@ -2,7 +2,6 @@ ActionController::Routing::Routes.draw do |map|
   map.resource  :user_session
   map.resources :users
   
-  # map.resources :species, :collection => { :data => :get, :species_data => :get }, :member => {:children => :get}
   map.resources :species, :member => {:children => :get}
 
   map.with_options :controller => :lifespans do |a|
@@ -39,7 +38,6 @@ ActionController::Routing::Routes.draw do |map|
   
   map.with_options :controller => :taxa, :rank => /(kingdom|phylum|class|order|family|genus)/ do |t|
     t.taxon '/:rank/:taxon', :action => :index, :conditions => {:method => :get}
-    # t.data '/taxa/data.:format', :action => :data, :conditions => {:method => :get}
     t.taxonomy_dropdown '/taxonomy/dropdown/:rank', :action => :dropdown_options, :conditions => {:method => :get}
   end
   

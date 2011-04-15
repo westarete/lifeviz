@@ -11,60 +11,8 @@ class TaxaController < ApplicationController
       @taxon = Taxon.root
     end
     
-    @taxon_ancestry = @taxon.full_ancestry(:include_children => true) # for taxon dropdowns
     @parents = @taxon.parents
     @parents.shift  # Remove UBT/root from the list of parents for Breadcrumbs. 
-    @rank = @taxon.rank
     @children = @taxon.children.select{|c| !(c.statistics.average_lifespan.blank? or c.statistics.average_birth_weight.blank? or c.statistics.average_adult_weight.blank? or c.statistics.average_litter_size.blank?) }
   end
-  
-  # This populates the taxon dropdowns that run across the top of the page
-  # /terms/1234/children and returns a list of 1234's children terms.
-  def children
-    @children      = Taxon.find_all_by_parent_id(params[:id], :order => 'name asc')
-    @rank          = @children.first.rank
-    @rank_in_words = @children.first.rank_in_words
-    render :partial => 'taxon_select', :layout => false, :locals => { :children => @children, :rank => @rank, :rank_in_words => @rank_in_words }
-  rescue Exception => e
-    logger.error(e)
-    render :text => "No item found", :status => 404
-  end
-
-  # Clinton: I don't know if we actually use this. Commenting it out to see if
-  #          stuff breaks. Now, the graph uses javascript and the table in the
-  #          view to get its data.
-  # def data
-  #   if params[:taxon_id] && ! params[:taxon_id].blank?
-  #     @taxon = Taxon.find(params[:taxon_id])
-  #   else
-  #     @taxon = Taxon.find(1)
-  #   end
-  #   respond_to do |format|
-  #     format.html do
-  #       @children = @taxon.children
-  #       render :partial => "table", :layout => false
-  #     end
-  #     format.json do
-  #       render :json =>  @taxon.children_of_rank(@taxon.rank + 1).to_json(
-  #                :only => :name,
-  #                :methods => [
-  #                  :avg_lifespan,
-  #                  :avg_birth_weight,
-  #                  :avg_adult_weight,
-  #                  :avg_litter_size,
-  #                  :id
-  #                ])
-  #     end
-  #   end
-  # end
-  
-  # Returns the set of options for a select field based on the parent id.
-  #
-  #   GET /taxonomy/dropdown/orders?class=32
-  def dropdown_options
-    # TODO: merge these conditionals into an arg for the named scope.    
-    @taxons = Taxon.send(params[:rank], :parent_id => params[:parent_id])
-    render :layout => false
-  end
-
 end
