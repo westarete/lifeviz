@@ -1,10 +1,19 @@
 form
+  +blueprint-form
+  
+  .fieldWithErrors
+    :display inline
+    input
+      :border 1px solid red
+
   fieldset
     :border none
     :margin 0
     :padding 0
   label, input
     :display block
+    :font-weight normal
+    
   legend
     :display none
   input

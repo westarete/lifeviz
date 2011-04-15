@@ -46,7 +46,7 @@ ActionController::Routing::Routes.draw do |map|
   
   
   # Static pages like home and contribute
-  map.connect '/contribute', :controller => :pages, :action => :show, :id => 'contribute'
+  map.contribute '/contribute', :controller => :pages, :action => :show, :id => 'contribute'
   
   map.root :controller => :pages, :action => :show, :id => 'home'
 end

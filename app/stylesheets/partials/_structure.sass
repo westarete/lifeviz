@@ -64,7 +64,12 @@ body
     #signup
       +column(15)
       +last
-      
+
+.users.new      
+  form
+    +column(8)
+    :padding-top 2em
+
 // Component Styles
 .spinner
   :display none
@@ -72,17 +77,7 @@ body
 .button_row
   :margin-top 1em
     
-form
-  +blueprint-form
-  .fieldWithErrors
-    :display inline
-    input
-      :border 1px solid red
 
-  
-.form_input
-  :margin-bottom 1em
-  
 // Visual Fixes
 
 /* new clearfix from perishablepress.com */

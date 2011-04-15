@@ -1,7 +1,5 @@
-%h1
-  Register
+%h1 Register
 - form_for @user, :url => users_path, :method => :post do |f|
   = f.error_messages
   = render :partial => "form", :object => f
   %button{:type => "submit", :name => "commit", :value => "Register", :class => 'button positive'} Register
-  = link_to "Cancel", request.env["HTTP_REFERER"], :class => 'button'

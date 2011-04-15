@@ -9,7 +9,7 @@ class UserSessionsController < ApplicationController
       redirect_to root_url
     else
       if !performed?
-        redirect_to root_url
+        redirect_to contribute_url
       end
       flash[:failure] = "Login failed. Were your credentials correct?"
     end
