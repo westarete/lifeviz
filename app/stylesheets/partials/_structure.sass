@@ -1,6 +1,6 @@
 // Main Structure
 body
-  :background-color #fbfbfb
+  :background-color $background-color
 
   #main
     +container
@@ -12,9 +12,6 @@ body
         
     #uiheader
       :margin-bottom 1.25em
-      
-    h1
-      :margin-bottom -4px
       
     #flash
     #content
@@ -29,6 +26,50 @@ body
       :margin-top 1em
       a
         :vertical-align middle
+        
+        
+// Static pages like Home and Contribute
+.home
+  #screencast
+    +column(24)
+    +last
+    :margin-top 12px
+    
+  #introduction
+    +column(24)
+    +last 
+    :margin-top 12px
+    
+    div
+      +column(6)
+    .start
+      +last
+      :text-align right
+      :padding-top 24px
+
+.contribute
+  #login_or_signup
+    +column(24)
+    +last
+    :padding-top 2em
+    
+    h2
+      margin-bottom: 12px
+    
+    #login
+      +column(8)
+      +colborder(#e5e5e5)
+      
+      
+    #signup
+      +column(15)
+      +last
+
+.users.new      
+  form
+    +column(8)
+    :padding-top 2em
+
 // Component Styles
 .spinner
   :display none
@@ -36,19 +77,7 @@ body
 .button_row
   :margin-top 1em
     
-form
-  +blueprint-form
-  .fieldWithErrors
-    :display inline
-    input
-      :border 1px solid red
-  // various form element changes
-  #user_openid_identifier.title
-    :width 600px
-  
-.form_input
-  :margin-bottom 1em
-  
+
 // Visual Fixes
 
 /* new clearfix from perishablepress.com */

@@ -1,4 +1,6 @@
-$font-color: #222
+$background-color: #fbfbfb
+$font-color: #333
+$quiet-font-color: #777
 $link-color: #18779d
 $link-line-color: #8eafbc
 $accent-color: #da227e
@@ -10,7 +12,10 @@ a
   :border-bottom $link-line-color
   :border-width 0px 0px 1px 0px
   :border-style none none dotted none
-
+  
+  &:hover
+    :border-bottom-style solid
+  
 .gold
   :color #cdab3b
 .silver

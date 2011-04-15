@@ -1,0 +1,31 @@
+form
+  +blueprint-form
+  
+  .fieldWithErrors
+    :display inline
+    input
+      :border 1px solid red
+
+  fieldset
+    :border none
+    :margin 0
+    :padding 0
+  label, input
+    :display block
+    :font-weight normal
+    
+  legend
+    :display none
+  input
+    :margin-bottom 1.5em !important
+    
+  .field_divider
+    :border-top 1px solid lighten(desaturate($accent-color, 30%), 30%)
+    :color $accent-color
+    :margin 25px 0 10px 0
+
+    span
+      :position relative
+      :top -6px
+      :padding .5em
+      :background-color $background-color

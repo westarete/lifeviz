@@ -1,26 +1,30 @@
 %fieldset
-  %legend Personal Information
+  %legend
+    %span Personal Information
   = form.label :name, "Full Name"
-  %br
-  = form.text_field :name, :class => 'title'
-  %br
+  = form.text_field :name
   = form.label :email
-  %br
-  = form.text_field :email, :class => 'title'
+  = form.text_field :email
+
+-# This whole field divider business, semantically, should be handled by the
+-# <legend>. However, most browsers have serious issues with styling legends
+-# so we're going to cheat.
+.field_divider
+  %span Sign Up with a Password
 
 %fieldset
-  %legend Password
+  %legend
+    %span Sign Up with a Password
   = form.label :password, form.object.new_record? ? nil : "Change password"
-  %br
-  = form.password_field :password, :class => 'title', :value => ""
-  %br
-  %br
+  = form.password_field :password, :value => ""
   = form.label :password_confirmation, "Confirm password"
-  %br
-  = form.password_field :password_confirmation, :class => 'title'
+  = form.password_field :password_confirmation
 
+.field_divider
+  %span or OpenId
+  
 %fieldset
-  %legend OpenID
-  = form.label :openid_identifier, "OpenID"
-  %br
-  = form.text_field :openid_identifier, :class => 'title'
+  %legend
+    %span or OpenID
+  = form.label :openid_identifier, "OpenID <span class='optional'>(optional)</span>"
+  = form.text_field :openid_identifier

@@ -1,0 +1,33 @@
+%h1 Contribute to LifeViz
+%p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ultricies vehicula est a euismod. Suspendisse eu est vitae purus congue ultricies.
+
+#login_or_signup
+  #login
+    %h2 Log In to Your Account
+    - form_tag user_session_path, :method => :post do
+      %fieldset#standard
+        %legend Login with Email
+        .email
+          %label{ :for => 'user_email' } Email Address
+          = text_field_tag 'user[email]', '', :class => 'text', :title => "Email"
+        .password
+          %label{ :for => 'user_password' } Password 
+          = password_field_tag 'user[password]', '', :class => 'text', :title => "Password"
+      .field_divider
+        %span.or or
+      %fieldset#openid
+        %legend Login with OpenID
+        .openid
+          %label{ :for => 'user_openid_identifier' } OpenID URL
+          = text_field_tag 'user[openid_identifier]', '', :class => 'text', :title => "OpenID"
+      %fieldset.buttons
+        %button{:type => "submit", :name => "commit", :value => "Login", :class => 'button positive'} Login
+
+  #signup
+    %h2 Create an Account
+    %p Signing up for LifeViz is free, quick and easy. Creating an account grants you privileges to add your own lifespan-related data to any species.
+    %ul
+      %li Add lifespan data to any species
+      %li Accumulate Karma points for being rad
+      %li That's really about it! 
+    = link_to "Sign up", new_user_path, :class => 'button'

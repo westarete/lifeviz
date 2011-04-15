@@ -6,8 +6,8 @@
       %td
       %th Measurement
       %th
+      %th Context
       %th Citation
-      %th Source
       %th User
   %tbody
     - @species.lifespans.each_with_index do |lifespan, i|
@@ -19,8 +19,8 @@
         %td.actions
           - if lifespan.created_by == current_user
             = button_to "", destroy_lifespan_path(@species, lifespan), :id => "delete_lifespan_#{lifespan.id}", :method => :delete, :alt => "Delete Lifespan", :class => 'delete_button'
-        %td.citation= lifespan.citation
         %td.context= lifespan.context
+        %td.citation= lifespan.citation
         %td.User
           = "#{lifespan.created_by} [#{lifespan.created_by.karma}]" unless lifespan.created_by.nil?
   %tbody
@@ -33,8 +33,8 @@
         %td.actions
           - if birth_weight.created_by == current_user
             = button_to "", destroy_birth_weight_path(@species, birth_weight), :id => "delete_birth_weight_#{birth_weight.id}", :method => :delete, :alt => "Delete Birth Weight", :class => 'delete_button'
-        %td.citation= birth_weight.citation
         %td.context= birth_weight.context
+        %td.citation= birth_weight.citation
         %td.User
           = "#{birth_weight.created_by} [#{birth_weight.created_by.karma}]" unless birth_weight.created_by.nil?
   %tbody      
@@ -47,8 +47,8 @@
         %td.actions
           - if adult_weight.created_by == current_user
             = button_to "", destroy_adult_weight_path(@species, adult_weight), :id => "delete_adult_weight_#{adult_weight.id}", :method => :delete, :alt => "Delete Adult Weight", :class => 'delete_button'
-        %td.citation= adult_weight.citation
         %td.context= adult_weight.context
+        %td.citation= adult_weight.citation
         %td.User
           = "#{adult_weight.created_by} [#{adult_weight.created_by.karma}]" unless adult_weight.created_by.nil?
   %tbody      
@@ -61,8 +61,8 @@
         %td.actions
           - if litter_size.created_by == current_user
             = button_to "", destroy_litter_size_path(@species, litter_size), :id => "delete_litter_size_#{litter_size.id}", :method => :delete, :alt => "Delete Litter Size", :class => 'delete_button'
-        %td.citation= litter_size.citation
         %td.context= litter_size.context
+        %td.citation= litter_size.citation
         %td.User
           = "#{litter_size.created_by} [#{litter_size.created_by.karma}]" unless litter_size.created_by.nil?
   / %tbody
