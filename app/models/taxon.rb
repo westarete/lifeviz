@@ -25,27 +25,26 @@ class Taxon < ActiveRecord::Base
   after_create :create_statistics_object
   
   # This method rebuilds lineage_ids for the entire taxonomy.
+  # TODO: I haven't actually tried this code yet, because it still takes a while
+  # to run! If you run it successfully, remove this TODO, please!
   def self.rebuild_lineages!
-    Taxon.find(1).rebuild_lineage_branch
-  end
-
-  # This is a recursive method to rebuild a tree of lineage_ids.
-  def rebuild_lineage_branch(parent_id=nil, parent_lineage_ids="")
-    # print "| " * rank unless rank == -1
-    # print "Calculating lineage for #{id}: #{name}..."
-    lineage_ids = if parent_id.nil?  # Root node
-                    ""
-                  elsif parent_lineage_ids == "" || parent_id == 1 # Child of root node
-                    "1"
-                  else
-                    parent_lineage_ids + "," + parent_id.to_s
-                  end     
- 
-    update_attributes(:lineage_ids => lineage_ids)
-    # puts " success!"
- 
-    unless rank == 6
-      children.each {|child| child.rebuild_lineage_branch(id, lineage_ids)}
+    logger.info "Creating kingdom lineage ids"
+    self.connection.execute "
+    update taxa
+      set lineage_ids = 1
+      where rank = 0;
+    "
+    
+    %w(phylum class order family genus species).each_with_index do |name, i|
+      logger.info "Creating #{name} lineage ids"
+      self.connection.execute "
+      update taxa
+        set lineage_ids = parent.lineage_ids || ',' || taxa.id
+        from taxa parent
+        where
+          taxa.rank = #{i + 1}
+          and taxa.parent_id = parent.id;
+      "
     end
   end
   
