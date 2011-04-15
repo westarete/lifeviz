@@ -41,11 +41,17 @@ h2
   :font-size 16px
   :line-height 22px
 
-p
+p, ul
   :font-size 13px
   :line-height 20px
   :margin-bottom 16px
-  
+
+ul
+  li
+    :padding-left 15px
+    :background url(/images/bullet.gif) no-repeat 8px center // use this instead of list-style-image because it gives us more control
+
+
 .breadcrumbs
   @include inline-list
   :font-size 11px
@@ -70,25 +76,17 @@ table
     font-family: CantarellBold
 
 form label 
-  font-family: CantarellBold
+  font-family: Cantarell
   font-weight: normal
-  font-size: 14px
+  font-size: 13px
 
 .field_divider
   :font-family CantarellBold
   :text-transform uppercase
   :font-size 10px
-  :border-top 1px solid #ddd
   :text-align center
-  :color #666
-  :margin-top 15px
-  
-  span
-    :position relative
-    :top -6px
-    :padding .5em
-    :background-color #fbfbfb
-    
+  +text-shadow(#fff, 0, 1px, 1px)
+
 
 .tablenote
   :text-align left

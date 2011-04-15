@@ -1,6 +1,6 @@
 // Main Structure
 body
-  :background-color #fbfbfb
+  :background-color $background-color
 
   #main
     +container
@@ -50,11 +50,19 @@ body
 .contribute
   #login_or_signup
     +column(24)
+    +last
+    :padding-top 2em
+    
+    h2
+      margin-bottom: 12px
     
     #login
       +column(8)
+      +colborder(#e5e5e5)
+      
+      
     #signup
-      +column(16)
+      +column(15)
       +last
       
 // Component Styles
