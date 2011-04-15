@@ -25,8 +25,8 @@
           %td.hidden.select
           %td.hidden.hover
           %td.hidden.name= taxon.name
-          - if taxon.rank_in_words.downcase == "genus"
-            %td.name= link_to taxon.name, genus_path(:genus => taxon.name)
+          - if taxon.rank == 6 #species
+            %td.name= link_to taxon.name, species_path(taxon)
           - else
             %td.name= link_to taxon.name, taxon_path(:rank => taxon.rank_in_words.downcase, :taxon => taxon.name)
           %td.hidden= sprintf("%2.2f", taxon.statistics[:average_lifespan]) if taxon.statistics[:average_lifespan]

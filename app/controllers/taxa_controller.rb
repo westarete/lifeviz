@@ -4,15 +4,11 @@ class TaxaController < ApplicationController
   def index
     if params[:taxon] && params[:rank]
       if ! @taxon = Taxon.find_by_name_and_rank(params[:taxon], params[:rank])
-        @taxon = Taxon.root
-        @disable_remaining_dropdowns = "disabled"
-        flash.now[:notice] = "#{params[:rank].capitalize} #{params[:taxon].capitalize} could not be found."
-      else
-        @disable_remaining_dropdowns = false
+        flash[:failure] = "#{params[:rank].capitalize} #{params[:taxon].capitalize} could not be found."
+        redirect_to root_path
       end
     else
       @taxon = Taxon.root
-      @disable_remaining_dropdowns = "disabled"
     end
     
     @taxon_ancestry = @taxon.full_ancestry(:include_children => true) # for taxon dropdowns
