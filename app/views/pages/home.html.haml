@@ -15,4 +15,8 @@
     %p LifeViz is the online home of lifespan data from the Biodiversity Heritage Library that was mined using natural language processing algorithms.  LifeViz is the first graph-based repository of this data and brings an increased accessibility to previously hard to find data. 
   .start
     = link_to 'Start Exploring!', taxon_path(:rank => 'class', :taxon => 'Mammalia'), :class => 'button giant'
-    
+#logotronic
+  =link_to image_tag('logo_boa.gif',     :alt => 'Logo of the Biology of Aging Project'),   'http://www.biologyofaging.org/',   :class=>"img_link external_link", :target=>'_blank'
+  =link_to image_tag('logo_ellison.gif', :alt => 'Logo of the Ellison Medical Foundation'), 'http://www.ellisonfoundation.org', :class=>"img_link external_link", :target=>'_blank' 
+  =link_to image_tag('logo_mblwhoi.gif', :alt =>'Logo of the MBL-WHOI Library'),            'http://www.mblwhoilibrary.org/',   :class=>"img_link external_link", :target=>'_blank'
+  
