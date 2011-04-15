@@ -17,8 +17,8 @@
         %td.lifespan
           = lifespan
         %td.actions
-          - if lifespan.created_by == current_user
-            = button_to "", destroy_lifespan_path(@species, lifespan), :id => "delete_lifespan_#{lifespan.id}", :method => :delete, :alt => "Delete Lifespan", :class => 'delete_button'
+          / - if lifespan.created_by == current_user
+          /   = button_to "", destroy_lifespan_path(@species, lifespan), :id => "delete_lifespan_#{lifespan.id}", :method => :delete, :alt => "Delete Lifespan", :class => 'delete_button'
         %td.context= lifespan.context
         %td.citation= lifespan.citation
         %td.User
@@ -31,8 +31,8 @@
         %td.birth_weight
           = birth_weight
         %td.actions
-          - if birth_weight.created_by == current_user
-            = button_to "", destroy_birth_weight_path(@species, birth_weight), :id => "delete_birth_weight_#{birth_weight.id}", :method => :delete, :alt => "Delete Birth Weight", :class => 'delete_button'
+          / - if birth_weight.created_by == current_user
+          /   = button_to "", destroy_birth_weight_path(@species, birth_weight), :id => "delete_birth_weight_#{birth_weight.id}", :method => :delete, :alt => "Delete Birth Weight", :class => 'delete_button'
         %td.context= birth_weight.context
         %td.citation= birth_weight.citation
         %td.User
@@ -45,8 +45,8 @@
         %td.adult_weight
           = adult_weight
         %td.actions
-          - if adult_weight.created_by == current_user
-            = button_to "", destroy_adult_weight_path(@species, adult_weight), :id => "delete_adult_weight_#{adult_weight.id}", :method => :delete, :alt => "Delete Adult Weight", :class => 'delete_button'
+          / - if adult_weight.created_by == current_user
+          /   = button_to "", destroy_adult_weight_path(@species, adult_weight), :id => "delete_adult_weight_#{adult_weight.id}", :method => :delete, :alt => "Delete Adult Weight", :class => 'delete_button'
         %td.context= adult_weight.context
         %td.citation= adult_weight.citation
         %td.User
@@ -59,18 +59,12 @@
         %td.litter_size
           = litter_size
         %td.actions
-          - if litter_size.created_by == current_user
-            = button_to "", destroy_litter_size_path(@species, litter_size), :id => "delete_litter_size_#{litter_size.id}", :method => :delete, :alt => "Delete Litter Size", :class => 'delete_button'
+          / - if litter_size.created_by == current_user
+          /   = button_to "", destroy_litter_size_path(@species, litter_size), :id => "delete_litter_size_#{litter_size.id}", :method => :delete, :alt => "Delete Litter Size", :class => 'delete_button'
         %td.context= litter_size.context
         %td.citation= litter_size.citation
         %td.User
           = "#{litter_size.created_by} [#{litter_size.created_by.karma}]" unless litter_size.created_by.nil?
-  / %tbody
-  /   %tr
-  /     %th{:rowspan => @species.references.length} References
-  /   - @species.references.each do |reference|
-  /     %tr
-  /       %td.reference{:colspan => 3}= reference
 
 - if current_user
   = link_to 'Add Lifespan', new_lifespan_path(@species), :class => "button"
