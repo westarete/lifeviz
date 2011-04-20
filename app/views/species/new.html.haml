@@ -3,7 +3,7 @@
   = render :partial => "form", :object => f
   %h4 WARNING! Creating a species can take several minutes, as it reorganizes the taxonomy.
   %button{:type => "submit", :name => "commit", :value => "Create", :class => 'button positive', :id => "create-species"} Create Species
-  = link_to "Cancel", species_index_path, :class => "button"
+  = link_to "Cancel", species_index_path
   
   #popup
     %h2 Species will take a few minutes to create...

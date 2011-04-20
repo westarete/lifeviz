@@ -5,4 +5,4 @@
     = render :partial => "age", :object => age_form
     
   %button{:type => "submit", :name => "commit", :value => "Update", :class => 'button positive'} Update Species
-  = link_to "Cancel", species_path(@species.id), :class => "button"
+  = link_to "Cancel", species_path(@species.id)
