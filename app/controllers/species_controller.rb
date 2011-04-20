@@ -28,6 +28,7 @@ class SpeciesController < ApplicationController
 
   def show
     @species = Species.find(params[:id])
+    @title = @species.name
   end
 
   def edit

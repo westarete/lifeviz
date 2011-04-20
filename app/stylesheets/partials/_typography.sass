@@ -40,6 +40,7 @@ h2
   :font-family AdelleBasicBold
   :font-size 16px
   :line-height 22px
+  :margin-bottom 12px
 
 p, ul
   :font-size 13px
@@ -78,17 +79,24 @@ table
   th
     font-family: CantarellBold
 
-form label 
-  font-family: Cantarell
-  font-weight: normal
-  font-size: 13px
+form
+  label 
+    font-family: Cantarell
+    font-weight: normal
+    font-size: 13px
 
-.field_divider
-  :font-family CantarellBold
-  :text-transform uppercase
-  :font-size 10px
-  :text-align center
-  +text-shadow(#fff, 0, 1px, 1px)
+  .field_divider
+    :font-family CantarellBold
+    :text-transform uppercase
+    :font-size 10px
+    :text-align center
+    +text-shadow(#fff, 0, 1px, 1px)
+
+  a.cancel
+    :margin-left 0.5em
+    :color $quiet-font-color
+    :border-color $quiet-font-color
+    
 
 
 .tablenote
