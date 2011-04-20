@@ -1,15 +1,15 @@
 =flash_box
   :padding .8em
   :margin-bottom 1em
-  :border 2px solid #ddd
+  :border 1px solid #ddd
 
 .failure, .error
   +flash_box
-  :background #FBE3E4
-  :color #8a1f11
-  :border-color #FBC2C4
+  :background #faf5f7
+  :color #bb045f
+  :border-color $accent-color
   a
-    :color #8a1f11
+    :color #bb045f
 .notice
   +flash_box
   :background #FFF6BF
@@ -19,8 +19,8 @@
     :color #514721
 .success
   +flash_box
-  :background #E6EFC2
-  :color #264409
-  :border-color #C6D880
+  :background #f4fae9
+  :color #3F570E
+  :border-color $accent-compliment
   a
     :color #264409

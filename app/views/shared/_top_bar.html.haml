@@ -18,7 +18,7 @@
               = link_to current_user.name.to_s, edit_user_path(current_user) 
           = link_to "Log out", user_session_path, :method => :delete
         - else
-          = link_to "Contribute", '/contribute'
+          = link_to "Contribute", '/contribute', :class => 'contribute'
         
 #flash
   = render :partial => "/shared/flash", :locals => { :flash => flash }
