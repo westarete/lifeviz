@@ -1,4 +1,6 @@
-.button 
+
+
+@mixin button
   :display inline-block
   :outline none
   :cursor pointer
@@ -23,3 +25,7 @@
   &:active 
     :position relative
     :top 1px
+
+
+.button
+  @include button
