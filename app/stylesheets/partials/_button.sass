@@ -1,4 +1,6 @@
-.button 
+
+
+@mixin button
   :display inline-block
   :outline none
   :cursor pointer
@@ -15,7 +17,7 @@
   +linear-gradient(color_stops(#da227e,  #bb045f))
   +background-clip(padding-box)
   :border 5px solid #e7e7e7
-
+  
   &:hover
     :text-decoration none
     :background-image none
@@ -23,3 +25,30 @@
   &:active 
     :position relative
     :top 1px
+
+
+.button
+  @include button
+  
+  
+
+// These are the little icon buttons on the species page to edit things  
+.icon
+  :width 16px
+  :height 16px
+
+.delete_button, .edit_button  
+  :width 16px
+  :height 16px
+  :border none
+  :background-color white
+  :cursor pointer
+  :float left
+  :text-decoration none
+  :margin 0 5px
+
+.delete_button
+  :background-image url(/images/delete.png)
+
+.edit_button
+  :background-image url(/images/edit.png)

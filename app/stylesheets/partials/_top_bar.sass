@@ -9,18 +9,25 @@
   
 
 #uiheader
-  :left 0px
   :height 40px
   :width 100%
   :clear both
-  #header
-    :float left
-    :padding-top 6px
+    
+  .logo
+    :position absolute
+    :left 0
+    :top 6px
+    :width +image-width('lifeviz-logo.gif')
+    :height +image-height('lifeviz-logo.gif')
+    a
+      @include replace-text-with-dimensions('lifeviz-logo.gif')
+      :display block
+      :border none
+
   #options
     :float right
-  h2, h3
-    :margin 0
-  a
-    :text-decoration none
-    &:hover
-      :text-decoration underline
+    :line-height 40px
+    
+    .contribute 
+      :color $accent-color
+      :border-color $accent-color

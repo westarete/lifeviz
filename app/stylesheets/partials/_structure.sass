@@ -42,6 +42,9 @@ body
     
     div
       +column(6)
+      
+      h2
+        :margin-bottom 0
     .start
       +last
       :text-align right
@@ -61,12 +64,9 @@ body
     +last
     :padding-top 2em
     
-    h2
-      margin-bottom: 12px
-    
     #login
       +column(8)
-      +colborder(#e5e5e5)
+      +colborder($light-border)
       
       
     #signup
