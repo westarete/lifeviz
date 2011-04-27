@@ -7,6 +7,9 @@ include SeedMethods
 UBIOTA          = "db/data/ubiota_taxonomy.psv.bz2"
 LIFEVIZ         = "db/data/lifeviz.xml.bz2"
 LIFEVIZ_UBIOTA  = "db/data/hagrid_ubid.txt"
+LAKSHMI         = "db/data/names_import.psv.bz2"
+MAXPLANK        = "db/data/maxplankdata.csv.bz2"
+
 
 # Count the number of taxa in a file.
 def num_taxa_lines_bz2(filename)
@@ -274,7 +277,7 @@ def create_species_and_data
   progress "Species", new_species.length do |progress_bar|
     new_species.each_with_index do |taxon, index|
       s = new_species[index]
-      species = Taxon.new(:name => s[:name], :parent_id => s[:taxon_id], :rank => 6)
+      species = Taxon.new(:name => s[:name], :parent_id => s[:taxon_id], :rank => 6, :id => s[:ubid])
       species.send(:create_without_callbacks)
       unless s[:age].blank?
         s[:references].each do |reference_id|
@@ -310,7 +313,7 @@ def create_species_and_data
        species_without_parents += 1
       else
        species = Taxon.new(:name => s[:name], :parent_id => taxon.id, :rank => 6)
-       # species.send(:create_without_callbacks)
+       species.send(:create_without_callbacks)
       end
       count = index
       progress_bar.inc
@@ -345,6 +348,72 @@ def rebuild_lineages
   sql.commit_db_transaction
 end
 
+def import_lakshmi
+  lakshmi = nil
+  seed "Opening lakshmi data" do
+    lakshmi = IO.popen("bunzip2 -c #{LAKSHMI}")
+    lakshmi ? true : false
+  end
+  
+  seed "Saving annotations from Lakshmi's dataset"
+  number_of_lines = num_lines_bz2(LAKSHMI)
+  species_annotations = 0
+  taxon_annotations = 0
+  misses = 0
+  progress "Lakshmi", number_of_lines do |progress_bar|
+    lakshmi.each do |line|
+      ubiota_id, lifespan_in_days, citation, citation_url, sentence, verbatim_name_string, url = line.split("|")
+      if species = Taxon.find(:first, :conditions => {:id => ubiota_id.to_i})
+        Lifespan.create(:value_in_days => lifespan_in_days, :units => "Days", :species_id => species.id, :citation => citation, :context => sentence)
+        if species.rank == 6
+          species_annotations += 1
+        else
+          taxon_annotations += 1
+        end
+      else
+        # notice failure_string("Couldn't find taxon #{ubiota_id}")
+        misses += 1
+      end
+      progress_bar.inc
+    end
+  end
+  notice success_string("Saved #{species_annotations} species annotations and #{taxon_annotations} taxon annotations.")
+  notice failure_string("Couldn't find #{misses} ubiota ids.")
+end
+
+def import_maxplank
+  maxplank = nil
+  seed "Opening maxplank data" do
+    maxplank = IO.popen("bunzip2 -c #{MAXPLANK}")
+    maxplank ? true : false
+  end
+  
+  seed "Saving annotations from the 'maxplankdata' dataset"
+  number_of_lines = num_lines_bz2(LAKSHMI)
+  species_annotations = 0
+  taxon_annotations = 0
+  misses = 0
+  progress "Maxplank", number_of_lines do |progress_bar|
+    maxplank.each do |line|
+      ubiota_id, lifespan_in_days, citation = line.split(",")
+      if species = Taxon.find(:first, :conditions => {:id => ubiota_id.to_i})
+        Lifespan.create(:value_in_days => lifespan_in_days, :units => "Days", :species_id => species.id, :citation => citation)
+        if species.rank == 6
+          species_annotations += 1
+        else
+          taxon_annotations += 1
+        end
+      else
+        # notice failure_string("Couldn't find taxon #{ubiota_id}")
+        misses += 1
+      end
+      progress_bar.inc
+    end
+  end
+  notice success_string("Saved #{species_annotations} species annotations and #{taxon_annotations} taxon annotations.")
+  notice failure_string("Couldn't find #{misses} ubiota ids.")
+end
+
 def create_statistics
   seed "Deleting existing statistics objects" do
     Statistics.delete_all
@@ -370,4 +439,6 @@ end
 # create_taxonomy
 # create_species_and_data  # Must be run after create_taxonomy
 # rebuild_lineages
-# create_statistics
+# import_lakshmi
+# import_maxplank
+create_statistics

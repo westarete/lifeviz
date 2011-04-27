@@ -60,20 +60,6 @@ class Taxon < ActiveRecord::Base
           where taxon_id=t.id
         );
     sql
-    # # Slow but informative method
-    # Rails.logger.info "Collecting taxon ids"
-    # taxon_ids = Taxon.find(:all, :select => "id").collect(&:id)
-    # Rails.logger.info "Collecting statistics taxon ids"
-    # statistics_taxon_ids = Statistics.find(:all, :select => "taxon_id").collect(&:taxon_id)
-    # Rails.logger.info "Finding taxa without statistics objects"
-    # statistics_to_create = taxon_ids - statistics_taxon_ids
-    # Rails.logger.info "Creating statistics objects"
-    # progress    "Creating", statistics_to_create.count do |progress_bar|
-    #   statistics_to_create.each do |taxon_id|
-    #     Statistics.create(:taxon_id => taxon_id)
-    #     progress_bar.inc
-    #   end
-    # end
   end
   
   def self.rebuild_stats(rank=6)
@@ -134,7 +120,7 @@ class Taxon < ActiveRecord::Base
     ancestry = self.class.find_all_by_parent_id(hierarchy_array, :order => 'rank asc, name asc')
     
     
-    # Makes our 1D array into a 2D array ordered by     
+    # Makes our 1D array into a 2D array
     returning Array.new do |ranked_ancestry|
       ancestry.each do |term|
         rank = term.rank.to_i
@@ -164,7 +150,7 @@ class Taxon < ActiveRecord::Base
     RANK_LABELS[self.rank.to_i]
   end
   
-  def scientific_name 
+  def scientific_name
     (id == 1) ? 'All Taxa' : read_attribute(:name)
   end
   
