@@ -2,14 +2,14 @@
 # functionality common to all of the annotation models.
 module Annotation
   def after_save
-    if self.species && self.species.statistics
-      self.species.statistics.calculate_statistics
+    if self.species
+      self.species.calculate_statistics
     end
   end
   
   def after_destroy
-    if self.species && self.species.statistics
-      self.species.statistics.calculate_statistics
+    if self.species
+      self.species.calculate_statistics
     end
   end
   
