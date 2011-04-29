@@ -66,23 +66,25 @@ module SeedMethods
     colorize('**', '[1;30m') << " #{text}... "
   end
   
-  def seed_section(text, &block)
-    print colorize("***#{text}", '[1;30m')
+  def seed_section(text, seed_method)
+    print colorize("\n***", "[30m")
+    print colorize(text, "[36m")
     if text.length < 27
-      print colorize('*' * (27 - text.length), '[1;30m')
+      print colorize('*' * (27 - text.length), "[30m")
     end
-    print '\n'
+    print "\n\n"
     
     time = Benchmark.realtime do
-      yield
+      seed_method.call
     end
     
     text = "%.1f s" % [time]
-    print colorize("***#{text}", '[1;30m')
+    print colorize("\n***", "[30m")
+    print colorize(text, "[36m")
     if text.length < 27
-      print colorize('*' * (27 - text.length), '[1;30m')
+      print colorize('*' * (27 - text.length), "[30m")
     end
-    print '\n'
+    print "\n\n\n"
   end
   
   def notice(text)

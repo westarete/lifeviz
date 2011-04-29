@@ -3,12 +3,22 @@ require 'db/seed_methods'
 require 'hpricot'
 require 'pp'
 require 'ruby-debug'
+require 'benchmark'
 include SeedMethods
 UBIOTA          = "db/data/ubiota_taxonomy.psv.bz2"
 LIFEVIZ         = "db/data/lifeviz.xml.bz2"
 LIFEVIZ_UBIOTA  = "db/data/hagrid_ubid.txt"
 LAKSHMI         = "db/data/names_import.psv.bz2"
 MAXPLANK        = "db/data/maxplankdata.csv.bz2"
+LAKSHMI_USER  = User.find_or_create_by_name("Lakshmi",  :email => "lakshmi-noreply@mbl.edu",  :password => "B8%.GA{2LbV_N0!a7OjMqj17bHz3klS,2CsKAts7k3bsK<!=y", :password_confirmation => "B8%.GA{2LbV_N0!a7OjMqj17bHz3klS,2CsKAts7k3bsK<!=y")
+ANAGE_USER    = User.find_or_create_by_name("Anage",    :email => "anage-noreply@mbl.edu",    :password => "B8%.GA{2LbV_N0!a7OjMqj17bHz3klS,2CsKAts7k3bsK<!=y", :password_confirmation => "B8%.GA{2LbV_N0!a7OjMqj17bHz3klS,2CsKAts7k3bsK<!=y")
+MAXPLANK_USER = User.find_or_create_by_name("Maxplank", :email => "maxplank-noreply@mbl.edu", :password => "B8%.GA{2LbV_N0!a7OjMqj17bHz3klS,2CsKAts7k3bsK<!=y", :password_confirmation => "B8%.GA{2LbV_N0!a7OjMqj17bHz3klS,2CsKAts7k3bsK<!=y")
+LAKSHMI_USER_ID    = LAKSHMI_USER.id
+ANAGE_USER_ID      = ANAGE_USER.id
+MAXPLANK_USER_ID   = MAXPLANK_USER.id
+LAKSHMI_USER_NAME  = LAKSHMI_USER.name
+ANAGE_USER_NAME    = ANAGE_USER.name
+MAXPLANK_USER_NAME = MAXPLANK_USER.name
 
 
 # Count the number of taxa in a file.
@@ -125,7 +135,7 @@ def create_species_and_data
   sql = ActiveRecord::Base.connection();
   new_species       = []
   orphaned_species  = []
-
+  
   # Open files
   lifeviz, ubiota, map = nil
   seed "Opening data files" do
@@ -284,12 +294,31 @@ def create_species_and_data
           lifespan = Lifespan.new(:value_in_days => (s[:age].to_f * 365), :units => "Years", :species_id => species.id)
           lifespan.context = s[:context]
           lifespan.citation = Reference.find(reference_id).to_s
+          lifespan.created_by = ANAGE_USER_ID
+          lifespan.created_by_name = ANAGE_USER_NAME
           lifespan.send(:create_without_callbacks)
         end
       end
-      BirthWeight.new(:value_in_grams => (s[:birth_weight]), :units => "Grams", :species_id => species.id).send(:create_without_callbacks) unless s[:birth_weight].blank?
-      AdultWeight.new(:value_in_grams => (s[:adult_weight]), :units => "Grams", :species_id => species.id).send(:create_without_callbacks) unless s[:adult_weight].blank?
-      LitterSize.new(:value => (s[:litter_size]), :species_id => species.id).send(:create_without_callbacks) unless s[:litter_size].blank?
+      BirthWeight.new(
+        :value_in_grams => (s[:birth_weight]),
+        :units => "Grams",
+        :species_id => species.id,
+        :created_by => ANAGE_USER_ID,
+        :created_by_name => ANAGE_USER_NAME
+      ).send(:create_without_callbacks) unless s[:birth_weight].blank?
+      AdultWeight.new(
+        :value_in_grams => (s[:adult_weight]),
+        :units => "Grams",
+        :species_id => species.id,
+        :created_by => ANAGE_USER_ID,
+        :created_by_name => ANAGE_USER_NAME
+      ).send(:create_without_callbacks) unless s[:adult_weight].blank?
+      LitterSize.new (
+        :value => (s[:litter_size]),
+        :species_id => species.id,
+        :created_by => ANAGE_USER_ID,
+        :created_by_name => ANAGE_USER_NAME
+      ).send(:create_without_callbacks) unless s[:litter_size].blank?
       count = index
       progress_bar.inc
     end
@@ -445,10 +474,10 @@ def create_statistics
   notice "Finished calculating statistics."
 end
 
-# create_references
-# create_taxonomy
-# create_species_and_data  # Must be run after create_taxonomy
-# rebuild_lineages
-# import_lakshmi
-# import_maxplank
-seed_section("Create Statistics", create_statistics)
+seed_section("Create References", Proc.new{create_references})
+seed_section("Create Taxonomy", Proc.new{create_taxonomy})
+seed_section("Create Species and Anage Data", Proc.new{create_species_and_data})  # Must be run after create_taxonomy
+seed_section("Rebuild Lineages", Proc.new{rebuild_lineages})
+seed_section("Import Lakshmi's Dataset", Proc.new{import_lakshmi})
+seed_section("Import 'Maxplank' Data", Proc.new{import_maxplank})
+seed_section("Create Statistics", Proc.new{create_statistics})
