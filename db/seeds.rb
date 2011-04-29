@@ -419,17 +419,27 @@ def create_statistics
     Statistics.delete_all
     true
   end
-  
-  number_of_statistics = nil
-  seed "Creating statistics objects" do
-    Taxon.rebuild_statistics_objects
-    number_of_statistics = Statistics.count
-    true
-  end
-  notice "#{number_of_statistics} objects created"
 
-  seed "Calculating statistics" do
+  seed "Calculating species statistics" do
+    Species.rebuild_stats
+  end
+  
+  seed "Calculating other taxa statistics" do
     Taxon.rebuild_stats
+  end
+  
+  # Create statistics records with no data.
+  seed "Create 'ghost' statistics records" do
+    ActiveRecord::Base.connection.execute("
+      INSERT INTO statistics
+        SELECT
+          taxa.id as id,
+          taxa.id as taxon_id
+        FROM taxa
+          LEFT OUTER JOIN statistics
+            ON taxa.id = statistics.taxon_id
+          WHERE statistics.id IS NULL;
+    ")
   end
 
   notice "Finished calculating statistics."
@@ -441,4 +451,4 @@ end
 # rebuild_lineages
 # import_lakshmi
 # import_maxplank
-create_statistics
+seed_section("Create Statistics", create_statistics)

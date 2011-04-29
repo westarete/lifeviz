@@ -24,6 +24,12 @@ class Taxon < ActiveRecord::Base
   
   after_create :create_statistics_object
   
+  def statistics
+    Statistics.find_by_taxon_id(self.id)
+  rescue
+    Statistics.new
+  end
+  
   # This method rebuilds lineage_ids for the entire taxonomy.
   # TODO: I haven't actually tried this code yet, because it still takes a while
   # to run! If you run it successfully, remove this TODO, please!
@@ -32,8 +38,7 @@ class Taxon < ActiveRecord::Base
     self.connection.execute "
     update taxa
       set lineage_ids = 1
-      where rank = 0;
-    "
+      where rank = 0;"
     
     %w(phylum class order family genus species).each_with_index do |name, i|
       logger.info "Creating #{name} lineage ids"
@@ -43,36 +48,36 @@ class Taxon < ActiveRecord::Base
         from taxa parent
         where
           taxa.rank = #{i + 1}
-          and taxa.parent_id = parent.id;
-      "
+          and taxa.parent_id = parent.id;"
     end
   end
   
-  def self.rebuild_statistics_objects
-    # # Fast, uninformative method!
-    ActiveRecord::Base.connection.execute <<-sql
-      insert into statistics (taxon_id) 
-        select t.id
-        from taxa t 
-        where not exists (
-          select taxon_id
-          from statistics
-          where taxon_id=t.id
-        );
-    sql
+  def self.taxa_ids_with_data
+    heirarchies = Taxon.find(Species.species_ids_with_data).collect do |species|
+      species.hierarchy
+    end
+    heirarchies.flatten.uniq.sort
   end
   
-  def self.rebuild_stats(rank=6)
-    while rank >= 0
-      size = Taxon.count(:all, :conditions => {:rank => rank})
-      progress "#{RANK_LABELS[rank]}", size do |progress_bar|
-        Taxon.find(:all, :conditions => {:rank => rank} ).each do |taxon|
-          taxon.statistics.calculate_statistics
-          progress_bar.inc
-        end
+  def self.rebuild_stats
+    # Species.rebuild_stats
+    taxa_ids = Taxon.taxa_ids_with_data
+    progress "Statistics", taxa_ids.length do |progress_bar|
+      Taxon.find(taxa_ids).each do |taxon|
+        taxon.calculate_statistics
+        progress_bar.inc
       end
-      rank -= 1
     end
+    
+    #   size = Taxon.count(:all, :conditions => {:rank => rank})
+    #   progress "#{RANK_LABELS[rank]}", size do |progress_bar|
+    #     Taxon.find(:all, :conditions => {:rank => rank} ).each do |taxon|
+    #       taxon.calculate_statistics
+    #       progress_bar.inc
+    #     end
+    #   end
+    #   rank -= 1
+    # end
   end
   
   # Redefining our own 'root' method, which should run much faster...
@@ -112,14 +117,10 @@ class Taxon < ActiveRecord::Base
   # full_ancestry[1] is an array of the ancestors at rank 1, etc
   def full_ancestry(options = {})
     options = {:include_children => false}.merge(options)
-    
     hierarchy_array = self.hierarchy
     hierarchy_array << 1 # for the top-level, rank0 terms
     hierarchy_array << self.id if options[:include_children]
-    
     ancestry = self.class.find_all_by_parent_id(hierarchy_array, :order => 'rank asc, name asc')
-    
-    
     # Makes our 1D array into a 2D array
     returning Array.new do |ranked_ancestry|
       ancestry.each do |term|
@@ -160,6 +161,57 @@ class Taxon < ActiveRecord::Base
     rescue
       raise "Left and Right attributes were nil!"
     end
+  end
+  
+  def calculate_statistics
+    time = Benchmark.realtime do
+    result = connection.execute "
+      SELECT 
+        MIN(lifespans.value_in_days) as minimum_lifespan,
+        MAX(lifespans.value_in_days) as maximum_lifespan,
+        AVG(lifespans.value_in_days) as average_lifespan,
+        STDDEV(lifespans.value_in_days) as standard_deviation_lifespan,
+        MIN(litter_sizes.value) as minimum_litter_size,
+        MAX(litter_sizes.value) as maximum_litter_size,
+        AVG(litter_sizes.value) as average_litter_size,
+        STDDEV(litter_sizes.value) as standard_deviation_litter_size,
+        MIN(adult_weights.value_in_grams) as minimum_adult_weight,
+        MAX(adult_weights.value_in_grams) as maximum_adult_weight,
+        AVG(adult_weights.value_in_grams) as average_adult_weight,
+        STDDEV(adult_weights.value_in_grams) as standard_deviation_adult_weight,
+        MIN(birth_weights.value_in_grams) as minimum_birth_weight,
+        MAX(birth_weights.value_in_grams) as maximum_birth_weight,
+        AVG(birth_weights.value_in_grams) as average_birth_weight,
+        STDDEV(birth_weights.value_in_grams) as standard_deviation_birth_weight
+      FROM taxa
+      LEFT OUTER JOIN lifespans
+        ON taxa.id = lifespans.species_id
+      LEFT OUTER JOIN litter_sizes
+        ON taxa.id = litter_sizes.species_id
+      LEFT OUTER JOIN adult_weights
+        ON taxa.id =  adult_weights.species_id
+      LEFT OUTER JOIN birth_weights
+        ON taxa.id =  birth_weights.species_id
+      WHERE
+        taxa.lft >= #{lft} AND
+        taxa.rgt <= #{rgt}
+    "
+    statistics = nil
+    ["minimum_lifespan",     "maximum_lifespan",     "average_lifespan",     "standard_deviation_lifespan",
+     "minimum_adult_weight", "maximum_adult_weight", "average_adult_weight", "standard_deviation_adult_weight",
+     "minimum_birth_weight", "maximum_birth_weight", "average_birth_weight", "standard_deviation_birth_weight",
+     "minimum_litter_size",  "maximum_litter_size",  "average_litter_size",  "standard_deviation_litter_size"
+    ].each do |column_name|
+      if result[0][column_name] && ! result[0][column_name].empty?
+        statistics ||= Statistics.find_or_create_by_taxon_id(id)
+        statistics[column_name] = result[0][column_name].to_f
+      end
+    end
+    
+    statistics.save! if statistics
+    end
+    time_elapsed = "%.1f" % [time*1000]
+    print "   #{time_elapsed}MS-#{self.rank}-#{self.name}\r"
   end
   
   private

@@ -1,3 +1,4 @@
+require 'benchmark'
 module SeedMethods
   
   # Display a progress bar. The block variable is the progress bar object.
@@ -19,14 +20,18 @@ module SeedMethods
   
   def seed(text, args={}, &block)
     if block_given?
-      print seed_string(text)
-      state = yield
+      state = nil
+      time = Benchmark.realtime do
+        print seed_string(text)
+        state = yield
+      end
+      time_elapsed = "%.1f" % [time]
       if state == true
-        puts success_string(args[:success]) + "\n"
+        puts success_string(args[:success]) + " in #{time_elapsed} seconds\n"
       elsif state == false
         puts failure_string(args[:failure]) + "\n"
       else  # state == nil
-        puts info_string(args[:notice]) + "\n"
+        puts info_string(args[:notice]) + " in #{time_elapsed} seconds\n"
       end
       if args[:quit]
         exit!
@@ -59,6 +64,25 @@ module SeedMethods
   
   def seed_string(text)
     colorize('**', '[1;30m') << " #{text}... "
+  end
+  
+  def seed_section(text, &block)
+    print colorize("***#{text}", '[1;30m')
+    if text.length < 27
+      print colorize('*' * (27 - text.length), '[1;30m')
+    end
+    print '\n'
+    
+    time = Benchmark.realtime do
+      yield
+    end
+    
+    text = "%.1f s" % [time]
+    print colorize("***#{text}", '[1;30m')
+    if text.length < 27
+      print colorize('*' * (27 - text.length), '[1;30m')
+    end
+    print '\n'
   end
   
   def notice(text)

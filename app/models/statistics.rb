@@ -86,52 +86,6 @@ class Statistics < ActiveRecord::Base
       end
     end
   end
-  
-  def calculate_statistics
-    result = connection.execute "
-      SELECT 
-        MIN(lifespans.value_in_days) as minimum_lifespan,
-        MAX(lifespans.value_in_days) as maximum_lifespan,
-        AVG(lifespans.value_in_days) as average_lifespan,
-        STDDEV(lifespans.value_in_days) as standard_deviation_lifespan,
-        MIN(litter_sizes.value) as minimum_litter_size,
-        MAX(litter_sizes.value) as maximum_litter_size,
-        AVG(litter_sizes.value) as average_litter_size,
-        STDDEV(litter_sizes.value) as standard_deviation_litter_size,
-        MIN(adult_weights.value_in_grams) as minimum_adult_weight,
-        MAX(adult_weights.value_in_grams) as maximum_adult_weight,
-        AVG(adult_weights.value_in_grams) as average_adult_weight,
-        STDDEV(adult_weights.value_in_grams) as standard_deviation_adult_weight,
-        MIN(birth_weights.value_in_grams) as minimum_birth_weight,
-        MAX(birth_weights.value_in_grams) as maximum_birth_weight,
-        AVG(birth_weights.value_in_grams) as average_birth_weight,
-        STDDEV(birth_weights.value_in_grams) as standard_deviation_birth_weight
-      FROM taxa
-      LEFT OUTER JOIN lifespans
-        ON taxa.id = lifespans.species_id
-      LEFT OUTER JOIN litter_sizes
-        ON taxa.id = litter_sizes.species_id
-      LEFT OUTER JOIN adult_weights
-        ON taxa.id =  adult_weights.species_id
-      LEFT OUTER JOIN birth_weights
-        ON taxa.id =  birth_weights.species_id
-      WHERE
-        taxa.lft >= %s AND
-        taxa.rgt <= %s
-    " % [taxon.lft, taxon.rgt]
-    
-    ["minimum_lifespan",     "maximum_lifespan",     "average_lifespan",     "standard_deviation_lifespan",
-     "minimum_adult_weight", "maximum_adult_weight", "average_adult_weight", "standard_deviation_adult_weight",
-     "minimum_birth_weight", "maximum_birth_weight", "average_birth_weight", "standard_deviation_birth_weight",
-     "minimum_litter_size",  "maximum_litter_size",  "average_litter_size",  "standard_deviation_litter_size"
-    ].each do |column_name|
-      if result[0][column_name] && ! result[0][column_name].empty?
-        self[column_name] = result[0][column_name].to_f
-      end
-    end
-    
-    self.save!
-  end
 end
 
 # == Schema Information
