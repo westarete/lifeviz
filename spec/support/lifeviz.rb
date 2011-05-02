@@ -1,10 +1,10 @@
 # NOTE: selenium is required to run log_in
 def log_in(user)
-  visit root_path
+  visit contribute_path
   if page.has_content?("Log out")
     click_link "Log out"
+    visit contribute_path
   end
-  click 'Log in'
   fill_in 'user_email'    ,:with => user.email
   fill_in 'user_password' ,:with => "password"
   click 'Login'
@@ -30,7 +30,6 @@ def make_statistics_set
   @taxon    = Taxon.make(:rank => 5)
   @species1 = Species.make(:parent_id => @taxon.id)
   @species2 = Species.make(:parent_id => @taxon.id)
-  Taxon.rebuild_statistics_objects
   
   @species1.litter_sizes.create!(:value => 10)
   @species1.litter_sizes.create!(:value => 20)

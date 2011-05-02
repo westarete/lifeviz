@@ -35,22 +35,22 @@ describe 'User interacts with species adult weight' do
         page.should have_xpath("//*[@class='adult_weight']", :text => '5.5')
       end
         
-      context 'deletes the adult weight' do
-        
-        let(:weight) { subject.adult_weights.first } 
-          
-        before(:all) do
-          click "delete_adult_weight_#{weight.id}"
-        end
-        
-        it 'should see success message' do
-          page.should have_content('Adult weight deleted.')
-        end
-        
-        it "shouldn't see the weight" do
-          page.should_not have_content('6.7')
-        end
-      end
+      # context 'deletes the adult weight' do
+      #   
+      #   let(:weight) { subject.adult_weights.first } 
+      #     
+      #   before(:all) do
+      #     click "delete_adult_weight_#{weight.id}"
+      #   end
+      #   
+      #   it 'should see success message' do
+      #     page.should have_content('Adult weight deleted.')
+      #   end
+      #   
+      #   it "shouldn't see the weight" do
+      #     page.should_not have_content('6.7')
+      #   end
+      # end
     end
   end
   

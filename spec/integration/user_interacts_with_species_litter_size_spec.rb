@@ -35,23 +35,23 @@ describe 'User interacts with species litter size' do
         page.should have_xpath("//*[@class='litter_size']", :text => '5')
       end
       
-      context 'deletes the litter size' do
-      
-        let(:litter_size) { subject.litter_sizes.first }   
-        
-        before(:all) do
-          click "delete_litter_size_#{litter_size.id}"
-        end
-        
-        it 'should see success message' do
-          page.should have_content('Litter size deleted.')
-        end
-        
-        it "shouldn't see the litter size" do
-          page.should_not have_content('6')
-        end
-        
-      end
+      # context 'deletes the litter size' do
+      # 
+      #   let(:litter_size) { subject.litter_sizes.first }   
+      #   
+      #   before(:all) do
+      #     click "delete_litter_size_#{litter_size.id}"
+      #   end
+      #   
+      #   it 'should see success message' do
+      #     page.should have_content('Litter size deleted.')
+      #   end
+      #   
+      #   it "shouldn't see the litter size" do
+      #     page.should_not have_content('6')
+      #   end
+      #   
+      # end
     end
   end
   

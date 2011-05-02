@@ -56,7 +56,7 @@ describe Statistics do
     before { make_statistics_set }
     context "for a given species' annotations" do
       before do
-        @species1.statistics.calculate_statistics
+        @species1.calculate_statistics
       end
       it "calculates statistics" do
         @species1.statistics.minimum_lifespan.should == "10.00 days"
@@ -80,7 +80,7 @@ describe Statistics do
     context "for a given taxon's species lifespans" do
       before do
         make_statistics_set
-        @taxon.statistics.calculate_statistics
+        @taxon.calculate_statistics
       end
       it "calculates statistics" do
         @taxon.statistics.minimum_lifespan.should == "10.00 days"
