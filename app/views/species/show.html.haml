@@ -22,7 +22,7 @@
         %td.context= lifespan.context
         %td.citation= lifespan.citation
         %td.User
-          = "#{lifespan.created_by} [#{lifespan.created_by.karma}]" unless lifespan.created_by.nil?
+          = "#{lifespan.created_by_string}" unless lifespan.created_by.nil?
   %tbody
     - @species.birth_weights.each_with_index do |birth_weight, i|
       %tr
@@ -36,7 +36,7 @@
         %td.context= birth_weight.context
         %td.citation= birth_weight.citation
         %td.User
-          = "#{birth_weight.created_by} [#{birth_weight.created_by.karma}]" unless birth_weight.created_by.nil?
+          = "#{birth_weight.created_by_string}" unless birth_weight.created_by.nil?
   %tbody      
     - @species.adult_weights.each_with_index do |adult_weight, i|
       %tr
@@ -50,7 +50,7 @@
         %td.context= adult_weight.context
         %td.citation= adult_weight.citation
         %td.User
-          = "#{adult_weight.created_by} [#{adult_weight.created_by.karma}]" unless adult_weight.created_by.nil?
+          = "#{adult_weight.created_by_string}" unless adult_weight.created_by.nil?
   %tbody      
     - @species.litter_sizes.each_with_index do |litter_size, i|
       %tr
@@ -64,7 +64,7 @@
         %td.context= litter_size.context
         %td.citation= litter_size.citation
         %td.User
-          = "#{litter_size.created_by} [#{litter_size.created_by.karma}]" unless litter_size.created_by.nil?
+          = "#{litter_size.created_by_string}" unless litter_size.created_by.nil?
 
 - if current_user
   = link_to 'Add Lifespan', new_lifespan_path(@species), :class => "button"

@@ -29,6 +29,14 @@ module Annotation
     end
   end
   
+  def created_by_string
+    if created_by.is_a? String
+      created_by_name
+    else
+      "#{created_by} #{created_by.karma}"
+    end
+  end
+  
   def created_by=(user)
     write_attribute(:created_by, user.id)
     write_attribute(:created_by_name, user.to_s)
