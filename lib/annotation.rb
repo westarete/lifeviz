@@ -33,7 +33,7 @@ module Annotation
     if created_by.is_a? String
       created_by_name
     else
-      "#{created_by} #{created_by.karma}"
+      "#{created_by} [#{created_by.karma}]"
     end
   end
   
