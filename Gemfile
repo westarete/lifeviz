@@ -30,6 +30,7 @@ gem 'will_paginate', '2.3.11'
 
 # For seeding database.
 gem 'hpricot', '0.8.2'
+gem 'fastercsv', '1.5.4'
 
 # Null object pattern.
 gem 'activerecord_null_object', '0.2.0'
