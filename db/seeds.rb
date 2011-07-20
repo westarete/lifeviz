@@ -20,28 +20,6 @@ LAKSHMI_USER_NAME  = LAKSHMI_USER.name
 ANAGE_USER_NAME    = ANAGE_USER.name
 MAXPLANK_USER_NAME = MAXPLANK_USER.name
 
-
-# Count the number of taxa in a file.
-def num_taxa_lines_bz2(filename)
-  returning num_lines = 0 do
-    IO.popen("bunzip2 -c #{filename}").each do |line|
-      id, term, rank, hierarchy, parent_id, num_children, hierarchy_ids = line.split("|")
-      next if rank  == "rank"
-      break if rank == "6"
-      num_lines += 1
-    end
-  end
-end
-
-# Count the number of rows in a file.
-def num_lines_bz2(filename)
-  returning num_lines = 0 do
-    IO.popen("bunzip2 -c #{filename}").each do |line|
-      num_lines += 1
-    end
-  end
-end
-
 def create_references
   # Remove any existing references
   seed "Removing any existing references and citations..." do

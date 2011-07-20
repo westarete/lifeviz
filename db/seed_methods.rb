@@ -1,5 +1,25 @@
 require 'benchmark'
 module SeedMethods
+  # Count the number of taxa in a file.
+  def num_taxa_lines_bz2(filename)
+    returning num_lines = 0 do
+      IO.popen("bunzip2 -c #{filename}").each do |line|
+        id, term, rank, hierarchy, parent_id, num_children, hierarchy_ids = line.split("|")
+        next if rank  == "rank"
+        break if rank == "6"
+        num_lines += 1
+      end
+    end
+  end
+
+  # Count the number of rows in a file.
+  def num_lines_bz2(filename)
+    num_lines = 0
+    IO.popen("bunzip2 -c #{filename}").each do |line|
+      num_lines += 1
+    end
+    num_lines
+  end
   
   # Display a progress bar. The block variable is the progress bar object.
   # Presumes that we will increment for each line in the input file.
