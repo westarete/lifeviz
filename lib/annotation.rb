@@ -1,17 +1,17 @@
 # This is a module to be included in all species annotation models. It has
 # functionality common to all of the annotation models.
 module Annotation
-  def after_save
-    if self.species
-      self.species.calculate_statistics
-    end
-  end
-  
-  def after_destroy
-    if self.species
-      self.species.calculate_statistics
-    end
-  end
+  # def after_save
+  #   if self.species
+  #     self.species.calculate_statistics
+  #   end
+  # end
+  # 
+  # def after_destroy
+  #   if self.species
+  #     self.species.calculate_statistics
+  #   end
+  # end
   
   def add_annotation_point
     if user = User.current_user
