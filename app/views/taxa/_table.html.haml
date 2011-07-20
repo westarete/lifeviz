@@ -6,14 +6,14 @@
       %th.hidden Hover
       %th.hidden Name
       %th= @children.first.rank_in_words if !@children.empty?
-      %th.hidden{:class => "{sorter: 'digit'}"} Lifespan, days
-      %th.hidden{:class => "{sorter: 'digit'}"} Birth Weight, g
-      %th.hidden{:class => "{sorter: 'digit'}"} Adult Weight, g
-      %th.hidden{:class => "{sorter: 'digit'}"} Litter Size
-      %th{:class => "{sorter: 'digit'}"} Lifespan
-      %th{:class => "{sorter: 'digit'}"} Birth Weight
-      %th{:class => "{sorter: 'digit'}"} Adult Weight
-      %th{:class => "{sorter: 'digit'}"} Litter Size
+      %th.hidden Lifespan, days
+      %th.hidden Birth Weight, g
+      %th.hidden Adult Weight, g
+      %th.hidden Litter Size
+      %th Lifespan
+      %th Birth Weight
+      %th Adult Weight
+      %th Litter Size
   %tbody
     - if @children.empty?
       %tr
