@@ -3,8 +3,6 @@ require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 
 require 'progressbar'
 require 'db/seed_methods'
-require 'pp'
-require 'ruby-debug'
 require 'fastercsv'
 include SeedMethods
 
