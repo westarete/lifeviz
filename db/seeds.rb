@@ -10,6 +10,7 @@ LIFEVIZ         = "db/data/lifeviz.xml.bz2"
 LIFEVIZ_UBIOTA  = "db/data/hagrid_ubid.txt"
 LAKSHMI         = "db/data/names_import.psv.bz2"
 MAXPLANK        = "db/data/maxplankdata.csv.bz2"
+LIFESPANS       = "db/data/lifespans.csv.bz2"
 LAKSHMI_USER  = User.find_or_create_by_name("Lakshmi",  :email => "lakshmi-noreply@mbl.edu",  :password => "B8%.GA{2LbV_N0!a7OjMqj17bHz3klS,2CsKAts7k3bsK<!=y", :password_confirmation => "B8%.GA{2LbV_N0!a7OjMqj17bHz3klS,2CsKAts7k3bsK<!=y")
 ANAGE_USER    = User.find_or_create_by_name("Anage",    :email => "anage-noreply@mbl.edu",    :password => "B8%.GA{2LbV_N0!a7OjMqj17bHz3klS,2CsKAts7k3bsK<!=y", :password_confirmation => "B8%.GA{2LbV_N0!a7OjMqj17bHz3klS,2CsKAts7k3bsK<!=y")
 MAXPLANK_USER = User.find_or_create_by_name("Maxplank", :email => "maxplank-noreply@mbl.edu", :password => "B8%.GA{2LbV_N0!a7OjMqj17bHz3klS,2CsKAts7k3bsK<!=y", :password_confirmation => "B8%.GA{2LbV_N0!a7OjMqj17bHz3klS,2CsKAts7k3bsK<!=y")
@@ -267,16 +268,16 @@ def create_species_and_data
       s = new_species[index]
       species = Taxon.new(:name => s[:name], :parent_id => s[:taxon_id], :rank => 6, :id => s[:ubid])
       species.send(:create_without_callbacks)
-      unless s[:age].blank?
-        s[:references].each do |reference_id|
-          lifespan = Lifespan.new(:value_in_days => (s[:age].to_f * 365), :units => "Years", :species_id => species.id)
-          lifespan.context = s[:context]
-          lifespan.citation = Reference.find(reference_id).to_s
-          lifespan.created_by = ANAGE_USER_ID
-          lifespan.created_by_name = ANAGE_USER_NAME
-          lifespan.send(:create_without_callbacks)
-        end
-      end
+      # unless s[:age].blank?
+      #   s[:references].each do |reference_id|
+      #     lifespan = Lifespan.new(:value_in_days => (s[:age].to_f * 365), :units => "Years", :species_id => species.id)
+      #     lifespan.context = s[:context]
+      #     lifespan.citation = Reference.find(reference_id).to_s
+      #     lifespan.created_by = ANAGE_USER_ID
+      #     lifespan.created_by_name = ANAGE_USER_NAME
+      #     lifespan.send(:create_without_callbacks)
+      #   end
+      # end
       BirthWeight.new(
         :value_in_grams => (s[:birth_weight]),
         :units => "Grams",
@@ -421,6 +422,36 @@ def import_maxplank
   notice failure_string("Couldn't find #{misses} ubiota ids.")
 end
 
+def import_lifespans
+  lifespans = nil
+  seed "Opening lifespan data" do
+    lifespans = IO.popen("bunzip2 -c #{LIFESPANS}")
+    lifespans ? true : false
+  end
+  
+  seed "Saving lifespans from Cera's modifications"
+  number_of_lines = num_lines_bz2(LIFESPANS)
+  failures = 0
+  successes = 0
+  progress "Lifespan", number_of_lines do |progress_bar|
+    lifespans.each_with_index do |line, i|
+      _, species_id, _, _, value_in_days, units, _, _, citation, context, reliable = FasterCSV.parse(line)[0]
+      lifespan = Lifespan.new
+      lifespan.species_id = species_id.to_i
+      lifespan.value_in_days = value_in_days.to_f
+      lifespan.units = units
+      lifespan.citation = citation
+      lifespan.context = context
+      lifespan.created_by = ANAGE_USER
+      lifespan.save ? successes += 1 : failures += 1
+      progress_bar.inc
+    end
+  end
+  
+  notice success_string("Saved #{successes} new lifespans successfully.")
+  notice failure_string("Failed to save #{failures} lifespans. Probably missing values!")
+end
+
 def create_statistics
   seed "Deleting existing statistics objects" do
     Statistics.delete_all
@@ -458,4 +489,5 @@ seed_section("Create Species and Anage Data", Proc.new{create_species_and_data})
 seed_section("Rebuild Lineages", Proc.new{rebuild_lineages})
 seed_section("Import Lakshmi's Dataset", Proc.new{import_lakshmi})
 seed_section("Import 'Maxplank' Data", Proc.new{import_maxplank})
+seed_section("Import Cera's lifespan data", Proc.new{import_lifespans})
 seed_section("Create Statistics", Proc.new{create_statistics})
