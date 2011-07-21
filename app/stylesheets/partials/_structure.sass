@@ -8,7 +8,6 @@ body
   #main
     +container
     :position relative
-    :margin-bottom 65px !important
     :min-height 100%
     :margin 0 auto
     #data
@@ -26,6 +25,10 @@ body
         td.permalink
           :font-weight 600
           :font-size 1.5em
+  .push
+    +column(24)
+    +last
+    :height 38px
   footer
     :height 30px
     :clear both
@@ -66,6 +69,7 @@ body
     +column(24)
     +last
     :padding-top 2em
+    :margin-bottom 30px
     
     img
       :padding-right 20px
