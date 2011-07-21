@@ -7,6 +7,12 @@
   - if @children.length > 1
     = render :partial => "chart"
     #graph{:taxon_id => @taxon.id}
+      .backup 
+        Sorry, but this graph is not viewable in older versions of Internet Explorer. Use 
+        = link_to "Chrome", "http://www.google.com/chrome"
+        or 
+        = link_to "Firefox", "http://www.mozilla.com/en-US/firefox/new/"
+        instead!
   - else
     #no-graph
       %p Sorry, there isn't enough data to show the comparison chart.
