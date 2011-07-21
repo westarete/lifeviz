@@ -1,11 +1,16 @@
 // Main Structure
+html
+  :height 100%
 body
   :background-color $background-color
+  :height 100%
 
   #main
     +container
     :position relative
-    :margin-bottom 65px
+    :margin-bottom 65px !important
+    :min-height 100%
+    :margin 0 auto
     #data
       :margin-top 1em
       :text-align center
@@ -21,13 +26,20 @@ body
         td.permalink
           :font-weight 600
           :font-size 1.5em
-    #footer
-      :clear both
-      :margin-top 1em
-      a
-        :vertical-align middle
-        
-        
+  footer
+    :height 30px
+    :clear both
+    :margin-top -36px
+    :width 100%
+    @include box-shadow(#e2e2e2, 0, 0, 60px)
+    :background-color #fff
+    :border-top 1px solid #e0e0e0
+    :padding-top 5px
+    p
+      +container
+      :font-size 11px
+      :text-align right
+    
 // Static pages like Home and Contribute
 .home
   #screencast
@@ -57,6 +69,8 @@ body
     
     img
       :padding-right 20px
+    a
+      :border-bottom none
       
 .contribute
   #login_or_signup

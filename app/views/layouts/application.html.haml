@@ -15,7 +15,10 @@
   #main
     = render :partial => "/shared/top_bar"
     = yield
-    = render :partial => "/shared/footer"
+    -# This empty 'push' div is for sticky footer.
+    .push
+  
+  %footer= render :partial => "/shared/footer"
 
   -# Move Javascript out of the head to make page render faster
   = javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"

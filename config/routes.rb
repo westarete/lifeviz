@@ -44,6 +44,7 @@ ActionController::Routing::Routes.draw do |map|
   
   # Static pages like home and contribute
   map.contribute '/contribute', :controller => :pages, :action => :show, :id => 'contribute'
+  map.privacy_policy '/privacy_policy', :controller => :pages, :action => :show, :id => 'privacy_policy'
   
   map.root :controller => :pages, :action => :show, :id => 'home'
 end
