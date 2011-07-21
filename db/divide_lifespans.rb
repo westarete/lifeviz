@@ -38,7 +38,7 @@ def import_lifespan_data
       _, species_id, _, _, value_in_days, units, _, _, citation, context, reliable = FasterCSV.parse(line)[0]
       lifespan = Lifespan.new
       lifespan.species_id = species_id.to_i
-      lifespan.value_in_days = value_in_days.to_i
+      lifespan.value_in_days = value_in_days.to_f
       lifespan.units = units
       lifespan.citation = citation
       lifespan.context = context
