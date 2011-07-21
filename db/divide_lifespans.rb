@@ -49,7 +49,7 @@ def import_lifespan_data
   end
   
   notice success_string("Saved #{successes} new lifespans successfully.")
-  notice failure_string("Saved #{failures} lifespans successfully.")
+  notice failure_string("Failed to save #{failures} lifespans. Probably missing values!")
 end
 
 import_lifespan_data
