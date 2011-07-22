@@ -26,3 +26,6 @@ config.action_view.cache_template_loading            = true
 
 # Enable threaded mode
 # config.threadsafe!
+
+KARMA_SERVER_HOSTNAME = 'karma.beta.westarete.com'
+KARMA_API_KEY = 'fillthisin'

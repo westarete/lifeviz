@@ -28,3 +28,6 @@ config.action_mailer.delivery_method = :test
 # config.active_record.schema_format = :sql
 
 config.gem 'rspec-rails', :version => '>= 1.3.2', :lib => false unless File.directory?(File.join(Rails.root, 'vendor/plugins/rspec-rails'))
+
+KARMA_SERVER_HOSTNAME = 'karma.beta.westarete.com'
+KARMA_API_KEY = '3c363701e83ee4a5164bf73b242bfbf9'
