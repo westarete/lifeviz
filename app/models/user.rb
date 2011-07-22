@@ -20,7 +20,6 @@ class User < ActiveRecord::Base
     result.downcase!
     result
   end
-  
 end
 
 # == Schema Information

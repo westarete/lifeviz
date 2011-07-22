@@ -10,11 +10,11 @@
 -# <legend>. However, most browsers have serious issues with styling legends
 -# so we're going to cheat.
 .field_divider
-  %span Sign Up with a Password
+  %span Please use a sensible password
 
 %fieldset
   %legend
-    %span Sign Up with a Password
+    %span Please use a sensible password
   = form.label :password, form.object.new_record? ? nil : "Change password"
   = form.password_field :password, :value => ""
   = form.label :password_confirmation, "Confirm password"
