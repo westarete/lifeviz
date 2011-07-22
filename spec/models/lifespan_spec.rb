@@ -27,6 +27,9 @@ describe Lifespan do
         @species1.statistics[:standard_deviation_lifespan].should be_close(8.340, 0.001)
       end
     end
+    context "when saving a lifespan in a different unit" do
+      
+    end
   end
   
   describe "#value" do
@@ -64,6 +67,7 @@ describe Lifespan do
       before(:each) do
         @lifespan.units = nil
         @lifespan.value = 360
+        @lifespan.save
       end
       it "should return itself" do
         @lifespan.value.should == 360
@@ -75,6 +79,7 @@ describe Lifespan do
     describe "when units is set" do
       before(:each) do
         @lifespan.value = 360
+        @lifespan.save
       end
       it "should return itself" do
         @lifespan.value.should == 360
@@ -90,6 +95,7 @@ describe Lifespan do
       describe "to Months" do
         before(:each) do
           @lifespan.units = "Months"
+          @lifespan.save
         end
         it "should set value correctly" do
           @lifespan.value.should == 360
@@ -101,6 +107,7 @@ describe Lifespan do
   describe "#in_units" do
     before(:each) do
       @lifespan.value_in_days = 360
+      @lifespan.save
     end
     describe "with Days" do
       it "should return the value in days" do
@@ -115,6 +122,7 @@ describe Lifespan do
     describe "with Years" do
       before(:each) do
         @lifespan.value_in_days = 730
+        @lifespan.save
       end
       it "should return the value in years" do
         @lifespan.in_units("Years").should == 2
