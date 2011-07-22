@@ -29,6 +29,10 @@ module KarmaClient
       end
     end
     
+    def to_i
+      total
+    end
+    
     def to_s
       total.to_s
     end
