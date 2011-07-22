@@ -51,4 +51,12 @@ module Annotation
       self.created_by = user
     end
   end
+  
+  def context
+    (self[:context] && ! self[:context].empty?) ? self[:context] : "No context given."
+  end
+  
+  def citation
+    (self[:citation] && ! self[:citation].empty?) ? self[:citation] : "No citation given."
+  end
 end
