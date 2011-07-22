@@ -20,6 +20,7 @@ MAXPLANK_USER_ID   = MAXPLANK_USER.id
 LAKSHMI_USER_NAME  = LAKSHMI_USER.name
 ANAGE_USER_NAME    = ANAGE_USER.name
 MAXPLANK_USER_NAME = MAXPLANK_USER.name
+SQL = ActiveRecord::Base.connection();
 
 def create_references
   # Remove any existing references
@@ -111,7 +112,6 @@ def create_species_and_data
   puts "** Creating new species from lifeviz/ubiota files using hagrid_ubid as the bridge"
   puts "   Note! New species are species with data imported from lifeviz. Orphaned species "
   puts "   are ubiota species with no associated lifeviz data."
-  sql = ActiveRecord::Base.connection();
   new_species       = []
   orphaned_species  = []
   
@@ -335,25 +335,31 @@ def create_species_and_data
   end
 
   seed "Vacuuming database" do
-    sql.execute "VACUUM ANALYZE;"
+    SQL.execute "VACUUM ANALYZE;"
   end
 
   notice "Species creation is completed."
 end
 
 def rebuild_lineages
-  sql = ActiveRecord::Base.connection();
-  sql.begin_db_transaction
+  
+  SQL.begin_db_transaction
   # Clear all lineage_ids
   seed "Clearing existing lineage data" do
-    sql.execute "alter table taxa drop column lineage_ids;"
-    sql.execute "alter table taxa add column lineage_ids varchar(255);"
+    SQL.execute "alter table taxa drop column lineage_ids;"
+    SQL.execute "alter table taxa add column lineage_ids varchar(255);"
   end
   seed "Rebuilding lineages", :success => "#{Taxon.count} taxa set" do
     Taxon.rebuild_lineages!
     true
   end
-  sql.commit_db_transaction
+  SQL.commit_db_transaction
+end
+
+def vacuum_database
+  seed "Vacuuming database" do
+    SQL.execute "VACUUM ANALYZE;"
+  end
 end
 
 def import_lakshmi
