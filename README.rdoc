@@ -24,20 +24,10 @@ July 21 2011
     8. run Taxon.rebuild_stats (NOT NEEDED FOR SLIM)
     9. script/server
     
-June 17th 2010
+July 22, 2011
   Clean Install from scratch
-    1. make sure you have anage.xml, hagrid_ubid.txt, and ubiota_taxonomy.psv in db/data folder
-    2. create new database
+    1. rake db:create:all
     3. rake db:schema:load
     4. run db:seed (~4hrs)
-        - create_taxonomy
-        - create_species_and_data
-    5. enter console and Taxon.rebuild! (~4hrs)
-    6. get into psql
-       $psql lifeviz_development
-    7. run vacuum (5mins)
-    8. #vacuum analyze;
-    9. run Species.rebuild_stats (2.5mins for 4k species)
-    10. run Taxon.rebuild_stats
-    11. at this point you may want to run Taxon.rebuild_lineages! from console since we performed a vacuum analyze and things are faster
+        - this process completely sets up the database with all of the taxonomy and lifespan data, builds lineages for navigating the taxonomy, and creates statistics on everything.
     12. script/server
