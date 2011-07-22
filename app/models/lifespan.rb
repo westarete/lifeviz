@@ -12,6 +12,13 @@ class Lifespan < ActiveRecord::Base
   validates_inclusion_of  :units, :in => %w( Days Months Years )
   validates_presence_of   :value_in_days
   
+  HUMANIZED_ATTRIBUTES = {
+    :value_in_days => "Lifespan"
+  }
+  def self.human_attribute_name(attr)
+    HUMANIZED_ATTRIBUTES[attr.to_sym] || super
+  end
+  
   def validate
     should_be_greater_than_zero
   end

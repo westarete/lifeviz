@@ -1,11 +1,8 @@
-%h2 Editing Birth Weight
+%h1#scientific_name= @species.name
+%h2 Edit Birth Weight
 
 - form_for :birth_weight, :url => { :action => :update }, :html => {:method => :put} do |f|
-  .form_input
-    = f.label :value, "Birth weight"
-    %br
-    = f.text_field :value, :class => "text", :style => "width: 50px"
-    = f.select :units, options_for_select(["Grams", "Kilograms"], @birth_weight.units)
+  = render :partial => "form", :locals => {:f => f}
 
   .form_input
     %button{:type => "submit", :name => "commit", :value => "Update", :class => 'button positive', :id => "update-birth-weight"} Submit Change

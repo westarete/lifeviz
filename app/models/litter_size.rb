@@ -8,6 +8,13 @@ class LitterSize < ActiveRecord::Base
   
   validates_presence_of :species_id
   validates_presence_of :value
+  
+  HUMANIZED_ATTRIBUTES = {
+    :value => "Litter Size"
+  }
+  def self.human_attribute_name(attr)
+    HUMANIZED_ATTRIBUTES[attr.to_sym] || super
+  end
 
   def validate
     should_be_greater_than_zero

@@ -11,6 +11,13 @@ class BirthWeight < ActiveRecord::Base
   validates_inclusion_of  :units, :in => %w( Grams Kilograms )
   validates_presence_of   :value_in_grams
   
+  HUMANIZED_ATTRIBUTES = {
+    :value_in_grams => "Birth Weight"
+  }
+  def self.human_attribute_name(attr)
+    HUMANIZED_ATTRIBUTES[attr.to_sym] || super
+  end
+  
   def validate
     should_be_greater_than_zero
   end

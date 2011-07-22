@@ -1,0 +1,16 @@
+%fieldset
+  %legend
+    %span Litter Size
+  = f.label :value, "Litter Size"
+  = f.text_field :value, :style => "width: 60px"
+
+.field_divider
+  %span Please cite your sources
+
+%fieldset
+  %legend
+    %span Please cite your sources
+  = f.label :citation, "Reference"
+  = f.text_field :citation
+  = f.label :context
+  = f.text_field :context
