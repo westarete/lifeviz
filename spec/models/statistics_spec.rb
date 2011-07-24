@@ -2,11 +2,12 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Statistics do
   
+  before do
+    make_statistics_set
+  end
+
   describe "#average_lifespan" do
     subject { @species1.statistics.average_lifespan }
-    before do
-      make_statistics_set
-    end
     context "when the average_lifespan is nil" do
       before { @species1.statistics.average_lifespan = nil }
       it { should == nil }
@@ -31,9 +32,6 @@ describe Statistics do
   
   describe "#average_adult_weight" do
     subject { @species1.statistics.average_adult_weight }
-    before do
-      make_statistics_set
-    end
     context "when the average_adult_weight is nil" do
       before { @species1.statistics.average_adult_weight = nil }
       it { should == nil }
@@ -53,7 +51,6 @@ describe Statistics do
   end
   
   describe "#calculate_lifespan" do
-    before { make_statistics_set }
     context "for a given species' annotations" do
       before do
         @species1.calculate_statistics
@@ -79,7 +76,6 @@ describe Statistics do
     end
     context "for a given taxon's species lifespans" do
       before do
-        make_statistics_set
         @taxon.calculate_statistics
       end
       it "calculates statistics" do
