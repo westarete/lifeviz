@@ -7,45 +7,51 @@ describe Statistics do
   end
 
   describe "#average_lifespan" do
-    subject { @species1.statistics.average_lifespan }
+    before do
+      @average_lifespan = @species1.statistics.average_lifespan
+    end
+    subject { @average_lifespan }
     context "when the average_lifespan is nil" do
-      before { @species1.statistics.average_lifespan = nil }
-      it { should == nil }
+      before { @average_lifespan = nil }
+      it { should be_nil }
     end
     context "when the average_lifespan is 15 days" do
-      before { @species1.statistics.average_lifespan = 15 }
+      before { @average_lifespan = 15 }
       it { should == "15.00 days" }
     end
     context "when the average_lifespan is 100 days" do
-      before { @species1.statistics.average_lifespan = 100 }
+      before { @average_lifespan = 100 }
       it { should == "3.33 months" }
     end
     context "when the average_lifespan is over 9000 days" do
-      before { @species1.statistics.average_lifespan = 9000 }
+      before { @average_lifespan = 9000 }
       it { should == "24.66 years" }
     end
     context "when the average_lifespan is 2200000 days" do
-      before { @species1.statistics.average_lifespan = 2200000 }
+      before { @average_lifespan = 2200000 }
       it { should == "6,027.40 years" }
     end
   end
   
   describe "#average_adult_weight" do
-    subject { @species1.statistics.average_adult_weight }
+    before do
+      @average_adult_weight = @species1.statistics.average_adult_weight
+    end
+    subject { @average_adult_weight }
     context "when the average_adult_weight is nil" do
-      before { @species1.statistics.average_adult_weight = nil }
+      before { @average_adult_weight = nil }
       it { should == nil }
     end
     context "when the average_adult_weight is 15 grams" do
-      before { @species1.statistics.average_adult_weight = 15 }
+      before { @average_adult_weight = 15 }
       it { should == "15.00 grams" }
     end
     context "when the average_adult_weight is 2200 grams" do
-      before { @species1.statistics.average_adult_weight = 2200 }
+      before { @average_adult_weight = 2200 }
       it { should == "2.20 kilograms" }
     end
     context "when the average_adult_weight is 2200000 grams" do
-      before { @species1.statistics.average_adult_weight = 2200000 }
+      before { @average_adult_weight = 2200000 }
       it { should == "2,200.00 kilograms" }
     end
   end
