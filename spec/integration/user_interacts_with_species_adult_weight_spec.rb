@@ -23,7 +23,7 @@ describe 'User interacts with species adult weight' do
       
       before(:all) do
         click 'Add Adult Weight'
-        fill_in 'Adult weight', :with => '5.5'
+        fill_in 'Adult Weight', :with => '5.5'
         click 'Add Adult Weight'        
       end
       

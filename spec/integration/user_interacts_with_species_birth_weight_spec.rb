@@ -23,7 +23,7 @@ describe 'User interacts with species birth weight' do
       
       before(:all) do
         click 'Add Birth Weight'
-        fill_in 'Birth weight', :with => '5.1'
+        fill_in 'Birth Weight', :with => '5.1'
         click 'Add Birth Weight'        
       end
       

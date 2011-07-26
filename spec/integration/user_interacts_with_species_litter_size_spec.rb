@@ -23,7 +23,7 @@ describe 'User interacts with species litter size' do
       
       before(:all) do
         click 'Add Litter Size'
-        fill_in 'Litter size', :with => '5'
+        fill_in 'Litter Size', :with => '5'
         click 'Add Litter Size'        
       end
       
