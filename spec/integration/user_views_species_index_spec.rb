@@ -18,17 +18,8 @@ context "User viewing the species index page" do
     visit taxon_path("genus", species.parent.name)
   end
   
-  it "sees a list of species" do
-    page.should have_xpath("//*[@id='taxa']//a[@href='#{species_path(species)}']", :text => species.name)
+  it "sees the breadcrumbs" do
+    page.should have_xpath("//*[@class='breadcrumbs']//a[@href='#{taxon_path(:rank => species.parent.rank_in_words.downcase, :taxon => species.parent.name)}']", :text => species.parent.name)
   end
   
-  context "each species" do
-    
-    it "has a name" do
-      Species.all.each do |specie|
-        page.should have_xpath("//*[@class='name']", :text => specie.name)
-      end
-    end
-    
-  end
 end
