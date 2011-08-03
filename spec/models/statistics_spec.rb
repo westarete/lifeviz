@@ -5,63 +5,10 @@ describe Statistics do
   before do
     make_statistics_set
   end
-
-  describe "#average_lifespan" do
-    before do
-      @average_lifespan = @species1.statistics.average_lifespan
-    end
-    subject { @average_lifespan }
-    context "when the average_lifespan is nil" do
-      before { @average_lifespan = nil }
-      it { should be_nil }
-    end
-    context "when the average_lifespan is 15 days" do
-      before { @average_lifespan = 15 }
-      it { should == "15.00 days" }
-    end
-    context "when the average_lifespan is 100 days" do
-      before { @average_lifespan = 100 }
-      it { should == "3.33 months" }
-    end
-    context "when the average_lifespan is over 9000 days" do
-      before { @average_lifespan = 9000 }
-      it { should == "24.66 years" }
-    end
-    context "when the average_lifespan is 2200000 days" do
-      before { @average_lifespan = 2200000 }
-      it { should == "6,027.40 years" }
-    end
-  end
   
-  describe "#average_adult_weight" do
-    before do
-      @average_adult_weight = @species1.statistics.average_adult_weight
-    end
-    subject { @average_adult_weight }
-    context "when the average_adult_weight is nil" do
-      before { @average_adult_weight = nil }
-      it { should == nil }
-    end
-    context "when the average_adult_weight is 15 grams" do
-      before { @average_adult_weight = 15 }
-      it { should == "15.00 grams" }
-    end
-    context "when the average_adult_weight is 2200 grams" do
-      before { @average_adult_weight = 2200 }
-      it { should == "2.20 kilograms" }
-    end
-    context "when the average_adult_weight is 2200000 grams" do
-      before { @average_adult_weight = 2200000 }
-      it { should == "2,200.00 kilograms" }
-    end
-  end
-  
-  describe "#calculate_lifespan" do
-    context "for a given species' annotations" do
-      before do
-        @species1.calculate_statistics
-      end
-      it "calculates statistics" do
+  context 'on a species' do
+    context 'for a default set of annotations' do
+      it 'appends the proper units and adds two decimal places' do
         @species1.statistics.minimum_lifespan.should == "10.00 days"
         @species1.statistics.maximum_lifespan.should == "20.00 days"
         @species1.statistics.average_lifespan.should == "15.00 days"
@@ -80,27 +27,34 @@ describe Statistics do
         @species1.statistics.standard_deviation_litter_size.should == "5.16"
       end
     end
-    context "for a given taxon's species lifespans" do
+    context 'when the maximum lifespan is 100 days' do
       before do
-        @taxon.calculate_statistics
+        @species1.lifespans.create!(:units => 'Days', :value_in_days => 100)
       end
-      it "calculates statistics" do
-        @taxon.statistics.minimum_lifespan.should == "10.00 days"
-        @taxon.statistics.maximum_lifespan.should == "40.00 days"
-        @taxon.statistics.average_lifespan.should == "25.00 days"
-        @taxon.statistics.standard_deviation_lifespan.should == "11.36 days"
-        @taxon.statistics.minimum_birth_weight.should == "10.00 grams"
-        @taxon.statistics.maximum_birth_weight.should == "40.00 grams"
-        @taxon.statistics.average_birth_weight.should == "25.00 grams"
-        @taxon.statistics.standard_deviation_birth_weight.should == "11.36 grams"
-        @taxon.statistics.minimum_adult_weight.should == "10.00 grams"
-        @taxon.statistics.maximum_adult_weight.should == "40.00 grams"
-        @taxon.statistics.average_adult_weight.should == "25.00 grams"
-        @taxon.statistics.standard_deviation_adult_weight.should == "11.36 grams"
-        @taxon.statistics.minimum_litter_size.should == "10.00"
-        @taxon.statistics.maximum_litter_size.should == "40.00"
-        @taxon.statistics.average_litter_size.should == "25.00"
-        @taxon.statistics.standard_deviation_litter_size.should == "11.36"
+      describe '#maximum_lifespan' do
+        it 'is 3.33 months' do
+          @species1.statistics.maximum_lifespan.should == '3.33 months'
+        end
+      end
+    end
+    context 'when the maximum lifespan is 9,000 days' do
+      before do
+        @species1.lifespans.create!(:units => 'Days', :value_in_days => 9_000)
+      end
+      describe '#maximum_lifespan' do
+        it 'is 24.66 years' do
+          @species1.statistics.maximum_lifespan.should == '24.66 years'
+        end
+      end
+    end
+    context 'when the maximum lifespan is 2,200,000 days' do
+      before do
+        @species1.lifespans.create!(:units => 'Days', :value_in_days => 2_200_000)
+      end
+      describe '#maximum_lifespan' do
+        it 'is 6,027.40 years' do
+          @species1.statistics.maximum_lifespan.should == '6,027.40 years'
+        end
       end
     end
   end

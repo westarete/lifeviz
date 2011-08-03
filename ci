@@ -31,5 +31,6 @@ cap staging deploy -s branch=$revision
 
 echo '========== Verify Content ==========================================='
 # Ensure that some key pages display properly.
-curl http://lifeviz.staging.westarete.com/ | grep -3 "Animalia"
+curl http://lifeviz.staging.westarete.com/ | grep -3 "Biodiversity Heritage Library"
+curl http://lifeviz.staging.westarete.com/class/Mammalia | grep -3 "Rodentia"
 

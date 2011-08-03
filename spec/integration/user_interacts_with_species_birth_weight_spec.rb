@@ -23,7 +23,7 @@ describe 'User interacts with species birth weight' do
       
       before(:all) do
         click 'Add Birth Weight'
-        fill_in 'Birth weight', :with => '5.1'
+        fill_in 'Birth Weight', :with => '5.1'
         click 'Add Birth Weight'        
       end
       
@@ -35,23 +35,6 @@ describe 'User interacts with species birth weight' do
         page.should have_xpath("//*[@class='birth_weight']", :text => '5.1')
       end
       
-      # context 'deletes the birth weight' do
-      #         
-      #   let(:weight) { subject.birth_weights.first }
-      #   
-      #   before(:all) do
-      #     click "delete_birth_weight_#{weight.id}"
-      #   end
-      #   
-      #   it 'should see success message' do
-      #     page.should have_content('Birth weight deleted.')
-      #   end
-      #   
-      #   it "shouldn't see the weight" do
-      #     page.should_not have_content('6.7')
-      #   end
-      #   
-      # end
     end
   end
   

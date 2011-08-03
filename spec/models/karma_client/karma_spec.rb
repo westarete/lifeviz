@@ -55,18 +55,5 @@ describe KarmaClient::Karma do
      end
    end
    
-   # This test doesn't work when we stub out the karma call!
-   # describe "#tags" do
-   #   it "should return a tags object" do
-   #     @karma.tags.kind_of?(KarmaClient::Tags).should be_true
-   #   end
-   #   describe "setters" do
-   #     it "should update the total" do
-   #       @karma.total.should == 7
-   #       @karma.tags.plants += 2
-   #       @karma.total.should == 9
-   #     end
-   #   end
-   # end
   
 end
