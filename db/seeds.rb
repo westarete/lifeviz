@@ -378,7 +378,7 @@ def import_lakshmi
     lakshmi.each do |line|
       ubiota_id, lifespan_in_days, citation, citation_url, sentence, verbatim_name_string, url = line.split("|")
       if species = Taxon.find(:first, :conditions => {:id => ubiota_id.to_i})
-        Lifespan.create(:value_in_days => lifespan_in_days, :units => "Days", :species_id => species.id, :citation => citation, :context => sentence)
+        Lifespan.create(:value_in_days => lifespan_in_days, :units => "Days", :species_id => species.id, :citation => citation, :context => sentence, :created_by => LAKSHMI_USER_ID, :created_by_name => LAKSHMI_USER_NAME)
         if species.rank == 6
           species_annotations += 1
         else
@@ -411,7 +411,7 @@ def import_maxplank
     maxplank.each do |line|
       ubiota_id, lifespan_in_days, citation = line.split(",")
       if species = Taxon.find(:first, :conditions => {:id => ubiota_id.to_i})
-        Lifespan.create(:value_in_days => lifespan_in_days, :units => "Days", :species_id => species.id, :citation => citation)
+        Lifespan.create(:value_in_days => lifespan_in_days, :units => "Days", :species_id => species.id, :citation => citation, :created_by => MAXPLANK_USER_ID, :created_by_name => MAXPLANK_USER_NAME)
         if species.rank == 6
           species_annotations += 1
         else
