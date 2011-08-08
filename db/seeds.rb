@@ -268,6 +268,7 @@ def create_species_and_data
       s = new_species[index]
       species = Taxon.new(:name => s[:name], :parent_id => s[:taxon_id], :rank => 6, :id => s[:ubid])
       species.send(:create_without_callbacks)
+      # # This was commented out because we're using Cera's lifespan data now.
       # unless s[:age].blank?
       #   s[:references].each do |reference_id|
       #     lifespan = Lifespan.new(:value_in_days => (s[:age].to_f * 365), :units => "Years", :species_id => species.id)
